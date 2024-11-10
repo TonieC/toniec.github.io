@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- FullPage.js CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fullpage.js/dist/fullpage.min.css" />
+
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#portfolio">Portfolio</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <span class="indicator"></span> <!-- Moving indicator -->
+    </div>
+    
+
+    <!-- FullPage.js Sections -->
+    <div id="fullpage">
+        <!-- Hero Section -->
+        <section id="hero" class="hero">
+            <div class="hero-content">
+                <h1 class="typing">Hi, I'm Tonie</h1>
+                <p>Web Developer | Designer | Creator</p>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="about">
+            <div class="container">
+                <h2>About Me</h2>
+                <div class="about-content">
+                    <img src="images/images1.png" alt="Profile Picture" class="profile-image">
+                    <p>
+                        I'm a passionate web developer with experience in front-end and back-end technologies. 
+                        I specialize in creating responsive, user-friendly websites that are both functional and visually appealing. 
+                        Let's build something amazing together!
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Portfolio Section -->
+        <section id="portfolio" class="portfolio">
+            <div class="container">
+                <h2>My Work</h2>
+                <div class="portfolio-gallery">
+                    <div class="portfolio-item">
+                        <img src="images/project1.jpg" alt="Project 1">
+                        <h3>Project 1</h3>
+                        <p>Web Design for an E-commerce Store</p>
+                    </div>
+                    <div class="portfolio-item">
+                        <img src="images/project2.jpg" alt="Project 2">
+                        <h3>Project 2</h3>
+                        <p>Responsive Portfolio Website</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section (Social Media Icons) -->
+        <section id="contact" class="contact">
+            <div class="container">
+                <h2>Contact Me</h2>
+                <div class="social-icons">
+                    <a href="https://www.linkedin.com/in/your-profile" target="_blank">
+                        <img src="images/linkedin-icon.png" alt="LinkedIn">
+                    </a>
+                    <a href="https://github.com/your-username" target="_blank">
+                        <img src="images/github-icon.png" alt="GitHub">
+                    </a>
+                    <a href="https://twitter.com/your-username" target="_blank">
+                        <img src="images/twitter-icon.png" alt="Twitter">
+                    </a>
+                    <a href="https://www.instagram.com/your-username" target="_blank">
+                        <img src="images/instagram-icon.png" alt="Instagram">
+                    </a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- FullPage.js JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/fullpage.js/dist/fullpage.min.js"></script>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
