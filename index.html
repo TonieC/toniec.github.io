@@ -1,98 +1,158 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Portfolio</title>
-    <link rel="stylesheet" href="styles.css">
+    <head>
+        <!-- Preconnect for Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <!-- FullPage.js CSS -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fullpage.js/dist/fullpage.min.css" />
+        <!-- Link to Goldman and Teko fonts -->
+        <link
+            href="https://fonts.googleapis.com/css2?family=Goldman:wght@400;700&family=Teko:wght@300..700&display=swap"
+            rel="stylesheet">
 
-</head>
-<body>
+        <!-- Meta Information -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="Tonie">
+        <meta name="description"
+            content="Portfolio website showcasing projects, skills, and contact information.">
+        <meta name="keywords"
+            content="portfolio, web developer, front-end, projects, Tonie">
+        <meta name="robots" content="index, follow">
 
-    <!-- Navigation Bar -->
-    <div class="navbar">
-        <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#portfolio">Portfolio</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-        <span class="indicator"></span> <!-- Moving indicator -->
-    </div>
-    
+        <!-- Open Graph Meta Tags (for social sharing) -->
+        <meta property="og:title" content="Tonie's Portfolio">
+        <meta property="og:description"
+            content="Showcasing my skills, projects, and professional achievements.">
+        <meta property="og:image" content="path/to/your-image.jpg">
+        <!-- Replace with an image URL -->
+        <meta property="og:url" content="https://yourportfolio.com">
+        <meta property="og:type" content="website">
 
-    <!-- FullPage.js Sections -->
-    <div id="fullpage">
-        <!-- Hero Section -->
-        <section id="hero" class="hero">
-            <div class="hero-content">
-                <h1 class="typing">Hi, I'm Tonie</h1>
-                <p>Web Developer | Designer | Creator</p>
-            </div>
-        </section>
+        <!-- Twitter Meta Tags (for Twitter sharing) -->
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Tonie's Portfolio">
+        <meta name="twitter:description"
+            content="Check out my portfolio with a collection of projects and professional work.">
+        <meta name="twitter:image" content="path/to/your-image.jpg">
+        <!-- Replace with an image URL -->
+        <meta name="twitter:url" content="https://yourportfolio.com">
 
-        <!-- About Section -->
-        <section id="about" class="about">
-            <div class="container">
-                <h2>About Me</h2>
-                <div class="about-content">
-                    <img src="images/images1.png" alt="Profile Picture" class="profile-image">
-                    <p>
-                        I'm a passionate web developer with experience in front-end and back-end technologies. 
-                        I specialize in creating responsive, user-friendly websites that are both functional and visually appealing. 
-                        Let's build something amazing together!
-                    </p>
+        <!-- Title of the Page -->
+        <title>Tonie's Portfolio</title>
+
+        <!-- Favicon (icon in the browser tab) -->
+        <link rel="icon" href="path/to/favicon.ico" type="image/x-icon">
+        <!-- Replace with your favicon URL -->
+
+        <!-- Stylesheets -->
+        <link rel="stylesheet" href="styles.css">
+        <!-- Link to your main stylesheet -->
+
+        <!-- Web App Manifest (for Progressive Web App features) -->
+        <link rel="manifest" href="manifest.json">
+        <!-- Optional: If you have a PWA setup -->
+
+        <!-- Additional Meta Tags for Mobile Optimization -->
+        <meta name="apple-mobile-web-app-title" content="Tonie's Portfolio">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style"
+            content="black-translucent">
+
+        <!-- Theme Color for Mobile -->
+        <meta name="theme-color" content="#97562C">
+        <!-- Coconut color or choose a matching color for your theme -->
+
+        <!-- Twitter Card Image Size (Optional) -->
+        <meta name="twitter:image:alt"
+            content="A preview image of Tonie's Portfolio website.">
+
+    </head>
+
+    <body>
+        
+
+        <!-- Navigation Bar -->
+        <div class="navbar">
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#projects">Portfolio</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <span class="indicator"></span>
+        </div>
+
+        <!-- FullPage.js Sections -->
+        <div id="fullpage">
+            <!-- Hero Section -->
+            <section id="hero" class="hero">
+                <div class="hero-content">
+                    <h1 class="typing">Hi, I'm Tonie</h1>
+                    <p>Web Developer | Designer | Creator</p>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- Portfolio Section -->
-        <section id="portfolio" class="portfolio">
-            <div class="container">
-                <h2>My Work</h2>
-                <div class="portfolio-gallery">
-                    <div class="portfolio-item">
-                        <img src="images/project1.jpg" alt="Project 1">
-                        <h3>Project 1</h3>
-                        <p>Web Design for an E-commerce Store</p>
+            <!-- About Section -->
+            <section id="about" class="about">
+                <div class="container">
+                    <h2>About Me</h2>
+                    <div class="about-content">
+                        <img src="images/images1.png" alt="Profile Picture"
+                            class="profile-image">
+                        <p>
+                            I'm a passionate web developer with experience in
+                            front-end and back-end technologies.
+                            I specialize in creating responsive, user-friendly
+                            websites that are both functional and visually
+                            appealing.
+                            Let's build something amazing together!
+                        </p>
                     </div>
-                    <div class="portfolio-item">
-                        <img src="images/project2.jpg" alt="Project 2">
-                        <h3>Project 2</h3>
-                        <p>Responsive Portfolio Website</p>
+                </div>
+            </section>
+
+            <!-- Portfolio Section -->
+            <section id="projects" class="projects">
+                <div class="projects-wrapper">
+                    <div class="project-item">Project 1</div>
+                    <div class="project-item">Project 2</div>
+                    <div class="project-item">Project 3</div>
+                    <div class="project-item">Project 4</div>
+                    <div class="project-item">Project 5</div>
+                    <div class="project-item">Project 6</div>
+                    <div class="project-item">Project 7</div>
+                    <div class="project-item">Project 8</div>
+                    <div class="project-item">Project 9</div>
+                </div>
+            </section>
+
+            <!-- Contact Section (Social Media Icons) -->
+            <section id="contact" class="contact">
+                <div class="container">
+                    <h2>Contact Me</h2>
+                    <div class="social-icons">
+                        <a href="#" target="_blank">
+                            <img src="images/facebook-icon.png" alt="Facebook">
+                        </a>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        </div>
 
-        <!-- Contact Section (Social Media Icons) -->
-        <section id="contact" class="contact">
-            <div class="container">
-                <h2>Contact Me</h2>
-                <div class="social-icons">
-                    <a href="https://www.linkedin.com/in/your-profile" target="_blank">
-                        <img src="images/linkedin-icon.png" alt="LinkedIn">
-                    </a>
-                    <a href="https://github.com/your-username" target="_blank">
-                        <img src="images/github-icon.png" alt="GitHub">
-                    </a>
-                    <a href="https://twitter.com/your-username" target="_blank">
-                        <img src="images/twitter-icon.png" alt="Twitter">
-                    </a>
-                    <a href="https://www.instagram.com/your-username" target="_blank">
-                        <img src="images/instagram-icon.png" alt="Instagram">
-                    </a>
-                </div>
-            </div>
-        </section>
-    </div>
+        <!-- FullPage.js JavaScript -->
+        <script
+            src="https://cdn.jsdelivr.net/npm/fullpage.js/dist/fullpage.min.js"></script>
 
-    <!-- FullPage.js JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/fullpage.js/dist/fullpage.min.js"></script>
-
-    <script src="scripts.js"></script>
-</body>
+        <script src="scripts.js"></script>
+        <script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
+<script>
+  kofiWidgetOverlay.draw('tonie', {
+    'type': 'floating-chat',
+    'floating-chat.donateButton.text': 'Support me',
+    'floating-chat.donateButton.background-color': '#323842',
+    'floating-chat.donateButton.text-color': '#fff'
+  });
+</script>
+    </body>
 </html>

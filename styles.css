@@ -6,14 +6,13 @@
 }
 
 body {
-  font-family: 'Arial', sans-serif;
-  background-color: #f7f7f7;
-  color: #333;
+  font-family: 'Goldman', sans-serif; /* Apply Goldman font to the entire body */
+  background-color: #FBC490; /* Macaroni And Cheese */
+  color: #333; /* Dark text for readability */
   line-height: 1.6;
   height: 100vh;
 }
 
-/* FullPage.js Section Styles */
 #fullpage {
   height: 100%;
   width: 100%;
@@ -23,7 +22,7 @@ section {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh; /* Full page sections */
+  height: 100vh;
 }
 
 .hero, .about, .portfolio, .contact {
@@ -34,27 +33,131 @@ section {
   text-align: center;
 }
 
+/* Hero Section */
 .hero {
-  background: #333;
-  color: #fff;
+  background: #97562C; /* Coconut */
+  color: #FBC490; /* Macaroni And Cheese */
 }
 
+.hero h1 {
+  font-family: 'Goldman', sans-serif; /* Goldman font for h1 */
+  font-size: 3.5rem;
+}
+
+.hero p {
+  font-family: 'Teko', sans-serif; /* Teko font for p */
+  font-size: 1.5rem;
+  margin-top: 10px;
+}
+
+/* About Section */
 .about {
-  background-color: #333;
-  color: #fff;
+  background-color: #AF7244; /* Metallic Bronze */
+  color: #FFF;
 }
 
+.about h2 {
+  font-family: 'Goldman', sans-serif; /* Goldman font for h2 */
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+}
+
+.about .about-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+}
+
+.profile-image {
+  border-radius: 100%;
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+}
+
+.about p {
+  font-family: 'Teko', sans-serif; /* Teko font for paragraphs */
+  max-width: 600px;
+  font-size: 1.1rem;
+  line-height: 1.8;
+}
+
+/* Portfolio Section */
 .portfolio {
-  background-color: #f1f1f1;
+  background-color: #D59B6D; /* Crayola's Tan */
 }
 
+.portfolio h2 {
+  font-family: 'Goldman', sans-serif; /* Goldman font for h2 */
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+}
+
+.portfolio-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  justify-items: center;
+}
+
+.portfolio-item {
+  background-color: #C38258; /* Deer */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  text-align: center;
+}
+
+.portfolio-item img {
+  max-width: 100%;
+  border-radius: 10px;
+}
+
+.portfolio-item h3 {
+  font-family: 'Goldman', sans-serif; /* Goldman font for h3 */
+  font-size: 1.5rem;
+  margin-top: 15px;
+}
+
+.portfolio-item p {
+  font-family: 'Teko', sans-serif; /* Teko font for p */
+  font-size: 1.1rem;
+  color: #777;
+}
+
+/* Contact Section */
 .contact {
-  background-color: #333;
-  color: #fff;
+  background-color: #97562C; /* Coconut */
+  color: #FFF;
+}
+
+.contact h2 {
+  font-family: 'Goldman', sans-serif; /* Goldman font for h2 */
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.social-icons a {
+  display: block;
+  width: 40px;
+  height: 40px;
+}
+
+.social-icons img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 /* Top-Centered Navigation Bar */
-/* Navbar styles */
 .navbar {
   position: fixed;
   top: 20px;
@@ -79,15 +182,16 @@ section {
 
 .navbar a {
   text-decoration: none;
-  color: white;
+  color: #FBC490; /* Macaroni And Cheese */
+  font-family: 'Goldman', sans-serif; /* Goldman font for navbar */
   font-size: 1.2rem;
-  font-weight: bold;
+  font-weight: 700;
   padding: 5px 15px;
   transition: color 0.3s ease;
 }
 
 .navbar a:hover {
-  color: #e50914; /* Hover color for text */
+  color: #AF7244; /* Metallic Bronze */
 }
 
 /* Indicator styles */
@@ -95,7 +199,7 @@ section {
   position: absolute;
   bottom: 0;
   height: 2px;
-  background-color: #e50914;
+  background-color: #AF7244; /* Metallic Bronze */
   border-radius: 2px;
   transition: all 0.3s ease;
   width: 0;
@@ -108,136 +212,40 @@ section {
   opacity: 1;
 }
 
-/* Dynamic indicator position */
-.navbar a:hover ~ .indicator {
-  left: 0;
-  width: 100%;
-}
-
-/* Contact Section */
-.contact h2 {
-  font-size: 2.5rem;
-  margin-bottom: 30px;
-}
-
-.social-icons {
+/* Projects Section Styling */
+.projects {
   display: flex;
-  justify-content: center;
-  gap: 20px;
-}
-
-.social-icons a {
-  display: block;
-  width: 40px;
-  height: 40px;
-}
-
-.social-icons img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-/* Hero Section */
-.hero h1 {
-  font-size: 3.5rem;
-}
-
-.hero p {
-  font-size: 1.5rem;
-  margin-top: 10px;
-}
-
-/* About Section */
-.about h2 {
-  font-size: 2.5rem;
-  margin-bottom: 30px;
-}
-
-.about .about-content {
-  display: flex;
-  justify-content: center;
   align-items: center;
-  gap: 50px;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: #FBC490; /* Macaroni And Cheese */
 }
 
-.profile-image {
-  border-radius: 100%;
-  width: 200px;
-  height: 200px;
-  object-fit: cover;
-}
-
-.about p {
-  max-width: 600px;
-  font-size: 1.1rem;
-  line-height: 1.8;
-}
-
-/* Portfolio Section */
-.portfolio h2 {
-  font-size: 2.5rem;
-  margin-bottom: 30px;
-}
-
-.portfolio-gallery {
+.projects-wrapper {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 20px;
-  justify-items: center;
+  grid-template-columns: repeat(3, 1fr); /* 3 columns */
+  grid-template-rows: repeat(3, 1fr);    /* 3 rows */
+  gap: 10px;
+  width: 60vw; /* Adjusted for a 3x3 layout */
+  height: 60vh;
 }
 
-.portfolio-item {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  text-align: center;
-}
-
-.portfolio-item img {
-  max-width: 100%;
-  border-radius: 10px;
-}
-
-.portfolio-item h3 {
+/* Project Item Styling */
+.project-item {
+  background-color: #C38258; /* Deer */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Goldman', sans-serif; /* Goldman font for project items */
   font-size: 1.5rem;
-  margin-top: 15px;
+  border-radius: 10px;
+  padding: 20px;
+  transition: transform 0.3s ease;
 }
 
-.portfolio-item p {
-  font-size: 1.1rem;
-  color: #777;
+/* Hover effect with full expansion */
+.project-item.hovered {
+  transform: scale(1.0); 
+  z-index: 10;           /* Bring it to the front */
 }
-
-.typing {
-  font-size: 3.5rem;
-  font-weight: bold;
-  color: #fff;
-  overflow: hidden; /* Ensures the text stays within the container */
-  white-space: nowrap; /* Prevents text wrapping */
-  border-right: 3px solid #fff; /* Creates the cursor effect */
-  animation: typing 2s steps(20, end) forwards, blink-caret 0.75s step-end infinite;
-}
-
-/* Typing animation */
-@keyframes typing {
-  from {
-      width: 0;
-  }
-  to {
-      width: 100%;
-  }
-}
-
-/* Blinking cursor */
-@keyframes blink-caret {
-  from, to {
-      border-color: transparent;
-  }
-  50% {
-      border-color: #fff;
-  }
-}
-
