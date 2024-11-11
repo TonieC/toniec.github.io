@@ -12,43 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
   });
   
   
-
-document.addEventListener("DOMContentLoaded", () => {
-    const projectItems = document.querySelectorAll(".project-item");
-    const gridSize = 3; // Adjust for the 3x3 grid
-
-    projectItems.forEach((item, index) => {
-        item.addEventListener("mouseenter", () => {
-            const row = Math.floor(index / gridSize);
-            const col = index % gridSize;
-
-            item.classList.add("hovered");
-
-            // Loop through all items to apply the "push" effect
-            projectItems.forEach((otherItem, otherIndex) => {
-                const otherRow = Math.floor(otherIndex / gridSize);
-                const otherCol = otherIndex % gridSize;
-
-                // Calculate row and column differences
-                const rowDiff = otherRow - row;
-                const colDiff = otherCol - col;
-
-                // Skip the hovered item itself
-                if (otherItem !== item) {
-                    // Apply push effect based on position
-                    otherItem.style.transform = `translate(${colDiff * 10}%, ${rowDiff * 10}%)`;
-                }
-            });
-        });
-
-        // Reset transforms on mouse leave
-        item.addEventListener("mouseleave", () => {
-            item.classList.remove("hovered");
-
-            // Reset all items' transforms
-            projectItems.forEach((otherItem) => {
-                otherItem.style.transform = "translate(0, 0)";
-            });
-        });
-    });
-});
+  function toggleDarkMode() {
+    document.body.classList.toggle("light-mode");
+    document.body.classList.toggle("dark-mode");
+}
