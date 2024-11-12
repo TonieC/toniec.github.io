@@ -1,0 +1,90 @@
+body {
+    font-family: "Goldman", sans-serif;
+    background-color: #f9f9f9;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #97562C;
+    color: #fff;
+    padding: 20px;
+}
+
+h1 {
+    font-size: 32px;
+}
+
+.game-container {
+    margin: 20px;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    width: 80%;
+    margin: 20px auto;
+}
+
+button {
+    padding: 12px 24px;
+    margin: 12px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 8px;
+    border: none;
+}
+
+button:hover {
+    background-color: #ddd;
+}
+
+#save-btn, #reset-btn {
+    background-color: #72a4f2;
+}
+
+#upgrade-1-btn, #upgrade-2-btn {
+    background-color: #4CAF50;
+    color: #fff;
+}
+
+#upgrade-1-btn:hover, #upgrade-2-btn:hover {
+    background-color: #45a049;
+}
+
+#copy-code-btn {
+    background-color: #ff9800;
+    margin-top: 20px;
+}
+
+#copy-code-btn:hover {
+    background-color: #fb8c00;
+}
+
+.donation-section {
+    margin-top: 30px;
+    background-color: #efefef;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+#donate-btn {
+    background-color: #ff4081;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+}
+
+#donate-btn:hover {
+    background-color: #f50057;
+}
+
+.code-section {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin: 20px auto;
+}
