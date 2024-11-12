@@ -153,17 +153,6 @@
             }, 1000);
         }
 
-        // View code button
-        viewCodeBtn.addEventListener("click", () => {
-            codeSection.style.display = "block";
-        });
-
-        // Copy code button
-        copyBtn.addEventListener("click", () => {
-            codeTextarea.select();
-            document.execCommand("copy");
-            alert("Code copied to clipboard!");
-        });
 
         // Initial score display
         updateScore();

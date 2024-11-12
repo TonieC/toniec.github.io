@@ -368,3 +368,47 @@ body.light-mode {
     transform: rotate(0deg);
   }
 }
+
+.contacte {
+  animation: side1 5s ease-in-out infinite;
+}
+.contactes {
+  animation: side2 5s ease-in-out infinite;
+}
+
+
+@keyframes side1 {
+  0%, 100% {
+      transform: rotate(0deg);
+  }
+  20% {
+    transform: rotate(10deg);
+  }
+  40% {
+    transform: rotate(-10deg);
+  }
+  60% {
+    transform: rotate(10deg);
+  }
+  80% {
+    transform: rotate(-10deg);
+  }
+}
+
+@keyframes side2 {
+  0%, 100% {
+      transform: rotate(0deg);
+  }
+  20% {
+    transform: rotate(-10deg);
+  }
+  40% {
+    transform: rotate(10deg);
+  }
+  60% {
+    transform: rotate(-10deg);
+  }
+  80% {
+    transform: rotate(10deg);
+  }
+}
