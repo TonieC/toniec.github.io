@@ -12,7 +12,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
         <meta name="author" content="Tonie">
-        <meta name="description" content="A website showing Tonie's Skills and Projects!">
+        <meta name="description" content="A Showcase of my skills and projects">
         <meta name="robots" content="index, follow">
     
         <!-- Title of the Page -->
@@ -34,7 +34,72 @@
     </head>    
 
     <body>
-        
+        <div id="loading" style="
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #FBC490; /* Match the background color or your theme */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;">
+    <p>For a better experience, the website is being loaded.</p>
+    <p id="loading-percentage" style="font-size: 1.5rem; margin-top: 10px;">0%</p>
+    <button id="open-website-btn" style="
+        margin-top: 20px;
+        padding: 10px 20px;
+        font-size: 1.2rem;
+        color: #fff;
+        background-color: #333;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        display: none;">Open Workshop</button>
+</div>
+
+<script>
+    function onReady(callback) {
+        var intervalId = window.setInterval(function() {
+            if (document.getElementsByTagName('body')[0] !== undefined) {
+                window.clearInterval(intervalId);
+                callback.call(this);
+            }
+        }, 1000);
+    }
+
+    function setVisible(selector, visible) {
+        document.querySelector(selector).style.display = visible ? 'block' : 'none';
+    }
+
+    // Initialize loading screen
+    onReady(function() {
+        const loadingElement = document.getElementById('loading');
+        const percentageElement = document.getElementById('loading-percentage');
+        const openWebsiteBtn = document.getElementById('open-website-btn');
+        let percentage = 0;
+        const interval = setInterval(() => {
+            percentage++;
+            percentageElement.textContent = `${percentage}%`;
+            if (percentage >= 100) {
+                clearInterval(interval);
+                openWebsiteBtn.style.display = 'block'; // Show the button
+            }
+        }); // Adjusted interval speed (30ms per percentage increment)
+
+        // Add event listener to the button
+        openWebsiteBtn.addEventListener('click', () => {
+            setVisible('#loading', false); // Hide the loading screen
+            setVisible('.page', true); // Show the page content
+        });
+    });
+</script>
+
+
+
+
 
         <!-- Navigation Bar -->
         <div class="navbar">
@@ -113,7 +178,7 @@
                         </div>
                     </div>
             
-                    <!-- Add more project cards as needed -->
+                 
                 </div>
             </section>
             
@@ -123,9 +188,9 @@
                     <h2>Contact Me</h2>
                     <div class="social-icons">
                         <a href="https://facebook.com/0tonie" target="_blank">
-                            <img class="contactes" src="images/facebook-icon.png" alt="Facebook">
+                            <img src="images/facebook-icon.png" alt="Facebook">
                         </a>
-                        <a  class="contacte" href="mailto:cadizal06@gmail.com?subject=Website%20Portfolio&body=Hello,%20Tonie!" target="_blank">
+                        <a  href="mailto:cadizal06@gmail.com?subject=Website%20Portfolio&body=Hello,%20Tonie!" target="_blank">
                             <img src="images/gmail-icon.png" alt="Email">
                         </a>
                     </div>

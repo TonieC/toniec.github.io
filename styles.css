@@ -1,4 +1,14 @@
-/* General Reset */
+:root {
+  --primary-bg: #FBC490;
+  --secondary-bg: #97562C;
+  --highlight-color: #AF7244;
+  --text-color: #333;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -6,11 +16,12 @@
 }
 
 body {
-  font-family: 'Goldman', sans-serif; /* Apply Goldman font to the entire body */
-  background-color: #FBC490; /* Macaroni And Cheese */
-  color: #333; /* Dark text for readability */
+  font-family: 'Goldman', sans-serif;
   line-height: 1.6;
   height: 100vh;
+  overflow: hidden;
+  background-color: var(--primary-bg);
+  color: var(--text-color);
 }
 
 #fullpage {
@@ -23,6 +34,7 @@ section {
   justify-content: center;
   align-items: center;
   height: 100vh;
+  overflow: auto;
 }
 
 .hero, .about, .portfolio, .contact {
@@ -33,31 +45,34 @@ section {
   text-align: center;
 }
 
-/* Hero Section */
 .hero {
-  background: #97562C; /* Coconut */
-  color: #FBC490; /* Macaroni And Cheese */
+  background: var(--secondary-bg);
+  color: var(--primary-bg);
+}
+
+.hero-content {
+  max-width: 700px;
+  text-align: center;
 }
 
 .hero h1 {
-  font-family: 'Goldman', sans-serif; /* Goldman font for h1 */
+  font-family: 'Goldman', sans-serif;
   font-size: 3.5rem;
 }
 
 .hero p {
-  font-family: 'Teko', sans-serif; /* Teko font for p */
+  font-family: 'Teko', sans-serif;
   font-size: 1.5rem;
   margin-top: 10px;
 }
 
-/* About Section */
 .about {
-  background-color: #AF7244; /* Metallic Bronze */
+  background-color: #AF7244;
   color: #FFF;
 }
 
 .about h2 {
-  font-family: 'Goldman', sans-serif; /* Goldman font for h2 */
+  font-family: 'Goldman', sans-serif;
   font-size: 2.5rem;
   margin-bottom: 30px;
 }
@@ -77,19 +92,18 @@ section {
 }
 
 .about p {
-  font-family: 'Teko', sans-serif; /* Teko font for paragraphs */
+  font-family: 'Teko', sans-serif;
   max-width: 600px;
   font-size: 1.1rem;
   line-height: 1.8;
 }
 
-/* Portfolio Section */
 .portfolio {
-  background-color: #D59B6D; /* Crayola's Tan */
+  background-color: #D59B6D;
 }
 
 .portfolio h2 {
-  font-family: 'Goldman', sans-serif; /* Goldman font for h2 */
+  font-family: 'Goldman', sans-serif;
   font-size: 2.5rem;
   margin-bottom: 30px;
 }
@@ -102,7 +116,7 @@ section {
 }
 
 .portfolio-item {
-  background-color: #C38258; /* Deer */
+  background-color: #C38258;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -116,25 +130,24 @@ section {
 }
 
 .portfolio-item h3 {
-  font-family: 'Goldman', sans-serif; /* Goldman font for h3 */
+  font-family: 'Goldman', sans-serif;
   font-size: 1.5rem;
   margin-top: 15px;
 }
 
 .portfolio-item p {
-  font-family: 'Teko', sans-serif; /* Teko font for p */
+  font-family: 'Teko', sans-serif;
   font-size: 1.1rem;
   color: #777;
 }
 
-/* Contact Section */
 .contact {
-  background-color: #97562C; /* Coconut */
+  background-color: #97562C;
   color: #FFF;
 }
 
 .contact h2 {
-  font-family: 'Goldman', sans-serif; /* Goldman font for h2 */
+  font-family: 'Goldman', sans-serif;
   font-size: 2.5rem;
   margin-bottom: 30px;
 }
@@ -143,6 +156,7 @@ section {
   display: flex;
   justify-content: center;
   gap: 20px;
+  transform: scale(1.1);
 }
 
 .social-icons a {
@@ -157,7 +171,6 @@ section {
   object-fit: contain;
 }
 
-/* Top-Centered Navigation Bar */
 .navbar {
   position: fixed;
   top: 20px;
@@ -182,8 +195,8 @@ section {
 
 .navbar a {
   text-decoration: none;
-  color: #FBC490; /* Macaroni And Cheese */
-  font-family: 'Goldman', sans-serif; /* Goldman font for navbar */
+  color: #FBC490;
+  font-family: 'Goldman', sans-serif;
   font-size: 1.2rem;
   font-weight: 700;
   padding: 5px 15px;
@@ -191,15 +204,14 @@ section {
 }
 
 .navbar a:hover {
-  color: #AF7244; /* Metallic Bronze */
+  color: white;
 }
 
-/* Indicator styles */
 .indicator {
   position: absolute;
   bottom: 0;
   height: 2px;
-  background-color: #AF7244; /* Metallic Bronze */
+  background-color: #AF7244;
   border-radius: 2px;
   transition: all 0.3s ease;
   width: 0;
@@ -232,12 +244,11 @@ section {
   width: 300px;
   overflow: hidden;
   border: 1px solid #333;
-  transition: transform 0.3s;
 }
 
 .project-card:hover {
-  transform: translateY(-20px);
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
+  transform: translateY(1px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 100);
 }
 
 .window-bar {
@@ -299,29 +310,29 @@ section {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* Button Hover Effect */
-.mac-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.6);
-  background-color: #1e1e1e;
+a:hover, .mac-button:hover {
+  transform: translateY(-3px);
+  color: #FFF;
 }
 
-/* Button Active (Click) Effect */
+.project-card:hover {
+  transform: scale(1.05);
+}
+
 .mac-button:active {
   transform: translateY(1px);
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
   background-color: #444;
 }
 
-/* Light Mode and Dark Mode Toggle Button */
 body.dark-mode {
   background-color: #121212;
   color: #e0e0e0;
 }
 
 body.light-mode {
-  background-color: #FFFFFF; /* Light background */
-  color: #333333; /* Dark text */
+  background-color: #FFFFFF;
+  color: #333333;
 }
 
 .toggle-mode {
@@ -347,39 +358,36 @@ body.light-mode {
   display: inline-block;
   animation: wave 1.5s ease-in-out infinite;
 }
-/* */
+
 @keyframes wave {
   0%, 100% {
-      transform: rotate(0deg);
+    transform: rotate(0deg);
   }
   20% {
-      transform: rotate(-29deg);
+    transform: rotate(-29deg);
   }
   40% {
-      transform: rotate(15deg);
+    transform: rotate(15deg);
   }
-  60% {
-      transform: rotate(-10deg);
+   60% {
+    transform: rotate(-10deg);
   }
   80% {
-      transform: rotate(10deg);
-  }
-  100% {
-    transform: rotate(0deg);
+    transform: rotate(10deg);
   }
 }
 
 .contacte {
   animation: side1 5s ease-in-out infinite;
 }
+
 .contactes {
   animation: side2 5s ease-in-out infinite;
 }
 
-
 @keyframes side1 {
   0%, 100% {
-      transform: rotate(0deg);
+    transform: rotate(0deg);
   }
   20% {
     transform: rotate(10deg);
@@ -397,7 +405,7 @@ body.light-mode {
 
 @keyframes side2 {
   0%, 100% {
-      transform: rotate(0deg);
+    transform: rotate(0deg);
   }
   20% {
     transform: rotate(-10deg);
@@ -410,5 +418,57 @@ body.light-mode {
   }
   80% {
     transform: rotate(10deg);
+  }
+}
+
+/* Media Queries for responsive design */
+@media (max-width: 1200px) {
+  .hero h1 {
+    font-size: 3rem;
+  }
+  .hero p {
+    font-size: 1.3rem;
+  }
+  .portfolio-item h3 {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 2.5rem;
+  }
+  .hero p {
+    font-size: 1.2rem;
+  }
+  .about h2 {
+    font-size: 2rem;
+  }
+  .portfolio-item h3 {
+    font-size: 1.2rem;
+  }
+  .portfolio-gallery {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .hero h1 {
+    font-size: 2rem;
+  }
+  .hero p {
+    font-size: 1rem;
+  }
+  .about h2 {
+    font-size: 1.8rem;
+  }
+  .portfolio-item h3 {
+    font-size: 1.1rem;
+  }
+  .navbar ul {
+    flex-direction: column;
+  }
+  .social-icons {
+    gap: 10px;
   }
 }
