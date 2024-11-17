@@ -97,20 +97,44 @@
     });
 </script>
 
-
-
-
-
-        <!-- Navigation Bar -->
-        <div class="navbar">
-            <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#projects">Portfolio</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-            <span class="indicator"></span>
-        </div>
+<div class="navbar">
+    <ul>
+      <li><a href="#" class="dot"></a></li>
+      <li><a href="#about" class="dot"></a></li>
+      <li><a href="#projects" class="dot"></a></li>
+      <li><a href="#contact" class="dot"></a></li>
+    </ul>
+    <span class="indicator"></span>
+  </div>
+  <script>
+    // Function to highlight the active dot based on the section in view
+    window.addEventListener('scroll', function() {
+      const sections = document.querySelectorAll('section'); // All sections
+      const dots = document.querySelectorAll('.navbar a.dot'); // All navbar dots
+  
+      let currentSection = "";
+  
+      // Find the section currently in the viewport
+      sections.forEach((section, index) => {
+        const rect = section.getBoundingClientRect();
+        if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
+          currentSection = section.id;
+        }
+      });
+      dots.forEach(dot => {
+        dot.classList.remove('active');
+      });
+  
+      // Activate the dot corresponding to the current section
+      if (currentSection) {
+        const activeDot = document.querySelector(`.navbar a[href="#${currentSection}"]`);
+        if (activeDot) {
+          activeDot.classList.add('active');
+        }
+      }
+    });
+  </script>
+  
 
         <!-- FullPage.js Sections -->
         <div id="fullpage">
