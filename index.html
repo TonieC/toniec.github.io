@@ -29,6 +29,12 @@
         <meta property="og:title" content="Tonie's Workshop">
         <meta property="og:description" content="Hi! I'm Tonie, a passionate hobbyist programmer skilled in JavaScript, C#, and C++. Explore my portfolio to see my projects and skills.">
         <meta property="og:image" content="/images/workshop.png">
+        <meta name="image" content="/images/workshop.png">
+
+        <meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="robots" content="nosnippet">
+
         <meta property="og:url" content="https://tonie.fun">
         <meta property="og:type" content="website">
         <meta property="og:site_name" content="Tonie's Workshop">
@@ -38,6 +44,18 @@
     <meta name="twitter:image" content="/images/workshop.png">
 
     </head>    
+
+    <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          "name": "Tonie's Portfolio",
+          "description": "Explore Tonie's amazing projects and skills!",
+          "image": "/images/workshop.png",
+          "url": "https://tonie.fun"
+        }
+        </script>
+        
 
     <body>
         <div id="loading" style="
@@ -52,6 +70,7 @@
     justify-content: center;
     align-items: center;
     z-index: 10000;">
+    <img style="width:250px;" src="/images/workshop-nobg.png">
     <p>For a better experience, the website is being loaded.</p>
     <p id="loading-percentage" style="font-size: 1.5rem; margin-top: 10px;">0%</p>
     <button id="open-website-btn" style="
