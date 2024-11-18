@@ -107,14 +107,11 @@
     <span class="indicator"></span>
 </div >
   <script>
-    // Function to highlight the active dot based on the section in view
     window.addEventListener('scroll', function() {
-      const sections = document.querySelectorAll('section'); // All sections
-      const dots = document.querySelectorAll('.navbar a.dot'); // All navbar dots
+      const sections = document.querySelectorAll('section');
+      const dots = document.querySelectorAll('.navbar a.dot'); 
   
       let currentSection = "";
-  
-      // Find the section currently in the viewport
       sections.forEach((section, index) => {
         const rect = section.getBoundingClientRect();
         if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
@@ -124,8 +121,6 @@
       dots.forEach(dot => {
         dot.classList.remove('active');
       });
-  
-      // Activate the dot corresponding to the current section
       if (currentSection) {
         const activeDot = document.querySelector(`.navbar a[href="#${currentSection}"]`);
         if (activeDot) {
@@ -156,17 +151,16 @@
                         <p>
                             Hi! I'm Tonie, a passionate hobbyist programmer
                              who loves coding and creating web applications in my spare time. 
-                             I'm particularly interested in Front-end development.   I currently know 
+                           <br><span style="font-weight: bold; font-size: 1rem;">What I have worked with:</span>
                     <img style="width: 25px; height: 25px;" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" />
-                  , 
+                 Javascript , 
                   <img style="width: 25px; height: 25px;" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/csharp/csharp-original.svg" />
-                , and
-                <img  style="width:25px;height:25px;" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg" />. <br>When I'm not building websites, I take my programming skills to 
-               the physical world with tools like 
+               C# , 
+                <img  style="width:25px;height:25px;" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg" /> C++, 
                <img style="width:25px;height:25px;" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/arduino/arduino-original-wordmark.svg" />
-             , <img style="width:25px;height:25px;" src="/images/esp32-icon.png">, and 
-               <img style="width:25px;height:25px;" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/raspberrypi/raspberrypi-original.svg" />.  
-               This lets me experiment with electronics and create interactive projects!</p>
+        Arduino , <img style="width:25px;height:25px;" src="/images/esp32-icon.png"> ESP32, and 
+               <img style="width:25px;height:25px;" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/raspberrypi/raspberrypi-original.svg" /> Raspberry Pi.  
+               <br></>
             </div>
                 </div>
             </section>
