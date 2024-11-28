@@ -5,12 +5,12 @@
   }
 
   .project-wrapper {
-    gap: 15px;
+    gap: 20px;
     justify-content: center;
   }
 
   .project-card {
-    width: 300px; /* Slightly smaller width for medium screens */
+    width: 350px; /* Slightly smaller width for medium screens */
   }
 
   .hero h1 {
@@ -53,19 +53,19 @@
   /* Make the project section scrollable horizontally if needed */
   .projects {
     overflow-x: auto;
-    padding: 10px;
+    padding: 20px;
   }
 
   .project-wrapper {
     display: flex;
-    gap: 10px;
+    gap: 20px;
     justify-content: flex-start;
     overflow-x: auto; /* Enables horizontal scroll only for the projects section */
     padding-bottom: 10px; /* Prevents the scroll bar from hiding content */
   }
 
   .project-card {
-    width: 280px; /* Adjust width for smaller screens */
+    width: 300px; /* Adjust width for smaller screens */
   }
 
   .hero h1 {
@@ -110,15 +110,15 @@
   /* Make the project section scrollable horizontally if needed */
   .projects {
     overflow-x: auto;
-    padding: 10px;
+    padding: 20px;
   }
 
   .project-wrapper {
     display: flex;
-    gap: 8px;
+    gap: 20px;
     justify-content: flex-start;
     overflow-x: auto;
-    padding-bottom: 10px;
+    padding-bottom: 20px;
   }
 
   .project-card {
