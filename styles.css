@@ -66,7 +66,9 @@
 
   .project-wrapper {
     gap: 10px;
-    justify-content: center;
+    justify-content: flex-start;
+    overflow-x: auto; /* Enables horizontal scroll */
+    display: flex; /* Ensure the container remains flexible */
   }
 
   .project-card {
@@ -88,7 +90,7 @@
   }
 
   .navbar ul {
-    flex-direction: column; /* Stack navbar items vertically on smaller screens */
+    flex-direction: row; /* Keep navbar horizontal */
     gap: 10px;
   }
 
@@ -128,7 +130,7 @@
   }
 
   .navbar ul {
-    flex-direction: column; /* Ensure navbar items are stacked vertically */
+    flex-direction: row; /* Ensure navbar items are still in a row */
     gap: 8px;
   }
 }
