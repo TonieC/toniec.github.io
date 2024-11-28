@@ -37,11 +37,9 @@ section {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: url('/1.mp4') no-repeat center center / cover; /* Replace with a preview image */
-
 }
 
-.hero, .about, .portfolio, .contact {
+.hero, .about, .project, .contact {
   width: 100%;
     justify-content: center;
   align-items: center;
@@ -116,8 +114,6 @@ section {
 }
 
 .portfolio-gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 20px;
   justify-items: center;
 }
@@ -251,17 +247,11 @@ section {
 }
 
   .projects {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
     padding: 20px;
   }
 
-  .project-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
+  .project-wrapper {   gap: 50px; display: flex;
+
   }
 
   .project-card {
