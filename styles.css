@@ -1,3 +1,139 @@
+@media (max-width: 1200px) {
+  .project-wrapper {
+    gap: 15px;
+    justify-content: center;
+  }
+
+  .project-card {
+    width: 300px; /* Slightly smaller width for medium screens */
+  }
+
+  .navbar ul {
+    gap: 15px;
+  }
+
+  .hero h1 {
+    font-size: 3rem;
+  }
+
+  .hero p {
+    font-size: 1.2rem;
+  }
+
+  .about h2 {
+    font-size: 2rem;
+  }
+
+  .about p {
+    font-size: 1rem;
+  }
+
+  .contact h2 {
+    font-size: 2rem;
+  }
+
+  .social-icons {
+    gap: 15px;
+  }
+
+  .profile-image {
+    width: 150px;
+    height: 150px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 2.5rem; /* Adjust size for smaller screens */
+  }
+
+  .hero p {
+    font-size: 1.1rem;
+  }
+
+  .about h2 {
+    font-size: 1.8rem;
+  }
+
+  .about .about-content {
+    flex-direction: column;
+    gap: 30px; /* Stack profile image and text vertically */
+  }
+
+  .projects {
+    padding: 10px;
+  }
+
+  .project-wrapper {
+    gap: 10px;
+    justify-content: center;
+  }
+
+  .project-card {
+    width: 280px; /* Adjust width for smaller screens */
+  }
+
+  .contact h2 {
+    font-size: 1.8rem;
+  }
+
+  .social-icons {
+    gap: 10px;
+    transform: scale(1);
+  }
+
+  .profile-image {
+    width: 120px;
+    height: 120px;
+  }
+
+  .navbar ul {
+    flex-direction: column; /* Stack navbar items vertically on smaller screens */
+    gap: 10px;
+  }
+
+  .navbar a.dot {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero h1 {
+    font-size: 2rem; /* Even smaller for very small screens */
+  }
+
+  .hero p {
+    font-size: 1rem;
+  }
+
+  .about h2 {
+    font-size: 1.6rem;
+  }
+
+  .project-card {
+    width: 100%; /* Make project cards full-width on mobile */
+  }
+
+  .contact h2 {
+    font-size: 1.6rem;
+  }
+
+  .social-icons {
+    gap: 5px;
+  }
+
+  .profile-image {
+    width: 100px;
+    height: 100px;
+  }
+
+  .navbar ul {
+    flex-direction: column; /* Ensure navbar items are stacked vertically */
+    gap: 8px;
+  }
+}
+
+
 :root {
   --primary-bg: #FBC490;
   --secondary-bg: #97562C;
@@ -39,7 +175,7 @@ section {
   height: 100vh;
 }
 
-.hero, .about, .project, .contact {
+.hero, .about, .contact {
   width: 100%;
     justify-content: center;
   align-items: center;
@@ -100,48 +236,6 @@ section {
   max-width: 600px;
   font-size: 1.1rem;
   line-height: 1.8;
-}
-
-/* Portfolio Section */
-.portfolio {
-  background-color: #D59B6D; /* Crayola's Tan */
-}
-
-.portfolio h2 {
-  font-family: 'Goldman', sans-serif; /* Goldman font for h2 */
-  font-size: 2.5rem;
-  margin-bottom: 30px;
-}
-
-.portfolio-gallery {
-  gap: 20px;
-  justify-items: center;
-}
-
-.portfolio-item {
-  background-color: #C38258; 
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  text-align: center;
-}
-
-.portfolio-item img {
-  max-width: 100%;
-  border-radius: 10px;
-}
-
-.portfolio-item h3 {
-  font-family: 'Goldman', sans-serif; /* Goldman font for h3 */
-  font-size: 1.5rem;
-  margin-top: 15px;
-}
-
-.portfolio-item p {
-  font-family: 'Teko', sans-serif; /* Teko font for p */
-  font-size: 1.1rem;
-  color: #777;
 }
 
 /* Contact Section */
@@ -246,104 +340,77 @@ section {
   opacity: 1;
 }
 
-  .projects {
-    padding: 20px;
-  }
+.projects {
+  padding: 20px;
+}
 
-  .project-wrapper {   gap: 50px; display: flex;
+.project-wrapper {
+  display: flex;
+  flex-wrap: wrap; /* Allows wrapping of items if there are too many to fit in one row */
+  gap: 20px;
+  justify-content: center; /* Centers the items horizontally */
+}
 
-  }
+.project-card {
+  background-color: #1e1e1e;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  width: 350px; /* Fixed width for project cards */
+  overflow: hidden;
+  border: 1px solid #333;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;}
 
-  .project-card {
-    background-color: #1e1e1e;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-    width: 300px;
-    overflow: hidden;
-    border: 1px solid #333;
-  }
+.project-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.7);
+}
 
-  .project-card:hover {
-    transform: translateY(1px); 
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 100);
-  }
+.project-content {
+  padding: 16px;
+  text-align: center;
+  flex-grow: 1;
+}
 
-  .window-bar {
-    background-color: #2e2e2e;
-    padding: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-  }
+.project-content h3 {
+  font-size: 1.2em;
+  margin-bottom: 8px;
+  color: #e0e0e0;
+}
 
-  .window-bar span {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    margin-right: 8px;
-    display: inline-block;
-  }
+.project-content p {
+  font-size: 0.9em;
+  color: #cfcfcf;
+}
 
-  .close-btn {
-    background-color: #ff5f57;
-  }
+/* Button Style */
+.project-button {
+  display: inline-block;
+  padding: 12px 24px;
+  background-color: #444;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 1em;
+  font-weight: bold;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: none;
+  cursor: pointer;
+}
 
-  .minimize-btn {
-    background-color: #ffbd2e;
-  }
+/* Button Hover Effect */
+.project-button:hover {
+  transform: translateY(-3px);
+  background-color: #666;
+}
 
-  .maximize-btn {
-    background-color: #28c840;
-  }
+/* Button Active (Click) Effect */
+.project-button:active {
+  transform: translateY(1px);
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
+}
 
-  .project-content {
-    padding: 16px;
-  }
-
-  .project-content h3 {
-    font-size: 1.2em;
-    margin-bottom: 8px;
-    color: #e0e0e0;
-  }
-
-  .project-content p {
-    font-size: 0.9em;
-    color: #cfcfcf;
-  }
-
-  .mac-button {
-    display: inline-block;
-    padding: 12px 24px;
-    background-color: #2e2e2e;
-    border-radius: 8px;
-    color: #e0e0e0;
-    font-size: 1em;
-    font-weight: bold;
-    text-decoration: none;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
-    border: 1px solid #3a3a3a;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-  }
-
-  /* Button Hover Effect */
-  a:hover, .mac-button:hover {
-    transform: translateY(-3px);
-    color: #FFF;
-  }
-  .project-card:hover {
-    transform: scale(1.05);
-  }
-
-
-
-  /* Button Active (Click) Effect */
-  .mac-button:active {
-    transform: translateY(1px);
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
-    background-color: #444;
-  }
  
 
 .wave-emoji {
