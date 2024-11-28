@@ -59,75 +59,217 @@
 
     <body>
         <div id="loading" style="
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #FBC490; /* Match the background color or your theme */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    z-index: 10000;">
-    <img style="width:250px;" class="contacte" src="/images/workshop-nobg.png">
-    <p>For a better experience, the website is being loaded.</p>
-    <p id="loading-percentage" style="font-size: 1.5rem; margin-top: 10px;">0%</p>
-    <button id="open-website-btn" style="
-        margin-top: 20px;
-        padding: 10px 20px;
-        font-size: 1.2rem;
-        color: #fff;
-        background-color: #333;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        display: none;">Open Workshop</button>
-</div>
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #FBC490; /* Match the background color or your theme */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 10000;">
+        <img style="width:250px;" class="contacte" src="/images/workshop-nobg.png">
+        <p>Random Facts About Me:</p>
+        <p id="fun-fact" style="font-size: 1.2rem; margin-top: 1px; text-align: center; font-style: italic;"></p>
+        <br><p>For a better experience, the website is being loaded in.</p>
+        <p id="loading-percentage" style="font-size: 2rem; margin-top: 10px;">0%</p>
+       <button id="open-website-btn" style="
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            color: #fff;
+            background-color: #333;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: none;">Open Workshop</button>
+    </div>
+    
+    <script>
+        function onReady(callback) {
+            var intervalId = window.setInterval(function() {
+                if (document.getElementsByTagName('body')[0] !== undefined) {
+                    window.clearInterval(intervalId);
+                    callback.call(this);
+                }
+            }, 1000);
+        }
+    
+        function setVisible(selector, visible) {
+            document.querySelector(selector).style.display = visible ? 'block' : 'none';
+        }
+    
+        // Array of fun facts about you
+        const funFacts = [
+    "I only code on my spare time.",
+    "I enjoy solving programming challenges in my free time.",
+    "I once built an Arduino project for a science fair.",
+    "I'm a huge fan of technology and gadgets.",
+    "My favorite language is JavaScript for web development.",
+    "I can code in Javascript, C++, C#, and even on microcontrollers like Arduino!",
+    "I enjoy building websites in my free time.",
+    "I love experimenting with Raspberry Pi projects.",
+    "I have a deep interest in machine learning and AI.",
+    "I’ve always been fascinated by how computers work.",
+    "I spend a lot of time reading tech blogs and learning new programming techniques.",
+    "I’ve tried to learn every programming language at least once.",
+    "I love debugging code and finding out what went wrong.",
+    "I’ve worked on several open-source projects.",
+    "I am constantly looking for ways to improve my coding skills.",
+    "I enjoy teaching others how to code.",
+    "I’ve attended multiple hackathons and coding competitions.",
+    "I believe the best way to learn is through building projects.",
+    "I once built a website that tracks my daily activities.",
+    "I can build simple web apps using just HTML, CSS, and JavaScript.",
+    "I love the challenge of optimizing code for better performance.",
+    "I think coding is a mix of art and science.",
+    "I enjoy building tools that help make people's lives easier.",
+    "I’ve created a few games in JavaScript and C#.",
+    "I enjoy designing UIs that are both functional and visually appealing.",
+    "I’ve built a few small robots using Arduino and Raspberry Pi.",
+    "I have a personal blog where I write about technology and coding.",
+    "I use GitHub to share and collaborate on projects.",
+    "I love learning about new frameworks and libraries in web development.",
+    "I prefer working with code over other types of tasks.",
+    "I once created a mini social media platform as a coding project.",
+    "I enjoy experimenting with CSS animations to make websites interactive.",
+    "I’ve recently gotten into using Docker for containerizing applications.",
+    "I enjoy writing clean, readable, and well-documented code.",
+    "I’ve worked with several APIs to fetch and display data on websites.",
+    "I have an interest in cybersecurity and ethical hacking.",
+    "I started coding as a hobby when I was young.",
+    "I’ve contributed to several coding communities online.",
+    "I find it satisfying when I see my code come to life.",
+    "I enjoy learning new algorithms and data structures.",
+    "I try to stay updated with the latest tech news and trends.",
+    "I’ve built a website for a local business as part of a freelance project.",
+    "I’m always looking for new tools to make coding more efficient.",
+    "I love solving puzzles, and coding feels like one big puzzle.",
+    "I often spend time improving and refactoring old code.",
+    "I have a collection of all the coding books I’ve read.",
+    "I’m passionate about making technology accessible to everyone.",
+    "I enjoy participating in coding challenges like LeetCode and HackerRank.",
+    "I’m always trying to improve my algorithmic thinking.",
+    "I once built a virtual pet project with JavaScript.",
+    "I enjoy building both the front-end and back-end of websites.",
+    "I believe that every bug is an opportunity to learn something new.",
+    "I love the satisfaction of solving a difficult coding problem.",
+    "I try to follow the principles of clean code in every project.",
+    "I started learning to code because I wanted to create my own games.",
+    "I’ve created a music recommendation app as a side project.",
+    "I love working with React to build interactive user interfaces.",
+    "I often play around with new JavaScript libraries to see what’s possible.",
+    "I believe that the best developers are lifelong learners.",
+    "I’ve built several websites using WordPress and custom themes.",
+    "I’m a fan of minimalist design in websites and apps.",
+    "I’m always working on a side project, no matter how small.",
+    "I once built a web app that tracks my favorite books and movies.",
+    "I’ve created a few Chrome extensions to improve productivity.",
+    "I once built a workout tracker web app with a friend.",
+    "I am always looking for new ways to improve user experience on websites.",
+    "I love working with databases and learning SQL.",
+    "I once built a to-do list web app using JavaScript and Firebase.",
+    "I love experimenting with different CSS frameworks for faster development.",
+    "I’ve built a few portfolio websites to showcase my work.",
+    "I enjoy the process of designing wireframes and prototypes for apps.",
+    "I’m constantly exploring new ways to improve my front-end development skills.",
+    "I once created a basic weather forecasting app using an API.",
+    "I love working on projects that have a real-world impact.",
+    "I’m interested in the intersection of technology and creativity.",
+    "I’ve learned how to code by taking online courses and tutorials.",
+    "I believe there’s no such thing as ‘too many projects’—the more, the better!",
+    "I love learning about the different layers of web development.",
+    "I spend hours watching coding tutorials on YouTube.",
+    "I once built an online store as a personal project.",
+    "I’ve worked on a few website redesigns as a freelance web developer.",
+    "I enjoy using design tools like Figma to create user interfaces.",
+    "I believe that every coding project should have a good testing strategy.",
+    "I once made a trivia app using a public trivia API.",
+    "I love working with JSON and manipulating it with JavaScript.",
+    "I’ve built a real-time chat application using JavaScript and Firebase.",
+    "I try to write my code in a way that others can easily understand it.",
+    "I once created a movie database app using a public API.",
+    "I enjoy learning about the latest updates in the web development world.",
+    "I believe that there’s always something new to learn in programming.",
+    "I started coding as a hobby, and now it's a big part of my life.",
+    "I love experimenting with machine learning concepts and frameworks.",
+    "I once built a photo gallery app using HTML, CSS, and JavaScript.",
+    "I enjoy the challenge of building responsive websites.",
+    "I’ve contributed to a few open-source projects to give back to the community.",
+    "I once built an online portfolio website from scratch to showcase my work.",
+    "I love the feeling of solving a problem with code.",
+    "I try to learn new tools and technologies every week.",
+    "I enjoy working on projects that have a visual or artistic aspect.",
+    "I’ve built a few websites using Bootstrap for rapid prototyping.",
+    "I love learning about new JavaScript frameworks and libraries.",
+    "I once created a simple interactive game using HTML5 and JavaScript.",
+    "I enjoy using version control systems like Git to manage my projects.",
+    "I believe that software development is all about solving problems creatively.",
+    "I once built a web-based task management tool for a team project.",
+    "I’m fascinated by how different programming languages solve the same problem.",
+    "I’ve worked on a project that integrated with Google APIs for maps and search.",
+    "I once created an interactive map using JavaScript and Leaflet.",
+    "I’m always on the lookout for new tools to make coding more enjoyable.",
+    "I believe in the power of collaboration in coding projects.",
+    "I’ve created a web app that helps with daily planning and goal setting.",
+    "I’m interested in how user experience and user interface design come together.",
+    "I enjoy experimenting with new JavaScript features as they are released.",
+    "I love exploring the world of data visualization through web applications.",
+    "I’ve built a recipe finder app that recommends meals based on available ingredients.",
+    "I once built a fitness tracking app with a daily goal setting feature.",
+    "I enjoy combining different technologies to create something unique.",
+    "I once built a digital calendar app to manage my schedule.",
+    "I’ve worked on several projects involving web scraping and data extraction.",
+    "I enjoy creating interactive infographics that tell a story.",
+    "I’m always looking for new ways to automate mundane tasks through code.",
+    "I’ve built a simple news aggregator app using an API to fetch the latest headlines.",
+    "I once created an interactive quiz game using JavaScript."
+];
 
-<script>
-    function onReady(callback) {
-        var intervalId = window.setInterval(function() {
-            if (document.getElementsByTagName('body')[0] !== undefined) {
-                window.clearInterval(intervalId);
-                callback.call(this);
-            }
-        }, 1000);
-    }
-
-    function setVisible(selector, visible) {
-        document.querySelector(selector).style.display = visible ? 'block' : 'none';
-    }
-
-    // Initialize loading screen
-    onReady(function() {
-        const loadingElement = document.getElementById('loading');
-        const percentageElement = document.getElementById('loading-percentage');
-        const openWebsiteBtn = document.getElementById('open-website-btn');
-        let percentage = 0;
-        const interval = setInterval(() => {
-            percentage++;
-            percentageElement.textContent = `${percentage}%`;
-            if (percentage >= 100) {
-                clearInterval(interval);
-                openWebsiteBtn.style.display = 'block'; // Show the button
-            }
-        }); // Adjusted interval speed (30ms per percentage increment)
-
-        // Add event listener to the button
-        openWebsiteBtn.addEventListener('click', () => {
-            setVisible('#loading', false); // Hide the loading screen
-            setVisible('.page', true); // Show the page content
+    
+        // Function to get a random fun fact
+        function getRandomFact() {
+            const randomIndex = Math.floor(Math.random() * funFacts.length);
+            return funFacts[randomIndex];
+        }
+    
+        // Initialize loading screen
+        onReady(function() {
+            const loadingElement = document.getElementById('loading');
+            const percentageElement = document.getElementById('loading-percentage');
+            const openWebsiteBtn = document.getElementById('open-website-btn');
+            const funFactElement = document.getElementById('fun-fact');
+            let percentage = 0;
+    
+            // Display a random fun fact
+            funFactElement.textContent = getRandomFact();
+    
+            const interval = setInterval(() => {
+                percentage++;
+                percentageElement.textContent = `${percentage}%`;
+                if (percentage >= 100) {
+                    clearInterval(interval);
+                    openWebsiteBtn.style.display = 'block'; // Show the button
+                }
+            }); // Adjusted interval speed (30ms per percentage increment)
+    
+            // Add event listener to the button
+            openWebsiteBtn.addEventListener('click', () => {
+                setVisible('#loading', false); // Hide the loading screen
+                setVisible('.page', true); // Show the page content
+            });
         });
-    });
-</script>
+    </script>
+    
 
 <div class="navbar">
     <ul>
-      <li><a href="#home" class="dot"><img style="width: 25px; lenght:25px;" src="/images/home.png"></a></li>
-      <li><a href="#about"class="dot"><img style="width: 25px; lenght:25px;" src="/images/about.png"></a></li>
-      <li><a href="#projects"class="dot"><img style="width: 25px; lenght:25px;" src="/images/portfolio.png"></a></li>
-      <li><a href="#contact"class="dot"><img style="width: 25px; lenght:25px;" src="/images/telephone.png"></a></li>
+      <li><a href="#home" class="dot"><img style="width: 25px;" src="/images/home.png"></a></li>
+      <li><a href="#about"class="dot"><img style="width: 25px;" src="/images/about.png"></a></li>
+      <li><a href="#projects"class="dot"><img style="width: 25px;" src="/images/portfolio.png"></a></li>
+      <li><a href="#contact"class="dot"><img style="width: 25px;" src="/images/telephone.png"></a></li>
     </ul>
     <span class="indicator"></span>
 </div >
@@ -175,52 +317,66 @@
                             Hi! I'm Tonie, a passionate hobbyist programmer
                              who loves coding and creating web applications in my spare time. 
                            <br><span style="font-weight: bold; font-size: 1rem;">What I have worked with:</span>
-                    <img style="width: 25px; height: 25px;" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" />
+                    <img class="move-up-hover" style="width: 25px; height: 25px;" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" />
                  Javascript , 
-                  <img style="width: 25px; height: 25px;" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/csharp/csharp-original.svg" />
+                  <img class="move-up-hover"style="width: 25px; height: 25px;" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/csharp/csharp-original.svg" />
                C# , 
-                <img  style="width:25px;height:25px;" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg" /> C++, 
-               <img style="width:25px;height:25px;" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/arduino/arduino-original-wordmark.svg" />
-        Arduino , <img style="width:25px;height:25px;" src="/images/esp32-icon.png"> ESP32, and 
-               <img style="width:25px;height:25px;" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/raspberrypi/raspberrypi-original.svg" /> Raspberry Pi.  
+                <img  class="move-up-hover"style="width:25px;height:25px;" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg" /> C++, 
+               <img class="move-up-hover"style="width:25px;height:25px;" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/arduino/arduino-original-wordmark.svg" />
+        Arduino , <img class="move-up-hover"style="width:25px;height:25px;" src="/images/esp32-icon.png"> ESP32, and 
+               <img class="move-up-hover" style="width:25px;height:25px;" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/raspberrypi/raspberrypi-original.svg" /> Raspberry Pi.  
                <br></p>
             </div>
                 </div>
+                <style>
+                    .move-up-hover {
+                        transition: transform 0.3s ease;
+                    }
+                    .move-up-hover:hover {
+                        transform: translateY(-10px);
+                    }
+                </style>
             </section>
 
             <!-- Portfolio Section -->
                    <section id="projects" class="projects">
-                <div class="project-wrapper">
-                    <!-- Project Card 1 -->
-                    <div class="project-card">
-                        <div class="window-bar">
-                            <span class="close-btn"></span>
-                            <span class="minimize-btn"></span>
-                            <span class="maximize-btn"></span>
-                        </div>
-                        <div class="project-content">
-                            <h3>Clicker Game Template</h3>
-                            <p>With a local save feature</p><br>
-                            <p> <a href="/projects/clicker.html" target="_blank" class="mac-button">Visit My Project</a></p>
-                        </div>
-                    </div>
-            
-                    <!-- Duplicate the project card for each project -->
-                    <div class="project-card">
-                        <div class="window-bar">
-                            <span class="close-btn"></span>
-                            <span class="minimize-btn"></span>
-                            <span class="maximize-btn"></span>
-                        </div>
-                        <div class="project-content">
-                            <h3>Arduino Bicycle Crash Detection</h3>
-                            <p>District Science and Technology Fair (CND1)</p>
-                            <p></p><a href="/projects/crash.html" target="_blank" class="mac-button">Visit my project</a></p>
-                        </div>
-                    </div>
-            
-                 
+                 <!-- Portfolio Section -->
+<section id="projects" class="projects">
+    <div class="scroll-container">
+        <div class="project-wrapper">
+            <!-- Project Card 1 -->
+            <div class="project-card">
+                <div class="window-bar">
+                    <span class="close-btn"></span>
+                    <span class="minimize-btn"></span>
+                    <span class="maximize-btn"></span>
                 </div>
+                <div class="project-content">
+                    <h3>Clicker Game Template</h3>
+                    <p>With a local save feature</p><br>
+                    <p><a href="/projects/clicker.html" target="_blank" class="mac-button">Visit My Project</a></p>
+                </div>
+            </div>
+
+            <!-- Project Card 2 -->
+            <div class="project-card">
+                <div class="window-bar">
+                    <span class="close-btn"></span>
+                    <span class="minimize-btn"></span>
+                    <span class="maximize-btn"></span>
+                </div>
+                <div class="project-content">
+                    <h3>Arduino Bicycle Crash Detection</h3>
+                    <p>District Science and Technology Fair (CND1)</p>
+                    <p><a href="/projects/crash.html" target="_blank" class="mac-button">Visit My Project</a></p>
+                </div>
+            </div>
+
+            <!-- Add more project cards as needed -->
+        </div>
+    </div>
+</section>
+
             </section>
             
             <!-- Contact Section (Social Media Icons) -->

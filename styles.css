@@ -23,7 +23,6 @@ body {
   scroll-behavior: smooth;
   background-color: var(--primary-bg);
   color: var(--text-color);
-  overflow:hidden;
 }
 
 #fullpage {
@@ -38,35 +37,38 @@ section {
   justify-content: center;
   align-items: center;
   height: 100vh;
+  background: url('/1.mp4') no-repeat center center / cover; /* Replace with a preview image */
+
 }
 
 .hero, .about, .portfolio, .contact {
   width: 100%;
-  display: flex;
-  justify-content: center;
+    justify-content: center;
   align-items: center;
   text-align: center;
+  z-index: 500;
 }
 
 /* Hero Section */
   .hero {
     background: var(--secondary-bg);
-    color: var(--primary-bg);
+    color: var(--primary-bg); z-index: 500;
 }
 .hero-content {
   max-width: 700px;
-  text-align: center;
+  text-align: center; z-index: 500;
 }
 
 .hero h1 {
   font-family: 'Goldman', sans-serif; /* Goldman font for h1 */
-  font-size: 3.5rem;
+  font-size: 3.5rem; z-index: 500;
 }
 
 .hero p {
   font-family: 'Teko', sans-serif; /* Teko font for p */
   font-size: 1.5rem;
   margin-top: 10px;
+  z-index: 500;
 }
 
 /* About Section */
@@ -352,6 +354,8 @@ section {
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
     background-color: #444;
   }
+ 
+
 .wave-emoji {
   display: inline-block;
   animation: wave 1.5s ease-in-out infinite;
@@ -421,4 +425,12 @@ section {
   80% {
     transform: rotate(10deg);
   }
+}
+
+#myVideo {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  height: 100%;
+  z-index:  0;
 }
