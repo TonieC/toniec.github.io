@@ -52,7 +52,7 @@
 
   /* Make the project section scrollable horizontally if needed */
   .projects {
-    overflow-x: auto;
+    overflow-x: scroll;
     padding: 20px;
   }
 
@@ -60,7 +60,7 @@
     display: flex;
     gap: 20px;
     justify-content: flex-start;
-    overflow-x: auto; /* Enables horizontal scroll only for the projects section */
+    overflow-x: scroll; /* Enables horizontal scroll only for the projects section */
     padding-bottom: 10px; /* Prevents the scroll bar from hiding content */
   }
 
@@ -109,7 +109,7 @@
 
   /* Make the project section scrollable horizontally if needed */
   .projects {
-    overflow-x: auto;
+    overflow-x: scroll;
     padding: 20px;
   }
 
@@ -122,7 +122,7 @@
   }
 
   .project-card {
-    width: 100%; /* Make project cards full-width on mobile */
+    width: 100%; 
   }
 
   .hero h1 {
@@ -138,7 +138,7 @@
   }
 
   .project-button {
-    padding: 10px 20px; /* Smaller buttons on mobile */
+    padding: 10px 20px;
   }
 
   .contact h2 {
