@@ -73,7 +73,7 @@
         <img style="width:250px;" class="contacte" src="/images/workshop-nobg.png">
         <p>Random Facts About Me:</p>
         <p id="fun-fact" style="font-size: 1.2rem; margin-top: 1px; text-align: center; font-style: italic;"></p>
-        <br><p>For a better experience, the website is being loaded in.</p>
+        <br><p>Please wait until website is fully loaded.</p>
         <p id="loading-percentage" style="font-size: 2rem; margin-top: 10px;">0%</p>
        <button id="open-website-btn" style="
             margin-top: 20px;
@@ -342,19 +342,11 @@
                    <section id="projects" class="projects">
                  <!-- Portfolio Section -->
 <section id="projects" class="projects">
-           <!-- Project Card 1 -->
-<div class="project-card">
-    <div class="project-content">
-        <h3>Clicker Game Template</h3>
-        <p>With a local save feature</p><br>
-        <p><a href="/projects/clicker.html" target="_blank" class="project-button">Visit My Project</a></p>
-    </div>
-</div>
 
 <!-- Project Card 2 -->
 <div class="project-card">
     <div class="project-content">
-        <h3>Looking for a dev?</h3>
+        <h3>Looking for a dev or a collab?</h3>
         <p>Get a copy of my Resume now!</p><br>
         <p><a href="#contact" class="project-button">Contact Me</a></p>
     </div>
@@ -385,9 +377,24 @@
                         <a href="https://facebook.com/0tonie" target="_blank">
                             <img src="images/facebook-icon.png" alt="Facebook">
                         </a>
-                        <a  href="mailto:cadizal06@gmail.com?subject=Website%20Portfolio&body=Hello,%20Tonie!" target="_blank">
-                            <img src="images/gmail-icon.png" alt="Email">
-                        </a>
+                        <a id="emailLink" target="_blank">
+                            <img id="emailImage" alt="Email" style="cursor: pointer;">
+                          </a>
+                          <script>
+                            // Construct the email dynamically
+                            const email = "cadizal06";
+                            const domain = "gmail.com";
+                            const subject = "Website Portfolio";
+                            const body = "State your concern here.";
+                            const link = `mailto:${email}@${domain}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+                            
+                            // Assign the constructed mailto link
+                            document.getElementById("emailLink").href = link;
+                            
+                            // Dynamically load the email image
+                            document.getElementById("emailImage").src = "images/gmail-icon.png"; // Replace with your image path
+                          </script>
+                          
                     </div>
                 </div>
             </section>
