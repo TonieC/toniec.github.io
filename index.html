@@ -41,15 +41,25 @@
   </script>
 
   <script>
-  // Simple mobile detection
-  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-  const minDesktopWidth = 1024;
+  function checkDesktopPrompt() {
+    const isMobileUA = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    const isSmallScreen = window.innerWidth < 1024;
+    const prompt = document.getElementById('desktopPrompt');
 
-  if (isMobile && window.innerWidth < minDesktopWidth) {
-    document.getElementById('desktopPrompt').style.display = 'flex';
-    document.body.style.overflow = 'hidden'; // optional: lock scroll
+    if (isMobileUA && isSmallScreen) {
+      prompt.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    } else {
+      prompt.style.display = 'none';
+      document.body.style.overflow = '';
+    }
   }
+
+  checkDesktopPrompt();
+  window.addEventListener('resize', checkDesktopPrompt);
 </script>
+
+
 
   <!-- Favicon + Icons -->
   <link rel="icon" href="images/favicon.ico" type="image/x-icon">
