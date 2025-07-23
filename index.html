@@ -71,15 +71,190 @@
    <script src="scripts.js" type="text/javaScript" ></script>
   <!-- Title -->
   <title>Tonie's Workshop</title>
+  
 </head>
 
 <body>
+
+  
+
+  <button id="modeToggle">Toggle Light mode</button>
+<div id="themeFlash"></div>
+  <div id="themeTransition"></div>
+  <div id="themeToast"></div>
+
+
+ <script>
+  const toggle = document.getElementById('modeToggle');
+  const overlay = document.getElementById('themeTransition');
+  const flash = document.getElementById('themeFlash');
+  const toast = document.getElementById('themeToast');
+
+  function updateButtonLabel() {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    toggle.textContent = currentTheme === 'light' ? 'Toggle Dark Mode' : 'Toggle Light Mode';
+    toggle.setAttribute('aria-pressed', currentTheme !== 'light');
+  }
+
+  function showToast(message) {
+    toast.textContent = message;
+    toast.classList.add('show');
+    setTimeout(() => {
+      toast.classList.remove('show');
+    }, 2500);
+  }
+
+  function getTimeGreeting() {
+    const hour = new Date().getHours();
+    if (hour < 4) return "Burning the midnight oil? 🌌";
+    if (hour < 6) return "Good early morning! 🌒";
+    if (hour < 12) return "Good morning! ☀️";
+    if (hour < 18) return "Good afternoon! 🌤️";
+    if (hour < 21) return "Good evening! 🌙";
+    return "Winding down? 🌃";
+  }
+
+  function themeRippleEffect(x, y) {
+    flash.style.left = `${x}px`;
+    flash.style.top = `${y}px`;
+    flash.style.transform = 'translate(-50%, -50%) scale(1)';
+    flash.style.opacity = '0.6';
+
+    setTimeout(() => {
+      flash.style.transform = 'translate(-50%, -50%) scale(0)';
+      flash.style.opacity = '0';
+    }, 500);
+  }
+
+  function toggleThemeWithSwipe(x = window.innerWidth / 2, y = window.innerHeight / 2) {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+
+    overlay.style.transformOrigin = currentTheme === 'light' ? 'right' : 'left';
+    overlay.style.transform = 'scaleX(1)';
+    themeRippleEffect(x, y);
+
+    setTimeout(() => {
+      if (currentTheme === 'light') {
+        document.documentElement.removeAttribute('data-theme'); // switch to dark
+        localStorage.setItem('theme', 'dark');
+      } else {
+        document.documentElement.setAttribute('data-theme', 'light'); // switch to light
+        localStorage.setItem('theme', 'light');
+      }
+
+      updateButtonLabel();
+      showToast(getTimeGreeting());
+
+      overlay.style.transformOrigin = currentTheme === 'light' ? 'left' : 'right';
+      overlay.style.transform = 'scaleX(0)';
+    }, 300);
+  }
+
+  // Load theme preference
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme === 'light') {
+    document.documentElement.setAttribute('data-theme', 'light');
+  }
+
+  toggle.addEventListener('click', (e) => {
+    toggleThemeWithSwipe(e.clientX, e.clientY);
+  });
+
+  updateButtonLabel();
+</script>
+
 
   <main class="split">
     <div class="left">
       <img src="images/images1.png" alt="Tonie" class="profile-img">
     </div>
+    
     <div class="right">
+
+
+      <div id="pageGreeting"></div>
+<script>
+  function getTimeGreeting() {
+    const hour = new Date().getHours();
+
+    const greetings = {
+      lateNight: [
+        "Burning the midnight oil this late night? 🌌",
+        "Still up this deep night? Let the stars inspire you ✨",
+        "Midnight grind hits different at this hour 🌙",
+        "Peaceful silence of this late night 🕯️",
+        "Creativity thrives in the stillness of night 💭"
+      ],
+      earlyMorning: [
+        "Up early this morning? You’re built different 🌒",
+        "Salute to you this dawn patrol hour ☕",
+        "Catching that quiet calm this early morning 🌅",
+        "Top of the morning — while others sleep 😴",
+        "Early birds like you run this world 🐓"
+      ],
+      morning: [
+        "Good vibes only this bright morning ☀️",
+        "You’ve got this fresh morning to shine 🚀",
+        "Let this crisp morning fuel your fire 🔥",
+        "Sun’s up — it’s your time this morning 💼",
+        "A golden morning like this is yours to own 🌞"
+      ],
+      afternoon: [
+        "This afternoon’s energy is yours to command 🌤️",
+        "Midday grind in full swing — let’s go 💪",
+        "Level up this productive afternoon 🧠",
+        "Stretch it out — it’s a long afternoon 🧘",
+        "Focus mode: activated this fine afternoon 👊"
+      ],
+      evening: [
+        "Winding down this calm evening? 🌙",
+        "Let this evening remind you of your progress 🛋️",
+        "You owned the day — now embrace this evening 💼",
+        "Evening vibes hit soft but steady 🌒",
+        "Recharge this peaceful evening 🔄"
+      ],
+      night: [
+        "End of day reflections start this night 🌃",
+        "Night owl mode on full blast this evening 🦉",
+        "This night is for dreams, big or small 🛌",
+        "Late night sparks fresh ideas 🤯",
+        "Close your day strong this starry night 🌠"
+      ]
+    };
+
+    let set;
+    if (hour < 4) set = greetings.lateNight;
+    else if (hour < 6) set = greetings.earlyMorning;
+    else if (hour < 12) set = greetings.morning;
+    else if (hour < 18) set = greetings.afternoon;
+    else if (hour < 21) set = greetings.evening;
+    else set = greetings.night;
+
+    return set[Math.floor(Math.random() * set.length)];
+  }
+
+  function updateGreeting() {
+    const greetingBox = document.getElementById('pageGreeting');
+    if (greetingBox) {
+      greetingBox.textContent = getTimeGreeting();
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    updateGreeting();
+
+    const now = new Date();
+    const msUntilNextHour =
+      (60 - now.getMinutes()) * 60 * 1000 - now.getSeconds() * 1000;
+
+    setTimeout(() => {
+      updateGreeting();
+      setInterval(updateGreeting, 60 * 60 * 1000);
+    }, msUntilNextHour);
+  });
+</script>
+
+
       <h1>Hi, I'm Tonie</h1>
       <p class="tagline">Website Developer | Freelancer | Grade 11 Student</p>
       <p class="about">
@@ -157,11 +332,25 @@
   });
 </script>
 
+<div class="page-wrapper">
+  <div class="main-content">
+  </div>
+
+  <footer class="footer-inline">
+    <p>© 2025 Tonie </p>
+  </footer>
+</div>
 
   </main>
 
+  
+
+
+ 
 </body>
 <script>
   document.addEventListener('contextmenu', event => event.preventDefault());
 </script>
+
+
 </html>
