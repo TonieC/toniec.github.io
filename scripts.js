@@ -1,18 +1,40 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // FullPage.js Initialization
-    new fullpage('#fullpage', {
-      sectionsColor: ['#333', '#f0f0f0', '#d2ffd5', '#b9ffb9'], // Customize background colors for sections
-      anchors: ['home', 'about', 'projects', 'contact'], // Define anchor links for sections
-      navigation: true, // Enable navigation dots
-      navigationPosition: 'right', // Position for navigation dots
-      scrollingSpeed: 1000, // Set scrolling speed
-      loopBottom: true, // Enable scrolling loop from bottom to top
-      loopTop: true, // Enable scrolling loop from top to bottom
-    });
-  });
-  
-  
-  function toggleDarkMode() {
-    document.body.classList.toggle("light-mode");
-    document.body.classList.toggle("dark-mode");
-}
+console.log(
+  "%c⚠️ Stop!",
+  "color: red; font-size: 60px; font-weight: bold;"
+);
+console.log(
+  "%cIf someone told you to paste something here, it might be a scam or malicious code. Stay safe out there. Even if the code came from Tonie itself.",
+  "color: #ffaaaa; font-size: 30px;"
+);
+
+// ASCII Art Header
+console.log(`%c
+ ______   ___   ____   ____    ___  __   _____     __    __   ___   ____   __  _   _____ __ __   ___   ____  
+|      | /   \\ |    \\ |    |  /  _]|  | / ___/    |  |__|  | /   \\ |    \\ |  |/ ] / ___/|  |  | /   \\ |    \\ 
+|      ||     ||  _  | |  |  /  [_ |_ |(   \\_     |  |  |  ||     ||  D  )|  ' / (   \\_ |  |  ||     ||  o  )
+|_|  |_||  O  ||  |  | |  | |    _]  \\| \\__  |    |  |  |  ||  O  ||    / |    \\  \\__  ||  _  ||  O  ||   _/ 
+  |  |  |     ||  |  | |  | |   [_      /  \\ |    |  \`  '  ||     ||    \\ |     | /  \\ ||  |  ||     ||  |   
+  |  |  |     ||  |  | |  | |     |     \\    |     \\      / |     ||  .  \\|  .  | \\    ||  |  ||     ||  |   
+  |__|   \\___/ |__|__||____||_____|      \\___|      \\_/\\_/   \\___/ |__|\\_||__|\\_|  \\___||__|__| \\___/ |__|   
+                                                                                                             
+`, "color: #00ffcc; font-family: monospace; font-size: 11px;");
+
+// Friendly message
+const style1 = 'color: #00ffcc; font-weight: bold; font-size: 32px;';
+const style2 = 'color: #aaa; font-size: 32px;';
+const linkStyle = 'color: #ff5c8a; text-decoration: underline;';
+
+console.log('%c👋 Hello, fellow dev!', style1);
+console.log('%cThis site was handcrafted by Tonie 💻', style2);
+console.log('%cGitHub: %chttps://github.com/TonieC', style2, linkStyle);
+
+console.log(`%c
+ ______   ___   ____   ____    ___  __   _____     __    __   ___   ____   __  _   _____ __ __   ___   ____  
+|      | /   \\ |    \\ |    |  /  _]|  | / ___/    |  |__|  | /   \\ |    \\ |  |/ ] / ___/|  |  | /   \\ |    \\ 
+|      ||     ||  _  | |  |  /  [_ |_ |(   \\_     |  |  |  ||     ||  D  )|  ' / (   \\_ |  |  ||     ||  o  )
+|_|  |_||  O  ||  |  | |  | |    _]  \\| \\__  |    |  |  |  ||  O  ||    / |    \\  \\__  ||  _  ||  O  ||   _/ 
+  |  |  |     ||  |  | |  | |   [_      /  \\ |    |  \`  '  ||     ||    \\ |     | /  \\ ||  |  ||     ||  |   
+  |  |  |     ||  |  | |  | |     |     \\    |     \\      / |     ||  .  \\|  .  | \\    ||  |  ||     ||  |   
+  |__|   \\___/ |__|__||____||_____|      \\___|      \\_/\\_/   \\___/ |__|\\_||__|\\_|  \\___||__|__| \\___/ |__|   
+                                                                                                             
+`, "color: #00ffcc; font-family: monospace; font-size: 11px;");

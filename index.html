@@ -46,7 +46,8 @@
 
   <!-- CSS -->
   <link rel="stylesheet" href="styles.css">
-
+  <!-- Scripts-->>
+   <script src="scripts.js" type="text/javaScript" ></script>
   <!-- Title -->
   <title>Tonie's Workshop</title>
 </head>
@@ -64,68 +65,82 @@
         I code out of curiosity, build projects for fun, and love blending software + hardware. From JavaScript and C# to Arduino and Raspberry Pi, I'm constantly experimenting and learning.
       </p>
       <div class="stack">
-        <span><i class="devicon-javascript-plain"></i> JavaScript</span>
-        <span><i class="devicon-csharp-plain"></i> C#</span>
-        <span><i class="devicon-cplusplus-plain"></i> C++</span>
-        <span><i class="devicon-arduino-plain-wordmark"></i> Arduino</span>
-        <span><img src="/images/esp32-icon.png" style="width:20px; vertical-align: middle;"> ESP32</span>
-        <span><i class="devicon-raspberrypi-line"></i> Raspberry Pi</span>
-      </div>
+  <span class="stack-item" data-tooltip="Level: Intermediate, built web apps, games, and tools">
+    <i class="devicon-javascript-plain"></i> JavaScript
+  </span>
+  <span class="stack-item" data-tooltip="Level: Intermediate, built simple games, and tools">
+    <i class="devicon-csharp-plain"></i> C#
+  </span>
+  <span class="stack-item" data-tooltip="Level: Starter, built simple applications, and tools">
+    <i class="devicon-cplusplus-plain"></i> C++
+  </span>
+  <span class="stack-item" data-tooltip="Level: Expirenced built IoT systems, crash detection, sensor interfacing">
+    <i class="devicon-arduino-plain-wordmark"></i> Arduino
+  </span>
+  <span class="stack-item" data-tooltip="Used for Wi-Fi modules, MQTT, real-time sensor data">
+    <img src="/images/esp32-icon.png" style="width:20px; vertical-align: middle;"> ESP32
+  </span>
+  <span class="stack-item" data-tooltip="Created Python+GPIO projects with sensors">
+    <i class="devicon-raspberrypi-line"></i> Raspberry Pi
+  </span>
+</div>
       <br>
- <a id="emailLink" class="contact-btn">Contact Me</a>
+<div class="contact-wrapper">
+  <a id="emailLink" class="contact-btn">Contact Me</a>
+  <div id="toast" class="toast">Email copied!</div>
+</div>
 
 <script>
   window.addEventListener('DOMContentLoaded', () => {
-    const email = "cadizal06";
-    const domain = "gmail.com";
-    const subject = "Website Portfolio";
-    const body = "State your concern here.";
-    const link = `mailto:${email}@${domain}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    const email = "cadizal06@gmail.com";
+    const toast = document.getElementById("toast");
+    const emailLink = document.getElementById("emailLink");
 
-    document.getElementById("emailLink").setAttribute("href", link);
+    let alreadyCopied = false;
+    let timeout;
+
+    emailLink.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      if (alreadyCopied) {
+        toast.textContent = "❌ Email already copied to clipboard";
+        toast.classList.add("show", "error");
+
+        clearTimeout(timeout);
+        timeout = setTimeout(() => {
+          toast.classList.remove("show", "error");
+        }, 2000);
+        return;
+      }
+
+      navigator.clipboard.writeText(email).then(() => {
+        alreadyCopied = true;
+        toast.textContent = "📋 Email copied!";
+        toast.classList.remove("error");
+        toast.classList.add("show");
+
+        clearTimeout(timeout);
+        timeout = setTimeout(() => {
+          toast.classList.remove("show");
+        }, 2000);
+
+        // Reset after 10 seconds
+        setTimeout(() => {
+          alreadyCopied = false;
+        }, 10000);
+
+        // Still launch mailto
+        window.location.href = `mailto:${email}?subject=Website Portfolio&body=State your concern here.`;
+      });
+    });
   });
 </script>
 
 
-    </div>
   </main>
 
-  <script>
-  const email = "cadizal06";
-  const domain = "gmail.com";
-  const subject = "Website Portfolio";
-  const body = "State your concern here.";
-
-  const link = `mailto:${email}@${domain}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-
-  document.getElementById("emailLink").href = link;
-  document.getElementById("emailImage").src = "images/gmail-icon.png";
-  document.getElementById("emailImage").alt = "Send Email";
-</script>
-
-
-  <!-- Ko-fi Button -->
-  <script src="https://storage.ko-fi.com/cdn/scripts/overlay-widget.js"></script>
-  <script>
-    kofiWidgetOverlay.draw('tonie', {
-      'type': 'floating-chat',
-      'floating-chat.donateButton.text': 'Support me',
-      'floating-chat.donateButton.background-color': '#323842',
-      'floating-chat.donateButton.text-color': '#fff'
-    });
-  </script>
 </body>
 <script>
   document.addEventListener('contextmenu', event => event.preventDefault());
-</script>
-<script>
-  document.addEventListener('keydown', function(e) {
-    if (
-      (e.ctrlKey && (e.key === 'u' || e.key === 'U' || e.key === 'c' || e.key === 'C')) ||
-      (e.ctrlKey && e.shiftKey && (e.key === 'i' || e.key === 'I'))
-    ) {
-      e.preventDefault();
-    }
-  });
 </script>
 </html>
