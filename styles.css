@@ -45,6 +45,7 @@
   --text-paragraph-hover: #000000;
   --tooltip-bg: rgba(0, 0, 0, 0.1);
   --accent: #ff4081;
+  --accent1: #421120;
   --border-light: rgba(0, 0, 0, 0.1);
   --stack-bg: rgba(0, 0, 0, 0.05);
   --stack-bg-hover: rgba(0, 0, 0, 0.1);
@@ -526,7 +527,7 @@ main {
 
 #pageGreeting::after {
   content: '|';
-  animation: blink 1s step-end infinite;
+  animation: blink 0.5s step-end infinite;
 }
 
 @keyframes blink {
@@ -535,30 +536,69 @@ main {
 }
 
 .profile-name {
-  margin-top: 0.25rem;
+  position: relative; /* Needed for tooltip positioning */
   font-size: 1.75rem;
   font-weight: 600;
   color: var(--main);
-  text-align: center;
+  background-color: transparent;
+  transform: scale(1);
+  transition: transform 0.3s ease, color 0.3s ease;
+  cursor: pointer;
 }
 
-
-  body {
-  transition: background 1.5s ease;
+.profile-name:hover {
+  transform: scale(1.15);
+  color: var(--accent);
 }
 
-body.morning {
-  background: linear-gradient(135deg, #fceabb, #f8b500);
+/* Tooltip bubble */
+.profile-name::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 130%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--tooltip-bubble-bg);
+  color: var(--tooltip-bubble-color);
+  padding: 8px 14px;
+  font-size: 0.85rem;
+  border-radius: 12px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 0 12px var(--tooltip-bubble-color);
+  z-index: 100;
 }
 
-body.afternoon {
-  background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+/* Tooltip arrow */
+.profile-name::before {
+  content: '';
+  position: absolute;
+  bottom: 120%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: var(--tooltip-arrow-color);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 99;
 }
 
-body.evening {
-  background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
+/* Show on hover */
+.profile-name:hover::after,
+.profile-name:hover::before {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
 }
 
-body.night {
-  background: linear-gradient(135deg, #141e30, #243b55);
+@keyframes popIn1 {
+  0% {
+    opacity: 0;
+    transform: scale(0.5) rotate(-10deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
 }
