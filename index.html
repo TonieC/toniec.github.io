@@ -72,17 +72,20 @@
         <span><i class="devicon-raspberrypi-line"></i> Raspberry Pi</span>
       </div>
       <br>
-      <a id="emailLink" class="contact-btn">Contact Me</a>
+ <a id="emailLink" class="contact-btn">Contact Me</a>
 
 <script>
-  const email = "cadizal06";
-  const domain = "gmail.com";
-  const subject = "Website Portfolio";
-  const body = "State your concern here.";
-  const link = `mailto:${email}@${domain}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  window.addEventListener('DOMContentLoaded', () => {
+    const email = "cadizal06";
+    const domain = "gmail.com";
+    const subject = "Website Portfolio";
+    const body = "State your concern here.";
+    const link = `mailto:${email}@${domain}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
-  document.getElementById("emailLink").href = link;
+    document.getElementById("emailLink").setAttribute("href", link);
+  });
 </script>
+
 
     </div>
   </main>
