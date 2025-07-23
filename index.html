@@ -40,6 +40,17 @@
     }
   </script>
 
+  <script>
+  // Simple mobile detection
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  const minDesktopWidth = 1024;
+
+  if (isMobile && window.innerWidth < minDesktopWidth) {
+    document.getElementById('desktopPrompt').style.display = 'flex';
+    document.body.style.overflow = 'hidden'; // optional: lock scroll
+  }
+</script>
+
   <!-- Favicon + Icons -->
   <link rel="icon" href="images/favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
@@ -53,6 +64,13 @@
 </head>
 
 <body>
+
+  <div id="desktopPrompt">
+  <div class="prompt-box">
+    <h2>👀 Looks better on Desktop Mode</h2>
+    <p>Please enable <strong>Desktop Site</strong> in your browser for the full experience.</p>
+  </div>
+</div>
 
   <main class="split">
     <div class="left">

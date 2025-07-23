@@ -16,6 +16,11 @@ html, body {
   -ms-user-select: none;
 }
 
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
 .container {
   min-height: 100vh;
 }
@@ -436,4 +441,26 @@ main {
   padding: 2rem;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
   backdrop-filter: blur(10px);
+}
+
+
+#desktopPrompt {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: #0d0d0d;
+  color: #fff;
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+}
+
+.prompt-box {
+  max-width: 500px;
+  background: #1a1a1a;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 0 24px rgba(255, 255, 255, 0.1);
 }
