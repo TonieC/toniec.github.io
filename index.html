@@ -78,7 +78,6 @@
 
   
 
-  <button id="modeToggle">Toggle Light mode</button>
 <div id="themeFlash"></div>
   <div id="themeTransition"></div>
   <div id="themeToast"></div>
@@ -92,7 +91,7 @@
 
   function updateButtonLabel() {
     const currentTheme = document.documentElement.getAttribute('data-theme');
-    toggle.textContent = currentTheme === 'light' ? 'Toggle Dark Mode' : 'Toggle Light Mode';
+    toggle.textContent = currentTheme === 'light' ? 'Darker Text' : 'Lighter Text';
     toggle.setAttribute('aria-pressed', currentTheme !== 'light');
   }
 
@@ -167,6 +166,7 @@
   <main class="split">
     <div class="left">
       <img src="images/images1.png" alt="Tonie" class="profile-img">
+        <div class="profile-name">Tonie C.</div>
     </div>
     
     <div class="right">
@@ -233,10 +233,20 @@
     return set[Math.floor(Math.random() * set.length)];
   }
 
+  function typeOut(text, element) {
+    element.textContent = "";
+    let i = 0;
+    const interval = setInterval(() => {
+      element.textContent += text.charAt(i++);
+      if (i >= text.length) clearInterval(interval);
+    }, 30);
+  }
+
   function updateGreeting() {
     const greetingBox = document.getElementById('pageGreeting');
     if (greetingBox) {
-      greetingBox.textContent = getTimeGreeting();
+      const newGreeting = getTimeGreeting();
+      typeOut(newGreeting, greetingBox);
     }
   }
 
@@ -253,6 +263,7 @@
     }, msUntilNextHour);
   });
 </script>
+
 
 
       <h1>Hi, I'm Tonie</h1>
@@ -282,55 +293,70 @@
 </div>
       <br>
 <div class="contact-wrapper">
-  <a id="emailLink" class="contact-btn">Contact Me</a>
-  <div id="toast" class="toast">Email copied!</div>
+  <a id="emailLink" class="contact-btn">Email</a>
+  <div id="toast" class="toast">copied!</div>
 </div>
-
 <script>
   window.addEventListener('DOMContentLoaded', () => {
     const email = "cadizal06@gmail.com";
+    const phoneNumber = "+63**********";
+
     const toast = document.getElementById("toast");
     const emailLink = document.getElementById("emailLink");
 
-    let alreadyCopied = false;
+    let copied = {
+      email: false,
+    };
+
     let timeout;
+
+    function showToast(message, isError = false) {
+      toast.textContent = message;
+      toast.classList.toggle("error", isError);
+      toast.classList.add("show");
+
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        toast.classList.remove("show", "error");
+      }, 3000);
+    }
 
     emailLink.addEventListener("click", (e) => {
       e.preventDefault();
 
-      if (alreadyCopied) {
-        toast.textContent = "❌ Email already copied to clipboard";
-        toast.classList.add("show", "error");
-
-        clearTimeout(timeout);
-        timeout = setTimeout(() => {
-          toast.classList.remove("show", "error");
-        }, 2000);
+      if (copied.email) {
+        showToast("❌ Email already copied to clipboard", true);
         return;
       }
 
       navigator.clipboard.writeText(email).then(() => {
-        alreadyCopied = true;
-        toast.textContent = "📋 Email copied!";
-        toast.classList.remove("error");
-        toast.classList.add("show");
+        copied.email = true;
+        showToast("📧 Email copied!");
+        setTimeout(() => copied.email = false, 10000);
 
-        clearTimeout(timeout);
-        timeout = setTimeout(() => {
-          toast.classList.remove("show");
-        }, 2000);
-
-        // Reset after 10 seconds
-        setTimeout(() => {
-          alreadyCopied = false;
-        }, 10000);
-
-        // Still launch mailto
+        // Open email client
         window.location.href = `mailto:${email}?subject=Website Portfolio&body=State your concern here.`;
+      });
+    });
+
+    phoneLink.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      if (copied.phone) {
+        showToast("❌ Number already copied to clipboard", true);
+        return;
+      }
+
+      navigator.clipboard.writeText(phoneNumber).then(() => {
+        copied.phone = true;
+        showToast(phoneNotice, true);
+        setTimeout(() => copied.phone = false, 10000);
       });
     });
   });
 </script>
+
+
 
 <div class="page-wrapper">
   <div class="main-content">
@@ -345,7 +371,26 @@
 
   
 
+<script>
+  function setTimeBasedBackground() {
+    const hour = new Date().getHours();
+    const body = document.body;
 
+    body.classList.remove("morning", "afternoon", "evening", "night");
+
+    if (hour >= 6 && hour < 12) {
+      body.classList.add("morning");
+    } else if (hour >= 12 && hour < 18) {
+      body.classList.add("afternoon");
+    } else if (hour >= 18 && hour < 21) {
+      body.classList.add("evening");
+    } else {
+      body.classList.add("night");
+    }
+  }
+
+  window.addEventListener("DOMContentLoaded", setTimeBasedBackground);
+</script>
  
 </body>
 <script>

@@ -523,3 +523,42 @@ main {
     transform: translateY(0);
   }
 }
+
+#pageGreeting::after {
+  content: '|';
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  from, to { opacity: 0; }
+  50% { opacity: 1; }
+}
+
+.profile-name {
+  margin-top: 0.25rem;
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--main);
+  text-align: center;
+}
+
+
+  body {
+  transition: background 1.5s ease;
+}
+
+body.morning {
+  background: linear-gradient(135deg, #fceabb, #f8b500);
+}
+
+body.afternoon {
+  background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+}
+
+body.evening {
+  background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
+}
+
+body.night {
+  background: linear-gradient(135deg, #141e30, #243b55);
+}
