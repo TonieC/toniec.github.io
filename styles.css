@@ -44,19 +44,6 @@ main.split {
   min-height: 100vh;  
 }
 
-@media (max-width: 768px) {
-  main.split {
-    flex-direction: column;
-    min-height: auto;
-  }
-
-  .left, .right {
-    width: 100%;
-    max-width: 100%;
-    padding: 2rem 1rem;
-  }
-}
-
 .left, .right {
   width: 50%;
   display: flex;
