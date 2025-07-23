@@ -8,11 +8,16 @@ html, body {
   margin: 0;
   padding: 0;
   height: 100vh;
-  overflow: hidden; 
+  overflow-x: hidden; /* prevent sideways scroll only */
+  overflow-y: auto;
   user-select: none;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
+}
+
+.container {
+  min-height: 100vh;
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
@@ -146,6 +151,7 @@ small {
   margin-top: 1.5rem;
   justify-content: center;
   position: relative;
+  
 }
 
 .stack span {
