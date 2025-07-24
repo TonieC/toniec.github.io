@@ -167,6 +167,7 @@
 
   <main class="split">
     <div class="left">
+      
       <img src="images/images1.png" alt="Tonie" class="profile-img">
 <div class="profile-name-wrapper">
   <div class="profile-name" data-tooltip="Tonie C. \ Programmer \ Based in the Philippines">
@@ -177,28 +178,78 @@
 
 
 <script>
-  const statuses = [
-    { text: "🟢 Available", tooltip: "Currently building cool stuff" },
-    { text: "🛠️ Debugging in the void", tooltip: "Fixing what I just broke" },
-    { text: "☕ Taking a coffee break", tooltip: "Caffeine is compiling..." },
-    { text: "📱 Working with clients", tooltip: "Making it snappy and clean" },
-    { text: "💤 Away", tooltip: "Probably sleeping in dark mode" }
-  ];
-
   const bubble = document.getElementById("statusBubble");
-  let current = 0;
 
-  function updateStatus() {
-    const status = statuses[current];
-    bubble.textContent = status.text;
-    bubble.setAttribute("data-tooltip", status.tooltip);
-    current = (current + 1) % statuses.length;
+  const tooltips = {
+    available: [
+      "Currently building cool stuff",
+      "Free and vibing",
+      "Open to ideas, say hi",
+      "Online and caffeinated"
+    ],
+    busy: [
+      "Class is in session!",
+      "Learning new stuff",
+      "School grind mode active",
+      "Brains loading 📚"
+    ],
+    sleep: [
+      "Dark mode dreams in progress",
+      "Zzz... sleeping dev",
+      "Out cold — rebooting soon",
+      "Silence means sleep"
+    ],
+    coding: [
+      "Weekend grind, building magic",
+      "Code mode: ON",
+      "Crafting side quests",
+      "Late night commits incoming"
+    ]
+  };
+
+  function getTooltip(key) {
+    const options = tooltips[key];
+    return options[Math.floor(Math.random() * options.length)];
   }
 
-  updateStatus(); // Optional: run once immediately
-setInterval(updateStatus, 3600000); // 3600000 ms = 1 hour
+  function getTimeBasedStatus() {
+    const now = new Date();
+    const hour = now.getHours();
+    const day = now.getDay();
+    const isWeekend = day === 0 || day === 6;
 
+    if (!isWeekend) {
+      if (hour >= 6 && hour < 13)
+        return { text: "📚 Busy at school", class: "busy", tooltip: getTooltip("busy") };
+      if (hour >= 23 || hour < 4)
+        return { text: "💤 Sleeping", class: "sleep", tooltip: getTooltip("sleep") };
+      return { text: "🟢 Available", class: "available", tooltip: getTooltip("available") };
+    } else {
+      if ((hour >= 20 && hour < 22) || (hour >= 23 || hour < 6))
+        return { text: "👨‍💻 Coding", class: "coding", tooltip: getTooltip("coding") };
+      return { text: "🟢 Available", class: "available", tooltip: getTooltip("available") };
+    }
+  }
+
+  function updateStatus() {
+    const { text, class: statusClass, tooltip } = getTimeBasedStatus();
+
+    bubble.textContent = text;
+    bubble.className = `status-bubble ${statusClass}`;
+    bubble.setAttribute("data-tooltip", tooltip);
+
+    // Trigger pop animation every time it updates
+    bubble.classList.add("pop");
+    setTimeout(() => bubble.classList.remove("pop"), 150);
+  }
+
+  updateStatus();
+  setInterval(updateStatus, 60000); // check every minute
 </script>
+
+
+
+
 
 
     </div>
@@ -326,79 +377,78 @@ setInterval(updateStatus, 3600000); // 3600000 ms = 1 hour
   </span>
 </div>
       <br>
-<div class="contact-wrapper">
-  <a id="emailLink" class="contact-btn">Email</a>
-  <div id="toast" class="toast">copied!</div>
+<a href="#" id="emailLink" class="tooltip-container">Email Me
+  <span id="emailTooltip" class="click-tooltip">Click to copy email</span>
+</a>
+<footer class="footer-inline">
+    <p>© 2025 Tonie </p>
+  </footer>
+
 </div>
 <script>
   window.addEventListener('DOMContentLoaded', () => {
-    const email = "cadizal06@gmail.com";
-    const phoneNumber = "+63**********";
+  const email = "cadizal06@gmail.com";
+  const emailLink = document.getElementById("emailLink");
+  const tooltip = document.getElementById("emailTooltip");
 
-    const toast = document.getElementById("toast");
-    const emailLink = document.getElementById("emailLink");
+  let copyCount = 0;
+  let lastClick = 0;
+  let resetTimeout;
 
-    let copied = {
-      email: false,
-    };
+  const messages = [
+    "📧 Copied!",
+    "📧 Double Copy!",
+    "📧 Triple Copy!",
+    "🔥 GODLIKE Copy!",
+    "💥 OVERKILL!!"
+  ];
 
-    let timeout;
+  const tooltipColors = [
+    "#00ccff", "#3399ff", "#ffaa33", "#ff3300", "#cc0000"
+  ];
 
-    function showToast(message, isError = false) {
-      toast.textContent = message;
-      toast.classList.toggle("error", isError);
-      toast.classList.add("show");
+  function showTooltip(msgIndex) {
+    tooltip.textContent = messages[msgIndex];
+    tooltip.style.backgroundColor = tooltipColors[msgIndex];
+    tooltip.classList.remove("rage-1", "rage-2", "rage-3", "show");
+    void tooltip.offsetWidth; // force reflow for animation
+    tooltip.classList.add("show");
 
-      clearTimeout(timeout);
-      timeout = setTimeout(() => {
-        toast.classList.remove("show", "error");
-      }, 3000);
-    }
+    if (msgIndex === 2) tooltip.classList.add("rage-1");
+    else if (msgIndex === 3) tooltip.classList.add("rage-2");
+    else if (msgIndex >= 4) tooltip.classList.add("rage-3");
 
-    emailLink.addEventListener("click", (e) => {
-      e.preventDefault();
+    clearTimeout(resetTimeout);
+    resetTimeout = setTimeout(() => {
+      tooltip.classList.remove("show", "rage-1", "rage-2", "rage-3");
+    }, 2000);
+  }
 
-      if (copied.email) {
-        showToast("❌ Email already copied to clipboard", true);
-        return;
-      }
+  emailLink.addEventListener("click", (e) => {
+    e.preventDefault();
 
-      navigator.clipboard.writeText(email).then(() => {
-        copied.email = true;
-        showToast("📧 Email copied!");
-        setTimeout(() => copied.email = false, 10000);
+    const now = Date.now();
+    if (now - lastClick > 5000) copyCount = 0;
+    lastClick = now;
 
-        // Open email client
-        window.location.href = `mailto:${email}?subject=Website Portfolio&body=State your concern here.`;
-      });
-    });
+    copyCount++;
+    const index = Math.min(copyCount - 1, messages.length - 1);
 
-    phoneLink.addEventListener("click", (e) => {
-      e.preventDefault();
-
-      if (copied.phone) {
-        showToast("❌ Number already copied to clipboard", true);
-        return;
-      }
-
-      navigator.clipboard.writeText(phoneNumber).then(() => {
-        copied.phone = true;
-        showToast(phoneNotice, true);
-        setTimeout(() => copied.phone = false, 10000);
-      });
+    navigator.clipboard.writeText(email).then(() => {
+      showTooltip(index);
+      window.location.href = `mailto:${email}?subject=Website Portfolio&body=State your concern here.`;
     });
   });
+});
+
 </script>
+
 
 
 
 <div class="page-wrapper">
   <div class="main-content">
   </div>
-
-  <footer class="footer-inline">
-    <p>© 2025 Tonie </p>
-  </footer>
 </div>
 
   </main>

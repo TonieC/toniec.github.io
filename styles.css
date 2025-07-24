@@ -71,6 +71,43 @@
   --profile-border: #222222;
 }
 
+/* Status Bubble Themes */
+.status-bubble {
+  background: var(--tooltip-bg);
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-weight: bold;
+  font-size: 0.9rem;
+  display: inline-block;
+  transition: all 0.3s ease;
+  cursor: default;
+}
+
+/* Dynamic status themes */
+.status-bubble.available {
+  --accent: #2ecc71; /* Green */
+}
+.status-bubble.busy {
+  --accent: #ffae42; /* Orange */
+}
+.status-bubble.sleep {
+  --accent: #8e44ad; /* Purple */
+}
+.status-bubble.coding {
+  --accent: #00b4d8; /* Electric Blue */
+}
+
+.status-bubble {
+  transition: transform 0.2s ease;
+}
+
+.status-bubble.pop {
+  transform: scale(1.08);
+}
+
+
 /* Then your styles updated to variables */
 
 * {
@@ -662,4 +699,85 @@ main {
     transform: scale(1) rotate(0deg);
   }
 }
+
+
+.tooltip-container {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  font-weight: bold;
+  color: var(--accent, #00ccff);
+  border: 1px solid var(--accent, #00ccff);
+  padding: 6px 12px;
+  border-radius: 12px;
+  text-decoration: none;
+  background: transparent;
+  transition: color 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.tooltip-container:hover {
+  background: rgba(0, 204, 255, 0.1);
+}
+
+
+
+.click-tooltip {
+  position: absolute;
+  top: -2.2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease, background-color 0.3s;
+  z-index: 100;
+}
+
+.click-tooltip.show {
+  opacity: 1;
+}
+
+/* Arrow */
+.click-tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -6px;
+  border-width: 6px;
+  border-style: solid;
+  border-color: #333 transparent transparent transparent;
+}
+
+/* Rage animations */
+@keyframes rageShake1 {
+  0%, 100% { transform: translate(-50%, 0); }
+  25% { transform: translate(-52%, -1px); }
+  50% { transform: translate(-48%, 1px); }
+  75% { transform: translate(-51%, -1px); }
+}
+@keyframes rageShake2 {
+  0%, 100% { transform: translate(-50%, 0); }
+  20% { transform: translate(-54%, -2px); }
+  40% { transform: translate(-46%, 2px); }
+  60% { transform: translate(-55%, 0); }
+  80% { transform: translate(-45%, 1px); }
+}
+@keyframes rageShake3 {
+  0% { transform: translate(-50%, 0) rotate(0); }
+  20% { transform: translate(-50%, -2px) rotate(-4deg); }
+  40% { transform: translate(-50%, 2px) rotate(4deg); }
+  60% { transform: translate(-50%, -3px) rotate(-6deg); }
+  80% { transform: translate(-50%, 3px) rotate(6deg); }
+  100% { transform: translate(-50%, 0) rotate(0); }
+}
+
+.rage-1 { animation: rageShake1 0.3s ease; }
+.rage-2 { animation: rageShake2 0.4s ease; }
+.rage-3 { animation: rageShake3 0.5s ease infinite; }
 
