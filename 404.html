@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>404 | Not Found</title>
+  <style>
+    :root {
+      --accent: #ff4b91;
+      --text-paragraph: #b9b8b8;
+      --contact-bg: #333;
+      --contact-hover-bg: #555;
+      --contact-hover-color: #fff;
+      --contact-hover-shadow1: rgba(255, 75, 145, 0.3);
+      --contact-hover-shadow2: rgba(255, 75, 145, 0.6);
+      --bg: #211b30;
+      --text: #f5f5f5;
+      --bonk-color: #ff3b3b;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Segoe UI", sans-serif;
+    }
+
+    .error-container {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+      position: relative;
+    }
+
+    .error-code {
+      font-size: 6rem;
+      font-weight: 800;
+      color: var(--accent);
+      animation: popIn1 1s ease-out forwards;
+      position: relative;
+      z-index: 1;
+    }
+
+    .digit {
+      display: inline-block;
+      transition: transform 0.2s ease;
+      position: relative;
+    }
+
+    .digit.zero {
+      position: relative;
+      clip-path: inset(0 0 0 0 round 9999px);
+    }
+
+    .digit.squish {
+      animation: squish 0.75s ease-in-out;
+    }
+
+    @keyframes squish {
+      0% { transform: scale(1); }
+      50% { transform: scaleX(1.3) scaleY(0.7); }
+      100% { transform: scale(1); }
+    }
+
+    .error-message {
+      font-size: 1.5rem;
+      color: var(--text-paragraph);
+      margin-top: 1rem;
+      animation: fadeInUp 1s ease-out 0.5s forwards;
+      opacity: 0;
+    }
+
+    .error-btn {
+      margin-top: 2rem;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 30px;
+      background: var(--contact-bg);
+      color: #fff;
+      text-decoration: none;
+      box-shadow: 0 0 12px var(--contact-hover-shadow1);
+      transition: all 0.3s ease;
+    }
+
+    .error-btn:hover {
+      background: var(--contact-hover-bg);
+      color: var(--contact-hover-color);
+      box-shadow: 0 0 24px var(--contact-hover-shadow2);
+      transform: scale(1.05);
+    }
+
+    /* Hammer */
+    .hammer {
+      position: absolute;
+      top: calc(50% - 240px);
+      left: 58%;
+      transform-origin: bottom center;
+      width: 80px;
+      height: 140px;
+      z-index: 2;
+    }
+
+    .hammer-head {
+      width: 80px;
+      height: 24px;
+      background: linear-gradient(to bottom, #aaa, #888);
+      border-radius: 4px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .hammer-handle {
+      width: 12px;
+      height: 110px;
+      background: linear-gradient(to bottom, #5c3a1e, #3b2412);
+      border-radius: 6px;
+      position: absolute;
+      bottom: 0;
+      left: 34px;
+      box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.4);
+    }
+
+    .bonk-text {
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -150%);
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--bonk-color);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 3;
+      animation: none;
+    }
+
+    .bonk-text.show {
+      animation: bonkText 0.75s ease forwards;
+    }
+
+    @keyframes bonkSwing {
+      0% { transform: translateX(-50%) rotate(-30deg); }
+      50% { transform: translateX(-50%) rotate(-90deg); }
+      100% { transform: translateX(-50%) rotate(-30deg); }
+    }
+
+    @keyframes bonkText {
+      0% { opacity: 0; transform: translate(-50%, -150%) scale(0.8); }
+      30% { opacity: 1; transform: translate(-50%, -160%) scale(1); }
+      100% { opacity: 0; transform: translate(-50%, -180%) scale(1.3); }
+    }
+
+    /* Animations */
+    @keyframes popIn1 {
+      from { transform: scale(0); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes fadeInUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <main class="error-container">
+    <!-- Hammer -->
+    <div class="hammer" id="hammer">
+      <div class="hammer-head"></div>
+      <div class="hammer-handle"></div>
+    </div>
+
+    <!-- BONK Text -->
+    <div class="bonk-text" id="bonk">BONK!</div>
+
+    <!-- Split 404 digits -->
+    <div class="error-code">
+      <span class="digit">4</span>
+      <span class="digit zero" id="zero">0</span>
+      <span class="digit">4</span>
+    </div>
+
+    <div class="error-message">Oops. You wandered too far. This page doesn’t exist.</div>
+    <a href="/" class="error-btn">Take me home</a>
+  </main>
+
+ <script>
+  const hammer = document.getElementById("hammer");
+  const zero = document.getElementById("zero");
+  const bonkText = document.getElementById("bonk");
+
+  // Create Web Audio Context once
+  const AudioContext = window.AudioContext || window.webkitAudioContext;
+  const audioCtx = new AudioContext();
+
+  // Dramatic bonk sound function with layered oscillators
+  function playBonkSound() {
+    if (audioCtx.state === 'suspended') {
+      audioCtx.resume();
+    }
+
+    const now = audioCtx.currentTime;
+
+    // Base oscillator — low punch
+    const baseOsc = audioCtx.createOscillator();
+    baseOsc.type = 'triangle';
+    baseOsc.frequency.setValueAtTime(80, now);
+
+    // Snap oscillator — high sharp snap
+    const snapOsc = audioCtx.createOscillator();
+    snapOsc.type = 'square';
+    snapOsc.frequency.setValueAtTime(600, now);
+
+    // Gain node for base (punch)
+    const baseGain = audioCtx.createGain();
+    baseGain.gain.setValueAtTime(0.3, now);
+    baseGain.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
+
+    // Gain node for snap (attack)
+    const snapGain = audioCtx.createGain();
+    snapGain.gain.setValueAtTime(0.15, now);
+    snapGain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+
+    baseOsc.connect(baseGain);
+    baseGain.connect(audioCtx.destination);
+
+    snapOsc.connect(snapGain);
+    snapGain.connect(audioCtx.destination);
+
+    baseOsc.start(now);
+    snapOsc.start(now);
+    baseOsc.stop(now + 0.2);
+    snapOsc.stop(now + 0.1);
+  }
+
+  setInterval(() => {
+    hammer.style.animation = "bonkSwing 0.75s ease-in-out forwards";
+    zero.classList.add("squish");
+    bonkText.classList.add("show");
+
+    playBonkSound();
+
+    setTimeout(() => {
+      hammer.style.animation = "";
+      zero.classList.remove("squish");
+      bonkText.classList.remove("show");
+    }, 750);
+  }, 2000);
+</script>
+
+
+</body>
+</html>

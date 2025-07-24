@@ -592,6 +592,66 @@ main {
   transform: translateX(-50%) translateY(0);
 }
 
+.profile-name-wrapper {
+  position: relative;
+  display: inline-block;
+  text-align: center;
+}
+
+.status-bubble {
+  position: absolute;
+  top: 105%; /* slightly below the name */
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--tooltip-bubble-bg, #1c1c1c);
+  color: var(--tooltip-bubble-color, #fff);
+  font-size: 0.75rem;
+  padding: 6px 12px;
+  border-radius: 12px;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+  opacity: 0.9;
+  animation: bubbleFadeIn 0.6s ease-out forwards;
+  z-index: 10;
+  cursor: default;
+}
+
+@keyframes bubbleFadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(10px) scale(0.9);
+  }
+  to {
+    opacity: 0.9;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+}
+
+/* Optional: hover tooltip on the bubble */
+.status-bubble::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  top: -140%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--tooltip-bubble-bg, #111);
+  color: var(--tooltip-bubble-color, #fff);
+  padding: 6px 10px;
+  font-size: 0.7rem;
+  border-radius: 10px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 999;
+  box-shadow: 0 0 8px var(--tooltip-bubble-color, #fff);
+}
+
+.status-bubble:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-4px);
+}
+ 
 @keyframes popIn1 {
   0% {
     opacity: 0;
@@ -602,3 +662,4 @@ main {
     transform: scale(1) rotate(0deg);
   }
 }
+

@@ -1,0 +1,53 @@
+.mac-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(to bottom, #3c3c3c, #2c2c2c);
+  padding: 0.4rem 1rem;
+  border-bottom: 1px solid #000;
+  font-family: "SF Pro Text", "Segoe UI", sans-serif;
+  font-size: 0.9rem;
+  color: #ccc;
+  user-select: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 32px;
+  z-index: 999;
+}
+
+.mac-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.mac-btn {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.mac-btn.close {
+  background-color: #ff5f56;
+  box-shadow: 0 0 0 1px #d70015;
+}
+
+.mac-btn.minimize {
+  background-color: #ffbd2e;
+  box-shadow: 0 0 0 1px #c99700;
+}
+
+.mac-btn.maximize {
+  background-color: #27c93f;
+  box-shadow: 0 0 0 1px #1aab29;
+}
+
+.mac-title {
+  margin-left: auto;
+  margin-right: auto;
+  font-weight: 600;
+  color: var(--text-light, #f0f0f0);
+  pointer-events: none;
+}
