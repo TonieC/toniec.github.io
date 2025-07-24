@@ -377,71 +377,35 @@
   </span>
 </div>
       <br>
-<a href="#" id="emailLink" class="tooltip-container">Email Me
-  <span id="emailTooltip" class="click-tooltip">Click to copy email</span>
-</a>
+<a href="resume.html" class="cta-button">View Resume</a>
+<style>
+  .cta-button {
+  display: inline-block;
+  padding: 0.6rem 1.2rem;
+  background: transparent;
+  color: var(--accent, #ff4081);
+  border: 2px solid var(--accent, #ff4081);
+  border-radius: 999px; /* pill shape */
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.cta-button:hover {
+  background-color: var(--accent, #ff4081);
+  color: var(--bg, #211b30);
+  box-shadow: 0 0 8px var(--accent, #ff4081);
+}
+
+
+</style>
 <footer class="footer-inline">
     <p>© 2025 Tonie </p>
   </footer>
 
 </div>
-<script>
-  window.addEventListener('DOMContentLoaded', () => {
-  const email = "cadizal06@gmail.com";
-  const emailLink = document.getElementById("emailLink");
-  const tooltip = document.getElementById("emailTooltip");
 
-  let copyCount = 0;
-  let lastClick = 0;
-  let resetTimeout;
-
-  const messages = [
-    "📧 Copied!",
-    "📧 Double Copy!",
-    "📧 Triple Copy!",
-    "🔥 GODLIKE Copy!",
-    "💥 OVERKILL!!"
-  ];
-
-  const tooltipColors = [
-    "#00ccff", "#3399ff", "#ffaa33", "#ff3300", "#cc0000"
-  ];
-
-  function showTooltip(msgIndex) {
-    tooltip.textContent = messages[msgIndex];
-    tooltip.style.backgroundColor = tooltipColors[msgIndex];
-    tooltip.classList.remove("rage-1", "rage-2", "rage-3", "show");
-    void tooltip.offsetWidth; // force reflow for animation
-    tooltip.classList.add("show");
-
-    if (msgIndex === 2) tooltip.classList.add("rage-1");
-    else if (msgIndex === 3) tooltip.classList.add("rage-2");
-    else if (msgIndex >= 4) tooltip.classList.add("rage-3");
-
-    clearTimeout(resetTimeout);
-    resetTimeout = setTimeout(() => {
-      tooltip.classList.remove("show", "rage-1", "rage-2", "rage-3");
-    }, 2000);
-  }
-
-  emailLink.addEventListener("click", (e) => {
-    e.preventDefault();
-
-    const now = Date.now();
-    if (now - lastClick > 5000) copyCount = 0;
-    lastClick = now;
-
-    copyCount++;
-    const index = Math.min(copyCount - 1, messages.length - 1);
-
-    navigator.clipboard.writeText(email).then(() => {
-      showTooltip(index);
-      window.location.href = `mailto:${email}?subject=Website Portfolio&body=State your concern here.`;
-    });
-  });
-});
-
-</script>
 
 
 

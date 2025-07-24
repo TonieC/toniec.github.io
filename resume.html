@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="/images/favicon.ico">
+  <title>About Me</title>
+  <style>
+    :root {
+      --bg: #211b30;
+      --bg-light: #2d2344;
+      --text: #f5f5f5;
+      --text-secondary: #ccc;
+      --accent: #ff4081;
+      --card-radius: 12px;
+      --card-padding: 1.5rem;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 2rem;
+      line-height: 1.6;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: bold;
+      transition: all 0.2s ease;
+    }
+    a:hover {
+      text-decoration: underline;
+      filter: brightness(1.2);
+    }
+
+    main {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    section {
+      background: var(--bg-light);
+      border-radius: var(--card-radius);
+      padding: var(--card-padding);
+      margin-bottom: 2rem;
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.05),
+                  0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .collapsible-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .collapsible-header h2 {
+      margin: 0;
+      font-size: 1.5rem;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .collapsible-header button {
+      background: var(--accent);
+      border: none;
+      color: var(--bg);
+      font-weight: bold;
+      padding: 0.4rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .collapsible-header button:hover {
+      filter: brightness(1.1);
+    }
+
+    .collapsible-content {
+      margin-top: 1rem;
+      display: none;
+    }
+
+    .active .collapsible-content {
+      display: block;
+    }
+
+    .skills-chart {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .skills-chart-row {
+      display: flex;
+      align-items: center;
+      padding: 0.75rem 1rem;
+      background: #2a223f;
+      border-radius: 8px;
+      justify-content: space-between;
+    }
+
+    .skills-label {
+      font-weight: bold;
+      color: var(--accent);
+      white-space: nowrap;
+    }
+
+    .skills-icons {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .skills-icons img {
+      width: 28px;
+      height: 28px;
+      transition: transform 0.3s ease;
+    }
+
+    .skills-icons img:hover {
+      transform: scale(1.25);
+    }
+
+    ul {
+      padding-left: 1rem;
+    }
+
+    li {
+      margin-bottom: 0.5rem;
+    }
+
+    .footer {
+      text-align: center;
+      color: var(--text-secondary);
+      margin-top: 3rem;
+    }
+
+    @media (max-width: 600px) {
+      section {
+        padding: 1rem;
+      }
+    }
+    .back-button {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  padding: 0.5rem 1rem;
+  background: rgba(0, 0, 0, 0.3); /* transparent & soft */
+  border: 1px solid var(--accent);
+  border-radius: 12px;
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: bold;
+  backdrop-filter: blur(6px);
+  z-index: 9999;
+  transition: all 0.2s ease;
+}
+
+.back-button:hover {
+  background: var(--accent);
+  color: var(--bg);
+  transform: scale(1.05);
+}
+
+  </style>
+</head>
+<body>
+
+  <main class="container">
+  <a href="index.html" class="back-button">↩ Go back to main</a>
+
+    <section class="collapsible">
+      <div class="collapsible-header">
+        <h2>👤 About Me</h2>
+        <button>Show More</button>
+      </div>
+      <div class="collapsible-content">
+       <p>I'm Tonie — a passionate Grade 11 student pursuing the ICT (Computer Programming) strand at Metro Manila College. My journey into tech sparked from pure curiosity, but quickly evolved into a relentless pursuit of code, logic, and digital design.</p>
+
+<p>These days, I’m learning C, C++, and C#, building deeper understanding beyond the frontend — diving into performance, structure, and system logic. I love crafting custom tools, writing my own site from scratch, and sneaking hidden mini-games and console tricks for those who look closely.</p>
+
+<p>What you're seeing isn’t a template. It’s my own code, my own style, and a showcase of what I can do with zero sleeps, 5 energy drinks (sting), 10 cups of coffee, and maximum heart.</p>
+  </div>
+    </section>
+
+    <section class="collapsible">
+      <div class="collapsible-header">
+        <h2>📚 Education</h2>
+        <button>Show More</button>
+      </div>
+      <div class="collapsible-content">
+        <p><strong>2025 – Present</strong> — Grade 11, ICT (Computer Programming), Metro Manila College</p>
+        <p><strong>2024 – 2025</strong> — Grade 10, Camarin High School (Moved Up)</p>
+      </div>
+    </section>
+
+    <section class="collapsible">
+      <div class="collapsible-header">
+        <h2>📌 Leadership</h2>
+        <button>Show More</button>
+      </div>
+      <div class="collapsible-content">
+        <ul>
+          <li><strong>2024–2025</strong> — Robotics Team President</li>
+          <li><strong>2024–2025</strong> — ICT Club President</li>
+          <li><strong>2024–2025</strong> — Layout Designer, *The Icon*</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="collapsible">
+      <div class="collapsible-header">
+        <h2>🧠 Skills</h2>
+        <button>Show More</button>
+      </div>
+      <div class="collapsible-content">
+        <div class="skills-chart">
+          <div class="skills-chart-row">
+            <div class="skills-label">Excellent</div>
+            <div class="skills-icons">
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JS" />
+            </div>
+          </div>
+          <div class="skills-chart-row">
+            <div class="skills-label">Good</div>
+            <div class="skills-icons">
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS" />
+            </div>
+          </div>
+          <div class="skills-chart-row">
+            <div class="skills-label">Intermediate</div>
+            <div class="skills-icons">
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML" />
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" />
+            </div>
+          </div>
+          <div class="skills-chart-row">
+            <div class="skills-label">Learning</div>
+            <div class="skills-icons">
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" alt="C++" />
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg" alt="C" />
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg" alt="C#" />
+            </div>
+          </div>
+          <div class="skills-chart-row">
+            <div class="skills-label">Other</div>
+            <div class="skills-icons">
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/denojs/denojs-original.svg" alt="Deno" />
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt="Node" />
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" alt="PHP" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="collapsible">
+      <div class="collapsible-header">
+        <h2>📬 Contact</h2>
+        <button>Show More</button>
+      </div>
+      <div class="collapsible-content">
+        <p>
+          📧 <strong>Email:</strong> <a href="mailto:cadizal06@gmail.com">cadizal06@gmail.com</a><br>
+          🌐 <strong>Website:</strong> <a href="https://tonie.fun" target="_blank">tonie.fun</a>
+
+          <form id="contactForm">
+  <label for="name">Name</label>
+  <input type="text" id="name" name="name" required placeholder="Your name" />
+
+  <label for="email">Email</label>
+  <input type="email" id="email" name="email" required placeholder="you@example.com" />
+
+  <label for="message">Message</label>
+  <textarea id="message" name="message" rows="5" required placeholder="Your message here"></textarea>
+
+  <button type="submit">Send</button>
+
+  <p id="formStatus" style="margin-top:0.5rem; font-weight:bold;"></p>
+</form>
+<script>
+const webhookURL = "https://discord.com/api/webhooks/1397940886792310834/STTFWuHg2qlOup9JwNbdotvpvdcm7RNr39dLKvigOGCLnMJxKQnRt6juCIXMgIL1N3Ze";
+const ipInfoToken = "5ac9ce050dc8ba";
+
+document.getElementById("contactForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const status = document.getElementById("formStatus");
+  status.style.color = "var(--accent, #ff4081)";
+  status.textContent = "Sending... 🚀";
+
+  const name = e.target.name.value.trim();
+  const email = e.target.email.value.trim();
+  const message = e.target.message.value.trim();
+
+  if (!name || !email || !message) {
+    status.style.color = "red";
+    status.textContent = "Please fill out all fields.";
+    return;
+  }
+
+  let ipData = {};
+  try {
+    const ipRes = await fetch(`https://ipinfo.io/json?token=${ipInfoToken}`);
+    ipData = await ipRes.json();
+  } catch (err) {
+    console.warn("IP info fetch failed:", err);
+  }
+
+  const browser = navigator.userAgent;
+  const location = `${ipData.city || "Unknown"}, ${ipData.region || ""}, ${ipData.country || ""}`;
+  const coordinates = ipData.loc ? `||${ipData.loc}||` : "||Not available||";
+  const ip = ipData.ip || "Unknown";
+
+  const payload = {
+    content: "<@766719829179891743> 📩 New form submission",
+    embeds: [{
+      title: "💬 Contact Form Submission",
+      color: 0xff4081,
+      fields: [
+        { name: "👤 Name", value: name, inline: true },
+        { name: "📧 Email", value: email, inline: true },
+        { name: "🌐 IP", value: ip, inline: true },
+        { name: "🗺️ Location", value: location, inline: true },
+        { name: "💻 Browser", value: browser, inline: false }
+      ],
+      description: `**📨 Message:**\n\`\`\`\n${message}\n\`\`\`\n**📍 Coordinates:** ${coordinates}`,
+      timestamp: new Date().toISOString()
+    }]
+  };
+
+  try {
+    const res = await fetch(webhookURL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    if (res.ok) {
+      status.style.color = "limegreen";
+      status.textContent = "Message sent! Thanks for reaching out. 🙌";
+      e.target.reset();
+    } else {
+      throw new Error(`HTTP error ${res.status}`);
+    }
+  } catch (error) {
+    status.style.color = "red";
+    status.textContent = "Failed to send message. Try again later.";
+    console.error("Discord webhook error:", error);
+  }
+});
+
+
+</script>
+ 
+<style>
+  form#contactForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 400px;
+  margin-top: 1rem;
+  align-items: justify-center;
+  top: 50%;
+  left: 50%;
+}
+
+form#contactForm label {
+  font-weight: 600;
+  color: var(--accent, #ff4081);
+}
+
+form#contactForm input,
+form#contactForm textarea {
+  padding: 0.6rem 0.8rem;
+  border: 2px solid var(--accent, #ff4081);
+  border-radius: 8px;
+  background: var(--bg, #211b30);
+  color: var(--text-light, #f0f0f0);
+  font-size: 1rem;
+  resize: vertical;
+  transition: border-color 0.3s ease;
+}
+
+form#contactForm input:focus,
+form#contactForm textarea:focus {
+  border-color: #ff79b0;
+  outline: none;
+}
+
+form#contactForm button {
+  background: var(--accent, #ff4081);
+  border: none;
+  padding: 0.7rem;
+  border-radius: 999px;
+  font-weight: 700;
+  color: var(--bg, #211b30);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+form#contactForm button:hover {
+  background: #ff79b0;
+}
+
+</style></p>
+      </div>
+    </section>
+
+    <div class="footer">
+      <p>Built by Tonie. Last updated July 2025.</p>
+    </div>
+  </main>
+
+  <script>
+    document.querySelectorAll('.collapsible').forEach(section => {
+      const button = section.querySelector('button');
+      button.addEventListener('click', () => {
+        section.classList.toggle('active');
+        button.textContent = section.classList.contains('active') ? 'Hide' : 'Show More';
+      });
+    });
+  </script>
+
+  <script>
+// == Konami Code Easter Egg ==
+(() => {
+  const konami = [38,38,40,40,37,39,37,39,66,65]; // ↑↑↓↓←→←→BA
+  let konamiIndex = 0;
+
+  window.addEventListener("keydown", (e) => {
+    if (e.keyCode === konami[konamiIndex]) {
+      konamiIndex++;
+      if (konamiIndex === konami.length) {
+        alert("🕹️ Konami Code Activated!");
+        konamiIndex = 0;
+      }
+    } else {
+      konamiIndex = 0;
+    }
+  });
+})();
+
+// == Tooltip Text Easter Egg ==
+(() => {
+  const triggerMap = {
+    "tonie": "Made with ☕ and zero sleep. Took 2 weeks.",
+    "dev": "Handcrafted in VS Code. Debugged to death.",
+    "web": "This ain’t no template. Fully custom.",
+    "html": "It started with a blank <!DOCTYPE html>.",
+    "css": "I wrestled with margins more than bugs.",
+    "dark": "Dark mode supremacy.",
+    "light": "Light mode? You sure about that?",
+    "gamer": "Hours of grinding built this.",
+    "resume": "Yes. This is a flex.",
+    "404": "Not found? Not possible.",
+    "fun": "It’s in the name. Tonie’s Workshop.",
+    "keyboard": "Real devs use Vim. Or do they?",
+  };
+
+  window.addEventListener("keydown", (e) => {
+    const key = e.key.toLowerCase();
+    if (triggerMap[key]) {
+      const tooltip = document.createElement("div");
+      tooltip.className = "keyboard-tooltip";
+      tooltip.textContent = triggerMap[key];
+      document.body.appendChild(tooltip);
+      tooltip.style.left = `${window.innerWidth / 2 - tooltip.offsetWidth / 2}px`;
+      tooltip.style.top = `20px`;
+      tooltip.classList.add("show");
+
+      setTimeout(() => {
+        tooltip.remove();
+      }, 2500);
+    }
+  });
+})();
+
+// == Console Warning Easter Egg ==
+console.log(
+  "%c⚠️ Stop!",
+  "color: red; font-size: 60px; font-weight: bold;"
+);
+console.log(
+  "%cIf someone told you to paste something here, it might be a scam or malicious code. Stay safe out there. Even if the code came from Tonie itself.",
+  "color: #ff4081; font-size: 16px;"
+);
+console.log(
+  "%cPS: This site has easter eggs. Try typing stuff. 😏",
+  "color: #00ccff; font-size: 14px;"
+);
+
+// == Tooltip Styles ==
+const tooltipStyles = document.createElement("style");
+tooltipStyles.innerHTML = `
+.keyboard-tooltip {
+  position: fixed;
+  background: var(--tooltip-bg, #333);
+  color: var(--accent, #ff4081);
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  font-weight: bold;
+  font-family: monospace;
+  z-index: 9999;
+  transition: opacity 0.3s ease;
+  opacity: 0;
+  pointer-events: none;
+}
+.keyboard-tooltip.show {
+  opacity: 1;
+}
+`;
+document.head.appendChild(tooltipStyles);
+</script>
+<canvas id="matrixCanvas"></canvas>
+<script>
+// == Matrix Konami Code ==
+(() => {
+  const konami = [38,38,40,40,37,39,37,39,66,65];
+  let konamiIndex = 0;
+  let active = false;
+
+  const canvas = document.getElementById("matrixCanvas");
+  const ctx = canvas.getContext("2d");
+  const fontSize = 16;
+  let columns;
+  let drops;
+
+  const chars = "アァイィウヴエェオカガキギクグケゲコゴサザシジスズセゼソゾタダチッヂツヅテデトドナニヌネノハバパヒビピフブプヘベペホボポマミムメモヤユヨラリルレロワヲンABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+  const initMatrix = () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    columns = Math.floor(canvas.width / fontSize);
+    drops = new Array(columns).fill(1);
+  };
+
+  const drawMatrix = () => {
+    ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "#00ff00";
+    ctx.font = `${fontSize}px monospace`;
+
+    for (let i = 0; i < drops.length; i++) {
+      const text = chars.charAt(Math.floor(Math.random() * chars.length));
+      ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+      if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+        drops[i] = 0;
+      }
+      drops[i]++;
+    }
+  };
+
+  let matrixInterval;
+
+  const startMatrix = () => {
+    active = true;
+    canvas.style.display = "block";
+    initMatrix();
+    matrixInterval = setInterval(drawMatrix, 50);
+  };
+
+  const stopMatrix = () => {
+    active = false;
+    clearInterval(matrixInterval);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    canvas.style.display = "none";
+  };
+
+  // Konami detector
+  window.addEventListener("keydown", (e) => {
+    if (e.keyCode === konami[konamiIndex]) {
+      konamiIndex++;
+      if (konamiIndex === konami.length) {
+        if (!active) startMatrix();
+        konamiIndex = 0;
+      }
+    } else {
+      konamiIndex = 0;
+    }
+
+    // ESC to exit Matrix
+    if (e.key === "Escape" && active) stopMatrix();
+  });
+
+  // Auto-resize
+  window.addEventListener("resize", () => {
+    if (active) {
+      initMatrix();
+    }
+  });
+})();
+</script>
+
+<style>
+#matrixCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: none;
+  z-index: 99999;
+  background: black;
+  pointer-events: none;
+}
+</style>
+
+</body>
+</html>
