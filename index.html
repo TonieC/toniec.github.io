@@ -196,12 +196,9 @@
     <p><span style="font-size:1.2em;">🔒</span> <strong>We do not track, save, or share your exact location.</strong> Everything stays local — nothing creepy, nothing stored.</p>
     <p>Sharing is optional, and the site will still work without it — just with fewer personalized features.</p>
     <p>If you feel unsafe or unsure, you can kindly step away from the site now and refuse entry. No hard feelings. 🙏</p>
-    <div class="modal-actions">
-      <button id="acceptLocation">Allow Location</button>
-      <button id="declineLocation">Continue Without It</button>
-    </div>
   </div>
 </div>
+
 
 <style>
   .modal {
@@ -260,39 +257,45 @@
 </style>
 
 <script>
+  async function initGeolocation() {
+    const prompt = document.getElementById('locationPrompt');
+
+    try {
+      // Try to get location
+      const position = await new Promise((resolve, reject) =>
+        navigator.geolocation.getCurrentPosition(resolve, reject)
+      );
+
+      localStorage.setItem('locationAccepted', 'true');
+      if (prompt) prompt.style.display = 'none';
+      startLocationWeather(position.coords.latitude, position.coords.longitude);
+    } catch (err) {
+      localStorage.setItem('locationAccepted', 'false');
+      if (prompt) prompt.style.display = 'none';
+      startFallbackWeather();
+    }
+  }
+
   window.addEventListener('DOMContentLoaded', () => {
     const prompt = document.getElementById('locationPrompt');
-    const acceptBtn = document.getElementById('acceptLocation');
-    const declineBtn = document.getElementById('declineLocation');
-
     const locationAccepted = localStorage.getItem('locationAccepted');
 
     if (locationAccepted === "true") {
-      startLocationWeather();
+      // Already accepted
+      if (prompt) prompt.style.display = 'none';
+      startLocationWeather(); // you should internally handle getting coords again
     } else if (locationAccepted === "false") {
+      // Already denied
+      if (prompt) prompt.style.display = 'none';
       startFallbackWeather();
     } else {
-      // Show the prompt if not accepted/declined yet
+      // Show modal briefly while waiting
       if (prompt) prompt.style.display = 'flex';
-
-      if (acceptBtn) {
-        acceptBtn.addEventListener('click', () => {
-          localStorage.setItem('locationAccepted', "true");
-          if (prompt) prompt.style.display = 'none';
-          startLocationWeather();
-        });
-      }
-
-      if (declineBtn) {
-        declineBtn.addEventListener('click', () => {
-          localStorage.setItem('locationAccepted', "false");
-          if (prompt) prompt.style.display = 'none';
-          startFallbackWeather();
-        });
-      }
+      initGeolocation();
     }
   });
 </script>
+
 
 
 
