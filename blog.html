@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tonie's Posts</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main id="cms">
+    <header>
+      <h1>📝 Tonie's Blog</h1>
+      <nav>
+        <a href="/">🏠 Home</a>
+        <a href="#/">📜 All Posts</a>
+      </nav>
+    </header>
+
+    <section class="content">
+      <div id="app">Loading posts…</div>
+    </section>
+  </main>
+
+  <!-- CMS.js Config -->
+  <script src="https://cdn.jsdelivr.net/npm/cms.js@1.3.6/dist/cms.min.js"></script>
+  <script>
+    CMS({
+      element: "#app",
+      mode: "Github",
+      github: {
+        username: "TonieC",
+        repo: "TonieC.github.io",
+        branch: "main"
+      },
+      path: "posts",
+      title: "Tonie's Blog",
+      description: "My thoughts, ideas, and updates."
+    });
+  </script>
+</body>
+</html>
