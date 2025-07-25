@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>404 | Not Found</title>
+  <title>You found an easter egg!</title>
   <style>
     :root {
       --accent: #ff4b91;
@@ -17,6 +17,8 @@
       --text: #f5f5f5;
       --bonk-color: #ff3b3b;
     }
+
+  
 
     body {
       margin: 0;
@@ -106,6 +108,8 @@
       z-index: 2;
     }
 
+
+
     .hammer-head {
       width: 80px;
       height: 24px;
@@ -168,9 +172,18 @@
       from { transform: translateY(20px); opacity: 0; }
       to { transform: translateY(0); opacity: 1; }
     }
+
+    #gravity-wrapper {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  overflow: hidden; /* Keep children inside */
+}
+
   </style>
 </head>
 <body>
+  <div id="gravity-wrapper">
   <main class="error-container">
     <!-- Hammer -->
     <div class="hammer" id="hammer">
@@ -189,72 +202,58 @@
     </div>
 
     <div class="error-message">Oops. You wandered too far. This page doesn’t exist.</div>
-    <a href="/" class="error-btn">Take me home</a>
+<a href="javascript:history.back()" class="error-btn">Take me back</a>
+  </div>
   </main>
 
- <script>
-  const hammer = document.getElementById("hammer");
-  const zero = document.getElementById("zero");
-  const bonkText = document.getElementById("bonk");
+ 
+<script>
+const hammer = document.getElementById("hammer");
+const zero = document.getElementById("zero");
+const bonkText = document.getElementById("bonk");
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
-  // Create Web Audio Context once
-  const AudioContext = window.AudioContext || window.webkitAudioContext;
-  const audioCtx = new AudioContext();
+function playBonkSound() {
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+  const now = audioCtx.currentTime;
 
-  // Dramatic bonk sound function with layered oscillators
-  function playBonkSound() {
-    if (audioCtx.state === 'suspended') {
-      audioCtx.resume();
-    }
+  const baseOsc = audioCtx.createOscillator();
+  const snapOsc = audioCtx.createOscillator();
+  const baseGain = audioCtx.createGain();
+  const snapGain = audioCtx.createGain();
 
-    const now = audioCtx.currentTime;
+  baseOsc.type = 'triangle';
+  baseOsc.frequency.setValueAtTime(80, now);
+  baseGain.gain.setValueAtTime(0.3, now);
+  baseGain.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
 
-    // Base oscillator — low punch
-    const baseOsc = audioCtx.createOscillator();
-    baseOsc.type = 'triangle';
-    baseOsc.frequency.setValueAtTime(80, now);
+  snapOsc.type = 'square';
+  snapOsc.frequency.setValueAtTime(600, now);
+  snapGain.gain.setValueAtTime(0.15, now);
+  snapGain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
 
-    // Snap oscillator — high sharp snap
-    const snapOsc = audioCtx.createOscillator();
-    snapOsc.type = 'square';
-    snapOsc.frequency.setValueAtTime(600, now);
+  baseOsc.connect(baseGain).connect(audioCtx.destination);
+  snapOsc.connect(snapGain).connect(audioCtx.destination);
+  baseOsc.start(now); snapOsc.start(now);
+  baseOsc.stop(now + 0.2); snapOsc.stop(now + 0.1);
+}
 
-    // Gain node for base (punch)
-    const baseGain = audioCtx.createGain();
-    baseGain.gain.setValueAtTime(0.3, now);
-    baseGain.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
+// Bonk loop (idle animation)
+setInterval(() => {
+  hammer.style.animation = "bonkSwing 0.75s ease-in-out forwards";
+  zero.classList.add("squish");
+  bonkText.classList.add("show");
+  playBonkSound();
 
-    // Gain node for snap (attack)
-    const snapGain = audioCtx.createGain();
-    snapGain.gain.setValueAtTime(0.15, now);
-    snapGain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
-
-    baseOsc.connect(baseGain);
-    baseGain.connect(audioCtx.destination);
-
-    snapOsc.connect(snapGain);
-    snapGain.connect(audioCtx.destination);
-
-    baseOsc.start(now);
-    snapOsc.start(now);
-    baseOsc.stop(now + 0.2);
-    snapOsc.stop(now + 0.1);
-  }
-
-  setInterval(() => {
-    hammer.style.animation = "bonkSwing 0.75s ease-in-out forwards";
-    zero.classList.add("squish");
-    bonkText.classList.add("show");
-
-    playBonkSound();
-
-    setTimeout(() => {
-      hammer.style.animation = "";
-      zero.classList.remove("squish");
-      bonkText.classList.remove("show");
-    }, 750);
-  }, 2000);
+  setTimeout(() => {
+    hammer.style.animation = "";
+    zero.classList.remove("squish");
+    bonkText.classList.remove("show");
+  }, 750);
+}, 2000);
 </script>
+
+
 
 
 </body>
