@@ -198,95 +198,267 @@
 
       <div id="pageGreeting"></div>
 <script>
-  function getTimeGreeting() {
-    const hour = new Date().getHours();
+const API_KEY = "8f674a8186a5e78a7c6a8b2e07d44580";
 
-    const greetings = {
-      lateNight: [
-        "Burning the midnight oil this late night? 🌌",
-        "Still up this deep night? Let the stars inspire you ✨",
-        "Midnight grind hits different at this hour 🌙",
-        "Peaceful silence of this late night 🕯️",
-        "Creativity thrives in the stillness of night 💭"
-      ],
-      earlyMorning: [
-        "Up early this morning? You’re built different 🌒",
-        "Salute to you this dawn patrol hour ☕",
-        "Catching that quiet calm this early morning 🌅",
-        "Top of the morning — while others sleep 😴",
-        "Early birds like you run this world 🐓"
-      ],
-      morning: [
-        "Good vibes only this bright morning ☀️",
-        "You’ve got this fresh morning to shine 🚀",
-        "Let this crisp morning fuel your fire 🔥",
-        "Sun’s up — it’s your time this morning 💼",
-        "A golden morning like this is yours to own 🌞"
-      ],
-      afternoon: [
-        "This afternoon’s energy is yours to command 🌤️",
-        "Midday grind in full swing — let’s go 💪",
-        "Level up this productive afternoon 🧠",
-        "Stretch it out — it’s a long afternoon 🧘",
-        "Focus mode: activated this fine afternoon 👊"
-      ],
-      evening: [
-        "Winding down this calm evening? 🌙",
-        "Let this evening remind you of your progress 🛋️",
-        "You owned the day — now embrace this evening 💼",
-        "Evening vibes hit soft but steady 🌒",
-        "Recharge this peaceful evening 🔄"
-      ],
-      night: [
-        "End of day reflections start this night 🌃",
-        "Night owl mode on full blast this evening 🦉",
-        "This night is for dreams, big or small 🛌",
-        "Late night sparks fresh ideas 🤯",
-        "Close your day strong this starry night 🌠"
-      ]
-    };
-
-    let set;
-    if (hour < 4) set = greetings.lateNight;
-    else if (hour < 6) set = greetings.earlyMorning;
-    else if (hour < 12) set = greetings.morning;
-    else if (hour < 18) set = greetings.afternoon;
-    else if (hour < 21) set = greetings.evening;
-    else set = greetings.night;
-
-    return set[Math.floor(Math.random() * set.length)];
+const weatherGreetings = {
+  morning: {
+    Rain: [
+      "Rainy morning grind — keep dry and dialed in. 🌧️",
+      "Let raindrops be your morning rhythm. ☔",
+      "Wake, rain, and hustle — classic combo. 🌦️",
+      "Umbrellas up, energy up. ☂️",
+      "Let the storm charge your ideas. ⛈️"
+    ],
+    Clouds: [
+      "Cloudy mornings are perfect for focus. ☁️",
+      "Gray skies, gold mindset. 💭",
+      "Start slow, aim high. ☁️",
+      "Today’s a blank canvas — paint it. 🎨",
+      "No sun? No problem. You shine enough. 🌥️"
+    ],
+    Snow: [
+      "Snowy mornings: crisp, calm, and clean. ❄️",
+      "Fresh snow, fresh start. ⛄",
+      "Fuel up, it’s a frosty grind. 🧊",
+      "Start slow, stay steady. 🌨️",
+      "Cool day ahead — stay sharp. ❄️"
+    ],
+    Clear: [
+      "Clear skies, clear purpose. ☀️",
+      "Let the sun set your tone. 🌞",
+      "It’s a beautiful day to make moves. 🌅",
+      "Sun’s out, grind’s on. 🔥",
+      "Rise and rewrite your story. 📖"
+    ],
+    "Scattered Clouds": [
+      "Patchy skies, focused mind. ⛅",
+      "Scattered clouds, steady energy. 🌤️",
+      "Start strong, even if skies aren’t. 💪",
+      "No storm, just momentum. 🚀",
+      "Balance the bright and gray. 🎯"
+    ],
+    default: [
+      "Let today surprise you. 🌄",
+      "Mornings are your reset button. 🔁",
+      "Start soft, finish loud. 🔊",
+      "Wake with purpose. 💼",
+      "You’re here — make it count. 🕊️"
+    ]
+  },
+  afternoon: {
+    Rain: [
+      "Rain in the afternoon? Focus mode ON. 🌧️",
+      "Stay dry, stay grinding. ☔",
+      "Keep your momentum even in the storm. ⚡",
+      "Rain check? Nah, rain charge. 💪",
+      "Storms pass, your effort lasts. 🌦️"
+    ],
+    Clouds: [
+      "Cloudy days = clear thoughts. ☁️",
+      "Don’t let the gray blur your vision. 🌫️",
+      "Quiet skies, loud work. 🎧",
+      "Use the calm to get creative. 🎨",
+      "It's okay to cruise today. 🛶"
+    ],
+    Snow: [
+      "Snowy afternoons bring cool perspective. ❄️",
+      "Let your grind match the chill. 🧊",
+      "Smooth day, smooth vibes. ⛄",
+      "Cold outside, warm within. 🔥",
+      "Frozen air, fierce energy. 🌬️"
+    ],
+    Clear: [
+      "Bright skies, bright mindset. ☀️",
+      "Perfect time to lock in. 🔐",
+      "Let the light fuel your hustle. 🔆",
+      "Own this day like you own your goals. 🏆",
+      "Midday magic is real. ✨"
+    ],
+    "Scattered Clouds": [
+      "Scattered clouds, full potential. 🌤️",
+      "Clouds don’t slow down legends. 😎",
+      "Keep it light, keep it moving. 🏃",
+      "Halfway there — don’t stop now. 🔁",
+      "The sky’s got character, so do you. 💼"
+    ],
+    default: [
+      "Afternoon hustle hits different. 🔋",
+      "You’ve made it halfway — push through. 🛠️",
+      "Keep your momentum alive. ⚙️",
+      "Let the day bend, not break you. 🌐",
+      "Ride the wave. 🌊"
+    ]
+  },
+  dusk: {
+    Rain: [
+      "Rain at dusk makes reflection sweeter. 🌧️",
+      "Storms wind down — so can you. 🌙",
+      "Evening downpour, let go some more. 🌫️",
+      "Soft skies, softer thoughts. 🧘",
+      "Let it rain, let it rest. 🌦️"
+    ],
+    Clouds: [
+      "Dusk with clouds? Peace mode unlocked. ☁️",
+      "Gray skies, no pressure. 🕯️",
+      "Pause. Breathe. Shift. 🌘",
+      "The world’s slowing — join it. 🌍",
+      "Use dusk to reconnect. 🤝"
+    ],
+    Snow: [
+      "Snowy dusk feels timeless. ❄️",
+      "Nature whispering: you did enough. 🌨️",
+      "Snow + sunset = masterpiece. 🎨",
+      "Chill down, warm up. ☕",
+      "Tonight’s yours. 🏔️"
+    ],
+    Clear: [
+      "Golden hour glow — reflect and recharge. 🌇",
+      "Clear dusk skies hold calm potential. 🧡",
+      "That final light hits just right. 🌅",
+      "The sun sets, not your goals. 🔥",
+      "Even endings hold beginnings. 🌄"
+    ],
+    "Scattered Clouds": [
+      "Fluffy dusk skies, smooth exits. ☁️",
+      "Cloudlight is moodlight. 🎭",
+      "Scattered clouds, scattered thoughts — it’s okay. ✨",
+      "Ease into the evening. 🎧",
+      "Slow skies, soft souls. 🌥️"
+    ],
+    default: [
+      "Dusk is for exhaling. 🕯️",
+      "You did well — let it land. 🌙",
+      "Let the light fade, not your fire. 🔥",
+      "Evening’s grace is yours. 🌇",
+      "Let today go gently. 💫"
+    ]
+  },
+  dawn: {
+    Rain: [
+      "Raindrops to start your day — poetic. 🌧️",
+      "Dawn rain = soft start. 🌂",
+      "Wake to rhythm, not rush. 🕊️",
+      "Stormy starts can still be steady. 🌦️",
+      "Rain clears the path forward. ☔"
+    ],
+    Clouds: [
+      "Dawn clouds soften the light. ☁️",
+      "Gray beginnings, golden goals. 🌥️",
+      "A gentle rise is still a rise. 🕊️",
+      "Clouds can’t cover effort. 💪",
+      "Start soft, build bold. 🏗️"
+    ],
+    Snow: [
+      "Frosty dawn is full of wonder. ❄️",
+      "Snow glows before the sun shows. 🌄",
+      "Cool air, warm fire within. 🔥",
+      "Step into calm. ☃️",
+      "Frozen moments, fierce beginnings. 🧊"
+    ],
+    Clear: [
+      "Dawn skies are full of promise. 🌅",
+      "Clear light, clear steps. ☀️",
+      "Daylight’s knocking — let it in. 🔆",
+      "Sunrise = mindset reset. 🌄",
+      "New light, new chapter. 📖"
+    ],
+    "Scattered Clouds": [
+      "Patchy skies, steady eyes. 🌤️",
+      "Rise with patience. ☁️",
+      "The day unfolds — walk into it. 🚶",
+      "Even scattered dawn holds power. ✨",
+      "Be gentle, be strong. 🌤️"
+    ],
+    default: [
+      "New day, new beat. 🎵",
+      "Dawn's quiet is your power. 🧘",
+      "Time to bloom again. 🌸",
+      "You’re not late, you’re alive. 🕰️",
+      "The light found you — show up. 🌞"
+    ]
+  },
+  evening: { /* already added earlier */ },
+  midnight: {
+    default: [
+      "Midnight thoughts fuel wild dreams. 🌌",
+      "The quiet is where clarity lives. 🌃",
+      "Still awake? You’re not alone. 🌙",
+      "Make peace with the dark. ☯️",
+      "Dreams start with stillness. ✨"
+    ]
+  },
+  night: {
+    default: [
+      "Night is not the end — it’s reset. 🌒",
+      "Slow down, not give up. 🌙",
+      "You did enough. Sleep easy. 💤",
+      "Dark skies = dream time. 🌌",
+      "Rest is resistance. Recharge. 🔋"
+    ]
   }
+};
 
-  function typeOut(text, element) {
-    element.textContent = "";
-    let i = 0;
-    const interval = setInterval(() => {
-      element.textContent += text.charAt(i++);
-      if (i >= text.length) clearInterval(interval);
-    }, 30);
-  }
+function getCurrentTimeSegment() {
+  const hour = new Date().getHours();
+  if (hour < 4) return "midnight";
+  if (hour < 6) return "dawn";
+  if (hour < 12) return "morning";
+  if (hour < 17) return "afternoon";
+  if (hour < 19) return "dusk";
+  if (hour < 21) return "evening";
+  return "night";
+}
 
-  function updateGreeting() {
-    const greetingBox = document.getElementById('pageGreeting');
-    if (greetingBox) {
-      const newGreeting = getTimeGreeting();
-      typeOut(newGreeting, greetingBox);
-    }
-  }
+function getGreetingByWeather(timeSegment, weather) {
+  const segment = weatherGreetings[timeSegment];
+  if (!segment) return null;
+  return segment[weather] || segment.default || null;
+}
 
-  window.addEventListener('DOMContentLoaded', () => {
-    updateGreeting();
+function typeOut(text, element) {
+  element.textContent = "";
+  let i = 0;
+  const interval = setInterval(() => {
+    element.textContent += text.charAt(i++);
+    if (i >= text.length) clearInterval(interval);
+  }, 30);
+}
 
-    const now = new Date();
-    const msUntilNextHour =
-      (60 - now.getMinutes()) * 60 * 1000 - now.getSeconds() * 1000;
+function fetchWeatherAndGreet() {
+  if (!navigator.geolocation) return;
 
-    setTimeout(() => {
-      updateGreeting();
-      setInterval(updateGreeting, 60 * 60 * 1000);
-    }, msUntilNextHour);
+  navigator.geolocation.getCurrentPosition(pos => {
+    const { latitude, longitude } = pos.coords;
+
+    fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}`)
+      .then(res => res.json())
+      .then(data => {
+        const weatherMain = data.weather?.[0]?.main || "default";
+        const timeSegment = getCurrentTimeSegment();
+        const greetings = getGreetingByWeather(timeSegment, weatherMain) || [];
+
+        if (greetings.length > 0) {
+          const greeting = greetings[Math.floor(Math.random() * greetings.length)];
+          const greetingBox = document.getElementById('pageGreeting');
+          if (greetingBox) typeOut(greeting, greetingBox);
+        }
+      })
+      .catch(console.error);
   });
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  fetchWeatherAndGreet();
+  const now = new Date();
+  const msUntilNextHour = (60 - now.getMinutes()) * 60 * 1000 - now.getSeconds() * 1000;
+
+  setTimeout(() => {
+    fetchWeatherAndGreet();
+    setInterval(fetchWeatherAndGreet, 60 * 60 * 1000);
+  }, msUntilNextHour);
+});
 </script>
+
 
 
 
