@@ -189,6 +189,111 @@
   setInterval(updateStatus, 60000); // check every minute
 </script>
 
+<div id="locationPrompt" class="modal">
+  <div class="modal-content">
+    <h2>🌍 Location Access</h2>
+    <p>This site asks for access to your <strong>approximate location</strong> to personalize greetings and show local weather.</p>
+    <p><span style="font-size:1.2em;">🔒</span> <strong>We do not track, save, or share your exact location.</strong> Everything stays local — nothing creepy, nothing stored.</p>
+    <p>Sharing is optional, and the site will still work without it — just with fewer personalized features.</p>
+    <p>If you feel unsafe or unsure, you can kindly step away from the site now and refuse entry. No hard feelings. 🙏</p>
+    <div class="modal-actions">
+      <button id="acceptLocation">Allow Location</button>
+      <button id="declineLocation">Continue Without It</button>
+    </div>
+  </div>
+</div>
+
+<style>
+  .modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(10, 10, 10, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  backdrop-filter: blur(4px);
+}
+
+.modal-content {
+  background: var(--background);
+  color: var(--text-color, #fff);
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+}
+
+.modal-actions button {
+  margin: 10px;
+  padding: 10px 20px;
+  background: var(--accent, #ff4081);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.modal-actions button:hover {
+  background: #e13774;
+}
+
+#locationPrompt {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 999999; /* Ensure it's above everything else */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.8); /* optional dark overlay */
+}
+
+</style>
+
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    const prompt = document.getElementById('locationPrompt');
+    const acceptBtn = document.getElementById('acceptLocation');
+    const declineBtn = document.getElementById('declineLocation');
+
+    const locationAccepted = localStorage.getItem('locationAccepted');
+
+    if (locationAccepted === "true") {
+      startLocationWeather();
+    } else if (locationAccepted === "false") {
+      startFallbackWeather();
+    } else {
+      // Show the prompt if not accepted/declined yet
+      if (prompt) prompt.style.display = 'flex';
+
+      if (acceptBtn) {
+        acceptBtn.addEventListener('click', () => {
+          localStorage.setItem('locationAccepted', "true");
+          if (prompt) prompt.style.display = 'none';
+          startLocationWeather();
+        });
+      }
+
+      if (declineBtn) {
+        declineBtn.addEventListener('click', () => {
+          localStorage.setItem('locationAccepted', "false");
+          if (prompt) prompt.style.display = 'none';
+          startFallbackWeather();
+        });
+      }
+    }
+  });
+</script>
+
 
 
     </div>
