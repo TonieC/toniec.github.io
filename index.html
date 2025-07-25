@@ -195,9 +195,10 @@
     <p>This site asks for access to your <strong>approximate location</strong> to personalize greetings and show local weather.</p>
     <p><span style="font-size:1.2em;">🔒</span> <strong>We do not track, save, or share your exact location.</strong> Everything stays local — nothing creepy, nothing stored.</p>
     <p>Sharing is optional, and the site will still work without it — just with fewer personalized features.</p>
-    <p>If you feel unsafe or unsure, you can kindly step away from the site now and refuse entry. No hard feelings. 🙏</p>
+    <p>If you feel unsafe or unsure, you can kindly step away from the site now and refuse entry. No hard feelings. </p>
   </div>
 </div>
+
 
 
 <style>
@@ -257,44 +258,52 @@
 </style>
 
 <script>
-  async function initGeolocation() {
+  async function startGeolocationFlow() {
     const prompt = document.getElementById('locationPrompt');
 
     try {
-      // Try to get location
-      const position = await new Promise((resolve, reject) =>
-        navigator.geolocation.getCurrentPosition(resolve, reject)
-      );
+      const permission = await navigator.permissions.query({ name: 'geolocation' });
 
-      localStorage.setItem('locationAccepted', 'true');
-      if (prompt) prompt.style.display = 'none';
-      startLocationWeather(position.coords.latitude, position.coords.longitude);
+      // If already granted, hide modal and get location
+      if (permission.state === 'granted') {
+        prompt.style.display = 'none';
+        navigator.geolocation.getCurrentPosition(pos => {
+          const { latitude, longitude } = pos.coords;
+          startLocationWeather(latitude, longitude);
+        });
+      }
+
+      // If denied, fallback immediately
+      else if (permission.state === 'denied') {
+        prompt.style.display = 'none';
+        startFallbackWeather();
+      }
+
+      // If prompt-able, show disclaimer then request location
+      else if (permission.state === 'prompt') {
+        prompt.style.display = 'flex';
+        navigator.geolocation.getCurrentPosition(
+          pos => {
+            prompt.style.display = 'none';
+            const { latitude, longitude } = pos.coords;
+            startLocationWeather(latitude, longitude);
+          },
+          () => {
+            prompt.style.display = 'none';
+            startFallbackWeather();
+          }
+        );
+      }
     } catch (err) {
-      localStorage.setItem('locationAccepted', 'false');
-      if (prompt) prompt.style.display = 'none';
+      // On error, use fallback
+      prompt.style.display = 'none';
       startFallbackWeather();
     }
   }
 
-  window.addEventListener('DOMContentLoaded', () => {
-    const prompt = document.getElementById('locationPrompt');
-    const locationAccepted = localStorage.getItem('locationAccepted');
-
-    if (locationAccepted === "true") {
-      // Already accepted
-      if (prompt) prompt.style.display = 'none';
-      startLocationWeather(); // you should internally handle getting coords again
-    } else if (locationAccepted === "false") {
-      // Already denied
-      if (prompt) prompt.style.display = 'none';
-      startFallbackWeather();
-    } else {
-      // Show modal briefly while waiting
-      if (prompt) prompt.style.display = 'flex';
-      initGeolocation();
-    }
-  });
+  window.addEventListener('DOMContentLoaded', startGeolocationFlow);
 </script>
+
 
 
 
