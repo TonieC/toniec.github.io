@@ -16,13 +16,15 @@
       --card-padding: 1.5rem;
     }
 
-    body {
+    body, html {
       font-family: 'Segoe UI', sans-serif;
       background: var(--bg);
       color: var(--text);
       margin: 0;
-      padding: 2rem;
+      padding: 2;
       line-height: 1.6;
+      cursor: none;
+  overflow-x: hidden;
     }
 
     a {
@@ -36,20 +38,38 @@
       filter: brightness(1.2);
     }
 
-    main {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 0 1rem;
-    }
+   main {
+  max-width: 70px; 
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+    cursor: none !important;
 
-    section {
-      background: var(--bg-light);
-      border-radius: var(--card-radius);
-      padding: var(--card-padding);
-      margin-bottom: 2rem;
-      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.05),
-                  0 0 10px rgba(0, 0, 0, 0.2);
-    }
+}
+
+
+section:first-of-type {
+  margin-top: 3rem;
+}
+
+
+  section {
+  padding: var(--card-padding);
+  background: var(--bg-light);
+  border-radius: var(--card-radius);
+  margin-bottom: 1rem;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.05),
+    0 0 10px rgba(0, 0, 0, 0.2);
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 
     .collapsible-header {
       display: flex;
@@ -201,36 +221,40 @@
 
 
   </style>
+   <script src="cursor.js" type="text/javascript" ></script>
+
 </head>
 <body>
+<img id="follower" src="/images/cursor.svg" alt="Follower"
+     style="position:fixed; width:60px; pointer-events:none; z-index:999; transform: translate(-50%, -50%);" />
 
-  <main class="container">
-  <a href="index.html" class="back-button">Home</a>
+  <script src="cursor.js" type="text/javascript"></script>
+
+  <a href="index.html" class="back-button" style="z-index: 1;">Home</a>
 
     <section class="collapsible">
   <div class="collapsible-header">
-    <h2>👤 About Me</h2>
+    <h2> About Me</h2>
     <button>Show More</button>
   </div>
   <div class="collapsible-content">
     <p>
-      I'm Tonie — a Grade 11 student at Metro Manila College, locked into the ICT (Computer Programming) track. What started as late-night curiosity quickly turned into an obsession with building, breaking, and understanding how things *really* work beneath the UI.
-    </p>
+      I'm Tonie — a Grade 11 coder at Metro Manila College, 
+      deep in the ICT (Programming) track. What started as 
+      late-night curiosity turned into a full-on obsession with making things work under the hood.</p> 
 
-    <p>
-      I'm currently leveling up in C, C++, and C#, aiming to bridge that gap between sleek frontend and powerful backend logic. Whether it’s memory management or micro-interactions, I’m all in. I write every line myself, including the hidden console mini-games and playful Easter eggs scattered around this site — a digital fingerprint of how I think and create.
-    </p>
+      <p>Every Easter egg, console mini-game, and pixel here?
+       I wrote that. No templates. No drag-and-drop. Just code,
+        caffeine, and raw ambition. </p>
 
-    <p>
-      No templates. No drag-and-drop. Just code, grit, and sleepless nights fueled by coffee, Sting, and raw ambition. If you’re seeing this, you’re seeing the real output of a young dev in the making — not perfect, but evolving.
-    </p>
+        <p>This site? It’s me — unfiltered, unfinished, but always building.</p>
   </div>
 </section>
 
 
     <section class="collapsible">
   <div class="collapsible-header">
-    <h2>📚 Education</h2>
+    <h2>Education</h2>
     <button>Show More</button>
   </div>
   <div class="collapsible-content">
@@ -246,7 +270,7 @@
 
 <section class="collapsible">
   <div class="collapsible-header">
-    <h2>📌 Leadership</h2>
+    <h2> Leadership</h2>
     <button>Show More</button>
   </div>
   <div class="collapsible-content">
@@ -259,8 +283,7 @@
           </div>
           <p class="timeline-sub">Camarin High School</p>
           <p class="timeline-desc">
-            Spearheaded the school’s robotics division, managing a team of builders and coders for inter-school competitions. Oversaw project timelines, hardware procurement, and strategic design decisions.
-          </p>
+           Led the school’s robotics team, guiding both builders and coders in preparing for inter-school competitions. Managed the timeline for each project, handled hardware purchases, and made decisions on how the robots should be built and programmed. Helped the team stay organized and ready for contests. </p>
         </div>
       </li>
 
@@ -285,8 +308,7 @@
           </div>
           <p class="timeline-sub">The Icon, Camarin High School</p>
           <p class="timeline-desc">
-      Led the school's online publication team as a layout designer. Produced visually engaging digital spreads for campus news and editorial pieces. Represented the school in the Division Schools Press Conference (DSPC) under the Online Publication category.
-          </p>
+      Led the school's online publication team as a layout designer. Produced visually engaging digital spreads for campus news and editorial pieces using custom-built WordPress sites tailored for DSPC requirements. Represented the school in the Division Schools Press Conference (DSPC) under the Online Publication category.  </p>
         </div>
       </li>
     </ul>
@@ -376,7 +398,7 @@
 
     <section class="collapsible">
   <div class="collapsible-header">
-    <h2>🧠 Skills</h2>
+    <h2> Skills</h2>
     <button>Show More</button>
   </div>
   <div class="collapsible-content">
@@ -453,12 +475,12 @@
 
     <section class="collapsible">
       <div class="collapsible-header">
-  <h2>📬 Contact</h2>
+  <h2> Contact</h2>
   <button>Show More</button>
 </div>
 <div class="collapsible-content">
   <p>
-    📧 <strong>Email:</strong> <a href="mailto:cadizal06@gmail.com">cadizal06@gmail.com</a><br>
+     <strong>Email:</strong> <a href="mailto:cadizal06@gmail.com">cadizal06@gmail.com</a><br>
 
     <form id="contactForm">
       <label for="name">Name</label>

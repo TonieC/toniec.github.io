@@ -69,8 +69,8 @@
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="mac.css">
   <!-- Scripts-->
-   <script src="scripts.js" type="text/javaScript" ></script>
-   <script src="console-game.js" type="text/javaScript" ></script>
+   <script src="scripts.js" type="text/javascript" ></script>
+   <script src="cursor.js" type="text/javascript" ></script>
   <!-- Title -->
   <title>Tonie's Workshop</title>
   
@@ -78,24 +78,13 @@
 
 <body>
 
-  
+<img id="follower" src="/images/cursor.svg" alt="Follower"
+     style="position:fixed; width:60px; pointer-events:none; z-index:5; transform: translate(-50%, -50%);" />
 
-<div id="themeFlash"></div>
-  <div id="themeTransition"></div>
-  <div id="themeToast"></div>
 
 
  <script>
-  const toggle = document.getElementById('modeToggle');
-  const overlay = document.getElementById('themeTransition');
-  const flash = document.getElementById('themeFlash');
   const toast = document.getElementById('themeToast');
-
-  function updateButtonLabel() {
-    const currentTheme = document.documentElement.getAttribute('data-theme');
-    toggle.textContent = currentTheme === 'light' ? 'Darker Text' : 'Lighter Text';
-    toggle.setAttribute('aria-pressed', currentTheme !== 'light');
-  }
 
   function showToast(message) {
     toast.textContent = message;
@@ -114,65 +103,18 @@
     if (hour < 21) return "Good evening! 🌙";
     return "Winding down? 🌃";
   }
-
-  function themeRippleEffect(x, y) {
-    flash.style.left = `${x}px`;
-    flash.style.top = `${y}px`;
-    flash.style.transform = 'translate(-50%, -50%) scale(1)';
-    flash.style.opacity = '0.6';
-
-    setTimeout(() => {
-      flash.style.transform = 'translate(-50%, -50%) scale(0)';
-      flash.style.opacity = '0';
-    }, 500);
-  }
-
-  function toggleThemeWithSwipe(x = window.innerWidth / 2, y = window.innerHeight / 2) {
-    const currentTheme = document.documentElement.getAttribute('data-theme');
-
-    overlay.style.transformOrigin = currentTheme === 'light' ? 'right' : 'left';
-    overlay.style.transform = 'scaleX(1)';
-    themeRippleEffect(x, y);
-
-    setTimeout(() => {
-      if (currentTheme === 'light') {
-        document.documentElement.removeAttribute('data-theme'); // switch to dark
-        localStorage.setItem('theme', 'dark');
-      } else {
-        document.documentElement.setAttribute('data-theme', 'light'); // switch to light
-        localStorage.setItem('theme', 'light');
-      }
-
-      updateButtonLabel();
-      showToast(getTimeGreeting());
-
-      overlay.style.transformOrigin = currentTheme === 'light' ? 'left' : 'right';
-      overlay.style.transform = 'scaleX(0)';
-    }, 300);
-  }
-
-  // Load theme preference
-  const savedTheme = localStorage.getItem('theme');
-  if (savedTheme === 'light') {
-    document.documentElement.setAttribute('data-theme', 'light');
-  }
-
-  toggle.addEventListener('click', (e) => {
-    toggleThemeWithSwipe(e.clientX, e.clientY);
-  });
-
-  updateButtonLabel();
 </script>
+
 
 
   <main class="split">
     <div class="left">
-      
-      <img src="images/images1.png" alt="Tonie" class="profile-img">
+     <div class="profile-img-container">
+  <img src="images/images1.png" alt="Tonie" class="profile-img">
+</div>
+
 <div class="profile-name-wrapper">
-  <div class="profile-name" data-tooltip="Tonie C. \ Programmer \ Based in the Philippines">
-    Tonie C.
-  </div>
+  <div class="profile-name">Tonie C.</div>
   <div class="status-bubble" id="statusBubble" data-tooltip="Currently building cool stuff">🟢 Available</div>
 </div>
 
@@ -246,9 +188,6 @@
   updateStatus();
   setInterval(updateStatus, 60000); // check every minute
 </script>
-
-
-
 
 
 
@@ -352,7 +291,7 @@
 
 
       <h1>Hi, I'm Tonie</h1>
-      <p class="tagline">Website Developer | Freelancer | Grade 11 Student</p>
+      <p class="tagline">Front-End Developer</p>
       <p class="about">
         I code out of curiosity, build projects for fun, and love blending software + hardware. From JavaScript and C# to Arduino and Raspberry Pi, I'm constantly experimenting and learning.
       </p>
