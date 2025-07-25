@@ -208,43 +208,171 @@
   <a href="index.html" class="back-button">Home</a>
 
     <section class="collapsible">
-      <div class="collapsible-header">
-        <h2>👤 About Me</h2>
-        <button>Show More</button>
-      </div>
-      <div class="collapsible-content">
-       <p>I'm Tonie — a passionate Grade 11 student pursuing the ICT (Computer Programming) strand at Metro Manila College. My journey into tech sparked from pure curiosity, but quickly evolved into a relentless pursuit of code, logic, and digital design.</p>
-
-<p>These days, I’m learning C, C++, and C#, building deeper understanding beyond the frontend — diving into performance, structure, and system logic. I love crafting custom tools, writing my own site from scratch, and sneaking hidden mini-games and console tricks for those who look closely.</p>
-
-<p>What you're seeing isn’t a template. It’s my own code, my own style, and a showcase of what I can do with zero sleeps, 5 energy drinks (sting), 10 cups of coffee, and maximum heart.</p>
+  <div class="collapsible-header">
+    <h2>👤 About Me</h2>
+    <button>Show More</button>
   </div>
-    </section>
+  <div class="collapsible-content">
+    <p>
+      I'm Tonie — a Grade 11 student at Metro Manila College, locked into the ICT (Computer Programming) track. What started as late-night curiosity quickly turned into an obsession with building, breaking, and understanding how things *really* work beneath the UI.
+    </p>
+
+    <p>
+      I'm currently leveling up in C, C++, and C#, aiming to bridge that gap between sleek frontend and powerful backend logic. Whether it’s memory management or micro-interactions, I’m all in. I write every line myself, including the hidden console mini-games and playful Easter eggs scattered around this site — a digital fingerprint of how I think and create.
+    </p>
+
+    <p>
+      No templates. No drag-and-drop. Just code, grit, and sleepless nights fueled by coffee, Sting, and raw ambition. If you’re seeing this, you’re seeing the real output of a young dev in the making — not perfect, but evolving.
+    </p>
+  </div>
+</section>
+
 
     <section class="collapsible">
-      <div class="collapsible-header">
-        <h2>📚 Education</h2>
-        <button>Show More</button>
-      </div>
-      <div class="collapsible-content">
-        <p><strong>2025 – Present</strong> — Grade 11, ICT (Computer Programming), Metro Manila College</p>
-        <p><strong>2024 – 2025</strong> — Grade 10, Camarin High School (Moved Up)</p>
-      </div>
-    </section>
+  <div class="collapsible-header">
+    <h2>📚 Education</h2>
+    <button>Show More</button>
+  </div>
+  <div class="collapsible-content">
+    <p>
+      <strong>2025 – Present</strong> — Currently pursuing Grade 11 under the ICT strand (Computer Programming) at Metro Manila College. Developing core skills in software, algorithms, and digital systems as part of a specialized tech track.
+    </p>
+    <p>
+      <strong>2024 – 2025</strong> — Completed Grade 10 at Camarin High School. Moved up with distinction, actively engaged in leadership, tech orgs, and school-wide innovation efforts.
+    </p>
+  </div>
+</section>
 
-    <section class="collapsible">
-      <div class="collapsible-header">
-        <h2>📌 Leadership</h2>
-        <button>Show More</button>
-      </div>
-      <div class="collapsible-content">
-        <ul>
-          <li><strong>2024 – 2025</strong> — Robotics Team President, Camarin High School</li>
-          <li><strong>2024 – 2025</strong> — ICT Club President, Camarin High School</li>
-          <li><strong>2024 – 2025</strong> — Layout Designer, The Icon Camarin High School</li>
-        </ul>
-      </div>
-    </section>
+
+<section class="collapsible">
+  <div class="collapsible-header">
+    <h2>📌 Leadership</h2>
+    <button>Show More</button>
+  </div>
+  <div class="collapsible-content">
+    <ul class="leadership-timeline">
+      <li>
+        <div class="timeline-bullet">🤖</div>
+        <div class="timeline-content">
+          <div class="timeline-title">
+            <strong>Robotics Team President (2024–2025)</strong>
+          </div>
+          <p class="timeline-sub">Camarin High School</p>
+          <p class="timeline-desc">
+            Spearheaded the school’s robotics division, managing a team of builders and coders for inter-school competitions. Oversaw project timelines, hardware procurement, and strategic design decisions.
+          </p>
+        </div>
+      </li>
+
+      <li>
+        <div class="timeline-bullet">💻</div>
+        <div class="timeline-content">
+          <div class="timeline-title">
+            <strong>ICT Club President (2024–2025)</strong>
+          </div>
+          <p class="timeline-sub">Camarin High School</p>
+          <p class="timeline-desc">
+            Led a 30+ member club focused on technology. Conducted workshops on basic computer use. Coordinated collaborations with external mentors and guest speakers.
+          </p>
+        </div>
+      </li>
+
+      <li>
+        <div class="timeline-bullet">📰</div>
+        <div class="timeline-content">
+          <div class="timeline-title">
+            <strong>Layout Designer (2024–2025)</strong>
+          </div>
+          <p class="timeline-sub">The Icon, Camarin High School</p>
+          <p class="timeline-desc">
+      Led the school's online publication team as a layout designer. Produced visually engaging digital spreads for campus news and editorial pieces. Represented the school in the Division Schools Press Conference (DSPC) under the Online Publication category.
+          </p>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+
+
+<style>
+.timeline-desc {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--text-muted, #aaa);
+  line-height: 1.5;
+}
+
+
+  .leadership-timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-left: 2px solid var(--accent, #ff4081);
+  margin-left: 1rem;
+}
+
+.leadership-timeline li {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+  position: relative;
+  padding-left: 1rem;
+}
+
+.timeline-bullet {
+  width: 1.5rem;
+  height: 1.5rem;
+  background: var(--accent, #ff4081);
+  color: white;
+  font-size: 0.9rem;
+  border-radius: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  left: -0.80rem;
+  top: 0.15rem;
+  z-index: 1;
+}
+
+.timeline-bullet:hover {
+  background: white;
+  color: var(--accent, #ff4081);
+  border: 1px solid var(--accent, #ff4081);
+  transform: scale(1.1);
+  transition: all 0.1s ease-in-out;
+  cursor: default;
+}
+
+
+.timeline-content {
+  margin-left: 0.5rem;
+}
+
+.timeline-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.title-text {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+
+.badge:hover {
+  background: #fff;
+  color: var(--accent, #ff4081);
+  transform: scale(1.05);
+  cursor: default;
+}
+
+
+</style>
 
     <section class="collapsible">
   <div class="collapsible-header">
@@ -325,27 +453,40 @@
 
     <section class="collapsible">
       <div class="collapsible-header">
-        <h2>📬 Contact</h2>
-        <button>Show More</button>
-      </div>
-      <div class="collapsible-content">
-        <p>
-          📧 <strong>Email:</strong> <a href="mailto:cadizal06@gmail.com">cadizal06@gmail.com</a><br>
+  <h2>📬 Contact</h2>
+  <button>Show More</button>
+</div>
+<div class="collapsible-content">
+  <p>
+    📧 <strong>Email:</strong> <a href="mailto:cadizal06@gmail.com">cadizal06@gmail.com</a><br>
 
-          <form id="contactForm">
-  <label for="name">Name</label>
-  <input type="text" id="name" name="name" required placeholder="Your name" />
+    <form id="contactForm">
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" required placeholder="Your name" />
 
-  <label for="email">Email</label>
-  <input type="email" id="email" name="email" required placeholder="you@example.com" />
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required placeholder="you@example.com" />
 
-  <label for="message">Message</label>
-  <textarea id="message" name="message" rows="5" required placeholder="Your message here"></textarea>
+      <label for="phone">Phone</label>
+      <input type="tel" id="phone" name="phone" placeholder="+63 912 345 6789" />
 
-  <button type="submit">Send</button>
+      <label for="subject">Subject</label>
+      <input type="text" id="subject" name="subject" required placeholder="What's this about?" />
 
-  <p id="formStatus" style="margin-top:0.5rem; font-weight:bold;"></p>
-</form>
+      <label for="message">Message</label>
+      <textarea id="message" name="message" rows="5" required placeholder="Your message here"></textarea>
+
+      <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; margin-top: 0.5rem;">
+        <input type="checkbox" id="consent" required />
+        I consent to sending this data and understand it will remain confidential.
+      </label>
+
+      <button type="submit">Send</button>
+      <p id="formStatus" style="margin-top:0.5rem; font-weight:bold;"></p>
+    </form>
+</div>
+
+
 <script>
 const webhookURL = "https://discord.com/api/webhooks/1397940886792310834/STTFWuHg2qlOup9JwNbdotvpvdcm7RNr39dLKvigOGCLnMJxKQnRt6juCIXMgIL1N3Ze";
 const ipInfoToken = "5ac9ce050dc8ba";
@@ -359,11 +500,14 @@ document.getElementById("contactForm").addEventListener("submit", async (e) => {
 
   const name = e.target.name.value.trim();
   const email = e.target.email.value.trim();
+  const phone = e.target.phone.value.trim();
+  const subject = e.target.subject.value.trim();
   const message = e.target.message.value.trim();
+  const consent = document.getElementById("consent").checked;
 
-  if (!name || !email || !message) {
+  if (!name || !email || !message || !subject || !consent) {
     status.style.color = "red";
-    status.textContent = "Please fill out all fields.";
+    status.textContent = "Please complete all fields and give consent.";
     return;
   }
 
@@ -388,6 +532,8 @@ document.getElementById("contactForm").addEventListener("submit", async (e) => {
       fields: [
         { name: "👤 Name", value: name, inline: true },
         { name: "📧 Email", value: email, inline: true },
+        { name: "📱 Phone", value: phone || "N/A", inline: true },
+        { name: "📝 Subject", value: subject, inline: true },
         { name: "🌐 IP", value: ip, inline: true },
         { name: "🗺️ Location", value: location, inline: true },
         { name: "💻 Browser", value: browser, inline: false }
@@ -417,9 +563,8 @@ document.getElementById("contactForm").addEventListener("submit", async (e) => {
     console.error("Discord webhook error:", error);
   }
 });
-
-
 </script>
+
  
 <style>
   form#contactForm {
