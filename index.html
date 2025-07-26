@@ -77,9 +77,93 @@
 </head>
 
 <body>
+<div id="geoToast" class="hidden">
+  <p>
+    ⚠️ This site uses your approximate location to show personalized greetings and weather.<br>
+    Your browser may request permission. You can deny it if you prefer.
+  </p>
+  <button id="geoToastClose">×</button>
+</div>
+
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    const geoToast = document.getElementById('geoToast');
+    const geoClose = document.getElementById('geoToastClose');
+
+    // 🚨 Always show the toast on load:
+    geoToast.classList.remove('hidden');
+
+    geoClose.addEventListener('click', () => {
+      geoToast.classList.add('hidden');
+    });
+  });
+</script>
+
+<style>
+ #geoToast {
+  position: fixed;
+  top: 0.8rem;
+  left: 0.8rem;
+  max-width: 220px;
+  background: var(--background-elevated, #222);
+  color: var(--text, #fff);
+  border: 1px solid var(--accent, #ff4081);
+  border-radius: 5px;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.25);
+  padding: 0.6rem 0.75rem 0.6rem 0.75rem;
+  z-index: 9999;
+  font-size: 0.78rem;
+  line-height: 1.35;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  animation: fadeInUp 0.3s ease-out;
+  pointer-events: auto;
+}
+
+#geoToast p {
+  margin: 0;
+}
+
+#geoToastClose {
+  position: absolute;
+  top: 5px;
+  right: 7px;
+  background: transparent;
+  border: none;
+  color: var(--text-muted, #aaa);
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  transition: color 0.2s;
+}
+
+#geoToastClose:hover {
+  color: var(--accent, #ff4081);
+}
+
+#geoToast.hidden {
+  display: none !important;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+</style>
+
+
 
 <img id="follower" src="/images/cursor.svg" alt="Follower"
-     style="position:fixed; width:60px; pointer-events:none; z-index:5; transform: translate(-50%, -50%);" />
+     style="position:fixed; width:60px; pointer-events:none; z-index:99999999999999999; transform: translate(-50%, -50%);" />
 
 
 
@@ -189,125 +273,22 @@
   setInterval(updateStatus, 60000); // check every minute
 </script>
 
-<div id="locationPrompt" class="modal">
-  <div class="modal-content">
-    <h2>🌍 Location Access</h2>
-    <p>This site asks for access to your <strong>approximate location</strong> to personalize greetings and show local weather.</p>
-    <p><span style="font-size:1.2em;">🔒</span> <strong>We do not track, save, or share your exact location.</strong> Everything stays local — nothing creepy, nothing stored.</p>
-    <p>Sharing is optional, and the site will still work without it — just with fewer personalized features.</p>
-    <p>If you feel unsafe or unsure, you can kindly step away from the site now and refuse entry. No hard feelings. </p>
-  </div>
-</div>
-
-
-
 <style>
-  .modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(10, 10, 10, 0.8);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-  backdrop-filter: blur(4px);
-}
-
-.modal-content {
-  background: var(--background);
-  color: var(--text-color, #fff);
-  padding: 2rem;
-  border-radius: 12px;
-  max-width: 400px;
-  text-align: center;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
-}
-
-.modal-actions button {
-  margin: 10px;
-  padding: 10px 20px;
-  background: var(--accent, #ff4081);
-  color: #fff;
-  border: none;
+ .notice {
+  font-size: 0.9rem;
+  color: var(--text-paragraph);
+  opacity: 0.8;
+  margin-top: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.75rem 1rem;
   border-radius: 6px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background 0.3s;
-}
-
-.modal-actions button:hover {
-  background: #e13774;
-}
-
-#locationPrompt {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 999999; /* Ensure it's above everything else */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0, 0, 0, 0.8); /* optional dark overlay */
+  border-left: 3px solid var(--accent);
 }
 
 </style>
-
-<script>
-  async function initLocationFlow() {
-    const prompt = document.getElementById('locationPrompt');
-
-    if (!navigator.permissions) {
-      // Old browsers fallback
-      showPromptThenAsk();
-      return;
-    }
-
-    const status = await navigator.permissions.query({ name: 'geolocation' });
-
-    if (status.state === 'granted') {
-      // User already allowed
-      startLocationWeather();
-    } else if (status.state === 'denied') {
-      // User denied
-      startFallbackWeather();
-    } else if (status.state === 'prompt') {
-      // Show the custom notice *before* triggering browser's native prompt
-      if (prompt) prompt.style.display = 'flex';
-
-      // Give them like 2 seconds to read the message
-      setTimeout(() => {
-        navigator.geolocation.getCurrentPosition(
-          (pos) => {
-            if (prompt) prompt.style.display = 'none';
-            startLocationWeather(pos);
-          },
-          (err) => {
-            if (prompt) prompt.style.display = 'none';
-            startFallbackWeather();
-          }
-        );
-      }, 2000);
-    }
-  }
-
-  window.addEventListener('DOMContentLoaded', initLocationFlow);
-</script>
-
-
-
-
-
-
     </div>
     
     <div class="right">
-
-
       <div id="pageGreeting"></div>
 <script>
 const API_KEY = "8f674a8186a5e78a7c6a8b2e07d44580";
