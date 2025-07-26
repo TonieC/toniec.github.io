@@ -23,7 +23,6 @@
       margin: 0;
       padding: 2;
       line-height: 1.6;
-      cursor: none;
   overflow-x: hidden;
     }
 
@@ -47,8 +46,6 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-    cursor: none !important;
-
 }
 
 
@@ -221,21 +218,16 @@ section:first-of-type {
 
 
   </style>
-   <script src="cursor.js" type="text/javascript" ></script>
 
 </head>
 <body>
-<img id="follower" src="/images/cursor.svg" alt="Follower"
-     style="position:fixed; width:60px; pointer-events:none; z-index:999; transform: translate(-50%, -50%);" />
-
-  <script src="cursor.js" type="text/javascript"></script>
 
   <a href="index.html" class="back-button" style="z-index: 1;">Home</a>
 
     <section class="collapsible">
   <div class="collapsible-header">
     <h2> About Me</h2>
-    <button>Show More</button>
+    <button>View</button>
   </div>
   <div class="collapsible-content">
     <p>
@@ -255,7 +247,7 @@ section:first-of-type {
     <section class="collapsible">
   <div class="collapsible-header">
     <h2>Education</h2>
-    <button>Show More</button>
+    <button>View</button>
   </div>
   <div class="collapsible-content">
     <p>
@@ -271,7 +263,7 @@ section:first-of-type {
 <section class="collapsible">
   <div class="collapsible-header">
     <h2> Leadership</h2>
-    <button>Show More</button>
+    <button>View</button>
   </div>
   <div class="collapsible-content">
     <ul class="leadership-timeline">
@@ -399,12 +391,12 @@ section:first-of-type {
     <section class="collapsible">
   <div class="collapsible-header">
     <h2> Skills</h2>
-    <button>Show More</button>
+    <button>View</button>
   </div>
   <div class="collapsible-content">
     <div class="skills-chart">
       <div class="skills-chart-row">
-        <div class="skills-label">Excellent</div>
+        <div class="skills-label">5 Years</div>
         <div class="skills-icons">
           <div class="tooltip-container">
             <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript" />
@@ -413,7 +405,7 @@ section:first-of-type {
         </div>
       </div>
       <div class="skills-chart-row">
-        <div class="skills-label">Good</div>
+        <div class="skills-label"> 3 Years</div>
         <div class="skills-icons">
             <div class="tooltip-container">
             <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" alt="C++" />
@@ -421,20 +413,18 @@ section:first-of-type {
           </div>
           </div>
         </div>
-      </div>
+      </div><br>
       <div class="skills-chart-row">
-        <div class="skills-label">Intermediate</div>
+        <div class="skills-label"> ~ 2 Years</div>
         <div class="skills-icons">
           <div class="tooltip-container">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML" />
-            <span class="click-tooltip">HTML5</span>
           </div>
           <div class="tooltip-container">
             <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" />
             <span class="click-tooltip">Python</span>
           </div>
         </div>
-      </div>
+      </div><br>
       <div class="skills-chart-row">
         <div class="skills-label">Learning</div>
         <div class="skills-icons">
@@ -444,10 +434,10 @@ section:first-of-type {
           </div>
           <div class="tooltip-container">
             <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg" alt="C#" />
-            <span class="click-tooltip">C#</span>
+            <span class="click-tooltip">C span>
           </div>
         </div>
-      </div>
+      </div><br>
       <div class="skills-chart-row">
         <div class="skills-label">Other</div>
         <div class="skills-icons">
@@ -473,21 +463,24 @@ section:first-of-type {
     <section class="collapsible">
       <div class="collapsible-header">
   <h2> Contact</h2>
-  <button>Show More</button>
+  <button>View</button>
 </div>
 <div class="collapsible-content">
   <p>
+    <!-- I want to center the email, and link to my email. -->
+    <div style="width: auto;    text-align: center;">
      <strong>Email:</strong> <a href="mailto:cadizal06@gmail.com">cadizal06@gmail.com</a><br>
-
+    </div>
+ <div class="center-form-container">
     <form id="contactForm">
       <label for="name">Name</label>
-      <input type="text" id="name" name="name" required placeholder="Your name" />
+      <input type="text" id="name" name="name" required placeholder="Name" />
 
       <label for="email">Email</label>
-      <input type="email" id="email" name="email" required placeholder="you@example.com" />
+      <input type="email" id="email" name="email" required placeholder="name@email.com" />
 
       <label for="phone">Phone</label>
-      <input type="tel" id="phone" name="phone" placeholder="+63 912 345 6789" />
+      <input type="tel" id="phone" name="phone" placeholder="+63 123 123 1234" />
 
       <label for="subject">Subject</label>
       <input type="text" id="subject" name="subject" required placeholder="What's this about?" />
@@ -497,12 +490,13 @@ section:first-of-type {
 
       <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; margin-top: 0.5rem;">
         <input type="checkbox" id="consent" required />
-        I consent to sending this data and understand it will remain confidential.
+        I consent to sending this data and understand it will remain confidential. 
       </label>
 
       <button type="submit">Send</button>
       <p id="formStatus" style="margin-top:0.5rem; font-weight:bold;"></p>
     </form>
+    </div>
 </div>
 
 
@@ -526,7 +520,7 @@ document.getElementById("contactForm").addEventListener("submit", async (e) => {
 
   if (!name || !email || !message || !subject || !consent) {
     status.style.color = "red";
-    status.textContent = "Please complete all fields and give consent.";
+    status.textContent = "Please complete all fields and give consent. ";
     return;
   }
 
@@ -544,7 +538,7 @@ document.getElementById("contactForm").addEventListener("submit", async (e) => {
   const ip = ipData.ip || "Unknown";
 
   const payload = {
-    content: "<@766719829179891743> 📩 New form submission",
+    content: "<@766719829179891743>  ",
     embeds: [{
       title: "💬 Contact Form Submission",
       color: 0xff4081,
@@ -571,14 +565,14 @@ document.getElementById("contactForm").addEventListener("submit", async (e) => {
 
     if (res.ok) {
       status.style.color = "limegreen";
-      status.textContent = "Message sent! Thanks for reaching out. 🙌";
+      status.textContent = "Message sent! Thanks for reaching out. I'll get back to you soon.";
       e.target.reset();
     } else {
       throw new Error(`HTTP error ${res.status}`);
     }
   } catch (error) {
     status.style.color = "red";
-    status.textContent = "Failed to send message. Try again later.";
+    status.textContent = "Failed to send message. Try again later. Or contact me directly at  <a href='mailto:cadizal06@gmail.com";
     console.error("Discord webhook error:", error);
   }
 });
@@ -617,8 +611,11 @@ form#contactForm textarea {
 form#contactForm input:focus,
 form#contactForm textarea:focus {
   border-color: #ff79b0;
-  outline: none;
+  outline:  ridge 2px var(--accent, #ff4081);
+  transform: scale(1.02);
+  box-shadow: 0 0 33px rgba(255, 64, 129, 0.2);
 }
+
 
 form#contactForm button {
   background: var(--accent, #ff4081);
@@ -628,14 +625,23 @@ form#contactForm button {
   font-weight: 700;
   color: var(--bg, #211b30);
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.9s ease;
 }
 
 form#contactForm button:hover {
-  background: #ff79b0;
+  background: #a74f4f;
+}
+.center-form-container {
+  display: flex;
+  justify-content: center;  /* Horizontal center */
+  align-items: center;      /* Vertical center */
+  padding: 0.1rem 0.5rem;
+  min-height: 50vh;        /* Optional: fill screen if needed */
+  box-sizing: border-box;
 }
 
-</style></p>
+</style>
+</p>
       </div>
     </section>
 
@@ -649,7 +655,7 @@ form#contactForm button:hover {
       const button = section.querySelector('button');
       button.addEventListener('click', () => {
         section.classList.toggle('active');
-        button.textContent = section.classList.contains('active') ? 'Hide' : 'Show More';
+        button.textContent = section.classList.contains('active') ? 'Hide' : 'View';
       });
     });
   </script>
