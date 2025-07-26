@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fake CMD</title>
+  <style>
+    :root { --accent: #00ff00; }
+    body {
+      margin: 0;
+      padding: 0;
+      background: black;
+      color: white;
+      font-family: Consolas, monospace;
+      font-size: 16px;
+    }
+    #terminal {
+      padding: 20px;
+      white-space: pre-wrap;
+    }
+    .input-line {
+      display: flex;
+      align-items: center;
+    }
+    .prompt {
+      color: var(--accent);
+    }
+    input {
+      background: none;
+      border: none;
+      color: white;
+      outline: none;
+      font-family: inherit;
+      font-size: inherit;
+      width: 100%;
+    }
+    .blinking-cursor::after {
+      content: "_";
+      animation: blink 1s step-start infinite;
+    }
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div id="terminal">
+    <div>Microsoft Windows [Version 10.0.22621.1]</div>
+    <div>(c) Microsoft Corporation. All rights reserved.</div>
+    <br>
+  </div>
+
+  <script>
+    const terminal = document.getElementById("terminal");
+
+    let cwd = "C:\\Users\\Tonie";
+    const fs = {
+      "C:\\Users\\Tonie": ["Desktop", "Documents", "Pictures"],
+      "C:\\Users\\Tonie\\Desktop": ["notes.txt", "game.exe"],
+      "C:\\Users\\Tonie\\Documents": [],
+      "C:\\Users\\Tonie\\Pictures": ["meme.png"]
+    };
+
+    function print(text = "") {
+      terminal.innerHTML += text + "\n";
+      window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function createPrompt() {
+      const line = document.createElement("div");
+      line.className = "input-line";
+      line.innerHTML = `<span class="prompt">${cwd}&gt;</span> <input type="text" class="blinking-cursor">`;
+      terminal.appendChild(line);
+
+      const input = line.querySelector("input");
+      setTimeout(() => input.focus(), 0); // Ensure proper focus
+
+      input.addEventListener("keydown", function (e) {
+        if (e.key === "Enter") {
+          const command = input.value.trim();
+          input.disabled = true;
+          input.classList.remove("blinking-cursor");
+          runCommand(command);
+        }
+      });
+    }
+
+    function runCommand(input) {
+      print(`${cwd}> ${input}`);
+      const [command, ...args] = input.split(" ");
+      const argStr = args.join(" ");
+
+      switch (command.toLowerCase()) {
+        case "help":
+          print("Available commands:\nhelp, dir, cd, cls, echo, color, date, time, ver, exit");
+          break;
+        case "cls":
+          terminal.innerHTML = "";
+          print("Microsoft Windows [Version 10.0.22621.1]");
+          print("(c) Microsoft Corporation. All rights reserved.\n");
+          break;
+        case "dir":
+          const files = fs[cwd] || [];
+          files.forEach(f => print(f));
+          break;
+        case "cd":
+          if (argStr === "..") {
+            const parts = cwd.split("\\");
+            if (parts.length > 2) parts.pop();
+            cwd = parts.join("\\");
+          } else if (fs[cwd + "\\" + argStr]) {
+            cwd += "\\" + argStr;
+          } else {
+            print("The system cannot find the path specified.");
+          }
+          break;
+        case "echo":
+          print(argStr);
+          break;
+        case "color":
+          if (argStr === "a") document.body.style.color = "#0f0";
+          else if (argStr === "c") document.body.style.color = "#f00";
+          else if (argStr === "e") document.body.style.color = "#ff0";
+          else document.body.style.color = "#fff";
+          break;
+        case "date":
+          print("Current date is: " + new Date().toLocaleDateString());
+          break;
+        case "time":
+          print("Current time is: " + new Date().toLocaleTimeString());
+          break;
+        case "ver":
+          print("Microsoft Windows [Version 10.0.22621.1]");
+          break;
+        case "exit":
+          print("Exiting fake CMD. Refresh to restart.");
+          return;
+        case "":
+          break;
+        default:
+          print(`'${command}' is not recognized as an internal or external command.`);
+      }
+
+      setTimeout(createPrompt, 50); // Delay ensures consistent input focus
+    }
+
+    createPrompt();
+  </script>
+</body>
+</html>
+s

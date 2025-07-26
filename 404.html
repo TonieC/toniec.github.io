@@ -213,6 +213,7 @@ const zero = document.getElementById("zero");
 const bonkText = document.getElementById("bonk");
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
+
 function playBonkSound() {
   if (audioCtx.state === 'suspended') audioCtx.resume();
   const now = audioCtx.currentTime;
@@ -253,6 +254,105 @@ setInterval(() => {
 }, 2000);
 </script>
 
+
+<script>
+let glitchKeyHeld = false;
+let glitchTimeout;
+
+document.addEventListener('keydown', (e) => {
+  if (e.key.toLowerCase() === 'g' && !glitchKeyHeld) {
+    glitchKeyHeld = true;
+    glitchTimeout = setTimeout(() => {
+      activateGlitchMode();
+    }, 2000); // 2 seconds
+  }
+});
+
+document.addEventListener('keyup', (e) => {
+  if (e.key.toLowerCase() === 'g') {
+    glitchKeyHeld = false;
+    clearTimeout(glitchTimeout);
+  }
+});
+
+function activateGlitchMode() {
+  const body = document.body;
+  body.classList.add('glitch-mode');
+
+  // Screen Shake
+  let shakeInterval = setInterval(() => {
+    body.style.transform = `translate(${Math.random() * 4 - 2}px, ${Math.random() * 4 - 2}px)`;
+  }, 50);
+
+  // Screen FX - Scanlines
+  const scanlines = document.createElement('div');
+  scanlines.className = 'scanlines';
+  document.body.appendChild(scanlines);
+
+  // Fake Terminal Popup
+  const term = document.createElement('div');
+  term.innerText = ">>> CORE DUMPED\n>>> SYSTEM OVERRIDE\n>>> 404 DETECTED";
+  term.style.cssText = `
+    position: fixed;
+    top: 10%;
+    left: 10%;
+    background: black;
+    color: lime;
+    font-family: monospace;
+    padding: 1rem;
+    z-index: 9999;
+    box-shadow: 0 0 10px lime;
+    white-space: pre;
+  `;
+  document.body.appendChild(term);
+  setTimeout(() => term.remove(), 4000);
+
+  // Element Mutation
+  document.querySelectorAll("*").forEach(el => {
+    el.style.fontFamily = "Comic Sans MS, cursive, sans-serif";
+    el.style.transform = `rotate(${Math.random() * 20 - 10}deg)`;
+    el.style.textShadow = "1px 0 red, -1px 0 cyan";
+    el.style.mixBlendMode = "difference";
+
+    // Marquee replacement
+    if (el.tagName === "BUTTON" || el.tagName === "A") {
+      const marquee = document.createElement("marquee");
+      marquee.innerText = el.innerText;
+      el.replaceWith(marquee);
+    }
+  });
+
+  // Cleanup after 7 seconds
+  setTimeout(() => {
+    body.classList.remove('glitch-mode');
+    body.style.transform = '';
+    clearInterval(shakeInterval);
+    scanlines.remove();
+  }, 7000);
+}
+</script>
+
+<style>
+.glitch-mode * {
+  text-shadow: 1px 0 red, -1px 0 cyan !important;
+  transition: all 0.2s ease;
+}
+
+.scanlines {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.02),
+    rgba(255, 255, 255, 0.02) 2px,
+    transparent 2px,
+    transparent 4px
+  );
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: overlay;
+}
+</style>
 
 
 
