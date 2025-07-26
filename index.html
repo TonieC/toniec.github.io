@@ -90,14 +90,18 @@
     const geoToast = document.getElementById('geoToast');
     const geoClose = document.getElementById('geoToastClose');
 
-    // 🚨 Always show the toast on load:
-    geoToast.classList.remove('hidden');
+    // 👉 Only show if first visit
+    if (!localStorage.getItem('hasVisitedGeoToast')) {
+      geoToast.classList.remove('hidden');
+    }
 
     geoClose.addEventListener('click', () => {
       geoToast.classList.add('hidden');
+      localStorage.setItem('hasVisitedGeoToast', 'true');
     });
   });
 </script>
+
 
 <style>
  #geoToast {
