@@ -309,9 +309,10 @@ small {
 .about {
   font-size: 1rem;
   max-width: 500px;
-  margin: 1rem 0;
   line-height: 1.5;
-}
+  text-align: justify;s
+  text-indent: 2em; 
+  line-height: 1.6;}
 
 .stack {
   display: flex;
@@ -346,24 +347,6 @@ small {
   box-shadow: 0 8px 24px var(--stack-shadow);
 }
 
-.stack span::after {
-  content: attr(data-tooltip);
-  position: absolute;
-  bottom: 130%;
-  left: 50%;
-  transform: translateX(-50%);
-  background: var(--tooltip-bubble-bg);
-  color: var(--tooltip-bubble-color);
-  padding: 8px 14px;
-  font-size: 0.85rem;
-  border-radius: 12px;
-  white-space: nowrap;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  box-shadow: 0 0 12px var(--tooltip-bubble-color);
-  z-index: 100;
-}
 
 .stack span::before {
   content: '';
@@ -378,11 +361,6 @@ small {
   z-index: 99;
 }
 
-.stack span:hover::after,
-.stack span:hover::before {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
-}
 
 .stack span img,
 .stack span i {
@@ -392,7 +370,6 @@ small {
 }
 
 @keyframes floaty {
-  /* your existing floaty keyframe animation unchanged */
   0% { transform: translateY(0); }
   /* ... */
   100% { transform: translateY(0); }
@@ -557,20 +534,13 @@ main {
 }
 
 .profile-name {
-  position: relative; /* Needed for tooltip positioning */
   font-size: 1.75rem;
   font-weight: 600;
   color: var(--main);
   background-color: transparent;
-  transform: scale(1);
   transition: transform 0.3s ease, color 0.3s ease;
-  cursor: pointer;
 }
 
-.profile-name:hover {
-  transform: scale(1.15);
-  color: var(--accent);
-}
 
 /* Show on hover */
 .profile-name:hover::after,
