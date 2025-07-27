@@ -2,8 +2,8 @@
 <html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" type="image/png" href="/images/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/png" href="/images/favicon.ico" />
   <title>About Me</title>
   <style>
     :root {
@@ -15,15 +15,17 @@
       --card-radius: 12px;
       --card-padding: 1.5rem;
     }
+    
 
-    body, html {
+    body,
+    html {
       font-family: 'Segoe UI', sans-serif;
       background: var(--bg);
       color: var(--text);
       margin: 0;
       padding: 2;
       line-height: 1.6;
-  overflow-x: hidden;
+      overflow-x: hidden;
     }
 
     a {
@@ -37,75 +39,36 @@
       filter: brightness(1.2);
     }
 
-   main {
-  max-width: 70px; 
-  margin: 0 auto;
-  padding: 0 1rem;
-}
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-
-section:first-of-type {
-  margin-top: 3rem;
-}
-
-
-  section {
-  padding: var(--card-padding);
-  background: var(--bg-light);
-  border-radius: var(--card-radius);
-  margin-bottom: 1rem;
-  box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.05),
-    0 0 10px rgba(0, 0, 0, 0.2);
-  max-width: 700px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-
-    .collapsible-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      cursor: pointer;
+    main {
+      max-width: 70px;
+      margin: 0 auto;
+      padding: 0 1rem;
     }
-
-    .collapsible-header h2 {
+    * {
       margin: 0;
-      font-size: 1.5rem;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    section {
+      padding: var(--card-padding);
+      background: var(--bg-light);
+      border-radius: var(--card-radius);
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      box-shadow:
+        0 0 0 3px rgb(75, 30, 50)
+        0 0 10px rgb(255, 0, 0);
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    section h2 {
+      margin-bottom: 1rem;
       color: var(--accent);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .collapsible-header button {
-      background: var(--accent);
-      border: none;
-      color: var(--bg);
-      font-weight: bold;
-      padding: 0.4rem 1rem;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: 0.2s ease;
-    }
-
-    .collapsible-header button:hover {
-      filter: brightness(1.1);
-    }
-
-    .collapsible-content {
-      margin-top: 1rem;
-      display: none;
-    }
-
-    .active .collapsible-content {
-      display: block;
+      font-weight: 700;
+      font-size: 1.6rem;
     }
 
     .skills-chart {
@@ -119,8 +82,8 @@ section:first-of-type {
       padding: 0.75rem 1rem;
       background: #2a223f;
       border-radius: 8px;
-      justify-content: none; 
-     }
+      justify-content: none;
+    }
 
     .skills-label {
       font-weight: bold;
@@ -129,11 +92,12 @@ section:first-of-type {
     }
 
     .skills-icons {
-  display: flex;
-  justify-content: flex-start; 
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
+      display: flex;
+      justify-content: flex-start;
+      /* Flex-wrap for mobile */
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
 
     .skills-icons img {
       width: 28px;
@@ -147,6 +111,7 @@ section:first-of-type {
 
     ul {
       padding-left: 1rem;
+      margin-bottom: 1rem;
     }
 
     li {
@@ -165,264 +130,214 @@ section:first-of-type {
       }
     }
     .back-button {
-  position: fixed;
-  top: 1rem;
-  left: 1rem;
-  padding: 0.5rem 1rem;
-  background: rgba(0, 0, 0, 0.3); /* transparent & soft */
-  border: 1px solid var(--accent);
-  border-radius: 12px;
-  color: var(--accent);
-  text-decoration: none;
-  font-weight: bold;
-  backdrop-filter: blur(6px);
-  z-index: 9999;
-  transition: all 0.2s ease;
-}
+      position: fixed;
+      top: 1rem;
+      left: 1rem;
+      padding: 0.5rem 1rem;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--accent);
+      border-radius: 12px;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: bold;
+      backdrop-filter: blur(6px);
+      z-index: 9999;
+      transition: all 0.2s ease;
+    }
 
-.back-button:hover {
-  background: var(--accent);
-  color: var(--bg);
-  transform: scale(1.05);
-}
+    .back-button:hover {
+      background: var(--accent);
+      color: var(--bg);
+      transform: scale(1.05);
+    }
 
-.tooltip-container {
-  position: relative;
-  display: inline-block;
-  margin: 0 0.4rem;
-  cursor: help;
-}
+    .tooltip-container {
+      position: relative;
+      display: inline-block;
+      margin: 0 0.4rem;
+      cursor: help;
+    }
 
-.click-tooltip {
-  position: absolute;
-  top: -2.2rem;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: var(--tooltip-bg, #333);
-  color: var(--text-light, #f5f5f5);
-  padding: 0.35rem 0.6rem;
-  font-size: 0.75rem;
-  border-radius: 6px;
-  white-space: nowrap;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  z-index: 10;
-}
+    .click-tooltip {
+      position: absolute;
+      top: -2.2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: var(--tooltip-bg, #333);
+      color: var(--text-light, #f5f5f5);
+      padding: 0.35rem 0.6rem;
+      font-size: 0.75rem;
+      border-radius: 6px;
+      white-space: nowrap;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      z-index: 10;
+    }
 
-.tooltip-container:hover .click-tooltip {
-  opacity: 1;
-  transform: translateX(-50%) translateY(-4px);
-}
+    .tooltip-container:hover .click-tooltip {
+      opacity: 1;
+      transform: translateX(-50%) translateY(-4px);
+    }
 
+    form#contactForm {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      max-width: 400px;
+      margin-top: 1rem;
+      align-items: justify-center;
+      top: 50%;
+      left: 50%;
+    }
 
+    form#contactForm label {
+      font-weight: 600;
+      color: var(--accent, #ff4081);
+    }
+
+    form#contactForm input,
+    form#contactForm textarea {
+      padding: 0.6rem 0.8rem;
+      border: 2px solid var(--accent, #ff4081);
+      border-radius: 8px;
+      background: var(--bg, #211b30);
+      color: var(--text-light, #f0f0f0);
+      font-size: 1rem;
+      resize: vertical;
+      transition: border-color 0.3s ease;
+    }
+
+    form#contactForm input:focus,
+    form#contactForm textarea:focus {
+      border-color: #ff79b0;
+      outline: ridge 2px var(--accent, #ff4081);
+      transform: scale(1.02);
+      box-shadow: 0 0 33px rgba(255, 64, 129, 0.2);
+    }
+
+    form#contactForm button {
+      background: var(--accent, #ff4081);
+      border: none;
+      padding: 0.7rem;
+      border-radius: 999px;
+      font-weight: 700;
+      color: var(--bg, #211b30);
+      cursor: pointer;
+      transition: background-color 0.9s ease;
+    }
+
+    form#contactForm button:hover {
+      background: #a74f4f;
+    }
+
+    .center-form-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0.1rem 0.5rem;
+      min-height: 50vh;
+      box-sizing: border-box;
+    }
   </style>
-
 </head>
 <body>
-
   <a href="https://tonie.fun/" class="back-button" style="z-index: 1;">Home</a>
 
-    <section class="collapsible">
-  <div class="collapsible-header">
-    <h2> About Me</h2>
-    <button>View</button>
-  </div>
-  <div class="collapsible-content">
+  <section>
+    <h2>About Me</h2>
     <p>
-      I'm Tonie based at The Philippines, 18 years old, and a Grade 11 coder at Metro Manila College, 
-      deep in the ICT (Programming) track. What started as 
-      late-night curiosity turned into a full-on obsession with making things work under the hood.</p> 
-      <p>Every Easter egg, console mini-game, and pixel here?
-       I wrote that. No templates. No drag-and-drop. Just code,
-        caffeine, and raw ambition. </p>
-        <p>This site? It’s me — unfiltered, unfinished, but always building.</p>
-  </div>
-</section>
+      I'm Tonie based at The Philippines, 18 years old, and a Grade 11 coder at Metro Manila College,
+      deep in the ICT (Programming) track.
+      What started as late-night curiosity turned into a full-on obsession with making things work under the hood.
+    </p>
+    <p>
+      Every Easter egg, console mini-game, and pixel here? I wrote that. No templates. No drag-and-drop. Just code,
+      caffeine, and raw ambition.
+    </p>
+    <p>
+      This site? It’s me — unfiltered, unfinished, but always building.
+    </p>
+  </section>
 
-
-    <section class="collapsible">
-  <div class="collapsible-header">
+  <section>
     <h2>Education</h2>
-    <button>View</button>
-  </div>
-  <div class="collapsible-content">
     <p>
-      <strong>2025 – Present</strong> — Currently pursuing Grade 11 under the ICT strand (Computer Programming) at Metro Manila College. Developing core skills in software, algorithms, and digital systems as part of a specialized tech track.
+      <strong>2025 – Present</strong> — Currently pursuing Grade 11 under the ICT strand (Computer Programming) at Metro Manila College.
+      Developing core skills in software, algorithms, and digital systems as part of a specialized tech track.
     </p>
     <p>
-      <strong>2024 – 2025</strong> — Completed Grade 10 at Camarin High School. Moved up with distinction, actively engaged in leadership, tech orgs, and school-wide innovation efforts.
+      <strong>2024 – 2025</strong> — Completed Grade 10 at Camarin High School.
+      Moved up with distinction, actively engaged in leadership, tech orgs, and school-wide innovation efforts.
     </p>
-  </div>
-</section>
+  </section>
 
-
-<section class="collapsible">
-  <div class="collapsible-header">
-    <h2> Leadership</h2>
-    <button>View</button>
-  </div>
-  <div class="collapsible-content">
-    <ul class="leadership-timeline">
+  <section>
+    <h2>Leadership</h2>
+    <ul>
       <li>
-        <div class="timeline-bullet">🤖</div>
-        <div class="timeline-content">
-          <div class="timeline-title">
-            <strong>Robotics Team President (2024–2025)</strong>
-          </div>
-          <p class="timeline-sub">Camarin High School</p>
-          <p class="timeline-desc">
-           Led the school’s robotics team, guiding both builders and coders in preparing for inter-school competitions. Managed the timeline for each project, handled hardware purchases, and made decisions on how the robots should be built and programmed. Helped the team stay organized and ready for contests. </p>
-        </div>
+        <strong>🤖 Robotics Team President (2024–2025)</strong><br />
+        Camarin High School<br />
+        Led the school’s robotics team, guiding both builders and coders in preparing for inter-school competitions.
+        Managed the timeline for each project, handled hardware purchases, and made decisions on how the robots should be built and programmed.
+        Helped the team stay organized and ready for contests.
       </li>
-
       <li>
-        <div class="timeline-bullet">💻</div>
-        <div class="timeline-content">
-          <div class="timeline-title">
-            <strong>ICT Club President (2024–2025)</strong>
-          </div>
-          <p class="timeline-sub">Camarin High School</p>
-          <p class="timeline-desc">
-            Led a 30+ member club focused on technology. Conducted workshops on basic computer use. Coordinated collaborations with external mentors and guest speakers.
-          </p>
-        </div>
+        <strong>💻 ICT Club President (2024–2025)</strong><br />
+        Camarin High School<br />
+        Led a 30+ member club focused on technology. Conducted workshops on basic computer use.
+        Coordinated collaborations with external mentors and guest speakers.
       </li>
-
       <li>
-        <div class="timeline-bullet">📰</div>
-        <div class="timeline-content">
-          <div class="timeline-title">
-            <strong>Layout Designer (2024–2025)</strong>
-          </div>
-          <p class="timeline-sub">The Icon, Camarin High School</p>
-          <p class="timeline-desc">
-      Led the school's online publication team as a layout designer. Produced visually engaging digital spreads for campus news and editorial pieces using custom-built WordPress sites tailored for DSPC requirements. Represented the school in the Division Schools Press Conference (DSPC) under the Online Publication category.  </p>
-        </div>
+        <strong>📰 Layout Designer (2024–2025)</strong><br />
+        The Icon, Camarin High School<br />
+        Led the school's online publication team as a layout designer.
+        Produced visually engaging digital spreads for campus news and editorial pieces using custom-built WordPress sites tailored for DSPC requirements.
+        Represented the school in the Division Schools Press Conference (DSPC) under the Online Publication category.
       </li>
     </ul>
-  </div>
-</section>
+  </section>
 
-
-
-<style>
-.timeline-desc {
-  margin-top: 0.5rem;
-  font-size: 0.9rem;
-  color: var(--text-muted, #aaa);
-  line-height: 1.5;
-}
-
-
-  .leadership-timeline {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  border-left: 2px solid var(--accent, #ff4081);
-  margin-left: 1rem;
-}
-
-.leadership-timeline li {
-  display: flex;
-  align-items: flex-start;
-  margin-bottom: 1.5rem;
-  position: relative;
-  padding-left: 1rem;
-}
-
-.timeline-bullet {
-  width: 1.5rem;
-  height: 1.5rem;
-  background: var(--accent, #ff4081);
-  color: white;
-  font-size: 0.9rem;
-  border-radius: 80%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  left: -0.80rem;
-  top: 0.15rem;
-  z-index: 1;
-}
-
-.timeline-bullet:hover {
-  background: white;
-  color: var(--accent, #ff4081);
-  border: 1px solid var(--accent, #ff4081);
-  transform: scale(1.1);
-  transition: all 0.1s ease-in-out;
-  cursor: default;
-}
-
-
-.timeline-content {
-  margin-left: 0.5rem;
-}
-
-.timeline-title {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-.title-text {
-  flex: 1 1 auto;
-  min-width: 0;
-}
-
-
-.badge:hover {
-  background: #fff;
-  color: var(--accent, #ff4081);
-  transform: scale(1.05);
-  cursor: default;
-}
-
-
-</style>
-
-    <section class="collapsible">
-  <div class="collapsible-header">
-    <h2> Skills</h2>
-    <button>View</button>
-  </div>
-  <div class="collapsible-content">
+  <section>
+    <h2>Skills</h2>
     <div class="skills-chart">
       <div class="skills-chart-row">
         <div class="skills-label">5 Years</div>
         <div class="skills-icons">
           <div class="tooltip-container">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript" />
+            <img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
+              alt="JavaScript"
+            />
             <span class="click-tooltip">JavaScript</span>
           </div>
         </div>
       </div>
       <div class="skills-chart-row">
-        <div class="skills-label"> 3 Years</div>
+        <div class="skills-label">3 Years</div>
         <div class="skills-icons">
-            <div class="tooltip-container">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" alt="C++" />
+          <div class="tooltip-container">
+            <img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg"
+              alt="C++"
+            />
             <span class="click-tooltip">C++</span>
           </div>
-          </div>
         </div>
-      </div><br>
+      </div>
       <div class="skills-chart-row">
-        <div class="skills-label"> ~ 2 Years</div>
+        <div class="skills-label">~ 2 Years</div>
         <div class="skills-icons">
           <div class="tooltip-container">
-          </div>
-          <div class="tooltip-container">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" />
+            <img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"
+              alt="Python"
+            />
             <span class="click-tooltip">Python</span>
           </div>
         </div>
-      </div><br>
+      </div>
       <div class="skills-chart-row">
         <div class="skills-label">Learning</div>
         <div class="skills-icons">
@@ -432,10 +347,10 @@ section:first-of-type {
           </div>
           <div class="tooltip-container">
             <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg" alt="C#" />
-            <span class="click-tooltip">C span>
+            <span class="click-tooltip">C#</span>
           </div>
         </div>
-      </div><br>
+      </div>
       <div class="skills-chart-row">
         <div class="skills-label">Other</div>
         <div class="skills-icons">
@@ -454,394 +369,122 @@ section:first-of-type {
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-
-    <section class="collapsible">
-      <div class="collapsible-header">
-  <h2> Contact</h2>
-  <button>View</button>
-</div>
-<div class="collapsible-content">
-  <p>
-    <!-- I want to center the email, and link to my email. -->
-    <div style="width: auto;    text-align: center;">
-     <strong>Email:</strong> <a href="mailto:cadizal06@gmail.com">cadizal06@gmail.com</a><br>
-    </div>
- <div class="center-form-container">
-    <form id="contactForm">
-      <label for="name">Name</label>
-      <input type="text" id="name" name="name" required placeholder="Name" />
-
-      <label for="email">Email</label>
-      <input type="email" id="email" name="email" required placeholder="name@email.com" />
-
-      <label for="phone">Phone</label>
-      <input type="tel" id="phone" name="phone" placeholder="+63 123 123 1234" />
-
-      <label for="subject">Subject</label>
-      <input type="text" id="subject" name="subject" required placeholder="What's this about?" />
-
-      <label for="message">Message</label>
-      <textarea id="message" name="message" rows="5" required placeholder="Your message here"></textarea>
-
-      <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; margin-top: 0.5rem;">
-        <input type="checkbox" id="consent" required />
-        I consent to sending this data and understand it will remain confidential. 
-      </label>
-
-      <button type="submit">Send</button>
-      <p id="formStatus" style="margin-top:0.5rem; font-weight:bold;"></p>
-    </form>
-    </div>
-</div>
-
-
-<script>
-const webhookURL = "https://discord.com/api/webhooks/1398923818394980465/TdFA1Vlxulks6kR1xim26rbY9eQcRQmc5kqLO9Mx2OAlJ4GLE3efHvHUPMV3nBre0htE";
-const ipInfoToken = "5ac9ce050dc8ba";
-
-document.getElementById("contactForm").addEventListener("submit", async (e) => {
-  e.preventDefault();
-
-  const status = document.getElementById("formStatus");
-  status.style.color = "var(--accent, #ff4081)";
-  status.textContent = "Sending... 🚀";
-
-  const name = e.target.name.value.trim();
-  const email = e.target.email.value.trim();
-  const phone = e.target.phone.value.trim();
-  const subject = e.target.subject.value.trim();
-  const message = e.target.message.value.trim();
-  const consent = document.getElementById("consent").checked;
-
-  if (!name || !email || !message || !subject || !consent) {
-    status.style.color = "red";
-    status.textContent = "Please complete all fields and give consent. ";
-    return;
-  }
-
-  let ipData = {};
-  try {
-    const ipRes = await fetch(`https://ipinfo.io/json?token=${ipInfoToken}`);
-    ipData = await ipRes.json();
-  } catch (err) {
-    console.warn("IP info fetch failed:", err);
-  }
-
-  const browser = navigator.userAgent;
-  const location = `${ipData.city || "Unknown"}, ${ipData.region || ""}, ${ipData.country || ""}`;
-  const coordinates = ipData.loc ? `||${ipData.loc}||` : "||Not available||";
-  const ip = ipData.ip || "Unknown";
-
-  const payload = {
-    content: "<@766719829179891743>  ",
-    embeds: [{
-      title: "💬 Contact Form Submission",
-      color: 0xff4081,
-      fields: [
-        { name: "👤 Name", value: name, inline: true },
-        { name: "📧 Email", value: email, inline: true },
-        { name: "📱 Phone", value: phone || "N/A", inline: true },
-        { name: "📝 Subject", value: subject, inline: true },
-        { name: "🌐 IP", value: ip, inline: true },
-        { name: "🗺️ Location", value: location, inline: true },
-        { name: "💻 Browser", value: browser, inline: false }
-      ],
-      description: `**📨 Message:**\n\`\`\`\n${message}\n\`\`\`\n**📍 Coordinates:** ${coordinates}`,
-      timestamp: new Date().toISOString()
-    }]
-  };
-
-  try {
-    const res = await fetch(webhookURL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
-
-    if (res.ok) {
-      status.style.color = "limegreen";
-      status.textContent = "Message sent! Thanks for reaching out. I'll get back to you soon.";
-      e.target.reset();
-    } else {
-      throw new Error(`HTTP error ${res.status}`);
-    }
-  } catch (error) {
-    status.style.color = "red";
-    status.textContent = "Failed to send message. Try again later. Or contact me directly at  <a href='mailto:cadizal06@gmail.com";
-    console.error("Discord webhook error:", error);
-  }
-});
-</script>
-
- 
-<style>
-  form#contactForm {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  max-width: 400px;
-  margin-top: 1rem;
-  align-items: justify-center;
-  top: 50%;
-  left: 50%;
-}
-
-form#contactForm label {
-  font-weight: 600;
-  color: var(--accent, #ff4081);
-}
-
-form#contactForm input,
-form#contactForm textarea {
-  padding: 0.6rem 0.8rem;
-  border: 2px solid var(--accent, #ff4081);
-  border-radius: 8px;
-  background: var(--bg, #211b30);
-  color: var(--text-light, #f0f0f0);
-  font-size: 1rem;
-  resize: vertical;
-  transition: border-color 0.3s ease;
-}
-
-form#contactForm input:focus,
-form#contactForm textarea:focus {
-  border-color: #ff79b0;
-  outline:  ridge 2px var(--accent, #ff4081);
-  transform: scale(1.02);
-  box-shadow: 0 0 33px rgba(255, 64, 129, 0.2);
-}
-
-
-form#contactForm button {
-  background: var(--accent, #ff4081);
-  border: none;
-  padding: 0.7rem;
-  border-radius: 999px;
-  font-weight: 700;
-  color: var(--bg, #211b30);
-  cursor: pointer;
-  transition: background-color 0.9s ease;
-}
-
-form#contactForm button:hover {
-  background: #a74f4f;
-}
-.center-form-container {
-  display: flex;
-  justify-content: center;  /* Horizontal center */
-  align-items: center;      /* Vertical center */
-  padding: 0.1rem 0.5rem;
-  min-height: 50vh;        /* Optional: fill screen if needed */
-  box-sizing: border-box;
-}
-
-</style>
-</p>
+  <section>
+    <h2>Contact</h2>
+    <p>
+      <div style="width: auto; text-align: center;">
+        <strong>Email:</strong> <a href="mailto:cadizal06@gmail.com">cadizal06@gmail.com</a><br />
       </div>
-    </section>
+      <div class="center-form-container">
+        <form id="contactForm">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" required placeholder="Name" />
 
-    <div class="footer">
-      <p>Built by Tonie. Last updated July 2025.</p>
-    </div>
-  </main>
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required placeholder="name@email.com" />
+
+          <label for="phone">Phone</label>
+          <input type="tel" id="phone" name="phone" placeholder="+63 123 123 1234" />
+
+          <label for="subject">Subject</label>
+          <input type="text" id="subject" name="subject" required placeholder="What's this about?" />
+
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="5" required placeholder="Your message here"></textarea>
+
+          <label
+            style="
+              display: flex;
+              align-items: center;
+              gap: 0.5rem;
+              font-size: 0.9rem;
+              margin-top: 0.5rem;
+            "
+          >
+            <input type="checkbox" id="consent" required />
+            I consent to sending this data and understand it will remain confidential.
+          </label>
+
+          <button type="submit">Send</button>
+          <p id="formStatus" style="margin-top: 0.5rem; font-weight: bold;"></p>
+        </form>
+      </div>
+    </p>
+  </section>
+
+  <div class="footer">
+    <p>Built by Tonie. Last updated July 2025.</p>
+  </div>
 
   <script>
-    document.querySelectorAll('.collapsible').forEach(section => {
-      const button = section.querySelector('button');
-      button.addEventListener('click', () => {
-        section.classList.toggle('active');
-        button.textContent = section.classList.contains('active') ? 'Hide' : 'View';
-      });
+    const webhookURL =
+      'https://discord.com/api/webhooks/1398923818394980465/TdFA1Vlxulks6kR1xim26rbY9eQcRQmc5kqLO9Mx2OAlJ4GLE3efHvHUPMV3nBre0htE';
+    const ipInfoToken = '5ac9ce050dc8ba';
+
+    document.getElementById('contactForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const status = document.getElementById('formStatus');
+      status.style.color = 'var(--accent, #ff4081)';
+      status.textContent = 'Sending... 🚀';
+
+      const name = e.target.name.value.trim();
+      const email = e.target.email.value.trim();
+      const phone = e.target.phone.value.trim();
+      const subject = e.target.subject.value.trim();
+      const message = e.target.message.value.trim();
+      const consent = e.target.consent.checked;
+
+      if (!consent) {
+        status.style.color = 'red';
+        status.textContent = 'You must agree to send the form.';
+        return;
+      }
+
+      // Fetch IP info
+      let ipData = {};
+      try {
+        const res = await fetch(`https://ipinfo.io/json?token=${ipInfoToken}`);
+        if (res.ok) ipData = await res.json();
+      } catch (err) {
+        console.warn('Failed to fetch IP info', err);
+      }
+
+      // Format message for Discord webhook
+      const payload = {
+        content: `**New Contact Form Submission**\n
+**Name:** ${name}
+**Email:** ${email}
+**Phone:** ${phone || 'N/A'}
+**Subject:** ${subject}
+**Message:** ${message}
+**IP Info:** ${ipData.ip || 'Unknown IP'}, ${ipData.city || 'Unknown City'}, ${ipData.region || 'Unknown Region'}, ${
+          ipData.country || 'Unknown Country'
+        }`,
+      };
+
+      try {
+        const webhookRes = await fetch(webhookURL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+
+        if (webhookRes.ok) {
+          status.style.color = 'limegreen';
+          status.textContent = 'Message sent! Thank you for contacting me.';
+          e.target.reset();
+        } else {
+          throw new Error(`Webhook error: ${webhookRes.statusText}`);
+        }
+      } catch (error) {
+        status.style.color = 'red';
+        status.textContent = 'Failed to send message. Try again later.';
+        console.error(error);
+      }
     });
   </script>
-
-  <script>
-// == Konami Code Easter Egg ==
-(() => {
-  const konami = [38,38,40,40,37,39,37,39,66,65]; // ↑↑↓↓←→←→BA
-  let konamiIndex = 0;
-
-  window.addEventListener("keydown", (e) => {
-    if (e.keyCode === konami[konamiIndex]) {
-      konamiIndex++;
-      if (konamiIndex === konami.length) {
-        alert("🕹️ Konami Code Activated!");
-        konamiIndex = 0;
-      }
-    } else {
-      konamiIndex = 0;
-    }
-  });
-})();
-
-// == Tooltip Text Easter Egg ==
-(() => {
-  const triggerMap = {
-    "tonie": "Made with ☕ and zero sleep. Took 2 weeks.",
-    "dev": "Handcrafted in VS Code. Debugged to death.",
-    "web": "This ain’t no template. Fully custom.",
-    "html": "It started with a blank <!DOCTYPE html>.",
-    "css": "I wrestled with margins more than bugs.",
-    "dark": "Dark mode supremacy.",
-    "light": "Light mode? You sure about that?",
-    "gamer": "Hours of grinding built this.",
-    "resume": "Yes. This is a flex.",
-    "404": "Not found? Not possible.",
-    "fun": "It’s in the name. Tonie’s Workshop.",
-    "keyboard": "Real devs use Vim. Or do they?",
-  };
-
-  window.addEventListener("keydown", (e) => {
-    const key = e.key.toLowerCase();
-    if (triggerMap[key]) {
-      const tooltip = document.createElement("div");
-      tooltip.className = "keyboard-tooltip";
-      tooltip.textContent = triggerMap[key];
-      document.body.appendChild(tooltip);
-      tooltip.style.left = `${window.innerWidth / 2 - tooltip.offsetWidth / 2}px`;
-      tooltip.style.top = `20px`;
-      tooltip.classList.add("show");
-
-      setTimeout(() => {
-        tooltip.remove();
-      }, 2500);
-    }
-  });
-})();
-
-// == Console Warning Easter Egg ==
-console.log(
-  "%c⚠️ Stop!",
-  "color: red; font-size: 60px; font-weight: bold;"
-);
-console.log(
-  "%cIf someone told you to paste something here, it might be a scam or malicious code. Stay safe out there. Even if the code came from Tonie itself.",
-  "color: #ff4081; font-size: 16px;"
-);
-console.log(
-  "%cPS: This site has easter eggs. Try typing stuff. 😏",
-  "color: #00ccff; font-size: 14px;"
-);
-
-// == Tooltip Styles ==
-const tooltipStyles = document.createElement("style");
-tooltipStyles.innerHTML = `
-.keyboard-tooltip {
-  position: fixed;
-  background: var(--tooltip-bg, #333);
-  color: var(--accent, #ff4081);
-  padding: 0.75rem 1.25rem;
-  border-radius: 8px;
-  font-weight: bold;
-  font-family: monospace;
-  z-index: 9999;
-  transition: opacity 0.3s ease;
-  opacity: 0;
-  pointer-events: none;
-}
-.keyboard-tooltip.show {
-  opacity: 1;
-}
-`;
-document.head.appendChild(tooltipStyles);
-</script>
-<canvas id="matrixCanvas"></canvas>
-<script>
-// == Matrix Konami Code ==
-(() => {
-  const konami = [38,38,40,40,37,39,37,39,66,65];
-  let konamiIndex = 0;
-  let active = false;
-
-  const canvas = document.getElementById("matrixCanvas");
-  const ctx = canvas.getContext("2d");
-  const fontSize = 16;
-  let columns;
-  let drops;
-
-  const chars = "アァイィウヴエェオカガキギクグケゲコゴサザシジスズセゼソゾタダチッヂツヅテデトドナニヌネノハバパヒビピフブプヘベペホボポマミムメモヤユヨラリルレロワヲンABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-
-  const initMatrix = () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    columns = Math.floor(canvas.width / fontSize);
-    drops = new Array(columns).fill(1);
-  };
-
-  const drawMatrix = () => {
-    ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = "#00ff00";
-    ctx.font = `${fontSize}px monospace`;
-
-    for (let i = 0; i < drops.length; i++) {
-      const text = chars.charAt(Math.floor(Math.random() * chars.length));
-      ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-      if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-        drops[i] = 0;
-      }
-      drops[i]++;
-    }
-  };
-
-  let matrixInterval;
-
-  const startMatrix = () => {
-    active = true;
-    canvas.style.display = "block";
-    initMatrix();
-    matrixInterval = setInterval(drawMatrix, 50);
-  };
-
-  const stopMatrix = () => {
-    active = false;
-    clearInterval(matrixInterval);
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    canvas.style.display = "none";
-  };
-
-  // Konami detector
-  window.addEventListener("keydown", (e) => {
-    if (e.keyCode === konami[konamiIndex]) {
-      konamiIndex++;
-      if (konamiIndex === konami.length) {
-        if (!active) startMatrix();
-        konamiIndex = 0;
-      }
-    } else {
-      konamiIndex = 0;
-    }
-
-    // ESC to exit Matrix
-    if (e.key === "Escape" && active) stopMatrix();
-  });
-
-  // Auto-resize
-  window.addEventListener("resize", () => {
-    if (active) {
-      initMatrix();
-    }
-  });
-})();
-</script>
-
-<style>
-#matrixCanvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  display: none;
-  z-index: 99999;
-  background: black;
-  pointer-events: none;
-}
-</style>
-
 </body>
 </html>

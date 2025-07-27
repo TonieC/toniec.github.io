@@ -203,6 +203,11 @@ main.split {
   text-align: center;
 }
 
+.content-wrapper {
+  width: 100%;
+}
+
+
 .profile-img-container {
   position: relative;
   z-index: 10000; /* Higher than cursor */
@@ -314,73 +319,82 @@ small {
   text-indent: 3em; 
   line-height: 1.6;}
 
+ .stack {
+  display: flex;
+  flex-wrap: nowrap; /* keep in one row */
+  overflow-x: auto;  /* horizontal scroll if too wide */
+  gap: 1rem;
+  padding: 0.5rem;
+  scrollbar-width: thin; /* for Firefox */
+}
+
+  .right {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem;
+  text-align: center;
+  overflow: hidden; /* prevent overflow out of right */
+  position: relative;
+}
+
+/* Container that masks overflow & holds the scrolling stack */
+.stack-container {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.stack-wrapper {
+  display: flex;
+  width: max-content; /* auto width based on content */
+  animation: scroll-left 25s linear infinite;
+}
+
 .stack {
   display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-top: 1.5rem;
-  justify-content: center;
-  position: relative;
+  gap: 20px;
+  white-space: nowrap;
 }
 
-.stack span {
-  position: relative;
+.stack-item {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 10px 18px;
-  background: var(--stack-bg);
-  border: 1px solid var(--border-light);
+  gap: 6px;
+  padding: 6px 12px;
+  background: rgba(30, 30, 30, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 20px;
-  font-size: 1rem;
+  font-size: 0.85rem;
   font-weight: 500;
-  color: var(--text);
+  color: #fff;
   backdrop-filter: blur(6px);
-  transition: all 0.3s ease;
-  animation: floaty 6s ease-in-out infinite;
   cursor: default;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: all 0.9s ease;
 }
 
-.stack span:hover {
-  transform: scale(1.1) rotate(2deg);
-  background: var(--stack-bg-hover);
-  box-shadow: 0 8px 24px var(--stack-shadow);
+.stack-item img {
+  height: 1.2em;
+  width: auto;
+  vertical-align: middle;
+}
+
+/* Animate wrapper left by exactly 50% (half width) */
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 
-.stack span::before {
-  content: '';
-  position: absolute;
-  bottom: 120%;
-  left: 50%;
-  transform: translateX(-50%);
-  border: 6px solid transparent;
-  border-top-color: var(--tooltip-arrow-color);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  z-index: 99;
-}
 
-
-.stack span img,
-.stack span i {
-  width: 20px;
-  height: 20px;
-  object-fit: contain;
-}
-
-@keyframes floaty {
-  0% { transform: translateY(0); }
-  /* ... */
-  100% { transform: translateY(0); }
-}
-
-.stack span:nth-child(1) { animation-delay: 0s; }
-.stack span:nth-child(2) { animation-delay: 0.4s; }
-.stack span:nth-child(3) { animation-delay: 0.8s; }
-.stack span:nth-child(4) { animation-delay: 1.2s; }
-.stack span:nth-child(5) { animation-delay: 1.6s; }
-.stack span:nth-child(6) { animation-delay: 1.7s; }
 
 .contact-btn {
   display: inline-flex;
@@ -389,7 +403,7 @@ small {
   padding: 12px 24px;
   font-size: 1rem;
   font-weight: 600;
-  color: #fff; /* keep white on button text */
+  color: #fff; 
   background: var(--contact-bg);
   border: 1px solid var(--contact-border);
   border-radius: 30px;

@@ -307,36 +307,46 @@ window.addEventListener("DOMContentLoaded", () => {
 </script>
 
 
-
-
-
       <h1>Hi, I'm Tonie</h1>
       <p class="tagline">Front-End Developer</p>
      <p class="about">
   I code out of curiosity and build for fun. I enjoy experimenting, learning, and refining experiences that feel smooth and intuitive to use.
 </p>
 
-
-      <div class="stack">
-  <span class="stack-item">
-    <i class="devicon-javascript-plain"></i> JavaScript
-  </span>
-  <span class="stack-item">
-    <i class="devicon-csharp-plain"></i> C#
-  </span>
-  <span class="stack-item">
-    <i class="devicon-cplusplus-plain"></i> C++
-  </span>
-  <span class="stack-item">
-    <i class="devicon-arduino-plain-wordmark"></i> Arduino
-  </span>
-  <span class="stack-item">
-    <img src="/images/esp32-icon.png" style="width:20px; vertical-align: middle;"> ESP32
-  </span>
-  <span class="stack-item">
-    <i class="devicon-raspberrypi-line"></i> Raspberry Pi
-  </span>
+<div class="stack-container">
+  <div class="stack-wrapper" id="stackWrapper">
+    <div class="stack" id="stack">
+      <!-- Paste your exact stack items here -->
+      <span class="stack-item"><i class="devicon-javascript-plain"></i> JavaScript</span>
+      <span class="stack-item"><i class="devicon-csharp-plain"></i> C#</span>
+      <span class="stack-item"><i class="devicon-cplusplus-plain"></i> C++</span>
+      <span class="stack-item"><i class="devicon-arduino-plain-wordmark"></i> Arduino</span>
+      <span class="stack-item"><img src="/images/esp32-icon.png" alt="ESP32" /> ESP32</span>
+      <span class="stack-item"><i class="devicon-raspberrypi-line"></i> Raspberry Pi</span>
+      <span class="stack-item"><i class="devicon-python-plain"></i> Python</span>
+      <span class="stack-item"><i class="devicon-nodejs-plain"></i> Node.js</span>
+      <span class="stack-item"><i class="devicon-html5-plain"></i> HTML5</span>
+      <span class="stack-item"><i class="devicon-css3-plain"></i> CSS3</span>
+      <span class="stack-item"><i class="devicon-linux-plain"></i> Linux</span>
+      <span class="stack-item"><i class="devicon-git-plain"></i> Git</span>
+      <span class="stack-item"><i class="devicon-react-original"></i> React</span>
+      <span class="stack-item"><i class="devicon-typescript-plain"></i> TypeScript</span>
+      <span class="stack-item"><i class="devicon-docker-plain"></i> Docker</span>
+      <span class="stack-item"><i class="devicon-kubernetes-plain"></i> Kubernetes</span>
+      <span class="stack-item"><i class="devicon-python-plain"></i> Django</span>
+      <span class="stack-item"><i class="devicon-sass-original"></i> SASS</span>
+    </div>
+  </div>
 </div>
+
+<script>
+const stackWrapper = document.getElementById('stackWrapper');
+const stack = document.getElementById('stack');
+
+const clone = stack.cloneNode(true);
+stackWrapper.appendChild(clone);
+</script>
+
       <br>
 <a href="resume" class="cta-button">View more</a>
 <style>
