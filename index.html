@@ -281,7 +281,7 @@ function typeOut(text, element) {
   const interval = setInterval(() => {
     element.textContent += text.charAt(i++);
     if (i >= text.length) clearInterval(interval);
-  }, 30);
+  }, 60); // Adjust speed here
 }
 
 function greetByTimeOnly() {
