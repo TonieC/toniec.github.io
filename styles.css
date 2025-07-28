@@ -383,6 +383,75 @@ small {
   vertical-align: middle;
 }
 
+.timeline-section {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .timeline {
+      position: relative;
+      margin-left: 1.5em;
+      padding-left: 2em;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0.5em;
+      width: 3px;
+      height: 100%;
+      background-color: var(--accent);
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 3em;
+    }
+
+    .timeline-icon {
+      position: absolute;
+      left: -0.3em;
+      top: 0;
+      width: 1.5em;
+      height: 1.5em;
+      background-color: var(--accent);
+      color: white;
+      border-radius: 50%;
+      font-size: 1.2em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+      transition: transform 0.3s ease;
+    }
+
+    .timeline-icon:hover {
+      transform: scale(1.2) rotate(5deg);
+    }
+
+    .timeline-content {
+      padding-left: 1em;
+    }
+
+    .timeline-content h3 {
+      margin: 0;
+      font-size: 1.1em;
+    }
+
+    .timeline-content h3 span {
+      font-size: 0.9em;
+      font-weight: normal;
+      color: var(--text-muted);
+    }
+
+    .timeline-content p {
+      margin: 0.5em 0 0 0;
+      line-height: 1.5;
+    }
+
+
+
 /* Animate wrapper left by exactly 50% (half width) */
 @keyframes scroll-left {
   0% {
