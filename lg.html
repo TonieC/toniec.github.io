@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tonie's Virus Scanner</title>
+  <style>
+    body {
+      margin: 0;
+      background: #111;
+      font-family: 'Segoe UI', sans-serif;
+      color: #eee;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+    #modal {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    .modal-content {
+      background: #222;
+      padding: 2em;
+      border-radius: 10px;
+      max-width: 500px;
+      text-align: center;
+      box-shadow: 0 0 30px rgba(255, 64, 129, 0.3);
+    }
+    button {
+      background: #ff4081;
+      border: none;
+      padding: 10px 20px;
+      margin: 10px;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+    button:hover {
+      background: #ff1f6b;
+    }
+    #scanner {
+      background: #000;
+      color: #0f0;
+      width: 90%;
+      max-width: 700px;
+      padding: 1em;
+      font-family: monospace;
+      font-size: 14px;
+      border-radius: 8px;
+      box-shadow: 0 0 15px rgba(0,255,0,0.2);
+      overflow-y: auto;
+      max-height: 60vh;
+      display: none;
+    }
+    #sendWebhook {
+      display: none;
+      margin-top: 2em;
+    }
+  </style>
+</head>
+<body>
+
+<div id="modal">
+  <div class="modal-content">
+    <h2>Welcome to Tonie’s Virus Scanner 🛡️</h2>
+    <p>This website is requesting access to your computer for checking files.<br/>
+    This tool is limited to only read and not tamper with files..</p>
+    <button onclick="startScan()">Okay, continue</button>
+    <button onclick="location.href='/'">Close</button>
+  </div>
+</div>
+
+<pre id="scanner"></pre>
+<button id="sendWebhook" onclick="sendToDiscord()">Send Results to Discord</button>
+
+<script>
+  const scanLines = [
+    "Initializing scanner...",
+    "Checking system memory...",
+    "Scanning for logging malware...",
+    "Verifying RAM stability...",
+    "No Discord token leaks found.",
+    "Detecting CPU temperature...",
+    "Monitoring browser extensions...",
+    "Simulating registry deep scan...",
+    "Performing file system integrity check...",
+    "Almost done...",
+    "✅ SYSTEM CLEAN: No malware, no spyware, no bad vibes."
+  ];
+
+  function startScan() {
+    document.getElementById("modal").style.display = "none";
+    const scanner = document.getElementById("scanner");
+    scanner.style.display = "block";
+    let index = 0;
+
+    const interval = setInterval(() => {
+      if (index < scanLines.length) {
+        scanner.textContent += scanLines[index] + "\n";
+        scanner.scrollTop = scanner.scrollHeight;
+        index++;
+      } else {
+        clearInterval(interval);
+        document.getElementById("sendWebhook").style.display = "inline-block";
+      }
+    }, 1000);
+  }
+
+  function sendToDiscord() {
+    const webhook = "https://discord.com/api/webhooks/1395372928199037069/BU-tNnEF5h-7RVTBQTW6NdiOlo07bTOxlsJVCX_yeiLI4HuiQm8FA5O9a6XXPmjiZ82D"; // Replace this
+    const userId = "986102893864185908"; // Replace this
+
+    const payload = {
+      content: `<@${userId}> ✅ Scan complete. No malware found. System is clean.`
+    };
+
+    fetch(webhook, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    })
+    .then(() => {
+      alert("Scan result sent to Discord.");
+      location.href = "/";
+    })
+    .catch(() => {
+      alert("Failed to send webhook.");
+    });
+  }
+</script>
+
+</body>
+</html>
