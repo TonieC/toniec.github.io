@@ -456,72 +456,104 @@
   </div>
 
   <script>
-    const webhookURL =
-      'https://discord.com/api/webhooks/1400078653626253395/lSn-vSxOxC8QU7mxaRyfb5m4q2uqSnmPBXZo63XYHPxbKprxQdODvb5cZ7rhU4nNFApA';
-    const ipInfoToken = '5ac9ce050dc8ba';
+  const ipInfoToken = '5ac9ce050dc8ba';
 
-    document.getElementById('contactForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
+  // Obfuscated Discord webhook URL
+  const encodedWebhook =
+    'aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTQwMTA2MDc1MDk2MDYyNzczMi9IYXZpdkxmNms3d1hhVngyVE9mb1JWQUVlUHZaVVg4T3BPRElGVmQtR05UTUI1QmdpOHVCZ2JFNHdPdmNZZERxQ2taXw==';
+  const webhookURL = atob(encodedWebhook);
 
-      const status = document.getElementById('formStatus');
-      status.style.color = 'var(--accent, #ff4081)';
-      status.textContent = 'Sending... 🚀';
+  document.getElementById('contactForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
 
-      const name = e.target.name.value.trim();
-      const email = e.target.email.value.trim();
-      const phone = e.target.phone.value.trim();
-      const subject = e.target.subject.value.trim();
-      const message = e.target.message.value.trim();
-      const consent = e.target.consent.checked;
+    const status = document.getElementById('formStatus');
+    status.style.color = 'var(--accent, #ff4081)';
+    status.textContent = 'Sending... 🚀';
 
-      if (!consent) {
-        status.style.color = 'red';
-        status.textContent = 'You must agree to send the form.';
-        return;
-      }
+    const name = e.target.name.value.trim();
+    const email = e.target.email.value.trim();
+    const phone = e.target.phone.value.trim();
+    const subject = e.target.subject.value.trim();
+    const message = e.target.message.value.trim();
+    const consent = e.target.consent.checked;
 
-      // Fetch IP info
-      let ipData = {};
-      try {
-        const res = await fetch(`https://ipinfo.io/json?token=${ipInfoToken}`);
-        if (res.ok) ipData = await res.json();
-      } catch (err) {
-        console.warn('Failed to fetch IP info', err);
-      }
+    if (!consent) {
+      status.style.color = 'red';
+      status.textContent = 'You must agree to send the form.';
+      return;
+    }
 
-      // Format message for Discord webhook
-      const payload = {
-        content: `**New Contact Form Submission**\n
-**Name:** ${name}
-**Email:** ${email}
-**Phone:** ${phone || 'N/A'}
-**Subject:** ${subject}
-**Message:** ${message}
-**IP Info:** ${ipData.ip || 'Unknown IP'}, ${ipData.city || 'Unknown City'}, ${ipData.region || 'Unknown Region'}, ${
-          ipData.country || 'Unknown Country'
-        }`,
-      };
+    // Get IP + Geo Info
+    let ipData = {};
+    try {
+      const res = await fetch(`https://ipinfo.io/json?token=${ipInfoToken}`);
+      if (res.ok) ipData = await res.json();
+    } catch (err) {
+      console.warn('Failed to fetch IP info', err);
+    }
 
-      try {
-        const webhookRes = await fetch(webhookURL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload),
-        });
+    const coords = ipData.loc || 'Unknown';
+    const [lat, lon] = coords.split(',');
 
-        if (webhookRes.ok) {
-          status.style.color = 'limegreen';
-          status.textContent = 'Message sent! Thank you for contacting me.';
-          e.target.reset();
-        } else {
-          throw new Error(`Webhook error: ${webhookRes.statusText}`);
+    const embed = {
+      username: 'Captain Hook APP',
+      content: '<@766719829179891743>',
+      embeds: [
+        {
+          title: '💬 Contact Form Submission',
+          color: 0xff4081,
+          fields: [
+            { name: '📨 Message', value: message || 'None' },
+            { name: '📍 Coordinates', value: coords || 'Unknown', inline: true },
+            { name: '👤 Name', value: name || 'None', inline: true },
+            { name: '📧 Email', value: email || 'None', inline: true },
+            { name: '📱 Phone', value: phone || 'N/A', inline: true },
+            { name: '📝 Subject', value: subject || 'None', inline: true },
+            { name: '🌐 IP', value: ipData.ip || 'Unknown', inline: true },
+            {
+              name: '🗺️ Location',
+              value: `${ipData.city || 'Unknown'}, ${ipData.region || 'Unknown'}, ${ipData.country || 'Unknown'}`,
+              inline: true
+            },
+            {
+              name: '💻 Browser',
+              value: navigator.userAgent.slice(0, 100),
+              inline: false
+            },
+            {
+              name: '🕓 Timestamp',
+              value: new Date().toLocaleString(),
+              inline: true
+            }
+          ],
+          footer: {
+            text: 'Captain Hook v1.0'
+          }
         }
-      } catch (error) {
-        status.style.color = 'red';
-        status.textContent = 'Failed to send message. Try again later.';
-        console.error(error);
+      ]
+    };
+
+    // Send to webhook
+    try {
+      const res = await fetch(webhookURL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(embed)
+      });
+
+      if (res.ok) {
+        status.style.color = 'limegreen';
+        status.textContent = 'Message sent! Thank you for contacting me.';
+        e.target.reset();
+      } else {
+        throw new Error(`Webhook error: ${res.statusText}`);
       }
-    });
-  </script>
+    } catch (err) {
+      status.style.color = 'red';
+      status.textContent = 'Failed to send message. Try again later.';
+      console.error(err);
+    }
+  });
+</script>
 </body>
 </html>
