@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Tonie's Web Playground</title>
+  <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+
+
+<!-- Fonts -->
+<link
+  href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
+  rel="stylesheet"
+/>
+
+<style>
+  :root {
+    --bg: #1e1e1e;
+    --panel-bg: #252526;
+    --accent: #0db9d7;
+    --text: #fff;
+    --error-color: #ff5555;
+    --log-color: #0f0;
+    --keyword: #569cd6;
+    --string: #d69d85;
+    --comment: #6a9955;
+    --function: #dcdcaa;
+  }
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  header {
+    background: var(--panel-bg);
+    padding: 10px 20px;
+    font-size: 1.3rem;
+    font-weight: 600;
+    border-bottom: 2px solid #333;
+    user-select: none;
+  }
+  .tabs {
+    display: flex;
+    background: var(--bg);
+    border-bottom: 2px solid #333;
+    user-select: none;
+  }
+  .tab {
+    padding: 10px 20px;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: 0.3s;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .tab.active {
+    background: var(--panel-bg);
+    border-bottom-color: var(--accent);
+    color: var(--accent);
+  }
+  .split {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+    height: 0;
+  }
+  .editor-container {
+    flex: 1 1 50%;
+    background: var(--panel-bg);
+    display: flex;
+    flex-direction: column;
+    min-width: 250px;
+  }
+  .editor-panel {
+    flex: 1;
+    display: none;
+  }
+  .editor-panel.active {
+    display: block;
+  }
+  textarea {
+    width: 100%;
+    height: 100%;
+    resize: none;
+    border: none;
+    outline: none;
+    background: var(--panel-bg);
+    color: var(--text);
+    font-family: monospace;
+    font-size: 14px;
+    padding: 10px;
+    line-height: 1.4;
+    /* simple pseudo syntax highlight by background stripes (for visual aid) */
+  }
+  /* Basic syntax coloring inside textarea is impossible with pure CSS, so we fake it by placeholders and user color matching */
+
+  .preview-wrapper {
+    flex: 1 1 50%;
+    display: flex;
+    flex-direction: column;
+    background: #111;
+    min-width: 300px;
+    overflow: hidden;
+    border-left: 2px solid #333;
+  }
+  .device-buttons {
+    display: flex;
+    gap: 5px;
+    padding: 6px 10px;
+    background: #1b1b1b;
+    border-bottom: 2px solid #333;
+  }
+  .device-buttons button {
+    flex: 1;
+    padding: 6px;
+    background: var(--panel-bg);
+    color: var(--text);
+    border: 1px solid #333;
+    cursor: pointer;
+    font-weight: 600;
+    border-radius: 4px;
+    user-select: none;
+    transition: background-color 0.3s ease;
+  }
+  .device-buttons button:hover {
+    background: var(--accent);
+    color: #000;
+  }
+  iframe#preview {
+    flex: 1;
+    border: none;
+    background: white;
+    width: 100%;
+  }
+  .console {
+    background: #111;
+    color: var(--log-color);
+    font-family: monospace;
+    font-size: 13px;
+    padding: 8px 10px;
+    height: 140px;
+    overflow-y: auto;
+    border-top: 2px solid #333;
+    white-space: pre-wrap;
+    user-select: text;
+  }
+  .console .error {
+    color: var(--error-color);
+    font-weight: bold;
+  }
+</style>
+</head>
+<body>
+<header>💻 Tonie's HTML / CSS / JS Playground</header>
+
+<div class="tabs" role="tablist" aria-label="Editor Tabs">
+  <div class="tab active" role="tab" tabindex="0" aria-selected="true" data-target="html">HTML</div>
+  <div class="tab" role="tab" tabindex="-1" aria-selected="false" data-target="css">CSS</div>
+  <div class="tab" role="tab" tabindex="-1" aria-selected="false" data-target="js">JS</div>
+</div>
+
+<div class="split">
+  <div class="editor-container">
+    <div class="editor-panel active" id="html-panel" role="tabpanel" aria-hidden="false">
+      <textarea id="html" spellcheck="false" autocorrect="off" autocapitalize="off" autocomplete="off"></textarea>
+    </div>
+    <div class="editor-panel" id="css-panel" role="tabpanel" aria-hidden="true" hidden>
+      <textarea id="css" spellcheck="false" autocorrect="off" autocapitalize="off" autocomplete="off"></textarea>
+    </div>
+    <div class="editor-panel" id="js-panel" role="tabpanel" aria-hidden="true" hidden>
+      <textarea id="js" spellcheck="false" autocorrect="off" autocapitalize="off" autocomplete="off"></textarea>
+    </div>
+  </div>
+
+  <div class="preview-wrapper" aria-live="polite" aria-atomic="true">
+    <div class="device-buttons" role="group" aria-label="Device Width Switcher">
+      <button type="button" data-width="375" aria-label="Mobile View (375px)">📱</button>
+      <button type="button" data-width="768" aria-label="Tablet View (768px)">📊</button>
+      <button type="button" data-width="100%" aria-label="Desktop View (Full Width)">🖥️</button>
+    </div>
+    <iframe id="preview" title="Live Preview"></iframe>
+    <div class="console" id="console-output" aria-live="polite" aria-atomic="true" role="log"></div>
+  </div>
+</div>
+
+<script>
+  // Tab switching logic
+  const tabs = document.querySelectorAll(".tab");
+  const panels = {
+    html: document.getElementById("html-panel"),
+    css: document.getElementById("css-panel"),
+    js: document.getElementById("js-panel"),
+  };
+
+  tabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      tabs.forEach((t) => {
+        t.classList.remove("active");
+        t.setAttribute("aria-selected", "false");
+        t.tabIndex = -1;
+        panels[t.dataset.target].hidden = true;
+        panels[t.dataset.target].setAttribute("aria-hidden", "true");
+        panels[t.dataset.target].classList.remove("active");
+      });
+      tab.classList.add("active");
+      tab.setAttribute("aria-selected", "true");
+      tab.tabIndex = 0;
+      panels[tab.dataset.target].hidden = false;
+      panels[tab.dataset.target].setAttribute("aria-hidden", "false");
+      panels[tab.dataset.target].classList.add("active");
+      tab.focus();
+    });
+  });
+
+  // Elements
+  const htmlInput = document.getElementById("html");
+  const cssInput = document.getElementById("css");
+  const jsInput = document.getElementById("js");
+  const preview = document.getElementById("preview");
+  const consoleOutput = document.getElementById("console-output");
+
+  // Initial code
+  htmlInput.value = `<h1>Hello World</h1>
+<p>Test the console:</p>
+<button onclick="console.log('Button clicked!')">Click me</button>`;
+  cssInput.value = `body {
+  font-family: sans-serif;
+  padding: 20px;
+  background: #fff;
+}
+h1 {
+  color: dodgerblue;
+}`;
+  jsInput.value = `console.log('Playground ready');`;
+
+  // Update preview & reset console
+  function updatePreview() {
+    const htmlCode = htmlInput.value;
+    const cssCode = `<style>${cssInput.value}</style>`;
+    const jsCode = `
+<script>
+  (function(){
+    const send = (type, args) => parent.postMessage({type, args}, '*');
+    ['log','error','warn','info'].forEach(method => {
+      const orig = console[method];
+      console[method] = function(...args){
+        send(method, args);
+        orig.apply(console, args);
+      };
+    });
+  })();
+<\/script>
+<script>
+try {
+  ${jsInput.value}
+} catch(e) {
+  console.error(e);
+}
+<\/script>`;
+
+    preview.srcdoc = htmlCode + cssCode + jsCode;
+    consoleOutput.textContent = "";
+  }
+
+  htmlInput.addEventListener("input", updatePreview);
+  cssInput.addEventListener("input", updatePreview);
+  jsInput.addEventListener("input", updatePreview);
+
+  // Device width buttons
+  document.querySelectorAll(".device-buttons button").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      preview.style.width = btn.dataset.width === "100%" ? "100%" : btn.dataset.width + "px";
+    });
+  });
+
+  // Listen for console messages from iframe
+  window.addEventListener("message", (e) => {
+    const { type, args } = e.data || {};
+    if (!type || !args) return;
+    const div = document.createElement("div");
+    div.textContent = `[${type}] ${args.join(" ")}`;
+    if (type === "error") div.classList.add("error");
+    consoleOutput.appendChild(div);
+    consoleOutput.scrollTop = consoleOutput.scrollHeight;
+  });
+
+  // Initial call
+  updatePreview();
+</script>
+</body>
+</html>
