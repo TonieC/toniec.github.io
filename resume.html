@@ -274,52 +274,64 @@
   </section>
   
 <style>
-  /* Playground-specific styling */
-  .playground-item {
-    border: 2px solid var(--accent);
-    border-radius: 12px;
-    padding: 1rem 1.25rem;
-    background: var(--bg-light);
-    max-width: 700px;
-    margin: 1rem auto 2rem auto;
-    transition: box-shadow 0.3s ease, transform 0.3s ease;
-    list-style: none; /* remove bullets */
-  }
-  .playground-item:hover {
-    box-shadow: 0 0 15px var(--accent);
-    transform: translateY(-4px);
-  }
-  .playground-link {
-    color: var(--accent);
-    font-weight: 700;
-    text-decoration: none;
-    transition: color 0.25s ease;
-  }
-  .playground-link:hover {
-    color: #ff79b0;
-    text-decoration: underline;
-  }
+ .playground-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* spacing between items */
+}
 
-  ul.no-bullets {
-    padding-left: 0;
-  }
+.playground-item {
+  border: 1px solid #444; /* subtle border */
+  padding: 16px;
+  border-radius: 8px;
+  background: var(--panel-bg);
+  max-width: 700px; /* optional max width */
+}
+
+.playground-link img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin-bottom: 8px;
+  border-radius: 6px;
+  object-fit: contain;
+}
+
+.playground-link {
+  text-decoration: none;
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 1.1rem;
+  display: inline-block;
+}
+
+.playground-item-description {
+  display: block;
+  margin-top: 6px;
+  font-style: italic;
+  color: #bbb;
+}
+
 </style>
 
 <section>
   <h2>Projects</h2>
-  <ul class="no-bullets">
-  <li class="playground-item">
-    <a href="/playground" target="_blank" rel="noopener noreferrer">
-      <img src="images/Playground1.png" alt="Playground" style="width: 600px; height: 250px;"/><br>
-      Playground
-    </a>
-    <span class="playground-item-description">
-  — A simple JavaScript, CSS, and HTML playground built by Tonie to quickly test code, experiment, and share ongoing projects.
-</span>
-
-
-  </li>
+  <div class="playground-list">
+    <div class="playground-item">
+      <a href="/playground" target="_blank" rel="noopener noreferrer" class="playground-link">
+        <img src="images/Playground1.png" alt="Playground" />
+        <br>
+        Playground
+      </a>
+      <span class="playground-item-description">
+        — A simple JavaScript, CSS, and HTML playground built by Tonie to quickly test code, experiment, and share ongoing projects.
+      </span>
+    </div>
+    <!-- Add more playground-item divs here as needed -->
+  </div>
 </section>
+
+
 
 
 
