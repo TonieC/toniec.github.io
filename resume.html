@@ -404,6 +404,34 @@
       </div>
     </div>
   </div>
+<small class="disclaimer">
+  <strong>Disclaimer:</strong> This reflects my familiarity and time spent using the following, not formal work experience unless explicitly stated otherwise.
+</small>
+
+<style>
+  .disclaimer {
+    color: gray;
+    display: block;
+    font-size: 0.75rem;
+    transition: color 0.3s ease, text-shadow 0.3s ease, transform 0.2s ease;
+  }
+  .disclaimer strong {
+    color: rgb(143, 80, 80);
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+  }
+  .disclaimer:hover {
+    color: #d0d0d0; /* Lighter gray */
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.4);
+    cursor: help; /* Question mark cursor */
+    transform: scale(1.05); /* Slightly bigger */
+  }
+  .disclaimer:hover strong {
+    color: rgb(200, 120, 120); /* Lighter red */
+    text-shadow: 0 0 6px rgba(200, 120, 120, 0.6);
+  }
+</style>
+
+
 </section>
 
 
@@ -458,7 +486,6 @@
   <script>
   const ipInfoToken = '5ac9ce050dc8ba';
 
-  // Obfuscated Discord webhook URL
   const encodedWebhook =
     'aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTQwMTA2MDc1MDk2MDYyNzczMi9IYXZpdkxmNms3d1hhVngyVE9mb1JWQUVlUHZaVVg4T3BPRElGVmQtR05UTUI1QmdpOHVCZ2JFNHdPdmNZZERxQ2taXw==';
   const webhookURL = atob(encodedWebhook);
