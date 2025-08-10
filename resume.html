@@ -316,19 +316,54 @@
 
 <section>
   <h2>Projects</h2>
-  <div class="playground-list">
-    <div class="playground-item">
-      <a href="/playground" target="_blank" rel="noopener noreferrer" class="playground-link">
-        <img src="images/Playground1.png" alt="Playground" />
-        <br>
-        Playground
-      </a>
-      <span class="playground-item-description">
-        — A simple JavaScript, CSS, and HTML playground built by Tonie to quickly test code, experiment, and share ongoing projects.
-      </span>
-    </div>
-    <!-- Add more playground-item divs here as needed -->
+<div class="playground-list">
+  <div class="playground-item">
+    <a href="/playground" target="_blank" rel="noopener noreferrer" class="playground-link">
+      <img id="playground-img" src="images/Playground1.png" alt="Playground" />
+      <br>
+      Playground
+    </a>
+    <span class="playground-item-description">
+      — A simple JavaScript, CSS, and HTML playground built by Tonie to quickly test code, experiment, and share ongoing projects.
+    </span>
   </div>
+</div>
+
+<style>
+  #playground-img {
+    transition: opacity 1s ease-in-out;
+    opacity: 1;
+  }
+  #playground-img.fade-out {
+    opacity: 0;
+  }
+</style>
+
+<script>
+  const images = [
+    'images/Playground.png',
+    'images/Playground1.png'
+  ];
+
+  let currentIndex = 1; // start with Playground1.png as per original src
+  const imgElement = document.getElementById('playground-img');
+  const interval = 10000; // 10 seconds
+
+  setInterval(() => {
+    // Fade out
+    imgElement.classList.add('fade-out');
+
+    setTimeout(() => {
+      // Swap image after fade out
+      currentIndex = (currentIndex + 1) % images.length;
+      imgElement.src = images[currentIndex];
+
+      // Fade in
+      imgElement.classList.remove('fade-out');
+    }, 1000); // matches CSS transition time
+  }, interval);
+</script>
+
 </section>
 
 
