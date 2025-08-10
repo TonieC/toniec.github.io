@@ -7,239 +7,279 @@
   <title>About Me</title>
   <style>
     :root {
-      --bg: #211b30;
-      --bg-light: #2d2344;
-      --text: #f5f5f5;
-      --text-secondary: #ccc;
-      --accent: #ff4081;
-      --card-radius: 12px;
-      --card-padding: 1.5rem;
-    }
-    
+  --bg: #211b30;
+  --bg-light: #2d2344;
+  --bg-gradient: linear-gradient(135deg, #2a2240, #372b56);
+  --text: #f5f5f5;
+  --text-secondary: #ccc;
+  --accent: #ff4081;
+  --card-radius: 12px;
+  --card-padding: 1.5rem;
+  --shadow-base: rgba(255, 64, 129, 0.25);
+  --shadow-dark: rgba(0, 0, 0, 0.6);
+}
 
-    body,
-    html {
-      font-family: 'Segoe UI', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      margin: 0;
-      padding: 2;
-      line-height: 1.6;
-      overflow-x: hidden;
-    }
+/* Fix main max-width from 70px to something sane */
+main {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  line-height: 1.6;
+  letter-spacing: 0.03em;
+  color: var(--text);
+  font-weight: 400;
+}
 
-    a {
-      color: var(--accent);
-      text-decoration: none;
-      font-weight: bold;
-      transition: all 0.2s ease;
-    }
-    a:hover {
-      text-decoration: underline;
-      filter: brightness(1.2);
-    }
+/* Body + html tweaks */
+body,
+html {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  user-select: text;
+}
 
-    main {
-      max-width: 70px;
-      margin: 0 auto;
-      padding: 0 1rem;
-    }
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+/* Sections: add subtle gradient + layered shadows + smooth hover glow */
+section {
+  padding: var(--card-padding);
+  background: var(--bg-gradient);
+  border-radius: var(--card-radius);
+  margin: 2rem auto 1rem auto;
+  max-width: 700px;
+  box-shadow:
+    0 4px 15px 1px var(--shadow-base),
+    inset 0 0 10px 2px #3a2b55,
+    0 0 12px 0 rgba(255, 64, 129, 0.3);
+  transition: box-shadow 0.3s ease;
+  backdrop-filter: saturate(150%) blur(6px);
+}
 
-    section {
-      padding: var(--card-padding);
-      background: var(--bg-light);
-      border-radius: var(--card-radius);
-      margin-top: 2rem;
-      margin-bottom: 1rem;
-      box-shadow:
-        0 0 0 3px rgb(75, 30, 50)
-        0 0 10px rgb(255, 0, 0);
-      max-width: 700px;
-      margin-left: auto;
-      margin-right: auto;
-    }
+section:hover {
+  box-shadow:
+    0 8px 28px 3px var(--shadow-base),
+    inset 0 0 14px 4px #5a3b75,
+    0 0 20px 0 rgba(255, 64, 129, 0.6);
+}
 
-    section h2 {
-      margin-bottom: 1rem;
-      color: var(--accent);
-      font-weight: 700;
-      font-size: 1.6rem;
-    }
+/* Headings */
+section h2 {
+  margin-bottom: 1rem;
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 1.7rem;
+  letter-spacing: 0.05em;
+  text-shadow: 0 0 8px var(--accent);
+}
 
-    .skills-chart {
-      display: grid;
-      gap: 1rem;
-    }
+/* Links: smoother hover */
+a {
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.25s ease, text-shadow 0.3s ease, filter 0.3s ease;
+}
 
-    .skills-chart-row {
-      display: flex;
-      align-items: left;
-      padding: 0.75rem 1rem;
-      background: #2a223f;
-      border-radius: 8px;
-      justify-content: none;
-    }
+a:hover {
+  color: #ff7aa6;
+  text-shadow: 0 0 6px #ff7aa6;
+  filter: brightness(1.2);
+  text-decoration: underline;
+}
 
-    .skills-label {
-      font-weight: bold;
-      color: var(--accent);
-      white-space: nowrap;
-    }
+/* Tooltip tweaks */
+.tooltip-container {
+  position: relative;
+  display: inline-block;
+  margin: 0 0.4rem;
+  cursor: help;
+}
 
-    .skills-icons {
-      display: flex;
-      justify-content: flex-start;
-      /* Flex-wrap for mobile */
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
+.click-tooltip {
+  position: absolute;
+  top: -2.4rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(51, 51, 51, 0.9);
+  color: var(--text);
+  padding: 0.4rem 0.75rem;
+  font-size: 0.75rem;
+  border-radius: 8px;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 10;
+}
 
-    .skills-icons img {
-      width: 28px;
-      height: 28px;
-      transition: transform 0.3s ease;
-    }
+.tooltip-container:hover .click-tooltip {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-6px);
+}
 
-    .skills-icons img:hover {
-      transform: scale(1.25);
-    }
+/* Back button: subtle pulse animation */
+@keyframes subtlePulse {
+  0%, 100% {
+    box-shadow: 0 0 6px var(--accent);
+  }
+  50% {
+    box-shadow: 0 0 14px var(--accent);
+  }
+}
 
-    ul {
-      padding-left: 1rem;
-      margin-bottom: 1rem;
-    }
+.back-button {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  padding: 0.55rem 1.1rem;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1.5px solid var(--accent);
+  border-radius: 14px;
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 700;
+  backdrop-filter: blur(7px);
+  z-index: 9999;
+  transition: all 0.2s ease;
+  animation: subtlePulse 4s ease-in-out infinite;
+}
 
-    li {
-      margin-bottom: 0.5rem;
-    }
+.back-button:hover {
+  background: var(--accent);
+  color: var(--bg);
+  transform: scale(1.07);
+  animation-play-state: paused;
+}
 
-    .footer {
-      text-align: center;
-      color: var(--text-secondary);
-      margin-top: 3rem;
-    }
+/* Skills icons: soft shadows & scale */
+.skills-icons img {
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  filter: drop-shadow(0 0 3px rgba(255, 64, 129, 0.3));
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
 
-    @media (max-width: 600px) {
-      section {
-        padding: 1rem;
-      }
-    }
-    .back-button {
-      position: fixed;
-      top: 1rem;
-      left: 1rem;
-      padding: 0.5rem 1rem;
-      background: rgba(0, 0, 0, 0.3);
-      border: 1px solid var(--accent);
-      border-radius: 12px;
-      color: var(--accent);
-      text-decoration: none;
-      font-weight: bold;
-      backdrop-filter: blur(6px);
-      z-index: 9999;
-      transition: all 0.2s ease;
-    }
+.skills-icons img:hover {
+  transform: scale(1.3);
+  filter: drop-shadow(0 0 10px var(--accent));
+}
 
-    .back-button:hover {
-      background: var(--accent);
-      color: var(--bg);
-      transform: scale(1.05);
-    }
+/* Disclaimer: subtle glow and scale on hover */
+.disclaimer {
+  color: #888;
+  font-size: 0.75rem;
+  display: block;
+  margin-top: 1rem;
+  transition: color 0.3s ease, text-shadow 0.3s ease, transform 0.2s ease;
+}
 
-    .tooltip-container {
-      position: relative;
-      display: inline-block;
-      margin: 0 0.4rem;
-      cursor: help;
-    }
+.disclaimer strong {
+  color: #8f5050;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
 
-    .click-tooltip {
-      position: absolute;
-      top: -2.2rem;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: var(--tooltip-bg, #333);
-      color: var(--text-light, #f5f5f5);
-      padding: 0.35rem 0.6rem;
-      font-size: 0.75rem;
-      border-radius: 6px;
-      white-space: nowrap;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s ease, transform 0.3s ease;
-      z-index: 10;
-    }
+.disclaimer:hover {
+  color: #d0d0d0;
+  text-shadow: 0 0 6px rgba(255, 64, 129, 0.5);
+  cursor: help;
+  transform: scale(1.05);
+}
 
-    .tooltip-container:hover .click-tooltip {
-      opacity: 1;
-      transform: translateX(-50%) translateY(-4px);
-    }
+.disclaimer:hover strong {
+  color: #c87878;
+  text-shadow: 0 0 7px rgba(200, 120, 120, 0.7);
+}
 
-    form#contactForm {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      max-width: 400px;
-      margin-top: 1rem;
-      align-items: justify-center;
-      top: 50%;
-      left: 50%;
-    }
+   form#contactForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  max-width: 400px;
+  margin-top: 1.2rem;
+  align-items: stretch; /* fixed from 'justify-center' which isn’t valid */
+  position: relative;
+  transition: transform 0.3s ease;
+}
 
-    form#contactForm label {
-      font-weight: 600;
-      color: var(--accent, #ff4081);
-    }
+form#contactForm label {
+  font-weight: 600;
+  color: var(--accent, #ff4081);
+  letter-spacing: 0.03em;
+  user-select: none;
+  transition: color 0.3s ease;
+}
 
-    form#contactForm input,
-    form#contactForm textarea {
-      padding: 0.6rem 0.8rem;
-      border: 2px solid var(--accent, #ff4081);
-      border-radius: 8px;
-      background: var(--bg, #211b30);
-      color: var(--text-light, #f0f0f0);
-      font-size: 1rem;
-      resize: vertical;
-      transition: border-color 0.3s ease;
-    }
+form#contactForm input,
+form#contactForm textarea {
+  padding: 0.65rem 0.85rem;
+  border: 2px solid var(--accent, #ff4081);
+  border-radius: 10px;
+  background: var(--bg, #211b30);
+  color: var(--text, #f5f5f5);
+  font-size: 1rem;
+  resize: vertical;
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.35s ease,
+    transform 0.2s ease;
+  box-shadow: inset 0 0 6px rgba(255, 64, 129, 0.1);
+}
 
-    form#contactForm input:focus,
-    form#contactForm textarea:focus {
-      border-color: #ff79b0;
-      outline: ridge 2px var(--accent, #ff4081);
-      transform: scale(1.02);
-      box-shadow: 0 0 33px rgba(255, 64, 129, 0.2);
-    }
+form#contactForm input::placeholder,
+form#contactForm textarea::placeholder {
+  color: #bb99aa;
+  font-style: italic;
+  user-select: none;
+}
 
-    form#contactForm button {
-      background: var(--accent, #ff4081);
-      border: none;
-      padding: 0.7rem;
-      border-radius: 999px;
-      font-weight: 700;
-      color: var(--bg, #211b30);
-      cursor: pointer;
-      transition: background-color 0.9s ease;
-    }
+form#contactForm input:focus,
+form#contactForm textarea:focus {
+  border-color: #ff79b0;
+  outline: ridge 2px var(--accent, #ff4081);
+  transform: scale(1.04);
+  box-shadow:
+    0 0 12px 3px rgba(255, 64, 129, 0.25),
+    inset 0 0 8px rgba(255, 64, 129, 0.3);
+}
 
-    form#contactForm button:hover {
-      background: #a74f4f;
-    }
+form#contactForm button {
+  background: var(--accent, #ff4081);
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 999px;
+  font-weight: 700;
+  color: var(--bg, #211b30);
+  cursor: pointer;
+  transition:
+    background-color 0.9s ease,
+    box-shadow 0.3s ease,
+    transform 0.2s ease;
+  box-shadow: 0 3px 12px rgba(255, 64, 129, 0.4);
+}
 
-    .center-form-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 0.1rem 0.5rem;
-      min-height: 50vh;
-      box-sizing: border-box;
-    }
+form#contactForm button:hover {
+  background: #a74f4f;
+  box-shadow: 0 5px 20px rgba(167, 79, 79, 0.6);
+  transform: scale(1.07);
+}
+
+.center-form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.3rem 0.7rem;
+  min-height: 50vh;
+  box-sizing: border-box;
+  user-select: none;
+}
+
   </style>
 </head>
 <body>
@@ -314,6 +354,49 @@
 
 </style>
 
+  <section class="timeline-section">
+  <h2>Leadership</h2>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-icon" title="Robotics Team President"></div>
+      <div class="timeline-content">
+        <h3>Robotics Team President <span>(2024–2025)</span></h3>
+        <p><strong>Camarin High School</strong></p>
+        <p>
+          Led the school’s robotics team, guiding both builders and coders in preparing for inter-school competitions.
+          Managed the timeline for each project, handled hardware purchases, and made decisions on how the robots should be built and programmed.
+          Helped the team stay organized and ready for contests.
+        </p>
+      </div>
+    </div>
+<br>
+    <div class="timeline-item">
+      <div class="timeline-icon" title="ICT Club President"></div>
+      <div class="timeline-content">
+        <h3>ICT Club President <span>(2024–2025)</span></h3>
+        <p><strong>Camarin High School</strong></p>
+        <p>
+          Led a 30+ member club focused on technology. Conducted workshops on basic computer use.
+          Coordinated collaborations with external mentors and guest speakers.
+        </p>
+      </div>
+    </div>
+<br>
+    <div class="timeline-item">
+      <div class="timeline-icon" title="Layout Designer"></div>
+      <div class="timeline-content">
+        <h3>Layout Designer <span>(2024–2025)</span></h3>
+        <p><strong>The Icon, Camarin High School</strong></p>
+        <p>
+          Led the school's online publication team as a layout designer.
+          Produced visually engaging digital spreads for campus news and editorial pieces using custom-built WordPress sites tailored for DSPC requirements.
+          Represented the school in the Division Schools Press Conference (DSPC) under the Online Publication category.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section>
   <h2>Projects</h2>
 <div class="playground-list">
@@ -365,54 +448,6 @@
 </script>
 
 </section>
-
-
-
-
-
-  <section class="timeline-section">
-  <h2>Leadership</h2>
-  <div class="timeline">
-    <div class="timeline-item">
-      <div class="timeline-icon" title="Robotics Team President"></div>
-      <div class="timeline-content">
-        <h3>Robotics Team President <span>(2024–2025)</span></h3>
-        <p><strong>Camarin High School</strong></p>
-        <p>
-          Led the school’s robotics team, guiding both builders and coders in preparing for inter-school competitions.
-          Managed the timeline for each project, handled hardware purchases, and made decisions on how the robots should be built and programmed.
-          Helped the team stay organized and ready for contests.
-        </p>
-      </div>
-    </div>
-<br>
-    <div class="timeline-item">
-      <div class="timeline-icon" title="ICT Club President"></div>
-      <div class="timeline-content">
-        <h3>ICT Club President <span>(2024–2025)</span></h3>
-        <p><strong>Camarin High School</strong></p>
-        <p>
-          Led a 30+ member club focused on technology. Conducted workshops on basic computer use.
-          Coordinated collaborations with external mentors and guest speakers.
-        </p>
-      </div>
-    </div>
-<br>
-    <div class="timeline-item">
-      <div class="timeline-icon" title="Layout Designer"></div>
-      <div class="timeline-content">
-        <h3>Layout Designer <span>(2024–2025)</span></h3>
-        <p><strong>The Icon, Camarin High School</strong></p>
-        <p>
-          Led the school's online publication team as a layout designer.
-          Produced visually engaging digital spreads for campus news and editorial pieces using custom-built WordPress sites tailored for DSPC requirements.
-          Represented the school in the Division Schools Press Conference (DSPC) under the Online Publication category.
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
-
 
  <section>
   <h2>What I’ve Worked With</h2>
@@ -536,9 +571,40 @@
   <section>
     <h2>Contact</h2>
     <p>
-      <div style="width: auto; text-align: center;">
-        <strong>Email:</strong> <a href="mailto:cadizal06@gmail.com">cadizal06@gmail.com</a><br />
-      </div>
+      <div class="contact-email">
+  <strong>Email:</strong> 
+  <a href="mailto:cadizal06@gmail.com" class="email-link">cadizal06@gmail.com</a>
+</div>
+
+<style>
+  .contact-email {
+    text-align: center;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    color: var(--text-secondary, #ccc);
+    user-select: text;
+  }
+
+  .contact-email strong {
+    color: var(--accent, #ff4081);
+    font-weight: 700;
+    margin-right: 0.4rem;
+  }
+
+  .email-link {
+    color: var(--accent, #ff4081);
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.3s ease, text-decoration 0.3s ease;
+  }
+
+  .email-link:hover,
+  .email-link:focus {
+    color: #ff79b0;
+    text-decoration: underline;
+  }
+</style>
+
       <div class="center-form-container">
         <form id="contactForm">
           <label for="name">Name</label>
@@ -565,9 +631,79 @@
               margin-top: 0.5rem;
             "
           >
-            <input type="checkbox" id="consent" required />
-            I consent to sending this data and understand it will remain confidential.
-          </label>
+  <label class="custom-checkbox" style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; margin-top: 0.5rem; cursor: pointer;">
+  <input type="checkbox" id="consent" required />
+  <span class="checkmark"></span>
+  I consent to sending this data and understand it will remain confidential.
+</label>
+
+<style>
+  /* Hide native checkbox but keep it accessible */
+  .custom-checkbox input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+
+  /* The custom checkbox */
+  .custom-checkbox .checkmark {
+    position: relative;
+    height: 22px;
+    width: 22px;
+    border: 2.5px solid var(--accent, #ff4081);
+    border-radius: 5px;
+    box-sizing: border-box;
+    background-color: transparent;
+    animation: pulseGlow 2.5s ease-in-out infinite;
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    flex-shrink: 0;
+  }
+
+  /* The checkmark/indicator */
+  .custom-checkbox .checkmark::after {
+    content: "";
+    position: absolute;
+    display: none;
+    left: 6px;
+    top: 2px;
+    width: 6px;
+    height: 12px;
+    border: solid var(--bg, #211b30);
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
+  }
+
+  /* Show checkmark when checked */
+  .custom-checkbox input[type="checkbox"]:checked + .checkmark {
+    background-color: var(--accent, #ff4081);
+    border-color: #ff79b0;
+    animation: none;
+    box-shadow: 0 0 12px 4px rgba(255, 64, 129, 0.8);
+  }
+
+  .custom-checkbox input[type="checkbox"]:checked + .checkmark::after {
+    display: block;
+  }
+
+  /* Pulse glow animation */
+  @keyframes pulseGlow {
+    0% {
+      box-shadow: 0 0 0 0 rgba(255, 64, 129, 0.7);
+      border-color: var(--accent, #ff4081);
+    }
+    50% {
+      box-shadow: 0 0 15px 6px rgba(255, 64, 129, 0.9);
+      border-color: #ff79b0;
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(255, 64, 129, 0.7);
+      border-color: var(--accent, #ff4081);
+    }
+  }
+</style>
+<br>
 
           <button type="submit">Send</button>
           <p id="formStatus" style="margin-top: 0.5rem; font-weight: bold;"></p>
