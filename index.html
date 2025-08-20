@@ -79,31 +79,13 @@
 <body>
 
 
-
-
-
-
- <script>
-  const toast = document.getElementById('themeToast');
-
-  function showToast(message) {
-    toast.textContent = message;
-    toast.classList.add('show');
-    setTimeout(() => {
-      toast.classList.remove('show');
-    }, 2500);
-  }
-
-  function getTimeGreeting() {
-    const hour = new Date().getHours();
-    if (hour < 4) return "Burning the midnight oil? 🌌";
-    if (hour < 6) return "Good early morning! 🌒";
-    if (hour < 12) return "Good morning! ☀️";
-    if (hour < 18) return "Good afternoon! 🌤️";
-    if (hour < 21) return "Good evening! 🌙";
-    return "Winding down? 🌃";
-  }
-</script>
+   <div class="blob"></div>
+  <div class="blob"></div>
+  <div class="blob"></div>
+  <div class="blob"></div> 
+  <div class="blob"></div>
+  <div class="blob"></div>
+  <div class="blob"></div>
 
 
 
@@ -214,53 +196,53 @@
 <script>
 const timeGreetings = {
   midnight: [
-    "Midnight thoughts fuel wild dreams. 🌌",
-    "The quiet is where clarity lives. 🌃",
-    "Still awake? You’re not alone. 🌙",
-    "Make peace with the dark. ☯️",
-    "Dreams start with stillness. ✨"
+    "Midnight thoughts fuel wild dreams.",
+    "The quiet is where clarity lives.",
+    "Still awake? You’re not alone.",
+    "Make peace with the dark.",
+    "Dreams start with stillness."
   ],
   dawn: [
-    "New day, new beat. 🎵",
-    "Dawn's quiet is your power. 🧘",
-    "Time to bloom again. 🌸",
-    "You’re not late, you’re alive. 🕰️",
-    "The light found you — show up. 🌞"
+    "New day, new beat.",
+    "Dawn's quiet is your power.",
+    "Time to bloom again.",
+    "You’re not late, you’re alive.",
+    "The light found you — show up."
   ],
   morning: [
-    "Let today surprise you. 🌄",
-    "Mornings are your reset button. 🔁",
-    "Start soft, finish loud. 🔊",
-    "Wake with purpose. 💼",
-    "You’re here — make it count. 🕊️"
+    "Let today surprise you.",
+    "Mornings are your reset button.",
+    "Start soft, finish loud.",
+    "Wake with purpose.",
+    "You’re here — make it count."
   ],
   afternoon: [
-    "Afternoon hustle hits different. 🔋",
-    "You’ve made it halfway — push through. 🛠️",
-    "Keep your momentum alive. ⚙️",
-    "Let the day bend, not break you. 🌐",
-    "Ride the wave. 🌊"
+    "Afternoon hustle hits different.",
+    "You’ve made it halfway — push through.",
+    "Keep your momentum alive.",
+    "Let the day bend, not break you.",
+    "Ride the wave."
   ],
   dusk: [
-    "Dusk is for exhaling. 🕯️",
-    "You did well — let it land. 🌙",
-    "Let the light fade, not your fire. 🔥",
-    "Evening’s grace is yours. 🌇",
-    "Let today go gently. 💫"
+    "Dusk is for exhaling.",
+    "You did well — let it land.",
+    "Let the light fade, not your fire.",
+    "Evening’s grace is yours.",
+    "Let today go gently."
   ],
   evening: [
-    "Let the day settle in your bones. 🌌",
-    "Ease into rest mode. 😌",
-    "Evening peace, earned and deserved. ✨",
-    "Reflect, don’t regret. 🌠",
-    "Grind winds down, heart stays strong. 💖"
+    "Let the day settle in your bones.",
+    "Ease into rest mode.",
+    "Evening peace, earned and deserved.",
+    "Reflect, don’t regret.",
+    "Grind winds down, heart stays strong."
   ],
   night: [
-    "Night is not the end — it’s reset. 🌒",
-    "Slow down, not give up. 🌙",
-    "You did enough. Sleep easy. 💤",
-    "Dark skies = dream time. 🌌",
-    "Rest is resistance. Recharge. 🔋"
+    "Night is not the end — it’s reset.",
+    "Slow down, not give up.",
+    "You did enough. Sleep easy.",
+    "Dark skies = dream time.",
+    "Rest is resistance. Recharge."
   ]
 };
 
@@ -275,29 +257,30 @@ function getCurrentTimeSegment() {
   return "night";
 }
 
-function typeOut(text, element) {
+function typeOut(text, element, speed = 60) {
   element.textContent = "";
   let i = 0;
   const interval = setInterval(() => {
     element.textContent += text.charAt(i++);
     if (i >= text.length) clearInterval(interval);
-  }, 60); // Adjust speed here
+  }, speed);
 }
 
 function greetByTimeOnly() {
   const timeSegment = getCurrentTimeSegment();
   const greetings = timeGreetings[timeSegment] || [];
-  if (greetings.length > 0) {
-    const greeting = greetings[Math.floor(Math.random() * greetings.length)];
-    const greetingBox = document.getElementById('pageGreeting');
-    if (greetingBox) typeOut(greeting, greetingBox);
-  }
+  if (!greetings.length) return;
+
+  const greeting = greetings[Math.floor(Math.random() * greetings.length)];
+  const greetingBox = document.getElementById('pageGreeting');
+  if (greetingBox) typeOut(greeting, greetingBox);
 }
 
 window.addEventListener("DOMContentLoaded", () => {
   greetByTimeOnly();
+
   const now = new Date();
-  const msUntilNextHour = (60 - now.getMinutes()) * 60 * 1000 - now.getSeconds() * 1000;
+  const msUntilNextHour = ((60 - now.getMinutes()) * 60 - now.getSeconds()) * 1000;
 
   setTimeout(() => {
     greetByTimeOnly();
@@ -305,6 +288,7 @@ window.addEventListener("DOMContentLoaded", () => {
   }, msUntilNextHour);
 });
 </script>
+
 
 
       <h1>Hi, I'm Tonie</h1>

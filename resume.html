@@ -7,20 +7,61 @@
   <title>About Me</title>
 
   <style>
-    :root {
-  --bg: #211b30;
-  --bg-light: #2d2344;
-  --bg-gradient: linear-gradient(135deg, #2a2240, #372b56);
-  --text: #f5f5f5;
-  --text-secondary: #ccc;
-  --accent: #ff4081;
+:root {
+  /* Backgrounds */
+  --bg: #121212;
+  --bg-light: #1e1e1e;
+  --bg-gradient: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+
+  /* Text */
+  --text: #eaeaea;
+  --text-secondary: #b5b5b5;
+  --text-muted: #7a7a7a;
+  --text-light: #ffffff;
+  --text-paragraph: #b9b8b8;
+  --text-paragraph-hover: #ffffff;
+
+  /* Accent */
+  --accent: #39ff14; /* neon lime */
+  --accent-hover: #52ff35;
+
+  /* Cards / Containers */
   --card-radius: 12px;
   --card-padding: 1.5rem;
-  --shadow-base: rgba(255, 64, 129, 0.25);
+  --card-bg: rgba(255, 255, 255, 0.03);
+
+  /* Borders */
+  --border-light: rgba(255, 255, 255, 0.1);
+
+  /* Shadows */
+  --shadow-base: rgba(57, 255, 20, 0.25);
   --shadow-dark: rgba(0, 0, 0, 0.6);
+
+  /* Toasts */
+  --toast-bg: #1a1a1a;
+  --toast-text: #39ff14;
+  --toast-error-bg: #ff3333;
+
+  /* Tooltips */
+  --tooltip-bg: rgba(57, 255, 20, 0.1);
+  --tooltip-bubble-bg: rgba(20, 20, 20, 0.9);
+  --tooltip-bubble-color: #39ff14;
+  --tooltip-arrow-color: rgba(20, 20, 20, 0.9);
+
+  /* Stack / Panels */
+  --stack-bg: rgba(255, 255, 255, 0.05);
+  --stack-bg-hover: rgba(57, 255, 20, 0.1);
+  --stack-shadow: rgba(57, 255, 20, 0.2);
+
+  /* Contact Buttons */
+  --contact-bg: linear-gradient(145deg, #1c1c1c, #2a2a2a);
+  --contact-hover-bg: linear-gradient(145deg, #2f2f2f, #3d3d3d);
+  --contact-hover-color: #39ff14;
+  --contact-hover-shadow1: rgba(57, 255, 20, 0.2);
+  --contact-hover-shadow2: rgba(57, 255, 20, 0.1);
 }
 
-/* Fix main max-width from 70px to something sane */
+/* Main content */
 main {
   max-width: 700px;
   margin: 0 auto;
@@ -31,7 +72,7 @@ main {
   font-weight: 400;
 }
 
-/* Body + html tweaks */
+/* Body + html */
 body,
 html {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -45,7 +86,7 @@ html {
   user-select: text;
 }
 
-/* Sections: add subtle gradient + layered shadows + smooth hover glow */
+/* Sections */
 section {
   padding: var(--card-padding);
   background: var(--bg-gradient);
@@ -54,8 +95,8 @@ section {
   max-width: 700px;
   box-shadow:
     0 4px 15px 1px var(--shadow-base),
-    inset 0 0 10px 2px #3a2b55,
-    0 0 12px 0 rgba(255, 64, 129, 0.3);
+    inset 0 0 10px 2px #1c1c1c,
+    0 0 12px 0 var(--shadow-base);
   transition: box-shadow 0.3s ease;
   backdrop-filter: saturate(150%) blur(6px);
 }
@@ -63,8 +104,8 @@ section {
 section:hover {
   box-shadow:
     0 8px 28px 3px var(--shadow-base),
-    inset 0 0 14px 4px #5a3b75,
-    0 0 20px 0 rgba(255, 64, 129, 0.6);
+    inset 0 0 14px 4px #2f2f2f,
+    0 0 20px 0 var(--accent);
 }
 
 /* Headings */
@@ -77,7 +118,7 @@ section h2 {
   text-shadow: 0 0 8px var(--accent);
 }
 
-/* Links: smoother hover */
+/* Links */
 a {
   color: var(--accent);
   font-weight: 600;
@@ -86,13 +127,13 @@ a {
 }
 
 a:hover {
-  color: #ff7aa6;
-  text-shadow: 0 0 6px #ff7aa6;
+  color: var(--accent-hover);
+  text-shadow: 0 0 6px var(--accent-hover);
   filter: brightness(1.2);
   text-decoration: underline;
 }
 
-/* Tooltip tweaks */
+/* Tooltip */
 .tooltip-container {
   position: relative;
   display: inline-block;
@@ -105,8 +146,8 @@ a:hover {
   top: -2.4rem;
   left: 50%;
   transform: translateX(-50%);
-  background-color: rgba(51, 51, 51, 0.9);
-  color: var(--text);
+  background-color: var(--tooltip-bubble-bg);
+  color: var(--tooltip-bubble-color);
   padding: 0.4rem 0.75rem;
   font-size: 0.75rem;
   border-radius: 8px;
@@ -124,7 +165,7 @@ a:hover {
   transform: translateX(-50%) translateY(-6px);
 }
 
-/* Back button: subtle pulse animation */
+/* Back button */
 @keyframes subtlePulse {
   0%, 100% {
     box-shadow: 0 0 6px var(--accent);
@@ -158,12 +199,12 @@ a:hover {
   animation-play-state: paused;
 }
 
-/* Skills icons: soft shadows & scale */
+/* Skills icons */
 .skills-icons img {
   width: 28px;
   height: 28px;
   border-radius: 4px;
-  filter: drop-shadow(0 0 3px rgba(255, 64, 129, 0.3));
+  filter: drop-shadow(0 0 3px var(--shadow-base));
   transition: transform 0.3s ease, filter 0.3s ease;
 }
 
@@ -172,9 +213,9 @@ a:hover {
   filter: drop-shadow(0 0 10px var(--accent));
 }
 
-/* Disclaimer: subtle glow and scale on hover */
+/* Disclaimer */
 .disclaimer {
-  color: #888;
+  color: var(--text-muted);
   font-size: 0.75rem;
   display: block;
   margin-top: 1rem;
@@ -182,36 +223,37 @@ a:hover {
 }
 
 .disclaimer strong {
-  color: #8f5050;
+  color: var(--accent);
   transition: color 0.3s ease, text-shadow 0.3s ease;
 }
 
 .disclaimer:hover {
-  color: #d0d0d0;
-  text-shadow: 0 0 6px rgba(255, 64, 129, 0.5);
+  color: var(--text-paragraph-hover);
+  text-shadow: 0 0 6px var(--accent);
   cursor: help;
   transform: scale(1.05);
 }
 
 .disclaimer:hover strong {
-  color: #c87878;
-  text-shadow: 0 0 7px rgba(200, 120, 120, 0.7);
+  color: var(--accent-hover);
+  text-shadow: 0 0 7px var(--accent-hover);
 }
 
-   form#contactForm {
+/* Contact Form */
+form#contactForm {
   display: flex;
   flex-direction: column;
   gap: 1.1rem;
   max-width: 400px;
   margin-top: 1.2rem;
-  align-items: stretch; /* fixed from 'justify-center' which isn’t valid */
+  align-items: stretch;
   position: relative;
   transition: transform 0.3s ease;
 }
 
 form#contactForm label {
   font-weight: 600;
-  color: var(--accent, #ff4081);
+  color: var(--accent);
   letter-spacing: 0.03em;
   user-select: none;
   transition: color 0.3s ease;
@@ -220,57 +262,52 @@ form#contactForm label {
 form#contactForm input,
 form#contactForm textarea {
   padding: 0.65rem 0.85rem;
-  border: 2px solid var(--accent, #ff4081);
+  border: 2px solid var(--accent);
   border-radius: 10px;
-  background: var(--bg, #211b30);
-  color: var(--text, #f5f5f5);
+  background: var(--bg);
+  color: var(--text);
   font-size: 1rem;
   resize: vertical;
-  transition:
-    border-color 0.3s ease,
-    box-shadow 0.35s ease,
-    transform 0.2s ease;
-  box-shadow: inset 0 0 6px rgba(255, 64, 129, 0.1);
+  transition: border-color 0.3s ease, box-shadow 0.35s ease, transform 0.2s ease;
+  box-shadow: inset 0 0 6px var(--shadow-base);
 }
 
 form#contactForm input::placeholder,
 form#contactForm textarea::placeholder {
-  color: #bb99aa;
+  color: var(--text-muted);
   font-style: italic;
   user-select: none;
 }
 
 form#contactForm input:focus,
 form#contactForm textarea:focus {
-  border-color: #ff79b0;
-  outline: ridge 2px var(--accent, #ff4081);
+  border-color: var(--accent-hover);
+  outline: ridge 2px var(--accent);
   transform: scale(1.04);
   box-shadow:
-    0 0 12px 3px rgba(255, 64, 129, 0.25),
-    inset 0 0 8px rgba(255, 64, 129, 0.3);
+    0 0 12px 3px var(--shadow-base),
+    inset 0 0 8px var(--accent-hover);
 }
 
 form#contactForm button {
-  background: var(--accent, #ff4081);
+  background: var(--accent);
   border: none;
   padding: 0.75rem 1.5rem;
   border-radius: 999px;
   font-weight: 700;
-  color: var(--bg, #211b30);
+  color: var(--bg);
   cursor: pointer;
-  transition:
-    background-color 0.9s ease,
-    box-shadow 0.3s ease,
-    transform 0.2s ease;
-  box-shadow: 0 3px 12px rgba(255, 64, 129, 0.4);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 3px 12px var(--shadow-base);
 }
 
 form#contactForm button:hover {
-  background: #a74f4f;
-  box-shadow: 0 5px 20px rgba(167, 79, 79, 0.6);
+  background: var(--accent-hover);
+  box-shadow: 0 5px 20px var(--stack-shadow);
   transform: scale(1.07);
 }
 
+/* Center form */
 .center-form-container {
   display: flex;
   justify-content: center;
@@ -280,8 +317,8 @@ form#contactForm button:hover {
   box-sizing: border-box;
   user-select: none;
 }
+</style>
 
-  </style>
 </head>
 <body>
   <a href="https://tonie.fun/" class="back-button" style="z-index: 1;">Home</a>
@@ -290,16 +327,13 @@ form#contactForm button:hover {
   <section>
     <h2>About Me</h2>
     <p>
-      I'm Tonie based at The Philippines, 18 years old, and a Grade 11 coder at Metro Manila College,
-      deep in the ICT (Programming) track.
-      What started as late-night curiosity turned into a full-on obsession with making things work under the hood.
-    </p>
+  I'm Tonie, an 18-year-old coder from the Philippines and a Grade 11 student at Metro Manila College, 
+  pursuing the ICT (Programming) track. What began as late-night curiosity has grown into a passion for 
+  building and understanding how things work behind the screen.
+</p>
     <p>
-      Every Easter egg, console mini-game, and pixel here? I wrote that. No templates. No drag-and-drop. Just code,
-      caffeine, and raw ambition.
-    </p>
-    <p>
-      This site? It’s me — unfiltered, unfinished, but always building.
+      I love creating things that make life easier, whether it's a simple script or a complex project. 
+      My journey in tech has been fueled by curiosity and a desire to learn, and I'm excited to see where it takes me next.
     </p>
   </section>
 
@@ -322,7 +356,7 @@ form#contactForm button:hover {
   margin: 2rem auto;
   padding: 0 1.5rem;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #ddd; /* assuming light text on dark bg */
+  color: var(--text);
   line-height: 1.6;
 }
 
@@ -334,24 +368,23 @@ form#contactForm button:hover {
   font-size: 2.2rem;
   font-weight: 700;
   margin-bottom: 1.2rem;
-  color: #ff4081; /* your accent */
+  color: var(--accent);
   letter-spacing: 0.05em;
   text-align: center;
   text-transform: uppercase;
   user-select: none;
-  text-shadow: 0 0 6px rgba(255, 64, 129, 0.6);
+  text-shadow: 0 0 6px var(--stack-shadow);
 }
 
 .profile-sections p {
   font-size: 1.05rem;
   margin-bottom: 1.2rem;
-  color: #ccc;
-  /* subtle text shadow for smoothness */
+  color: var(--text-secondary);
   text-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
 }
 
 .profile-sections p strong {
-  color: #ff4081;
+  color: var(--accent);
   font-weight: 700;
   user-select: none;
 }
@@ -360,7 +393,7 @@ form#contactForm button:hover {
   margin-bottom: 0;
 }
 
-/* Optional: add a subtle fade-in on scroll */
+/* Fade-in animation */
 @media (prefers-reduced-motion: no-preference) {
   .profile-sections section {
     opacity: 0;
@@ -382,19 +415,25 @@ form#contactForm button:hover {
   }
 }
 
-
- .playground-list {
+/* Playground Section */
+.playground-list {
   display: flex;
   flex-direction: column;
-  gap: 16px; /* spacing between items */
+  gap: 16px;
 }
 
 .playground-item {
-  border: 1px solid #444; /* subtle border */
+  border: 1px solid var(--stack-shadow);
   padding: 16px;
   border-radius: 8px;
-  background: var(--panel-bg);
-  max-width: 700px; /* optional max width */
+  background: var(--stack-bg);
+  max-width: 700px;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.playground-item:hover {
+  background: var(--stack-bg-hover);
+  box-shadow: 0 0 12px var(--stack-shadow);
 }
 
 .playground-link img {
@@ -418,16 +457,14 @@ form#contactForm button:hover {
   display: block;
   margin-top: 6px;
   font-style: italic;
-  color: #bbb;
+  color: var(--text-muted);
 }
-
 </style>
 
-<section class="timeline-section leadership-timeline">
+<section class="timeline-section leadership-timeline card">
   <h2>Leadership</h2>
   <div class="timeline">
     <div class="timeline-item">
-      <div class="timeline-icon" title="Robotics Team President"></div>
       <div class="timeline-content">
         <h3>Robotics Team President <span>(2024–2025)</span></h3>
         <p><strong>Camarin High School</strong></p>
@@ -438,9 +475,7 @@ form#contactForm button:hover {
         </p>
       </div>
     </div>
-    <br>
     <div class="timeline-item">
-      <div class="timeline-icon" title="ICT Club President"></div>
       <div class="timeline-content">
         <h3>ICT Club President <span>(2024–2025)</span></h3>
         <p><strong>Camarin High School</strong></p>
@@ -450,9 +485,7 @@ form#contactForm button:hover {
         </p>
       </div>
     </div>
-    <br>
     <div class="timeline-item">
-      <div class="timeline-icon" title="Layout Designer"></div>
       <div class="timeline-content">
         <h3>Layout Designer <span>(2024–2025)</span></h3>
         <p><strong>The Icon, Camarin High School</strong></p>
@@ -465,67 +498,52 @@ form#contactForm button:hover {
     </div>
   </div>
 </section>
+
 <style>
- .leadership-timeline {
-  background: transparent; /* keep original bg if any */
+.leadership-timeline {
+  background-color: #0b1d0b; /* dark green background */
   padding: 2rem 1rem;
-  border-left: 3px solid #666; /* subtle timeline line */
   max-width: 720px;
   margin: 0 auto;
   font-family: inherit;
-  color: inherit;
+  color: #c2f0c2; /* light green text */
+  border-radius: 1rem;
+  box-shadow: 0 0 15px rgba(0, 128, 0, 0.3);
 }
 
 .leadership-timeline h2 {
   font-weight: 700;
   font-size: 2.2rem;
-  color: inherit;
+  color: #a3f0a3; /* lighter green for heading */
   text-align: center;
   margin-bottom: 1.8rem;
   user-select: none;
   letter-spacing: 0.05em;
-  text-transform: none;
 }
 
 .leadership-timeline .timeline {
   position: relative;
-  padding-left: 2.5rem;
-  border-left: 3px solid #666;
+  padding-left: 0;
 }
 
 .leadership-timeline .timeline-item {
   position: relative;
   margin-bottom: 2.2rem;
-  padding-left: 2.5rem;
-  transition: transform 0.25s ease;
+  padding: 1rem;
+  border-left: 4px solid #00b300; /* dark green accent line */
   border-radius: 0.5rem;
+  background-color: rgba(0, 128, 0, 0.05); /* subtle green hover base */
+  transition: transform 0.25s ease, background-color 0.25s ease;
 }
 
 .leadership-timeline .timeline-item:hover {
   transform: translateX(5px);
-  background-color: rgba(255, 255, 255, 0.05);
-}
-
-.leadership-timeline .timeline-icon {
-  display: none;
-  position: absolute;
-  left: -1.3rem;
-  top: 0.3rem;
-  width: 1.3rem;
-  height: 1.3rem;
-  background: #666; /* original timeline dot color */
-  border-radius: 50%;
-  cursor: default;
-  transition: background-color 0.3s ease;
-}
-
-.leadership-timeline .timeline-icon:hover {
-  background: #999;
+  background-color: rgba(0, 128, 0, 0.15);
 }
 
 .leadership-timeline .timeline-content h3 {
   font-size: 1.3rem;
-  color: inherit;
+  color: #c2f0c2;
   margin-bottom: 0.25rem;
   display: flex;
   justify-content: space-between;
@@ -535,7 +553,7 @@ form#contactForm button:hover {
 
 .leadership-timeline .timeline-content h3 span {
   font-size: 0.9rem;
-  color: #aaa;
+  color: #88bb88; /* muted green for dates */
   font-weight: 400;
   font-style: italic;
   user-select: none;
@@ -543,31 +561,19 @@ form#contactForm button:hover {
 
 .leadership-timeline .timeline-content p strong {
   font-weight: 600;
-  color: inherit;
+  color: #a3f0a3; /* highlight strong text */
 }
 
 .leadership-timeline .timeline-content p {
   font-size: 1rem;
   line-height: 1.5;
-  color: inherit;
+  color: #c2f0c2;
   margin-top: 0.3rem;
 }
 
-/* subtle vertical line glow */
-.leadership-timeline .timeline::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 3px;
-  height: 100%;
-  background: #666;
-  border-radius: 2px;
-  pointer-events: none;
-}
-
-
 </style>
+
+
 
 <section>
   <h2>Projects</h2>
@@ -621,7 +627,7 @@ form#contactForm button:hover {
 
 </section>
 
- <section>
+<section>
   <h2>What I’ve Worked With</h2>
   <div class="skills-chart">
     <div class="skills-chart-row">
@@ -684,8 +690,8 @@ form#contactForm button:hover {
           <span class="click-tooltip">React</span>
         </div>
         <div class="tooltip-container">
-       <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg" alt="Django" />
-  <span class="click-tooltip">Django</span>
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg" alt="Django" />
+          <span class="click-tooltip">Django</span>
         </div>
       </div>
     </div>
@@ -708,90 +714,94 @@ form#contactForm button:hover {
       </div>
     </div>
   </div>
-<small class="disclaimer">
-  <strong>Disclaimer:</strong> This reflects my familiarity and time spent using the following, not formal work experience unless explicitly stated otherwise.
-</small>
 
-<style>
-  h2 { text-align: center;}
-  .skills-chart {
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* center all rows horizontally */
-  gap: 2rem;
-  max-width: 720px;
-  margin: 0 auto;
-}
+  <small class="disclaimer">
+    <strong>Disclaimer:</strong> This reflects my familiarity and time spent using the following, not formal work experience unless explicitly stated otherwise.
+  </small>
 
-.skills-chart-row {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* center label and icons inside each row */
-  gap: 0.8rem;
-}
+  <style>
+  <style>
+    h2 { 
+      text-align: center; 
+      color: #c2f0c2;
+    }
 
-.skills-label {
-  font-weight: 600;
-  font-size: 1.1rem;
-  color: #ff4081; /* accent color */
-  user-select: none;
-  text-align: center;
-}
+    .skills-chart {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+      max-width: 720px;
+      margin: 0 auto;
+    }
 
-.skills-icons {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center; /* center icons inside each row */
-  gap: 0.1rem;
-}
+    .skills-chart-row {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.8rem;
+    }
 
-.tooltip-container {
-  position: relative;
-  display: inline-block;
-  cursor: default;
-}
+    .skills-label {
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: #00b300; /* dark green accent */
+      user-select: none;
+      text-align: center;
+    }
 
-.tooltip-container img {
-  width: 25px;
-  height: 25px;
-  object-fit: contain;
-  filter: drop-shadow(0 0 1px rgba(0,0,0,0.2));
-  transition: transform 0.2s ease;
-}
+    .skills-icons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.1rem;
+    }
 
-.tooltip-container:hover img {
-  transform: scale(1.15);
-}
+    .tooltip-container {
+      position: relative;
+      display: inline-block;
+      cursor: default;
+    }
 
-.disclaimer {
-  color: gray;
-  font-size: 0.75rem;
-  margin-top: 1.5rem;
-  text-align: center;
-  user-select: none;
-  transition: color 0.3s ease, text-shadow 0.3s ease, transform 0.2s ease;
-}
+    .tooltip-container img {
+      width: 25px;
+      height: 25px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 1px rgba(0,0,0,0.2));
+      transition: transform 0.2s ease;
+    }
 
-.disclaimer strong {
-  color: rgb(143, 80, 80);
-  transition: color 0.3s ease, text-shadow 0.3s ease;
-}
+    .tooltip-container:hover img {
+      transform: scale(1.15);
+    }
 
-.disclaimer:hover {
-  color: #d0d0d0;
-  text-shadow: 0 0 5px rgba(255, 255, 255, 0.4);
-  cursor: help;
-  transform: scale(1.05);
-}
+    .disclaimer {
+      color: #a3bfa3; /* muted green */
+      font-size: 0.75rem;
+      margin-top: 1.5rem;
+      text-align: center;
+      user-select: none;
+      transition: color 0.3s ease, text-shadow 0.3s ease, transform 0.2s ease;
+    }
 
-.disclaimer:hover strong {
-  color: rgb(200, 120, 120);
-  text-shadow: 0 0 6px rgba(200, 120, 120, 0.6);
-}
-</style>
+    .disclaimer strong {
+      color: #006600; /* dark green */
+      transition: color 0.3s ease, text-shadow 0.3s ease;
+    }
 
+    .disclaimer:hover {
+      color: #d0f0d0;
+      text-shadow: 0 0 5px rgba(0, 255, 0, 0.4);
+      cursor: help;
+      transform: scale(1.05);
+    }
 
+    .disclaimer:hover strong {
+      color: #009900;
+      text-shadow: 0 0 6px rgba(0, 153, 0, 0.6);
+    }
+  </style>
 </section>
 
 
