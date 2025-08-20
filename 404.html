@@ -6,25 +6,24 @@
   <title>GO BACK!</title>
   <style>
     :root {
-      --accent: #ff4b91;
+      --accent: #4caf50; /* Green accent */
       --text-paragraph: #b9b8b8;
-      --contact-bg: #333;
-      --contact-hover-bg: #555;
+      --contact-bg: #1b3a24; /* Dark green button bg */
+      --contact-hover-bg: #2e7d32; /* Lighter hover green */
       --contact-hover-color: #fff;
-      --contact-hover-shadow1: rgba(255, 75, 145, 0.3);
-      --contact-hover-shadow2: rgba(255, 75, 145, 0.6);
-      --bg: #211b30;
+      --contact-hover-shadow1: rgba(76, 175, 80, 0.3); /* Green glow */
+      --contact-hover-shadow2: rgba(76, 175, 80, 0.6);
+      --bg: #121a13; /* Dark greenish background */
       --text: #f5f5f5;
-      --bonk-color: #ff3b3b;
+      --bonk-color: #66ff66; /* Neon green BONK text */
     }
-
-  
 
     body {
       margin: 0;
       background: var(--bg);
       color: var(--text);
       font-family: "Segoe UI", sans-serif;
+      overflow: hidden; /* disable scrollbars */
     }
 
     .error-container {
@@ -103,33 +102,73 @@
       top: calc(50% - 240px);
       left: 58%;
       transform-origin: bottom center;
-      width: 80px;
-      height: 140px;
+      width: 100px;
+      height: 180px;
       z-index: 2;
     }
 
-
-
     .hammer-head {
-      width: 80px;
-      height: 24px;
-      background: linear-gradient(to bottom, #aaa, #888);
-      border-radius: 4px;
+      width: 100px;
+      height: 30px;
+      background: linear-gradient(to bottom, #bbb, #777);
+      border-radius: 6px;
       position: absolute;
       top: 0;
       left: 0;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      box-shadow: inset 0 2px 6px rgba(255, 255, 255, 0.3),
+                  inset 0 -2px 6px rgba(0, 0, 0, 0.4),
+                  0 3px 6px rgba(0, 0, 0, 0.5);
+    }
+
+    .hammer-claw {
+      position: absolute;
+      top: 0;
+      right: -18px;
+      width: 20px;
+      height: 30px;
+      background: linear-gradient(to bottom, #999, #555);
+      clip-path: polygon(0 0, 100% 20%, 80% 50%, 100% 80%, 0 100%);
+      box-shadow: inset 0 -2px 4px rgba(0, 0, 0, 0.5);
+      border-radius: 2px;
+    }
+
+    .hammer-bolt {
+      position: absolute;
+      top: 8px;
+      left: 20px;
+      width: 6px;
+      height: 6px;
+      background: radial-gradient(circle, #ddd, #555);
+      border-radius: 50%;
+      box-shadow: 30px 0 #666, 60px 0 #666;
     }
 
     .hammer-handle {
-      width: 12px;
-      height: 110px;
-      background: linear-gradient(to bottom, #5c3a1e, #3b2412);
-      border-radius: 6px;
+      width: 16px;
+      height: 140px;
+      background: linear-gradient(to bottom, #6a3e1f, #3b2412);
+      border-radius: 8px;
       position: absolute;
       bottom: 0;
-      left: 34px;
-      box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.4);
+      left: 42px;
+      box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.5),
+                  0 0 6px rgba(0, 0, 0, 0.3);
+    }
+
+    .hammer-grip {
+      position: absolute;
+      bottom: 0;
+      left: 42px;
+      width: 16px;
+      height: 50px;
+      background: repeating-linear-gradient(
+        to bottom,
+        #222,
+        #444 6px,
+        #222 12px
+      );
+      border-radius: 8px;
+      box-shadow: inset 0 0 4px rgba(255, 255, 255, 0.2);
     }
 
     .bonk-text {
@@ -162,7 +201,6 @@
       100% { opacity: 0; transform: translate(-50%, -180%) scale(1.3); }
     }
 
-    /* Animations */
     @keyframes popIn1 {
       from { transform: scale(0); opacity: 0; }
       to { transform: scale(1); opacity: 1; }
@@ -174,187 +212,129 @@
     }
 
     #gravity-wrapper {
-  position: relative;
-  height: 100%;
-  width: 100%;
-  overflow: hidden; /* Keep children inside */
-}
+      position: relative;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+    }
 
+    /* Glitch mode styles */
+    .glitch-mode h1,
+    .glitch-mode h2,
+    .glitch-mode h3,
+    .glitch-mode h4,
+    .glitch-mode h5,
+    .glitch-mode h6,
+    .glitch-mode p,
+    .glitch-mode span,
+    .glitch-mode a,
+    .glitch-mode button,
+    .glitch-mode .error-code,
+    .glitch-mode .error-message {
+      text-shadow: 1px 0 red, -1px 0 cyan;
+      transition: all 0.2s ease;
+    }
+
+    body.glitch-mode {
+      overflow: hidden;
+    }
+
+    .scanlines {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.02),
+        rgba(255, 255, 255, 0.02) 2px,
+        transparent 2px,
+        transparent 4px
+      );
+      pointer-events: none;
+      z-index: 9999;
+      mix-blend-mode: overlay;
+    }
   </style>
 </head>
 <body>
   <div id="gravity-wrapper">
-  <main class="error-container">
-    <!-- Hammer -->
-    <div class="hammer" id="hammer">
-      <div class="hammer-head"></div>
-      <div class="hammer-handle"></div>
-    </div>
+    <main class="error-container">
+      <!-- Hammer (FIXED: id added) -->
+      <div class="hammer" id="hammer">
+        <div class="hammer-head"></div>
+        <div class="hammer-claw"></div>
+        <div class="hammer-bolt"></div>
+        <div class="hammer-handle"></div>
+        <div class="hammer-grip"></div>
+      </div>
 
-    <!-- BONK Text -->
-    <div class="bonk-text" id="bonk">BONK!</div>
+      <!-- BONK Text -->
+      <div class="bonk-text" id="bonk">B0nkED!</div>
 
-    <!-- Split 404 digits -->
-    <div class="error-code">
-      <span class="digit">4</span>
-      <span class="digit zero" id="zero">0</span>
-      <span class="digit">4</span>
-    </div>
+      <!-- Split 404 digits -->
+      <div class="error-code">
+        <span class="digit zero" id="zero">4</span>
+        <span class="digit zero">0</span>
+        <span class="digit zero">4</span>
+      </div>
 
-    <div class="error-message">Oops. You wandered too far. This page doesn’t exist.</div>
-<a href="/index" class="error-btn">Take me back</a>
+      <div class="error-message">Oops. You wandered too far. This page doesn’t exist.</div>
+      <a href="/index" class="error-btn">Take me back</a>
+    </main>
   </div>
-  </main>
 
- 
-<script>
-const hammer = document.getElementById("hammer");
-const zero = document.getElementById("zero");
-const bonkText = document.getElementById("bonk");
-const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const hammer = document.getElementById("hammer");
+      const zero = document.getElementById("zero");
+      const bonkText = document.getElementById("bonk");
 
+      if (!hammer || !zero || !bonkText) {
+        console.warn("Hammer, Zero, or Bonk element not found in DOM.");
+        return;
+      }
 
-function playBonkSound() {
-  if (audioCtx.state === 'suspended') audioCtx.resume();
-  const now = audioCtx.currentTime;
+      const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
-  const baseOsc = audioCtx.createOscillator();
-  const snapOsc = audioCtx.createOscillator();
-  const baseGain = audioCtx.createGain();
-  const snapGain = audioCtx.createGain();
+      function playBonkSound() {
+        if (audioCtx.state === "suspended") audioCtx.resume();
+        const now = audioCtx.currentTime;
 
-  baseOsc.type = 'triangle';
-  baseOsc.frequency.setValueAtTime(80, now);
-  baseGain.gain.setValueAtTime(0.3, now);
-  baseGain.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
+        const baseOsc = audioCtx.createOscillator();
+        const baseGain = audioCtx.createGain();
+        baseOsc.type = "triangle";
+        baseOsc.frequency.setValueAtTime(80, now);
+        baseGain.gain.setValueAtTime(0.4, now);
+        baseGain.gain.exponentialRampToValueAtTime(0.01, now + 0.25);
 
-  snapOsc.type = 'square';
-  snapOsc.frequency.setValueAtTime(600, now);
-  snapGain.gain.setValueAtTime(0.15, now);
-  snapGain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+        const snapOsc = audioCtx.createOscillator();
+        const snapGain = audioCtx.createGain();
+        snapOsc.type = "square";
+        snapOsc.frequency.setValueAtTime(500 + Math.random() * 200, now);
+        snapGain.gain.setValueAtTime(0.2, now);
+        snapGain.gain.exponentialRampToValueAtTime(0.01, now + 0.08);
 
-  baseOsc.connect(baseGain).connect(audioCtx.destination);
-  snapOsc.connect(snapGain).connect(audioCtx.destination);
-  baseOsc.start(now); snapOsc.start(now);
-  baseOsc.stop(now + 0.2); snapOsc.stop(now + 0.1);
-}
+        baseOsc.connect(baseGain).connect(audioCtx.destination);
+        snapOsc.connect(snapGain).connect(audioCtx.destination);
 
-// Bonk loop (idle animation)
-setInterval(() => {
-  hammer.style.animation = "bonkSwing 0.75s ease-in-out forwards";
-  zero.classList.add("squish");
-  bonkText.classList.add("show");
-  playBonkSound();
+        baseOsc.start(now); snapOsc.start(now);
+        baseOsc.stop(now + 0.25); snapOsc.stop(now + 0.1);
+      }
 
-  setTimeout(() => {
-    hammer.style.animation = "";
-    zero.classList.remove("squish");
-    bonkText.classList.remove("show");
-  }, 750);
-}, 2000);
-</script>
+      function doBonk() {
+        hammer.style.animation = "bonkSwing 0.75s ease-in-out forwards";
+        zero.classList.add("squish");
+        bonkText.classList.add("show");
+        playBonkSound();
 
+        setTimeout(() => {
+          hammer.style.animation = "";
+          zero.classList.remove("squish");
+          bonkText.classList.remove("show");
+        }, 750);
+      }
 
-<script>
-let glitchKeyHeld = false;
-let glitchTimeout;
-
-document.addEventListener('keydown', (e) => {
-  if (e.key.toLowerCase() === 'g' && !glitchKeyHeld) {
-    glitchKeyHeld = true;
-    glitchTimeout = setTimeout(() => {
-      activateGlitchMode();
-    }, 2000); // 2 seconds
-  }
-});
-
-document.addEventListener('keyup', (e) => {
-  if (e.key.toLowerCase() === 'g') {
-    glitchKeyHeld = false;
-    clearTimeout(glitchTimeout);
-  }
-});
-
-function activateGlitchMode() {
-  const body = document.body;
-  body.classList.add('glitch-mode');
-
-  // Screen Shake
-  let shakeInterval = setInterval(() => {
-    body.style.transform = `translate(${Math.random() * 4 - 2}px, ${Math.random() * 4 - 2}px)`;
-  }, 50);
-
-  // Screen FX - Scanlines
-  const scanlines = document.createElement('div');
-  scanlines.className = 'scanlines';
-  document.body.appendChild(scanlines);
-
-  // Fake Terminal Popup
-  const term = document.createElement('div');
-  term.innerText = ">>> CORE DUMPED\n>>> SYSTEM OVERRIDE\n>>> 404 DETECTED";
-  term.style.cssText = `
-    position: fixed;
-    top: 10%;
-    left: 10%;
-    background: black;
-    color: lime;
-    font-family: monospace;
-    padding: 1rem;
-    z-index: 9999;
-    box-shadow: 0 0 10px lime;
-    white-space: pre;
-  `;
-  document.body.appendChild(term);
-  setTimeout(() => term.remove(), 4000);
-
-  // Element Mutation
-  document.querySelectorAll("*").forEach(el => {
-    el.style.fontFamily = "Comic Sans MS, cursive, sans-serif";
-    el.style.transform = `rotate(${Math.random() * 20 - 10}deg)`;
-    el.style.textShadow = "1px 0 red, -1px 0 cyan";
-    el.style.mixBlendMode = "difference";
-
-    // Marquee replacement
-    if (el.tagName === "BUTTON" || el.tagName === "A") {
-      const marquee = document.createElement("marquee");
-      marquee.innerText = el.innerText;
-      el.replaceWith(marquee);
-    }
-  });
-
-  // Cleanup after 7 seconds
-  setTimeout(() => {
-    body.classList.remove('glitch-mode');
-    body.style.transform = '';
-    clearInterval(shakeInterval);
-    scanlines.remove();
-  }, 7000);
-}
-</script>
-
-<style>
-.glitch-mode * {
-  text-shadow: 1px 0 red, -1px 0 cyan !important;
-  transition: all 0.2s ease;
-}
-
-.scanlines {
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: repeating-linear-gradient(
-    to bottom,
-    rgba(255, 255, 255, 0.02),
-    rgba(255, 255, 255, 0.02) 2px,
-    transparent 2px,
-    transparent 4px
-  );
-  pointer-events: none;
-  z-index: 9999;
-  mix-blend-mode: overlay;
-}
-</style>
-
-
-
+      setInterval(doBonk, 2000);
+    });
+  </script>
 </body>
 </html>
