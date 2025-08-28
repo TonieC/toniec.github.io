@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Happy Birthday Kyle!</title>
+  <title>Yo Kyle! 🎉</title>
   <style>
     body {
       margin: 0;
@@ -58,7 +58,7 @@
       cursor: pointer;
       transition: all 0.3s ease;
       margin-top: 20px;
-      text-decoration: none; /* for <a> button */
+      text-decoration: none;
       display: inline-block;
     }
 
@@ -94,27 +94,6 @@
       to { transform: translateY(30px); }
     }
 
-    .confetti-piece {
-      position: absolute;
-      width: 8px;
-      height: 16px;
-      background-color: #ffcc00;
-      top: -20px;
-      opacity: 0;
-      transform: translateY(0) rotate(0deg);
-      animation: confettiFall 3s linear forwards;
-    }
-    @keyframes confettiFall {
-      0% {
-        opacity: 1;
-        transform: translateY(0) rotate(0deg);
-      }
-      100% {
-        opacity: 0;
-        transform: translateY(100vh) rotate(360deg);
-      }
-    }
-
     .funny-comments {
       margin-top: 20px;
       font-size: 1.1rem;
@@ -131,7 +110,7 @@
 
     .confetti-piece {
       position: fixed;
-      top: -px;
+      top: -25px;
       opacity: 1;
       animation: fall 2s linear forwards;
       border-radius: 1px;
@@ -150,32 +129,22 @@
   <div class="glow blue"></div>
 
   <div class="profile">
-    <img src="https://scontent.fmnl25-6.fna.fbcdn.net/v/t1.6435-9/55613137_100247517830068_4751910975450382336_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=a5f93a&_nc_eui2=AeFPDVVFKZ_tBz7poXntlhGcqpjBLtF-famqmMEu0X59qUS-220jogLnQeH9kWsqqV2F3QcoqPmxipyZaSoxcLxZ&_nc_ohc=9FLOEhWAxnUQ7kNvwHyp8p2&_nc_oc=Adlnl7ttGvHfX67qER7Kld5iOcUZWPCdvkUlKmxTND1ko_SJ1Wq76hoH432CWKL_TBU&_nc_zt=23&_nc_ht=scontent.fmnl25-6.fna&_nc_gid=Gdvbjkt2uBHBF4Zn9ESHow&oh=00_AfXpPmFoEsU6GCQ2IN0eWuS9HgP9rfGWMSmI8Rw1Srz3Gw&oe=68D3546B" alt="Kyle Lim">
+    <img src="https://scontent.fmnl25-6.fna.fbcdn.net/v/t1.6435-9/55613137_100247517830068_4751910975450382336_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=a5f93a&_nc_eui2=AeFPDVVFKZ_tBz7poXntlhGcqpjBLtF-famqmMEu0X59qUS-220jogLnQeH9kWsqqV2F3QcoqPmxipyZaSoxcLxZ&_nc_ohc=9FLOEhWAxnUQ7kNvwHyp8p2&_nc_oc=Adlnl7ttGvHfX67qER7Kld5iOcUZWPCdvkUlKmxTND1ko_SJ1Wq76hoH432CWKL_TBU&_nc_zt=23&_nc_ht=scontent.fmnl25-6.fna&_nc_gid=Gdvbjkt2uBHBF4Zn9ESHow&oh=00_AfXpPmFoEsU6GCQ2IN0eWuS9HgP9rfGWMSmI8Rw1Srz3Gw&oe=68D3546B" alt="Kyle L.">
   </div>
 
-  <h1>🎉 pibertday bossing, Kyle Lim! 🎂</h1>
-  <h2>paisa lods<br>- Tonie masarap</h2>
+  <h1>Yo Kyle! 🌚</h1>
+  <h2>ang sarap mo</h2>
 
   <div class="funny-comments">
-    <p>may shanghai? penge ibulsa ko lang</p>
+    <p>hindi mo na birthday pero bakit nandito ka?</p>
+  
   </div>
 
-  <button class="btn" id="celebrateBtn">Celebrate 🎂</button>
-  <a href="/" class="btn" id="mainSiteBtn">Go to Main Site 🌐</a>
-
-  <iframe 
-    id="confettiSound" 
-    width="0" 
-    height="0" 
-    src="https://www.myinstants.com/instant/lack-of-a-father-figure-49559/embed/" 
-    frameborder="0">
-  </iframe>
+  <button class="btn" id="celebrateBtn">Throw Confetti 🎉</button>
+  <a href="/" class="btn">Go to Main Site 🌐</a>
 
   <script>
     document.getElementById('celebrateBtn').addEventListener('click', () => {
-      const iframe = document.getElementById('confettiSound');
-      iframe.src = iframe.src;
-
       const count = 150;
       for (let i = 0; i < count; i++) {
         const piece = document.createElement('div');
