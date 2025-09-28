@@ -720,12 +720,10 @@ form#contactForm button:hover {
   </small>
 
   <style>
-  <style>
     h2 { 
       text-align: center; 
       color: #c2f0c2;
     }
-
     .skills-chart {
       display: flex;
       flex-direction: column;
@@ -734,7 +732,6 @@ form#contactForm button:hover {
       max-width: 720px;
       margin: 0 auto;
     }
-
     .skills-chart-row {
       width: 100%;
       display: flex;
@@ -742,28 +739,24 @@ form#contactForm button:hover {
       align-items: center;
       gap: 0.8rem;
     }
-
     .skills-label {
       font-weight: 600;
       font-size: 1.1rem;
-      color: #00b300; /* dark green accent */
+      color: #00b300;
       user-select: none;
       text-align: center;
     }
-
     .skills-icons {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       gap: 0.1rem;
     }
-
     .tooltip-container {
       position: relative;
       display: inline-block;
       cursor: default;
     }
-
     .tooltip-container img {
       width: 25px;
       height: 25px;
@@ -771,32 +764,27 @@ form#contactForm button:hover {
       filter: drop-shadow(0 0 1px rgba(0,0,0,0.2));
       transition: transform 0.2s ease;
     }
-
     .tooltip-container:hover img {
       transform: scale(1.15);
     }
-
     .disclaimer {
-      color: #a3bfa3; /* muted green */
+      color: #a3bfa3;
       font-size: 0.75rem;
       margin-top: 1.5rem;
       text-align: center;
       user-select: none;
       transition: color 0.3s ease, text-shadow 0.3s ease, transform 0.2s ease;
     }
-
     .disclaimer strong {
-      color: #006600; /* dark green */
+      color: #006600;
       transition: color 0.3s ease, text-shadow 0.3s ease;
     }
-
     .disclaimer:hover {
       color: #d0f0d0;
       text-shadow: 0 0 5px rgba(0, 255, 0, 0.4);
       cursor: help;
       transform: scale(1.05);
     }
-
     .disclaimer:hover strong {
       color: #009900;
       text-shadow: 0 0 6px rgba(0, 153, 0, 0.6);
@@ -808,152 +796,157 @@ form#contactForm button:hover {
 
   <section>
     <h2>Contact</h2>
-    <p>
-      <div class="contact-email">
-  <strong>Email:</strong> 
-  <a href="mailto:cadizal06@gmail.com" class="email-link">cadizal06@gmail.com</a>
-</div>
+    <div class="contact-email">
+      <strong>Email:</strong> 
+      <a href="mailto:cadizal06@gmail.com" class="email-link">cadizal06@gmail.com</a>
+    </div>
+    <style>
+      .contact-email {
+        text-align: center;
+        margin-bottom: 1rem;
+        font-size: 1rem;
+        color: var(--text-secondary, #ccc);
+        user-select: text;
+      }
+      .contact-email strong {
+        color: var(--accent, #ff4081);
+        font-weight: 700;
+        margin-right: 0.4rem;
+      }
+      .email-link {
+        color: var(--accent, #ff4081);
+        font-weight: 600;
+        text-decoration: none;
+        transition: color 0.3s ease, text-decoration 0.3s ease;
+      }
+      .email-link:hover,
+      .email-link:focus {
+        color: #ff79b0;
+        text-decoration: underline;
+      }
+    </style>
+    <div class="center-form-container">
+      <form id="contactForm">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" required placeholder="Name" />
 
-<style>
-  .contact-email {
-    text-align: center;
-    margin-bottom: 1rem;
-    font-size: 1rem;
-    color: var(--text-secondary, #ccc);
-    user-select: text;
-  }
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required placeholder="name@email.com" />
 
-  .contact-email strong {
-    color: var(--accent, #ff4081);
-    font-weight: 700;
-    margin-right: 0.4rem;
-  }
+        <label for="phone">Phone</label>
+        <input type="tel" id="phone" name="phone" placeholder="+63 123 123 1234" />
 
-  .email-link {
-    color: var(--accent, #ff4081);
-    font-weight: 600;
-    text-decoration: none;
-    transition: color 0.3s ease, text-decoration 0.3s ease;
-  }
+        <label for="subject">Subject</label>
+        <input type="text" id="subject" name="subject" required placeholder="What's this about?" />
 
-  .email-link:hover,
-  .email-link:focus {
-    color: #ff79b0;
-    text-decoration: underline;
-  }
-</style>
+        <label for="message">Message</label>
+        <textarea id="message" name="message" rows="5" required placeholder="Your message here"></textarea>
 
-      <div class="center-form-container">
-        <form id="contactForm">
-          <label for="name">Name</label>
-          <input type="text" id="name" name="name" required placeholder="Name" />
+        <label class="custom-checkbox" style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; margin-top: 0.5rem; cursor: pointer;">
+          <input type="checkbox" id="consent" required />
+          <span class="checkmark"></span>
+          I consent to sending this data and understand it will remain confidential.
+        </label>
+        <style>
+          /* Hide native checkbox but keep it accessible */
+          .custom-checkbox input[type="checkbox"] {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+          }
 
-          <label for="email">Email</label>
-          <input type="email" id="email" name="email" required placeholder="name@email.com" />
+          /* The custom checkbox */
+          .custom-checkbox .checkmark {
+            position: relative;
+            height: 22px;
+            width: 22px;
+            border: 2.5px solid var(--accent, #ff4081);
+            border-radius: 5px;
+            box-sizing: border-box;
+            background-color: transparent;
+            animation: pulseGlow 2.5s ease-in-out infinite;
+            transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            flex-shrink: 0;
+          }
 
-          <label for="phone">Phone</label>
-          <input type="tel" id="phone" name="phone" placeholder="+63 123 123 1234" />
+          /* The checkmark/indicator */
+          .custom-checkbox .checkmark::after {
+            content: "";
+            position: absolute;
+            display: none;
+            left: 6px;
+            top: 2px;
+            width: 6px;
+            height: 12px;
+            border: solid var(--bg, #211b30);
+            border-width: 0 3px 3px 0;
+            transform: rotate(45deg);
+          }
 
-          <label for="subject">Subject</label>
-          <input type="text" id="subject" name="subject" required placeholder="What's this about?" />
+          /* Show checkmark when checked */
+          .custom-checkbox input[type="checkbox"]:checked + .checkmark {
+            background-color: var(--accent, #ff4081);
+            border-color: #ff79b0;
+            animation: none;
+            box-shadow: 0 0 12px 4px rgba(255, 64, 129, 0.8);
+          }
 
-          <label for="message">Message</label>
-          <textarea id="message" name="message" rows="5" required placeholder="Your message here"></textarea>
+          .custom-checkbox input[type="checkbox"]:checked + .checkmark::after {
+            display: block;
+          }
 
-          <label
-            style="
-              display: flex;
-              align-items: center;
-              gap: 0.5rem;
-              font-size: 0.9rem;
-              margin-top: 0.5rem;
-            "
-          >
-  <label class="custom-checkbox" style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; margin-top: 0.5rem; cursor: pointer;">
-  <input type="checkbox" id="consent" required />
-  <span class="checkmark"></span>
-  I consent to sending this data and understand it will remain confidential.
-</label>
-
-<style>
-  /* Hide native checkbox but keep it accessible */
-  .custom-checkbox input[type="checkbox"] {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-    height: 0;
-    width: 0;
-  }
-
-  /* The custom checkbox */
-  .custom-checkbox .checkmark {
-    position: relative;
-    height: 22px;
-    width: 22px;
-    border: 2.5px solid var(--accent, #ff4081);
-    border-radius: 5px;
-    box-sizing: border-box;
-    background-color: transparent;
-    animation: pulseGlow 2.5s ease-in-out infinite;
-    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-    flex-shrink: 0;
-  }
-
-  /* The checkmark/indicator */
-  .custom-checkbox .checkmark::after {
-    content: "";
-    position: absolute;
-    display: none;
-    left: 6px;
-    top: 2px;
-    width: 6px;
-    height: 12px;
-    border: solid var(--bg, #211b30);
-    border-width: 0 3px 3px 0;
-    transform: rotate(45deg);
-  }
-
-  /* Show checkmark when checked */
-  .custom-checkbox input[type="checkbox"]:checked + .checkmark {
-    background-color: var(--accent, #ff4081);
-    border-color: #ff79b0;
-    animation: none;
-    box-shadow: 0 0 12px 4px rgba(255, 64, 129, 0.8);
-  }
-
-  .custom-checkbox input[type="checkbox"]:checked + .checkmark::after {
-    display: block;
-  }
-
-  /* Pulse glow animation */
-  @keyframes pulseGlow {
-    0% {
-      box-shadow: 0 0 0 0 rgba(255, 64, 129, 0.7);
-      border-color: var(--accent, #ff4081);
-    }
-    50% {
-      box-shadow: 0 0 15px 6px rgba(255, 64, 129, 0.9);
-      border-color: #ff79b0;
-    }
-    100% {
-      box-shadow: 0 0 0 0 rgba(255, 64, 129, 0.7);
-      border-color: var(--accent, #ff4081);
-    }
-  }
-</style>
-<br>
-
-          <button type="submit">Send</button>
-          <p id="formStatus" style="margin-top: 0.5rem; font-weight: bold;"></p>
-        </form>
-      </div>
-    </p>
+          /* Pulse glow animation */
+          @keyframes pulseGlow {
+            0% {
+              box-shadow: 0 0 0 0 rgba(255, 64, 129, 0.7);
+              border-color: var(--accent, #ff4081);
+            }
+            50% {
+              box-shadow: 0 0 15px 6px rgba(255, 64, 129, 0.9);
+              border-color: #ff79b0;
+            }
+            100% {
+              box-shadow: 0 0 0 0 rgba(255, 64, 129, 0.7);
+              border-color: var(--accent, #ff4081);
+            }
+          }
+        </style>
+        <br>
+        <button type="submit">Send</button>
+        <p id="formStatus" style="margin-top: 0.5rem; font-weight: bold;"></p>
+      </form>
+    </div>
   </section>
 
 <footer class="footer-inline">
     <p>© 2025 Tonie </p>
-  </footer>
+</footer>
 </div>
+
+<style>
+.footer-inline {
+  width: 100%;
+  text-align: center;
+  padding: 1.2rem 0 1.5rem 0;
+  font-size: 1rem;
+  color: var(--text-muted, #7a7a7a);
+  background: linear-gradient(90deg, #161616 0%, #232323 100%);
+  border-top: 1.5px solid var(--accent, #39ff14);
+  box-shadow: 0 -2px 16px 0 var(--shadow-base, rgba(57,255,20,0.15));
+  opacity: 0.7;
+  transition: opacity 0.3s, background 0.3s;
+  letter-spacing: 0.04em;
+  user-select: none;
+}
+
+.footer-inline:hover {
+  opacity: 1;
+  background: linear-gradient(90deg, #232323 0%, #161616 100%);
+  color: var(--accent, #39ff14);
+}
+</style>
 
   <script>
   const ipInfoToken = '5ac9ce050dc8ba';
