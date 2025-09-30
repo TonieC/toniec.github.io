@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Happy Birthday Sheen!</title>
+  <title>Sheen Dauphin Gazo</title>
   <style>
     body {
       margin: 0;
@@ -13,93 +13,47 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-start;
-      min-height: 100vh;
+      justify-content: center;
+      height: 100vh;
       text-align: center;
-      padding: 2rem 1rem;
-      overflow-x: hidden;
-      overflow-y: hidden;
+      overflow: hidden;
     }
 
-    /* Profile Image */
-    .profile img {
-      width: 300px;
-      height: auto;
-      margin-bottom: 1.5rem;
-      border-radius: 0.5rem;
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: #b5b5b5;
+      margin-bottom: 2rem;
+      animation: textPulse 3s infinite;
+    }
+
+    @keyframes textPulse {
+      0%, 100% { transform: scale(1); color: #b5b5b5; }
+      50% { transform: scale(1.1); color: #39ff14; }
+    }
+
+    .profile-pic {
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      border: 4px solid #39ff14;
+      object-fit: cover;
       animation: shake 3s infinite;
     }
 
     @keyframes shake {
-      0%, 100% { transform: translate(0, 0) rotate(0); }
-      20% { transform: translate(-5px, 0) rotate(-2deg); }
-      40% { transform: translate(5px, 0) rotate(2deg); }
-      60% { transform: translate(-3px, 0) rotate(-1deg); }
-      80% { transform: translate(3px, 0) rotate(1deg); }
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(2deg); }
+      50% { transform: rotate(-2deg); }
+      75% { transform: rotate(1deg); }
     }
 
-    /* Heading Animations */
-    h1 {
-      font-size: 2.5rem;
-      color: #39ff14;
-      margin-bottom: 0.5rem;
-      animation: glow 2s ease-in-out infinite alternate, fadeIn 1.5s ease forwards;
-    }
-
-    @keyframes glow {
-      from { text-shadow: 0 0 5px #39ff14, 0 0 10px #39ff14; }
-      to   { text-shadow: 0 0 15px #39ff14, 0 0 30px #39ff14; }
-    }
-
-    h2 {
-      font-size: 1.2rem;
-      font-weight: 400;
-      color: #b5b5b5;
-      max-width: 700px;
-      margin-bottom: 1.5rem;
-      opacity: 0;
-      animation: slideIn 1.2s ease forwards;
-      animation-delay: 0.5s;
-    }
-
-    @keyframes slideIn {
-      from { transform: translateY(20px); opacity: 0; }
-      to   { transform: translateY(0); opacity: 1; }
-    }
-
-    /* Friend Note */
-    .friend-note {
-      background: rgba(255, 255, 255, 0.05);
-      padding: 1rem 1.5rem;
-      border-radius: 1rem;
-      box-shadow: 0 0 10px rgba(57, 255, 20, 0.2);
-      max-width: 500px;
-      margin-bottom: 1.5rem;
-      opacity: 0;
-      transform: scale(0.9);
-      animation: popIn 1s ease forwards;
-      animation-delay: 1s;
-    }
-
-    @keyframes popIn {
-      to { opacity: 1; transform: scale(1); }
-    }
-
-    .friend-note p {
-      font-size: 1rem;
-      color: #eaeaea;
-      margin: 0;
-    }
-
-    /* Tagline */
     .tagline {
-      margin-top: 1rem;
+      margin-top: 2rem;
       font-style: italic;
       color: #7a7a7a;
       font-size: 1.1rem;
-      opacity: 0;
-      animation: fadeIn 1.5s ease forwards;
-      animation-delay: 2s;
+      animation: fadeIn 4s infinite alternate;
     }
 
     .tagline span {
@@ -110,6 +64,7 @@
     }
 
     @keyframes fadeIn {
+      from { opacity: 0.4; }
       to { opacity: 1; }
     }
 
@@ -133,10 +88,8 @@
       height: 100%;
       background: radial-gradient(circle, red 0%, orange 40%, #444 100%);
       border-radius: 0 3px 3px 0;
-      display: block;
     }
 
-    /* Smoke puff */
     .smoke {
       position: absolute;
       width: 20px;
@@ -161,13 +114,8 @@
   </style>
 </head>
 <body>
-  <div class="profile">
-    <img src="/images/sheeen.png" alt="Sheen Dauphin Gazo">
-  </div>
-
-  <h1>🎉 Happy Birthday, Sheen Dauphin Gazo! 🎉</h1>
-  <h2>Cheers to another year of laughter, learning, and great memories together in class. 🥳</h2>
-
+  <img src="/images/sheeen.png" alt="Sheen Dauphin Gazo" class="profile-pic">
+  <h2>Sheen Dauphin Gazo</h2>
 
   <div class="tagline">
     "how do I say this"
@@ -175,7 +123,7 @@
   </div>
 
   <script>
-    // Cigarette Generator (replacing confetti)
+    // Cigarette Generator
     function createCigarette() {
       const cig = document.createElement("div");
       cig.classList.add("cigarette");
@@ -192,6 +140,7 @@
         const puff = document.createElement("div");
         puff.classList.add("smoke");
         cig.appendChild(puff);
+
         setTimeout(() => puff.remove(), 2500);
       }, 800);
 
@@ -202,8 +151,7 @@
       }, 10000);
     }
 
-    // Spawn every few seconds
-    setInterval(createCigarette, 1000);
+    setInterval(createCigarette, 4000);
   </script>
 </body>
 </html>
