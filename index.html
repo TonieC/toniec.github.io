@@ -4,14 +4,15 @@
   <!-- Preconnect + Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
   <!-- Meta Tags -->
-  <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="author" content="Tonie">
-  <meta name="description" content="A Showcase of my skills and projects">
-  <meta name="robots" content="index, follow, nosnippet">
+  <meta name="description" content="A showcase of my skills and projects.">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#121212">
 
   <!-- Open Graph / Twitter Card -->
   <meta property="og:title" content="Tonie's Workshop">
@@ -40,27 +41,6 @@
     }
   </script>
 
-  <script>
-  function checkDesktopPrompt() {
-    const isMobileUA = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    const isSmallScreen = window.innerWidth < 1024;
-    const prompt = document.getElementById('desktopPrompt');
-
-    if (isMobileUA && isSmallScreen) {
-      prompt.style.display = 'flex';
-      document.body.style.overflow = 'hidden';
-    } else {
-      prompt.style.display = 'none';
-      document.body.style.overflow = '';
-    }
-  }
-
-  checkDesktopPrompt();
-  window.addEventListener('resize', checkDesktopPrompt);
-</script>
-
-
-
   <!-- Favicon + Icons -->
   <link rel="icon" href="images/favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
@@ -68,300 +48,164 @@
   <!-- CSS -->
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="mac.css">
-  <!-- Scripts-->
-   <script src="scripts.js" type="text/javascript" ></script>
-   <script src="cursor.js" type="text/javascript" ></script>
-  <!-- Title -->
+
+  <!-- Scripts -->
+  <script src="scripts.js" defer></script>
+  <script src="cursor.js" defer></script>
+
   <title>Tonie's Workshop</title>
-  
 </head>
 
 <body>
+  <!-- Decorative blobs handled by CSS -->
+  <div class="background-blobs"></div>
 
-   <div class="blob"></div>
-  <div class="blob"></div>
-  <div class="blob"></div>
-  <div class="blob"></div> 
-  <div class="blob"></div>
-  <div class="blob"></div>
-  <div class="blob"></div> 
-     
   <main class="split">
     <div class="left">
-     <div class="profile-img-container">
-  <img src="images/images1.png" alt="Tonie" class="profile-img">
-</div>
+      <div class="profile-img-container">
+        <img src="images/images1.png" alt="Tonie" class="profile-img">
+      </div>
 
-<div class="profile-name-wrapper">
-  <div class="profile-name">Tonie C. </div>
-  <div class="status-bubble" id="statusBubble" data-tooltip="Currently building cool stuff">🟢 Available</div>
-</div>
-
-<script>
-  const bubble = document.getElementById("statusBubble");
-
-  const tooltips = {
-    available: [
-      "Currently building cool stuff",
-      "Free and vibing",
-      "Open to ideas, say hi",
-      "Online and caffeinated"
-    ],
-    busy: [
-      "Class is in session!",
-      "Learning new stuff",
-      "School grind mode active",
-      "Brains loading 📚"
-    ],
-    sleep: [
-      "Dark mode dreams in progress",
-      "Zzz... sleeping dev",
-      "Out cold — rebooting soon",
-      "Silence means sleep"
-    ],
-    coding: [
-      "Weekend grind, building magic",
-      "Code mode: ON",
-      "Crafting side quests",
-      "Late night commits incoming"
-    ]
-  };
-
-  function getTooltip(key) {
-    const options = tooltips[key];
-    return options[Math.floor(Math.random() * options.length)];
-  }
-
-  function getTimeBasedStatus() {
-    const now = new Date();
-    const hour = now.getHours();
-    const day = now.getDay();
-    const isWeekend = day === 0 || day === 6;
-
-    if (!isWeekend) {
-      if (hour >= 6 && hour < 13)
-        return { text: "📚 Busy at school", class: "busy", tooltip: getTooltip("busy") };
-      if (hour >= 23 || hour < 4)
-        return { text: "💤 Sleeping", class: "sleep", tooltip: getTooltip("sleep") };
-      return { text: "🟢 Available", class: "available", tooltip: getTooltip("available") };
-    } else {
-      if ((hour >= 20 && hour < 22) || (hour >= 23 || hour < 6))
-        return { text: "👨‍💻 Coding", class: "coding", tooltip: getTooltip("coding") };
-      return { text: "🟢 Available", class: "available", tooltip: getTooltip("available") };
-    }
-  }
-
-  function updateStatus() {
-    const { text, class: statusClass, tooltip } = getTimeBasedStatus();
-
-    bubble.textContent = text;
-    bubble.className = `status-bubble ${statusClass}`;
-    bubble.setAttribute("data-tooltip", tooltip);
-
-    // Trigger pop animation every time it updates
-    bubble.classList.add("pop");
-    setTimeout(() => bubble.classList.remove("pop"), 150);
-  }
-
-  updateStatus();
-  setInterval(updateStatus, 60000); // check every minute
-</script>
-
-<style>
- .notice {
-  font-size: 0.9rem;
-  color: var(--text-paragraph);
-  opacity: 0.8;
-  margin-top: 1rem;
-  background: rgba(255, 255, 255, 0.05);
-  padding: 0.75rem 1rem;
-  border-radius: 6px;
-  border-left: 3px solid var(--accent);
-}
-
-  .notice a {
-    color: var(--accent);
-    text-decoration: underline;
-  }
-
-</style>
+      <div class="profile-name-wrapper">
+        <div class="profile-name">Tonie C.</div>
+        <div class="status-bubble" id="statusBubble" data-tooltip="Currently building cool stuff">🟢 Available</div>
+      </div>
     </div>
-    
+
     <div class="right">
       <div id="pageGreeting"></div>
-<script>
-const timeGreetings = {
-  midnight: [
-    "Midnight thoughts fuel wild dreams.",
-    "The quiet is where clarity lives.",
-    "Still awake? You’re not alone.",
-    "Make peace with the dark.",
-    "Dreams start with stillness."
-  ],
-  dawn: [
-    "New day, new beat.",
-    "Dawn's quiet is your power.",
-    "Time to bloom again.",
-    "You’re not late, you’re alive.",
-    "The light found you — show up."
-  ],
-  morning: [
-    "Let today surprise you.",
-    "Mornings are your reset button.",
-    "Start soft, finish loud.",
-    "Wake with purpose.",
-    "You’re here — make it count."
-  ],
-  afternoon: [
-    "Afternoon hustle hits different.",
-    "You’ve made it halfway — push through.",
-    "Keep your momentum alive.",
-    "Let the day bend, not break you.",
-    "Ride the wave."
-  ],
-  dusk: [
-    "Dusk is for exhaling.",
-    "You did well — let it land.",
-    "Let the light fade, not your fire.",
-    "Evening’s grace is yours.",
-    "Let today go gently."
-  ],
-  evening: [
-    "Let the day settle in your bones.",
-    "Ease into rest mode.",
-    "Evening peace, earned and deserved.",
-    "Reflect, don’t regret.",
-    "Grind winds down, heart stays strong."
-  ],
-  night: [
-    "Night is not the end it’s reset.",
-    "Slow down, not give up.",
-    "You did enough. Sleep easy.",
-    "Dark skies = dream time.",
-    "Rest is resistance. Recharge."
-  ]
-};
-
-function getCurrentTimeSegment() {
-  const hour = new Date().getHours();
-  if (hour < 4) return "midnight";
-  if (hour < 6) return "dawn";
-  if (hour < 12) return "morning";
-  if (hour < 17) return "afternoon";
-  if (hour < 19) return "dusk";
-  if (hour < 21) return "evening";
-  return "night";
-}
-
-function typeOut(text, element, speed = 60) {
-  element.textContent = "";
-  let i = 0;
-  const interval = setInterval(() => {
-    element.textContent += text.charAt(i++);
-    if (i >= text.length) clearInterval(interval);
-  }, speed);
-}
-
-function greetByTimeOnly() {
-  const timeSegment = getCurrentTimeSegment();
-  const greetings = timeGreetings[timeSegment] || [];
-  if (!greetings.length) return;
-
-  const greeting = greetings[Math.floor(Math.random() * greetings.length)];
-  const greetingBox = document.getElementById('pageGreeting');
-  if (greetingBox) typeOut(greeting, greetingBox);
-}
-
-window.addEventListener("DOMContentLoaded", () => {
-  greetByTimeOnly();
-
-  const now = new Date();
-  const msUntilNextHour = ((60 - now.getMinutes()) * 60 - now.getSeconds()) * 1000;
-
-  setTimeout(() => {
-    greetByTimeOnly();
-    setInterval(greetByTimeOnly, 60 * 60 * 1000);
-  }, msUntilNextHour);
-});
-</script>
-
-
 
       <h1>Hi, I'm Tonie!</h1>
       <p class="tagline">Front-End Developer</p>
-     <p class="about">
-  I code out of curiosity and build for fun. I enjoy experimenting, learning, and refining experiences that feel smooth and intuitive to use.
-</p>
+      <p class="about">
+        I code out of curiosity and build for fun. I enjoy experimenting, learning, and refining experiences that feel smooth and intuitive to use.
+      </p>
 
-<div class="stack-container">
-  <div class="stack-wrapper" id="stackWrapper">
-    <div class="stack" id="stack">
-      <span class="stack-item"><i class="devicon-javascript-plain"></i> JavaScript</span>
-      <span class="stack-item"><i class="devicon-csharp-plain"></i> C#</span>
-      <span class="stack-item"><i class="devicon-cplusplus-plain"></i> C++</span>
-      <span class="stack-item"><i class="devicon-arduino-plain-wordmark"></i> Arduino</span>
-      <span class="stack-item"><img src="/images/esp32-icon.png" alt="ESP32" /> ESP32</span>
-      <span class="stack-item"><i class="devicon-raspberrypi-line"></i> Raspberry Pi</span>
-      <span class="stack-item"><i class="devicon-python-plain"></i> Python</span>
-      <span class="stack-item"><i class="devicon-nodejs-plain"></i> Node.js</span>
-      <span class="stack-item"><i class="devicon-html5-plain"></i> HTML5</span>
-      <span class="stack-item"><i class="devicon-css3-plain"></i> CSS3</span>
-      <span class="stack-item"><i class="devicon-linux-plain"></i> Linux</span>
-      <span class="stack-item"><i class="devicon-git-plain"></i> Git</span>
-      <span class="stack-item"><i class="devicon-react-original"></i> React</span>
-      <span class="stack-item"><i class="devicon-python-plain"></i> Django</span>
-      <span class="stack-item"><i class="devicon-sass-original"></i> SASS</span>
-    </div>
-  </div>
-</div>
-
-<script>
-const stackWrapper = document.getElementById('stackWrapper');
-const stack = document.getElementById('stack');
-
-const clone = stack.cloneNode(true);
-stackWrapper.appendChild(clone);
-</script>
+      <div class="stack-container">
+        <div class="stack-wrapper" id="stackWrapper">
+          <div class="stack" id="stack">
+            <span class="stack-item"><i class="devicon-javascript-plain"></i> JavaScript</span>
+            <span class="stack-item"><i class="devicon-csharp-plain"></i> C#</span>
+            <span class="stack-item"><i class="devicon-cplusplus-plain"></i> C++</span>
+            <span class="stack-item"><i class="devicon-arduino-plain-wordmark"></i> Arduino</span>
+            <span class="stack-item"><img src="/images/esp32-icon.png" alt="ESP32"> ESP32</span>
+            <span class="stack-item"><i class="devicon-raspberrypi-line"></i> Raspberry Pi</span>
+            <span class="stack-item"><i class="devicon-python-plain"></i> Python</span>
+            <span class="stack-item"><i class="devicon-nodejs-plain"></i> Node.js</span>
+            <span class="stack-item"><i class="devicon-html5-plain"></i> HTML5</span>
+            <span class="stack-item"><i class="devicon-css3-plain"></i> CSS3</span>
+            <span class="stack-item"><i class="devicon-linux-plain"></i> Linux</span>
+            <span class="stack-item"><i class="devicon-git-plain"></i> Git</span>
+            <span class="stack-item"><i class="devicon-react-original"></i> React</span>
+            <span class="stack-item"><i class="devicon-python-plain"></i> Django</span>
+            <span class="stack-item"><i class="devicon-sass-original"></i> SASS</span>
+          </div>
+        </div>
+      </div>
 
       <br>
-<a href="resume" class="cta-button">View more</a>
-<style>
-  .cta-button {
-  display: inline-block;
-  padding: 0.6rem 1.2rem;
-  background: transparent;
-  color: var(--accent, #ff4081);
-  border: 2px solid var(--accent, #ff4081);
-  border-radius: 999px; /* pill shape */
-  font-weight: bold;
-  cursor: pointer;
-  text-decoration: none;
-  transition: all 0.2s ease-in-out;
-}
+      <a href="resume" class="cta-button">View more</a>
 
-.cta-button:hover {
-  background-color: var(--accent, #ff4081);
-  color: var(--bg, #211b30);
-  box-shadow: 0 0 8px var(--accent, #ff4081);
-}
-</style>
-
-<footer class="footer-inline">
-    <p>© 2025 Tonie </p>
-  </footer>
-</div>
-
-<div class="page-wrapper">
-  <div class="main-content">
-  </div>
-</div>
-
+      <footer class="footer-inline">
+        <p>© 2025 Tonie</p>
+      </footer>
+    </div>
   </main>
 
+  <script>
+    // Cache selectors
+    const bubble = document.getElementById("statusBubble");
+    const stackWrapper = document.getElementById("stackWrapper");
+    const stack = document.getElementById("stack");
+
+    // Stack duplicate (smooth infinite scroll)
+    const clone = stack.cloneNode(true);
+    stackWrapper.appendChild(clone);
+
+    // Tooltip variations
+    const tooltips = {
+      available: ["Currently building cool stuff", "Free and vibing", "Open to ideas, say hi", "Online and caffeinated"],
+      busy: ["Class is in session!", "Learning new stuff", "School grind mode active", "Brains loading 📚"],
+      sleep: ["Dark mode dreams in progress", "Zzz... sleeping dev", "Out cold — rebooting soon", "Silence means sleep"],
+      coding: ["Weekend grind, building magic", "Code mode: ON", "Crafting side quests", "Late night commits incoming"]
+    };
+
+    function getTooltip(key) {
+      const options = tooltips[key];
+      return options[Math.floor(Math.random() * options.length)];
+    }
+
+    function getTimeBasedStatus() {
+      const now = new Date();
+      const hour = now.getHours();
+      const day = now.getDay();
+      const isWeekend = day === 0 || day === 6;
+
+      if (!isWeekend) {
+        if (hour >= 6 && hour < 13) return { text: "📚 Busy at school", class: "busy", tooltip: getTooltip("busy") };
+        if (hour >= 23 || hour < 4) return { text: "💤 Sleeping", class: "sleep", tooltip: getTooltip("sleep") };
+        return { text: "🟢 Available", class: "available", tooltip: getTooltip("available") };
+      } else {
+        if ((hour >= 20 && hour < 22) || (hour >= 23 || hour < 6)) return { text: "👨‍💻 Coding", class: "coding", tooltip: getTooltip("coding") };
+        return { text: "🟢 Available", class: "available", tooltip: getTooltip("available") };
+      }
+    }
+
+    function updateStatus() {
+      const { text, class: statusClass, tooltip } = getTimeBasedStatus();
+      bubble.textContent = text;
+      bubble.className = `status-bubble ${statusClass}`;
+      bubble.dataset.tooltip = tooltip;
+      bubble.classList.add("pop");
+      setTimeout(() => bubble.classList.remove("pop"), 150);
+    }
+
+    updateStatus();
+    setInterval(updateStatus, 60000);
+  </script>
+
+  <style>
+    /* Lighter background blobs using pseudo-elements */
+    .background-blobs::before, .background-blobs::after {
+      content: "";
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(57, 255, 20, 0.08), transparent 70%);
+      border-radius: 50%;
+      transform: translate(-50%, -50%) scale(1);
+      filter: blur(120px);
+      z-index: -1;
+      animation: pulse 8s infinite ease-in-out alternate;
+    }
+
+    @keyframes pulse {
+      from { transform: translate(-50%, -50%) scale(1); }
+      to { transform: translate(-50%, -50%) scale(1.2); }
+    }
+
+    /* Button with smoother hover */
+    .cta-button {
+      display: inline-block;
+      padding: 0.6rem 1.2rem;
+      background: transparent;
+      color: var(--accent, #39ff14);
+      border: 2px solid var(--accent, #39ff14);
+      border-radius: 999px;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .cta-button:hover {
+      background-color: var(--accent, #39ff14);
+      color: #121212;
+      box-shadow: 0 0 8px var(--accent, #39ff14);
+      transform: translateY(-1px);
+    }
+  </style>
 </body>
-<script>
-  document.addEventListener('contextmenu', event => event.preventDefault());
-</script>
-
-
 </html>
