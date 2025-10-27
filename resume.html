@@ -600,28 +600,74 @@ form#contactForm button:hover {
       </span>
     </div>
 
+    <!-- Ex-Portfolio -->
+    <div class="playground-item">
+      <a href="/ex-portfolio.html" target="_blank" rel="noopener noreferrer" class="playground-link">
+        <img id="exportfolio-img" src="images/ex-portfoliosc.png" alt="Ex-Portfolio" />
+        <br>
+        Example Portfolio
+      </a>
+      <span class="playground-item-description">
+        — A professional one-page portfolio template with modern design and responsive layout, showcasing skills and projects.
+      </span>
+    </div>
+
   </div>
 
   <style>
-    .playground-item {
-      margin-bottom: 2rem;
+    /* Horizontal scroll container */
+    .playground-list {
+      display: flex;
+      overflow-x: auto;
+      gap: 2rem;
+      padding-bottom: 1rem;
+      scroll-behavior: smooth;
     }
 
- #playground-img,
-#taskify-img {
-  transition: opacity 1s ease-in-out;
-  opacity: 1;
-  width: 300px;
-  border-radius: 12px;
-  box-shadow: 0 0 12px rgba(57, 255, 20, 0.25);
-  display: block;
-  margin: 0.8rem auto; /* centers the image horizontally */
-}
+    /* Scrollbar styling */
+    .playground-list::-webkit-scrollbar {
+      height: 10px;
+    }
 
+    .playground-list::-webkit-scrollbar-track {
+      background: rgba(255,255,255,0.05);
+      border-radius: 5px;
+    }
 
+    .playground-list::-webkit-scrollbar-thumb {
+      background: #39ff14;
+      border-radius: 5px;
+    }
+
+    .playground-item {
+      min-width: 320px;
+      flex-shrink: 0;
+      background: rgba(57, 255, 20, 0.05);
+      padding: 1rem;
+      border-radius: 12px;
+      box-shadow: 0 0 12px rgba(57, 255, 20, 0.15);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .playground-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 25px rgba(57, 255, 20, 0.25);
+    }
+
+    #playground-img,
+    #taskify-img,
+    #exportfolio-img {
+      transition: opacity 1s ease-in-out;
+      opacity: 1;
+      width: 100%;
+      border-radius: 12px;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
 
     #playground-img.fade-out,
-    #taskify-img.fade-out {
+    #taskify-img.fade-out,
+    #exportfolio-img.fade-out {
       opacity: 0;
     }
 
@@ -630,14 +676,22 @@ form#contactForm button:hover {
       font-weight: bold;
       text-decoration: none;
       display: inline-block;
-      margin-top: 0.3rem;
+      margin-bottom: 0.5rem;
     }
 
     .playground-item-description {
       color: var(--text-muted);
-      display: block;
-      margin-top: 0.3rem;
-      max-width: 480px;
+      font-size: 0.9rem;
+    }
+
+    @media(max-width: 768px){
+      .playground-list {
+        gap: 1rem;
+      }
+
+      .playground-item {
+        min-width: 260px;
+      }
     }
   </style>
 
@@ -658,6 +712,14 @@ form#contactForm button:hover {
     let currentTaskify = 0;
     const taskifyImg = document.getElementById('taskify-img');
 
+    // Ex-Portfolio slideshow
+    const exPortfolioImages = [
+      'images/ex-portfoliosc.png',
+      'images/ex-portfoliosc1.png'
+    ];
+    let currentExPortfolio = 0;
+    const exPortfolioImg = document.getElementById('exportfolio-img');
+
     const interval = 10000; // 10 seconds
 
     setInterval(() => {
@@ -676,6 +738,15 @@ form#contactForm button:hover {
         taskifyImg.src = taskifyImages[currentTaskify];
         taskifyImg.classList.remove('fade-out');
       }, 1000);
+
+      // Ex-Portfolio fade
+      exPortfolioImg.classList.add('fade-out');
+      setTimeout(() => {
+        currentExPortfolio = (currentExPortfolio + 1) % exPortfolioImages.length;
+        exPortfolioImg.src = exPortfolioImages[currentExPortfolio];
+        exPortfolioImg.classList.remove('fade-out');
+      }, 1000);
+
     }, interval);
   </script>
 </section>
