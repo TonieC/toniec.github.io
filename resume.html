@@ -573,55 +573,113 @@ form#contactForm button:hover {
 
 <section>
   <h2>Projects</h2>
-<div class="playground-list">
-  <div class="playground-item">
-    <a href="/playground" target="_blank" rel="noopener noreferrer" class="playground-link">
-      <img id="playground-img" src="images/Playground1.png" alt="Playground" />
-      <br>
-      Playground
-    </a>
-    <span class="playground-item-description">
-      — A simple JavaScript, CSS, and HTML playground built by Tonie to quickly test code, experiment, and share ongoing projects.
-    </span>
+
+  <div class="playground-list">
+
+    <!-- Playground -->
+    <div class="playground-item">
+      <a href="/playground" target="_blank" rel="noopener noreferrer" class="playground-link">
+        <img id="playground-img" src="images/Playground1.png" alt="Playground" />
+        <br>
+        Playground
+      </a>
+      <span class="playground-item-description">
+        — A simple JavaScript, CSS, and HTML playground built by Tonie to quickly test code, experiment, and share ongoing projects.
+      </span>
+    </div>
+
+    <!-- Taskify -->
+    <div class="playground-item">
+      <a href="/taskify.html" target="_blank" rel="noopener noreferrer" class="playground-link">
+        <img id="taskify-img" src="images/taskifysc.png" alt="Taskify" />
+        <br>
+        Taskify
+      </a>
+      <span class="playground-item-description">
+        — A clean and minimal task manager that saves your tasks locally, built for productivity with a modern neon-inspired design.
+      </span>
+    </div>
+
   </div>
-</div>
 
-<style>
-  #playground-img {
-    transition: opacity 1s ease-in-out;
-    opacity: 1;
-  }
-  #playground-img.fade-out {
-    opacity: 0;
-  }
-</style>
+  <style>
+    .playground-item {
+      margin-bottom: 2rem;
+    }
 
-<script>
-  const images = [
-    'images/Playground.png',
-    'images/Playground1.png'
-  ];
+ #playground-img,
+#taskify-img {
+  transition: opacity 1s ease-in-out;
+  opacity: 1;
+  width: 300px;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(57, 255, 20, 0.25);
+  display: block;
+  margin: 0.8rem auto; /* centers the image horizontally */
+}
 
-  let currentIndex = 1; // start with Playground1.png as per original src
-  const imgElement = document.getElementById('playground-img');
-  const interval = 10000; // 10 seconds
 
-  setInterval(() => {
-    // Fade out
-    imgElement.classList.add('fade-out');
 
-    setTimeout(() => {
-      // Swap image after fade out
-      currentIndex = (currentIndex + 1) % images.length;
-      imgElement.src = images[currentIndex];
+    #playground-img.fade-out,
+    #taskify-img.fade-out {
+      opacity: 0;
+    }
 
-      // Fade in
-      imgElement.classList.remove('fade-out');
-    }, 1000); // matches CSS transition time
-  }, interval);
-</script>
+    .playground-link {
+      color: var(--accent);
+      font-weight: bold;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 0.3rem;
+    }
 
+    .playground-item-description {
+      color: var(--text-muted);
+      display: block;
+      margin-top: 0.3rem;
+      max-width: 480px;
+    }
+  </style>
+
+  <script>
+    // Playground slideshow
+    const playgroundImages = [
+      'images/Playground.png',
+      'images/Playground1.png'
+    ];
+    let currentPlayground = 1;
+    const playgroundImg = document.getElementById('playground-img');
+
+    // Taskify slideshow
+    const taskifyImages = [
+      'images/taskifysc.png',
+      'images/taskifysc1.png'
+    ];
+    let currentTaskify = 0;
+    const taskifyImg = document.getElementById('taskify-img');
+
+    const interval = 10000; // 10 seconds
+
+    setInterval(() => {
+      // Playground fade
+      playgroundImg.classList.add('fade-out');
+      setTimeout(() => {
+        currentPlayground = (currentPlayground + 1) % playgroundImages.length;
+        playgroundImg.src = playgroundImages[currentPlayground];
+        playgroundImg.classList.remove('fade-out');
+      }, 1000);
+
+      // Taskify fade
+      taskifyImg.classList.add('fade-out');
+      setTimeout(() => {
+        currentTaskify = (currentTaskify + 1) % taskifyImages.length;
+        taskifyImg.src = taskifyImages[currentTaskify];
+        taskifyImg.classList.remove('fade-out');
+      }, 1000);
+    }, interval);
+  </script>
 </section>
+
 
 <section>
   <h2>What I’ve Worked With</h2>

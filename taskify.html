@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Taskify — Simple Task Manager</title>
+
+  <style>
+    :root {
+      --bg: #121212;
+      --text: #eaeaea;
+      --text-muted: #7a7a7a;
+      --accent: #39ff14;
+      --card-bg: rgba(255, 255, 255, 0.05);
+      --shadow: rgba(57, 255, 20, 0.15);
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+      padding: 2rem;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      margin-bottom: 0.8rem;
+    }
+
+    header img {
+      width: 150px;
+      height: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 0 4px var(--accent));
+    }
+
+    h1 {
+      font-size: 2rem;
+      color: var(--accent);
+      letter-spacing: 0.5px;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+    .task-container {
+      background: var(--card-bg);
+      border-radius: 12px;
+      width: 100%;
+      max-width: 480px;
+      box-shadow: 0 0 12px var(--shadow);
+      padding: 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .task-input {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .task-input input {
+      flex: 1;
+      padding: 0.6rem 1rem;
+      border-radius: 999px;
+      border: none;
+      outline: none;
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text);
+      transition: 0.2s;
+    }
+
+    .task-input input:focus {
+      box-shadow: 0 0 8px var(--accent);
+    }
+
+    .task-input button {
+      background: var(--accent);
+      color: #000;
+      border: none;
+      border-radius: 999px;
+      padding: 0.6rem 1.2rem;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.25s;
+    }
+
+    .task-input button:hover {
+      box-shadow: 0 0 10px var(--accent);
+      transform: translateY(-2px);
+    }
+
+    ul {
+      list-style: none;
+      margin-top: 1rem;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    li {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 0.8rem 1rem;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: 0.3s ease;
+      opacity: 0;
+      transform: translateY(10px);
+      animation: fadeIn 0.3s forwards;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    li.completed {
+      text-decoration: line-through;
+      color: var(--text-muted);
+      opacity: 0.7;
+      transition: 0.2s;
+    }
+
+    li.removed {
+      animation: fadeOut 0.25s forwards;
+    }
+
+    @keyframes fadeOut {
+      to {
+        opacity: 0;
+        transform: translateX(20px);
+      }
+    }
+
+    .buttons {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .btn {
+      background: transparent;
+      border: none;
+      color: var(--accent);
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: 0.2s;
+    }
+
+    .btn:hover {
+      color: #fff;
+      transform: scale(1.1);
+    }
+
+    footer {
+      margin-top: 2rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .no-tasks {
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-top: 1rem;
+    }
+
+    .back-btn {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      background: transparent;
+      border: 2px solid var(--accent);
+      color: var(--accent);
+      border-radius: 999px;
+      padding: 0.3rem 0.8rem;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: bold;
+      transition: 0.25s;
+      text-decoration: none;
+    }
+
+    .back-btn:hover {
+      background: var(--accent);
+      color: #000;
+      box-shadow: 0 0 8px var(--accent);
+    }
+  </style>
+</head>
+
+<body>
+    <a href="index.html" class="back-btn">← Back</a>
+  <header>
+    <img src="/images/taskify-logo.png" alt="Taskify Logo" />
+  </header>
+
+  <p class="subtitle">Organize your day, one task at a time.</p>
+
+  <div class="task-container">
+
+
+    <div class="task-input">
+      <input type="text" id="taskInput" placeholder="Add a new task..." />
+      <button id="addTaskBtn">Add</button>
+    </div>
+
+    <ul id="taskList"></ul>
+    <p class="no-tasks" id="noTasksText">No tasks yet. Add one!</p>
+  </div>
+
+  <footer>© 2025 Tonie — Taskify</footer>
+
+  <script>
+    const taskInput = document.getElementById('taskInput');
+    const addTaskBtn = document.getElementById('addTaskBtn');
+    const taskList = document.getElementById('taskList');
+    const noTasksText = document.getElementById('noTasksText');
+
+    let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+    renderTasks();
+
+    addTaskBtn.addEventListener('click', addTask);
+    taskInput.addEventListener('keypress', e => {
+      if (e.key === 'Enter') addTask();
+    });
+
+    function addTask() {
+      const text = taskInput.value.trim();
+      if (!text) return;
+      tasks.push({ text, completed: false });
+      saveTasks();
+      renderTasks();
+      taskInput.value = '';
+    }
+
+    function toggleTask(index) {
+      tasks[index].completed = !tasks[index].completed;
+      saveTasks();
+      renderTasks();
+    }
+
+    function deleteTask(index) {
+      const li = taskList.children[index];
+      li.classList.add('removed');
+      setTimeout(() => {
+        tasks.splice(index, 1);
+        saveTasks();
+        renderTasks();
+      }, 200);
+    }
+
+    function saveTasks() {
+      localStorage.setItem('tasks', JSON.stringify(tasks));
+    }
+
+    function renderTasks() {
+      taskList.innerHTML = '';
+
+      if (tasks.length === 0) {
+        noTasksText.style.display = 'block';
+        return;
+      }
+      noTasksText.style.display = 'none';
+
+      tasks.forEach((task, i) => {
+        const li = document.createElement('li');
+        li.textContent = task.text;
+        if (task.completed) li.classList.add('completed');
+
+        const buttons = document.createElement('div');
+        buttons.classList.add('buttons');
+
+        const completeBtn = document.createElement('button');
+        completeBtn.textContent = task.completed ? 'Undo' : 'Done';
+        completeBtn.classList.add('btn');
+        completeBtn.onclick = () => toggleTask(i);
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.textContent = 'Delete';
+        deleteBtn.classList.add('btn');
+        deleteBtn.onclick = () => deleteTask(i);
+
+        buttons.append(completeBtn, deleteBtn);
+        li.append(buttons);
+        taskList.append(li);
+      });
+    }
+  </script>
+
+</body>
+</html>
