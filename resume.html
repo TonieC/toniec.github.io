@@ -321,20 +321,20 @@ form#contactForm button:hover {
 
 </head>
 <body>
-  <a href="https://tonie.fun/" class="back-button" style="z-index: 1;">Home</a>
+  <a href="/" class="back-button" style="z-index: 1;">Home</a>
 
  <div class="profile-sections">
   <section>
     <h2>About Me</h2>
-    <p>
-  I'm Tonie, an 18-year-old coder from the Philippines and a Grade 11 student at Metro Manila College, 
-  pursuing the ICT (Programming) track. What began as late-night curiosity has grown into a passion for 
-  building and understanding how things work behind the screen.
+   <p>
+  I'm Tonie, an 18-year-old coder from the Philippines and a Grade 11 ICT (Programming) student at Metro Manila College. 
+  I focus on web development, software logic, and building efficient, well-structured projects.
 </p>
-    <p>
-      I love creating things that make life easier, whether it's a simple script or a complex project. 
-      My journey in tech has been fueled by curiosity and a desire to learn, and I'm excited to see where it takes me next.
-    </p>
+<p>
+  I enjoy creating practical tools and digital experiences that solve problems or make tasks easier. 
+  I'm continuously improving my skills and exploring new technologies to strengthen my foundation in programming.
+</p>
+
   </section>
 
   <section>
@@ -413,51 +413,6 @@ form#contactForm button:hover {
     opacity: 1;
     transform: none;
   }
-}
-
-/* Playground Section */
-.playground-list {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.playground-item {
-  border: 1px solid var(--stack-shadow);
-  padding: 16px;
-  border-radius: 8px;
-  background: var(--stack-bg);
-  max-width: 700px;
-  transition: background 0.3s ease, box-shadow 0.3s ease;
-}
-
-.playground-item:hover {
-  background: var(--stack-bg-hover);
-  box-shadow: 0 0 12px var(--stack-shadow);
-}
-
-.playground-link img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-  margin-bottom: 8px;
-  border-radius: 6px;
-  object-fit: contain;
-}
-
-.playground-link {
-  text-decoration: none;
-  color: var(--accent);
-  font-weight: 600;
-  font-size: 1.1rem;
-  display: inline-block;
-}
-
-.playground-item-description {
-  display: block;
-  margin-top: 6px;
-  font-style: italic;
-  color: var(--text-muted);
 }
 </style>
 
@@ -612,158 +567,149 @@ form#contactForm button:hover {
       </span>
     </div>
 
+    <!-- Notepad -->
+    <div class="playground-item">
+      <a href="/notepad.html" target="_blank" rel="noopener noreferrer" class="playground-link">
+        <img id="notepad-img" src="images/notepadsc.png" alt="Notepad" />
+        <br>
+        Notepad
+      </a>
+      <span class="playground-item-description">
+        — A minimalist yellow-themed notepad that saves locally, supports rich text formatting, lists, and adjustable font size.
+      </span>
+    </div>
+
   </div>
 
- <style>
-   /* Force horizontal layout */
-  .playground-list {
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: flex-start;
-    justify-content: flex-start;
-    overflow-x: auto;
-    overflow-y: hidden;
-    white-space: nowrap;
-    gap: 2rem;
-    padding: 1rem 2rem;
-    scroll-behavior: smooth;
-    scroll-snap-type: x mandatory;
-  }
-
-  /* Scroll each card as a unit */
-  .playground-list > * {
-    flex: 0 0 auto;
-    scroll-snap-align: start;
-  }
-
-  /* Custom scrollbar */
-  .playground-list::-webkit-scrollbar {
-    height: 10px;
-  }
-
-  .playground-list::-webkit-scrollbar-track {
-    background: rgba(255,255,255,0.05);
-    border-radius: 5px;
-  }
-
-  .playground-list::-webkit-scrollbar-thumb {
-    background: #39ff14;
-    border-radius: 5px;
-  }
-
-  /* Card styling */
- .playground-item {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  min-width: 320px;
-  max-width: 340px;
-  flex-shrink: 0;
-  background: rgba(57, 255, 20, 0.05);
-  padding: 1rem;
-  border-radius: 12px;
-  box-shadow: 0 0 12px rgba(57, 255, 20, 0.15);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  overflow: hidden;            /* 🔹 Ensures content stays inside card */
-  word-wrap: break-word;       /* 🔹 Forces text to wrap properly */
-  white-space: normal;         /* 🔹 Allows line breaks inside cards */
-}
-
-.playground-item-description {
-  color: var(--text-muted);
-  font-size: 0.9rem;
-  line-height: 1.4;
-  margin-top: 0.4rem;
-  max-width: 100%;             /* 🔹 Prevents text from overflowing horizontally */
-  overflow: hidden;
-  text-overflow: ellipsis;     /* optional: if you want it to cut off super long lines */
-  white-space: normal;         /* 🔹 Allow text wrapping */
-}
-
-.playground-item-description:hover {
-  color: var(--text-paragraph-hover);
-  text-shadow: 0 0 6px var(--accent);
-  transform: scaleX(1000px);
-}
-
-  .playground-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 0 25px rgba(57, 255, 20, 0.25);
-  }
-
-  /* Image */
-  #playground-img,
-  #taskify-img,
-  #exportfolio-img {
-    transition: opacity 1s ease-in-out;
-    opacity: 1;
-    width: 100%;
-    border-radius: 12px;
-    display: block;
-    margin-bottom: 0.5rem;
-  }
-
-  #playground-img.fade-out,
-  #taskify-img.fade-out,
-  #exportfolio-img.fade-out {
-    opacity: 0;
-  }
-
-  /* Text styling */
-  .playground-link {
-    color: var(--accent);
-    font-weight: bold;
-    text-decoration: none;
-    display: inline-block;
-    margin-bottom: 0.5rem;
-  }
-
-  .playground-item-description {
-    color: var(--text-muted);
-    font-size: 0.9rem;
-  }
-
-  @media(max-width: 768px){
+  <style>
+    /* Force horizontal layout */
     .playground-list {
-      gap: 1rem;
-      padding: 1rem;
+      display: flex !important;
+      flex-direction: row !important;
+      align-items: flex-start;
+      justify-content: flex-start;
+      overflow-x: auto;
+      overflow-y: hidden;
+      white-space: nowrap;
+      gap: 2rem;
+      padding: 1rem 2rem;
+      scroll-behavior: smooth;
+      scroll-snap-type: x mandatory;
     }
 
-    .playground-item {
-      min-width: 260px;
+    /* Scroll each card as a unit */
+    .playground-list > * {
+      flex: 0 0 auto;
+      scroll-snap-align: start;
     }
-  }
-</style>
+
+    /* Custom scrollbar */
+    .playground-list::-webkit-scrollbar {
+      height: 10px;
+    }
+
+    .playground-list::-webkit-scrollbar-track {
+      background: rgba(255,255,255,0.05);
+      border-radius: 5px;
+    }
+
+    .playground-list::-webkit-scrollbar-thumb {
+      background: #39ff14;
+      border-radius: 5px;
+    }
+
+    /* Card styling */
+    .playground-item {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      min-width: 320px;
+      max-width: 340px;
+      flex-shrink: 0;
+      background: rgba(57, 255, 20, 0.05);
+      padding: 1rem;
+      border-radius: 12px;
+      box-shadow: 0 0 12px rgba(57, 255, 20, 0.15);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      overflow: hidden;
+      word-wrap: break-word;
+      white-space: normal;
+    }
+
+    .playground-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 25px rgba(57, 255, 20, 0.25);
+    }
+
+    .playground-item-description {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.4;
+      margin-top: 0.4rem;
+      max-width: 100%;
+      overflow: hidden;
+      white-space: normal;
+    }
+
+    /* Images */
+    #playground-img,
+    #taskify-img,
+    #exportfolio-img,
+    #notepad-img {
+      transition: opacity 1s ease-in-out;
+      opacity: 1;
+      width: 100%;
+      border-radius: 12px;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    #playground-img.fade-out,
+    #taskify-img.fade-out,
+    #exportfolio-img.fade-out,
+    #notepad-img.fade-out {
+      opacity: 0;
+    }
+
+    /* Text */
+    .playground-link {
+      color: var(--accent);
+      font-weight: bold;
+      text-decoration: none;
+      display: inline-block;
+      margin-bottom: 0.5rem;
+    }
+
+    @media(max-width: 768px){
+      .playground-list {
+        gap: 1rem;
+        padding: 1rem;
+      }
+
+      .playground-item {
+        min-width: 260px;
+      }
+    }
+  </style>
 
   <script>
-    // Playground slideshow
-    const playgroundImages = [
-      'images/Playground.png',
-      'images/Playground1.png'
-    ];
-    let currentPlayground = 1;
-    const playgroundImg = document.getElementById('playground-img');
-
-    // Taskify slideshow
-    const taskifyImages = [
-      'images/taskifysc.png',
-      'images/taskifysc1.png'
-    ];
-    let currentTaskify = 0;
-    const taskifyImg = document.getElementById('taskify-img');
-
-    // Ex-Portfolio slideshow
-    const exPortfolioImages = [
-      'images/ex-portfoliosc.png',
-      'images/ex-portfoliosc1.png'
-    ];
-    let currentExPortfolio = 0;
-    const exPortfolioImg = document.getElementById('exportfolio-img');
+    // Image sets for slideshow
+    const playgroundImages = ['images/Playground.png', 'images/Playground1.png'];
+    const taskifyImages = ['images/taskifysc.png', 'images/taskifysc1.png'];
+    const exPortfolioImages = ['images/ex-portfoliosc.png', 'images/ex-portfoliosc1.png'];
+    const notepadImages = ['images/notepadsc.png', 'images/notepadsc1.png'];
 
     const interval = 10000; // 10 seconds
 
+    const playgroundImg = document.getElementById('playground-img');
+    const taskifyImg = document.getElementById('taskify-img');
+    const exPortfolioImg = document.getElementById('exportfolio-img');
+    const notepadImg = document.getElementById('notepad-img');
+
+    let currentPlayground = 0, currentTaskify = 0, currentExPortfolio = 0, currentNotepad = 0;
+
     setInterval(() => {
-      // Playground fade
+      // Playground
       playgroundImg.classList.add('fade-out');
       setTimeout(() => {
         currentPlayground = (currentPlayground + 1) % playgroundImages.length;
@@ -771,7 +717,7 @@ form#contactForm button:hover {
         playgroundImg.classList.remove('fade-out');
       }, 1000);
 
-      // Taskify fade
+      // Taskify
       taskifyImg.classList.add('fade-out');
       setTimeout(() => {
         currentTaskify = (currentTaskify + 1) % taskifyImages.length;
@@ -779,12 +725,20 @@ form#contactForm button:hover {
         taskifyImg.classList.remove('fade-out');
       }, 1000);
 
-      // Ex-Portfolio fade
+      // Ex-Portfolio
       exPortfolioImg.classList.add('fade-out');
       setTimeout(() => {
         currentExPortfolio = (currentExPortfolio + 1) % exPortfolioImages.length;
         exPortfolioImg.src = exPortfolioImages[currentExPortfolio];
         exPortfolioImg.classList.remove('fade-out');
+      }, 1000);
+
+      // Notepad
+      notepadImg.classList.add('fade-out');
+      setTimeout(() => {
+        currentNotepad = (currentNotepad + 1) % notepadImages.length;
+        notepadImg.src = notepadImages[currentNotepad];
+        notepadImg.classList.remove('fade-out');
       }, 1000);
 
     }, interval);
@@ -794,86 +748,91 @@ form#contactForm button:hover {
 
 <section>
   <h2>What I’ve Worked With</h2>
+
   <div class="skills-chart">
+    <!-- Row 1 -->
     <div class="skills-chart-row">
       <div class="skills-label">Used Frequently (5+ yrs)</div>
       <div class="skills-icons">
         <div class="tooltip-container">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript" />
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript">
           <span class="click-tooltip">JavaScript</span>
         </div>
         <div class="tooltip-container">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5" />
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5">
           <span class="click-tooltip">HTML5</span>
         </div>
         <div class="tooltip-container">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3" />
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3">
           <span class="click-tooltip">CSS3</span>
         </div>
       </div>
     </div>
 
+    <!-- Row 2 -->
     <div class="skills-chart-row">
       <div class="skills-label">Solid Practice (3+ yrs)</div>
       <div class="skills-icons">
         <div class="tooltip-container">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" alt="C++" />
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" alt="C++">
           <span class="click-tooltip">C++</span>
         </div>
         <div class="tooltip-container">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git" />
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git">
           <span class="click-tooltip">Git</span>
         </div>
         <div class="tooltip-container">
-          <img src="/images/esp32-icon.png" alt="ESP32" />
+          <img src="/images/esp32-icon.png" alt="ESP32">
           <span class="click-tooltip">ESP32</span>
         </div>
         <div class="tooltip-container">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/arduino/arduino-original-wordmark.svg" alt="Arduino" />
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/arduino/arduino-original-wordmark.svg" alt="Arduino">
           <span class="click-tooltip">Arduino</span>
         </div>
       </div>
     </div>
 
+    <!-- Row 3 -->
     <div class="skills-chart-row">
       <div class="skills-label">Built Projects (2 yrs)</div>
       <div class="skills-icons">
         <div class="tooltip-container">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" />
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python">
           <span class="click-tooltip">Python</span>
         </div>
         <div class="tooltip-container">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" alt="Linux" />
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" alt="Linux">
           <span class="click-tooltip">Linux</span>
         </div>
         <div class="tooltip-container">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt="Node.js" />
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt="Node.js">
           <span class="click-tooltip">Node.js</span>
         </div>
         <div class="tooltip-container">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React" />
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React">
           <span class="click-tooltip">React</span>
         </div>
         <div class="tooltip-container">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg" alt="Django" />
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg" alt="Django">
           <span class="click-tooltip">Django</span>
         </div>
       </div>
     </div>
 
+    <!-- Row 4 -->
     <div class="skills-chart-row">
       <div class="skills-label">Currently Exploring</div>
       <div class="skills-icons">
         <div class="tooltip-container">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg" alt="C#" />
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg" alt="C#">
           <span class="click-tooltip">C#</span>
         </div>
         <div class="tooltip-container">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/raspberrypi/raspberrypi-line.svg" alt="Raspberry Pi" />
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/raspberrypi/raspberrypi-line.svg" alt="Raspberry Pi">
           <span class="click-tooltip">Raspberry Pi</span>
         </div>
         <div class="tooltip-container">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sass/sass-original.svg" alt="SASS" />
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sass/sass-original.svg" alt="SASS">
           <span class="click-tooltip">SASS</span>
         </div>
       </div>
@@ -885,77 +844,100 @@ form#contactForm button:hover {
   </small>
 
   <style>
-    h2 { 
-      text-align: center; 
-      color: #c2f0c2;
+    h2 {
+      text-align: center;
+      color: #b8ffb8;
+      margin-bottom: 2rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
     }
+
     .skills-chart {
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 2rem;
-      max-width: 720px;
+      max-width: 800px;
       margin: 0 auto;
     }
+
     .skills-chart-row {
       width: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 0.8rem;
+      gap: 1rem;
+      background: rgba(57, 255, 20, 0.05);
+      border-radius: 10px;
+      padding: 1rem 0.5rem;
+      box-shadow: 0 0 12px rgba(57, 255, 20, 0.15);
     }
+
     .skills-label {
       font-weight: 600;
       font-size: 1.1rem;
-      color: #00b300;
-      user-select: none;
+      color: #00d000;
       text-align: center;
     }
+
     .skills-icons {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 0.1rem;
+      gap: 0.8rem;
     }
+
     .tooltip-container {
       position: relative;
       display: inline-block;
-      cursor: default;
     }
+
     .tooltip-container img {
-      width: 25px;
-      height: 25px;
+      width: 40px;
+      height: 40px;
       object-fit: contain;
-      filter: drop-shadow(0 0 1px rgba(0,0,0,0.2));
-      transition: transform 0.2s ease;
+      transition: transform 0.2s ease, filter 0.2s ease;
+      filter: drop-shadow(0 0 3px rgba(0,255,0,0.3));
     }
+
     .tooltip-container:hover img {
       transform: scale(1.15);
+      filter: drop-shadow(0 0 8px rgba(57,255,20,0.6));
     }
-    .disclaimer {
-      color: #a3bfa3;
+
+    .click-tooltip {
+      position: absolute;
+      bottom: -28px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 3px 8px;
+      border-radius: 6px;
       font-size: 0.75rem;
-      margin-top: 1.5rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .tooltip-container:hover .click-tooltip {
+      opacity: 1;
+      transform: translateX(-50%) translateY(-2px);
+    }
+
+    .disclaimer {
+      color: #9fe89f;
+      font-size: 0.8rem;
       text-align: center;
-      user-select: none;
-      transition: color 0.3s ease, text-shadow 0.3s ease, transform 0.2s ease;
+      margin-top: 2rem;
+      max-width: 700px;
     }
+
     .disclaimer strong {
-      color: #006600;
-      transition: color 0.3s ease, text-shadow 0.3s ease;
-    }
-    .disclaimer:hover {
-      color: #d0f0d0;
-      text-shadow: 0 0 5px rgba(0, 255, 0, 0.4);
-      cursor: help;
-      transform: scale(1.05);
-    }
-    .disclaimer:hover strong {
-      color: #009900;
-      text-shadow: 0 0 6px rgba(0, 153, 0, 0.6);
+      color: #00aa00;
     }
   </style>
 </section>
+
 
 
 
@@ -966,29 +948,58 @@ form#contactForm button:hover {
       <a href="mailto:cadizal06@gmail.com" class="email-link">cadizal06@gmail.com</a>
     </div>
     <style>
-      .contact-email {
-        text-align: center;
-        margin-bottom: 1rem;
-        font-size: 1rem;
-        color: var(--text-secondary, #ccc);
-        user-select: text;
-      }
-      .contact-email strong {
-        color: var(--accent, #ff4081);
-        font-weight: 700;
-        margin-right: 0.4rem;
-      }
-      .email-link {
-        color: var(--accent, #ff4081);
-        font-weight: 600;
-        text-decoration: none;
-        transition: color 0.3s ease, text-decoration 0.3s ease;
-      }
-      .email-link:hover,
-      .email-link:focus {
-        color: #ff79b0;
-        text-decoration: underline;
-      }
+    .contact-email {
+  text-align: center;
+  margin-bottom: 1.2rem;
+  font-size: 1rem;
+  color: var(--text-secondary, #b5b5b5);
+  user-select: text;
+  line-height: 1.6;
+  letter-spacing: 0.3px;
+}
+
+/* Label text (e.g., "Email:") */
+.contact-email strong {
+  color: var(--accent, #39ff14);
+  font-weight: 700;
+  margin-right: 0.4rem;
+  text-shadow: 0 0 6px rgba(57, 255, 20, 0.5);
+}
+
+/* Email link styling */
+.email-link {
+  color: var(--accent, #39ff14);
+  font-weight: 600;
+  text-decoration: none;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+/* Subtle glow underline */
+.email-link::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background: var(--accent, #39ff14);
+  box-shadow: 0 0 6px rgba(57, 255, 20, 0.6);
+  transition: width 0.3s ease;
+}
+
+/* Hover / Focus effects */
+.email-link:hover,
+.email-link:focus {
+  color: #7aff5a;
+  text-shadow: 0 0 8px rgba(122, 255, 90, 0.6);
+}
+
+.email-link:hover::after,
+.email-link:focus::after {
+  width: 100%;
+}
+
     </style>
     <div class="center-form-container">
       <form id="contactForm">
@@ -1013,70 +1024,89 @@ form#contactForm button:hover {
           I consent to sending this data and understand it will remain confidential.
         </label>
         <style>
-          /* Hide native checkbox but keep it accessible */
-          .custom-checkbox input[type="checkbox"] {
-            position: absolute;
-            opacity: 0;
-            cursor: pointer;
-            height: 0;
-            width: 0;
-          }
+/* Container for checkbox + label */
+.custom-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  color: var(--text, #eaeaea);
+  font-size: 15px;
+}
 
-          /* The custom checkbox */
-          .custom-checkbox .checkmark {
-            position: relative;
-            height: 22px;
-            width: 22px;
-            border: 2.5px solid var(--accent, #ff4081);
-            border-radius: 5px;
-            box-sizing: border-box;
-            background-color: transparent;
-            animation: pulseGlow 2.5s ease-in-out infinite;
-            transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-            flex-shrink: 0;
-          }
+/* Hide native checkbox */
+.custom-checkbox input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
 
-          /* The checkmark/indicator */
-          .custom-checkbox .checkmark::after {
-            content: "";
-            position: absolute;
-            display: none;
-            left: 6px;
-            top: 2px;
-            width: 6px;
-            height: 12px;
-            border: solid var(--bg, #211b30);
-            border-width: 0 3px 3px 0;
-            transform: rotate(45deg);
-          }
+/* The visual checkbox box */
+.custom-checkbox .checkmark {
+  position: relative;
+  height: 22px;
+  width: 22px;
+  border: 2.5px solid var(--accent, #39ff14);
+  border-radius: 5px;
+  background-color: transparent;
+  box-sizing: border-box;
+  animation: pulseGlow 2.5s ease-in-out infinite;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
 
-          /* Show checkmark when checked */
-          .custom-checkbox input[type="checkbox"]:checked + .checkmark {
-            background-color: var(--accent, #ff4081);
-            border-color: #ff79b0;
-            animation: none;
-            box-shadow: 0 0 12px 4px rgba(255, 64, 129, 0.8);
-          }
+/* The checkmark inside */
+.custom-checkbox .checkmark::after {
+  content: "";
+  position: absolute;
+  display: none;
+  left: 6px;
+  top: 2px;
+  width: 6px;
+  height: 12px;
+  border: solid var(--bg, #121212);
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
 
-          .custom-checkbox input[type="checkbox"]:checked + .checkmark::after {
-            display: block;
-          }
+/* When checked */
+.custom-checkbox input[type="checkbox"]:checked + .checkmark {
+  background-color: var(--accent, #39ff14);
+  border-color: #7aff5a;
+  animation: none;
+  box-shadow: 0 0 12px 3px rgba(57, 255, 20, 0.5);
+}
 
-          /* Pulse glow animation */
-          @keyframes pulseGlow {
-            0% {
-              box-shadow: 0 0 0 0 rgba(255, 64, 129, 0.7);
-              border-color: var(--accent, #ff4081);
-            }
-            50% {
-              box-shadow: 0 0 15px 6px rgba(255, 64, 129, 0.9);
-              border-color: #ff79b0;
-            }
-            100% {
-              box-shadow: 0 0 0 0 rgba(255, 64, 129, 0.7);
-              border-color: var(--accent, #ff4081);
-            }
-          }
+.custom-checkbox input[type="checkbox"]:checked + .checkmark::after {
+  display: block;
+}
+
+/* Glow animation */
+@keyframes pulseGlow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(57, 255, 20, 0.4);
+    border-color: var(--accent, #39ff14);
+  }
+  50% {
+    box-shadow: 0 0 15px 5px rgba(57, 255, 20, 0.6);
+    border-color: #7aff5a;
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(57, 255, 20, 0.4);
+    border-color: var(--accent, #39ff14);
+  }
+}
+
+/* Optional hover effect */
+.custom-checkbox:hover .checkmark {
+  border-color: #7aff5a;
+  transform: scale(1.05);
+}
+
         </style>
         <br>
         <button type="submit">Send</button>
