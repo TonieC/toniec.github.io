@@ -246,11 +246,23 @@
   .footer { text-align: center; padding: 2rem; color: #7a7a7a; }
 
   /* Responsive */
-  @media(max-width: 768px){
-    .about { flex-direction: column; text-align: center; }
-    .about-text { margin-left: 0; }
-    nav ul { flex-direction: column; gap: 1rem; }
+ @media(max-width: 768px){
+  .about {
+    flex-direction: column;
+    text-align: center;
   }
+  .about-text {
+    margin-left: 0;
+  }
+
+  /* Remove the stacking effect */
+  nav ul {
+    flex-direction: row;
+    flex-wrap: wrap; /* optional - allows wrapping if too many items */
+    gap: 1rem;
+  }
+}
+
 
 </style>
 </head>

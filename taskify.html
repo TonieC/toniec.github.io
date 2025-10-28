@@ -1,56 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
- <head>
   <!-- Preconnect + Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link 
-    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" 
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
   <!-- Meta Tags -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="author" content="Tonie">
-  <meta name="description" content="A showcase of my projects, skills, and programming journey.">
+  <meta name="description" content="A showcase of my skills and projects.">
   <meta name="robots" content="index, follow">
   <meta name="theme-color" content="#121212">
-
-  <!-- Open Graph / Twitter Card -->
-  <meta property="og:title" content="Taskify">
-  <meta property="og:description" content="Hi! I'm Tonie, a hobbyist programmer passionate about building creative and useful things.">
-  <meta property="og:image" content="/images/workshop.png">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="Taskify">
-
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Taskify">
-  <meta name="twitter:description" content="A portfolio showcasing Tonie's programming skills and projects.">
-  <meta name="twitter:image" content="/images/workshop.png">
-
-  <!-- Schema.org Structured Data -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "name": "Tonie's Workshop",
-    "description": "Explore Tonie's projects, skills, and programming journey.",
-    "image": "/images/workshop.png"
-  }
-  </script>
-
-  <!-- Favicon + Icons -->
-  <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
-
-  <!-- Shared Scripts -->
-  <script src="/scripts.js" defer></script>
-
   <title>Taskify</title>
-</head>
 
   <style>
     :root {
@@ -60,6 +23,7 @@
       --accent: #39ff14;
       --card-bg: rgba(255, 255, 255, 0.05);
       --shadow: rgba(57, 255, 20, 0.15);
+      --error: #ff3333;
     }
 
     * {
@@ -72,96 +36,106 @@
     body {
       background: var(--bg);
       color: var(--text);
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-start;
-      min-height: 100vh;
-      padding: 2rem;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    #particles {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+      pointer-events: none;
     }
 
     header {
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 0.6rem;
-      margin-bottom: 0.8rem;
+      justify-content: flex-start;
+      width: 100%;
+      max-width: 1000px;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      gap: 1rem;
+      padding-left: 2rem;
+      z-index: 2;
     }
 
     header img {
-      width: 150px;
-      height: auto;
-      object-fit: contain;
-      filter: drop-shadow(0 0 4px var(--accent));
+      width: 50px;
+      filter: drop-shadow(0 0 6px var(--accent));
     }
 
     h1 {
-      font-size: 2rem;
       color: var(--accent);
-      letter-spacing: 0.5px;
+      font-weight: 600;
+      font-size: 1.5rem;
     }
 
-    .subtitle {
-      color: var(--text-muted);
-      margin-bottom: 1.5rem;
-      font-size: 0.9rem;
-      text-align: center;
-    }
-
-    .task-container {
+    .task-container, .timer-container {
+      position: relative;
       background: var(--card-bg);
+      box-shadow: 0 0 12px var(--shadow);
       border-radius: 12px;
       width: 100%;
-      max-width: 480px;
-      box-shadow: 0 0 12px var(--shadow);
+      max-width: 600px;
       padding: 1.5rem;
-      position: relative;
-      overflow: hidden;
+      margin-bottom: 2rem;
+      z-index: 2;
     }
 
     .task-input {
       display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .row {
+      display: flex;
       gap: 0.5rem;
     }
 
-    .task-input input {
-      flex: 1;
+    input, select {
       padding: 0.6rem 1rem;
-      border-radius: 999px;
       border: none;
       outline: none;
+      border-radius: 999px;
       background: rgba(255, 255, 255, 0.08);
       color: var(--text);
-      transition: 0.2s;
+      flex: 1;
     }
 
-    .task-input input:focus {
-      box-shadow: 0 0 8px var(--accent);
+    select option {
+      background: #1c1c1c;
+      color: #fff;
     }
 
-    .task-input button {
+    button {
       background: var(--accent);
-      color: #000;
       border: none;
       border-radius: 999px;
       padding: 0.6rem 1.2rem;
-      cursor: pointer;
       font-weight: bold;
-      transition: 0.25s;
+      cursor: pointer;
+      transition: 0.2s;
+      color: #000;
     }
 
-    .task-input button:hover {
-      box-shadow: 0 0 10px var(--accent);
+    button:hover {
       transform: translateY(-2px);
+      box-shadow: 0 0 8px var(--accent);
     }
 
     ul {
       list-style: none;
-      margin-top: 1rem;
-      padding: 0;
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
+      gap: 0.6rem;
     }
 
     li {
@@ -169,42 +143,40 @@
       padding: 0.8rem 1rem;
       border-radius: 8px;
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      transition: 0.3s ease;
+      flex-direction: column;
+      gap: 0.3rem;
+      position: relative;
       opacity: 0;
       transform: translateY(10px);
       animation: fadeIn 0.3s forwards;
     }
 
     @keyframes fadeIn {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    li.completed {
-      text-decoration: line-through;
+    .priority {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      padding: 0.2rem 0.5rem;
+      border-radius: 6px;
+      display: inline-block;
+    }
+
+    .low { color: #00ff9d; }
+    .medium { color: #ffd633; }
+    .high { color: #ff3333; }
+
+    .task-time {
+      font-size: 0.75rem;
       color: var(--text-muted);
-      opacity: 0.7;
-      transition: 0.2s;
-    }
-
-    li.removed {
-      animation: fadeOut 0.25s forwards;
-    }
-
-    @keyframes fadeOut {
-      to {
-        opacity: 0;
-        transform: translateX(20px);
-      }
     }
 
     .buttons {
       display: flex;
       gap: 0.5rem;
+      margin-top: 0.3rem;
     }
 
     .btn {
@@ -221,67 +193,124 @@
       transform: scale(1.1);
     }
 
-    footer {
-      margin-top: 2rem;
-      font-size: 0.8rem;
-      color: var(--text-muted);
+    li.completed {
+      text-decoration: line-through;
+      opacity: 0.6;
     }
 
     .no-tasks {
       text-align: center;
-      font-size: 0.9rem;
       color: var(--text-muted);
+      font-size: 0.9rem;
       margin-top: 1rem;
     }
 
-    .back-btn {
-      position: absolute;
-      top: 1rem;
-      left: 1rem;
-      background: transparent;
-      border: 2px solid var(--accent);
-      color: var(--accent);
-      border-radius: 999px;
-      padding: 0.3rem 0.8rem;
-      cursor: pointer;
-      font-size: 0.9rem;
-      font-weight: bold;
-      transition: 0.25s;
-      text-decoration: none;
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--card-bg);
+  border: 1px solid var(--error);
+  color: var(--error);
+  padding: 1rem 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(255, 50, 50, 0.4);
+  font-size: 1rem;
+  text-align: center;
+  opacity: 0;
+  animation: popIn 0.3s forwards, fadeOut 2s 1.5s forwards;
+  z-index: 999;
+}
+
+
+    @keyframes popIn {
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    .back-btn:hover {
-      background: var(--accent);
-      color: #000;
-      box-shadow: 0 0 8px var(--accent);
+    /* TIMER STYLES */
+    .timer-container h2 {
+      color: var(--accent);
+      margin-bottom: 1rem;
+      text-align: center;
     }
+
+    .timer-display {
+      font-size: 2.5rem;
+      text-align: center;
+      margin-bottom: 1rem;
+      color: var(--text);
+      text-shadow: 0 0 8px var(--accent);
+    }
+
+    .timer-controls {
+      display: flex;
+      justify-content: center;
+      gap: 0.6rem;
+    }
+
+    .timer-controls input {
+      width: 80px;
+      text-align: center;
+    }
+
   </style>
 </head>
-
 <body>
-    <a href="index.html" class="back-btn">← Back</a>
+  <canvas id="particles"></canvas>
+
   <header>
-    <img src="/images/taskify-logo.png" alt="Taskify Logo" />
+    <img src="/images/taskify-logo.png" alt="Taskify Logo">
   </header>
 
-  <p class="subtitle">Organize your day, one task at a time.</p>
-
   <div class="task-container">
-
-
     <div class="task-input">
-      <input type="text" id="taskInput" placeholder="Add a new task..." />
-      <button id="addTaskBtn">Add</button>
+      <div class="row">
+        <input type="text" id="taskInput" placeholder="Task name..." />
+        <input type="date" id="dueDate">
+      </div>
+      <div class="row">
+        <select id="priority">
+          <option value="" disabled selected>Choose Priority</option>
+          <option value="low">Low Priority</option>
+          <option value="medium">Medium Priority</option>
+          <option value="high">High Priority</option>
+        </select>
+        <button id="addTaskBtn">Add Task</button>
+      </div>
     </div>
 
     <ul id="taskList"></ul>
-    <p class="no-tasks" id="noTasksText">No tasks yet. Add one!</p>
+    <p id="noTasksText" class="no-tasks">No tasks yet. Add one!</p>
   </div>
 
-  <footer>© 2025 Tonie — Taskify</footer>
+ <!-- TIMER FEATURE -->
+<div class="timer-container">
+  <h2>Timer</h2>
+  <div class="timer-display" id="timerDisplay">00:00</div>
+   <div id="timerStatus" style="text-align:center; color: var(--accent); font-size: 0.9rem; margin-bottom: 1rem; display:none;">
+    ⏸️ Paused
+  </div>
+  <div class="timer-controls">
+    <input type="number" id="minutesInput" min="0" max="120" placeholder="Min">
+    <input type="number" id="secondsInput" min="0" max="59" placeholder="Sec">
+    <button id="startTimer">Start</button>
+    <button id="pauseTimer">Pause</button>
+    <button id="resetTimer">Reset</button>
+  </div>
+</div>
+
+  <footer style="margin-top: 2rem; color: var(--text-muted); font-size: 0.8rem;">
+    © 2025 Tonie — Taskify
+  </footer>
+
+  <audio id="alarmSound" src="https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg"></audio>
 
   <script>
+    // === TASKIFY LOGIC ===
     const taskInput = document.getElementById('taskInput');
+    const dueDate = document.getElementById('dueDate');
+    const priority = document.getElementById('priority');
     const addTaskBtn = document.getElementById('addTaskBtn');
     const taskList = document.getElementById('taskList');
     const noTasksText = document.getElementById('noTasksText');
@@ -289,34 +318,42 @@
     let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
     renderTasks();
 
-    addTaskBtn.addEventListener('click', addTask);
-    taskInput.addEventListener('keypress', e => {
-      if (e.key === 'Enter') addTask();
-    });
+    addTaskBtn.onclick = addTask;
 
     function addTask() {
       const text = taskInput.value.trim();
-      if (!text) return;
-      tasks.push({ text, completed: false });
+      const prio = priority.value;
+      const date = dueDate.value;
+
+      if (!text) return showError("Task name can't be empty.");
+      if (!prio) return showError("Please choose a priority.");
+
+      const newTask = {
+        text,
+        completed: false,
+        priority: prio,
+        date: date || 'No due date',
+        added: new Date().toLocaleString()
+      };
+
+      tasks.push(newTask);
       saveTasks();
       renderTasks();
       taskInput.value = '';
+      priority.value = '';
+      dueDate.value = '';
     }
 
-    function toggleTask(index) {
-      tasks[index].completed = !tasks[index].completed;
+    function toggleTask(i) {
+      tasks[i].completed = !tasks[i].completed;
       saveTasks();
       renderTasks();
     }
 
-    function deleteTask(index) {
-      const li = taskList.children[index];
-      li.classList.add('removed');
-      setTimeout(() => {
-        tasks.splice(index, 1);
-        saveTasks();
-        renderTasks();
-      }, 200);
+    function deleteTask(i) {
+      tasks.splice(i, 1);
+      saveTasks();
+      renderTasks();
     }
 
     function saveTasks() {
@@ -325,7 +362,6 @@
 
     function renderTasks() {
       taskList.innerHTML = '';
-
       if (tasks.length === 0) {
         noTasksText.style.display = 'block';
         return;
@@ -334,28 +370,128 @@
 
       tasks.forEach((task, i) => {
         const li = document.createElement('li');
-        li.textContent = task.text;
         if (task.completed) li.classList.add('completed');
 
-        const buttons = document.createElement('div');
-        buttons.classList.add('buttons');
-
-        const completeBtn = document.createElement('button');
-        completeBtn.textContent = task.completed ? 'Undo' : 'Done';
-        completeBtn.classList.add('btn');
-        completeBtn.onclick = () => toggleTask(i);
-
-        const deleteBtn = document.createElement('button');
-        deleteBtn.textContent = 'Delete';
-        deleteBtn.classList.add('btn');
-        deleteBtn.onclick = () => deleteTask(i);
-
-        buttons.append(completeBtn, deleteBtn);
-        li.append(buttons);
+        li.innerHTML = `
+          <strong>${task.text}</strong>
+          <span class="priority ${task.priority}">${task.priority} priority</span>
+          <span class="task-time">Added: ${task.added}</span>
+          <span class="task-time">Due: ${task.date}</span>
+          <div class="buttons">
+            <button class="btn" onclick="toggleTask(${i})">${task.completed ? 'Undo' : 'Done'}</button>
+            <button class="btn" onclick="deleteTask(${i})">Delete</button>
+          </div>
+        `;
         taskList.append(li);
       });
     }
-  </script>
 
+    function showError(msg) {
+      const popup = document.createElement('div');
+      popup.className = 'popup';
+      popup.textContent = msg;
+      document.body.appendChild(popup);
+      setTimeout(() => popup.remove(), 2000);
+    }
+
+ // === TIMER LOGIC ===
+const timerDisplay = document.getElementById("timerDisplay");
+const minutesInput = document.getElementById("minutesInput");
+const secondsInput = document.getElementById("secondsInput");
+const startBtn = document.getElementById("startTimer");
+const pauseBtn = document.getElementById("pauseTimer");
+const resetBtn = document.getElementById("resetTimer");
+const timerStatus = document.getElementById("timerStatus");
+const alarmSound = document.getElementById("alarmSound");
+
+let timer;
+let remainingTime = 0;
+let isRunning = false;
+
+startBtn.onclick = () => {
+  if (isRunning) return;
+
+  if (!remainingTime) {
+    const mins = parseInt(minutesInput.value) || 0;
+    const secs = parseInt(secondsInput.value) || 0;
+    const total = mins * 60 + secs;
+    if (total <= 0) return showError("Enter valid time!");
+    remainingTime = total;
+  }
+
+  isRunning = true;
+  timerStatus.style.display = "none";
+  timer = setInterval(updateTimer, 1000);
+};
+
+pauseBtn.onclick = () => {
+  clearInterval(timer);
+  isRunning = false;
+  timerStatus.style.display = "block";
+  timerStatus.textContent = "⏸️ Paused";
+};
+
+resetBtn.onclick = () => {
+  clearInterval(timer);
+  isRunning = false;
+  remainingTime = 0;
+  updateDisplay();
+  timerStatus.style.display = "none";
+};
+
+function updateTimer() {
+  if (remainingTime <= 0) {
+    clearInterval(timer);
+    isRunning = false;
+    alarmSound.play();
+    showError("⏰ Time's up!");
+    timerStatus.style.display = "none";
+    return;
+  }
+  remainingTime--;
+  updateDisplay();
+}
+
+function updateDisplay() {
+  const mins = Math.floor(remainingTime / 60);
+  const secs = remainingTime % 60;
+  timerDisplay.textContent =
+    `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+}
+
+
+    // === PARTICLES ===
+    const canvas = document.getElementById("particles");
+    const ctx = canvas.getContext("2d");
+    let particles = [];
+    function resize() { canvas.width = innerWidth; canvas.height = innerHeight; }
+    window.addEventListener("resize", resize);
+    resize();
+
+    for (let i = 0; i < 80; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 2,
+        dx: (Math.random() - 0.5) * 0.5,
+        dy: (Math.random() - 0.5) * 0.5,
+      });
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "rgba(57,255,20,0.6)";
+      for (let p of particles) {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fill();
+        p.x += p.dx; p.y += p.dy;
+        if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
+        if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+      }
+      requestAnimationFrame(animate);
+    }
+    animate();
+  </script>
 </body>
 </html>
