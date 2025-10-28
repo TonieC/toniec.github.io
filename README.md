@@ -5,6 +5,15 @@ Here, I turn ideas into working prototypes, explore new tools, and push my codin
 
 ---
 
+## 🧭 Table of Contents
+
+- [What You'll Find Here](#-what-youll-find-here)
+- [Author](#-author)
+- [License](#-license)
+- [Quotes](#-quotes)
+
+---
+
 ## 🧰 What You'll Find Here
 
 - 🖥️ **Frontend Projects** — lightweight and responsive web apps built with clean, minimal design principles.  
@@ -20,23 +29,28 @@ Every project here is built with performance and simplicity in mind — no unnec
 
 **Tonie Cadizal**
 
-- Portfolio: [tonie.fun](https://tonie.fun)
-- GitHub: [@TonieC](https://github.com/TonieC)
-- Email: cadizal06@gmail.com
+- 🌐 Portfolio: [tonie.fun](https://tonie.fun)  
+- 💻 GitHub: [@TonieC](https://github.com/TonieC)  
+- ✉️ Email: [cadizal06@gmail.com](mailto:cadizal06@gmail.com)
 
 ---
 
 ## 📝 License
 
 Released under the **MIT License** — you’re completely free to **use**, **modify**, **remix**, and **build upon** any part of the code in this repository.  
+
 You can study it, tweak it for your own projects, or even repurpose it commercially if you want — as long as you **credit the original source**.  
 
 This repository was made for learning and sharing.  
-No restrictions, no hidden terms just clean, open code meant to inspire and help other developers grow.  
+No restrictions, no hidden terms — just clean, open code meant to inspire and help other developers grow.  
+
 If you find something useful here, consider leaving a ⭐ or sharing it with others.  
 That’s the best kind of feedback you can give.  
 
-> “Free code doesn’t mean free effort it means freedom to learn, improve, and create without gatekeeping.”
+> “Free code doesn’t mean free effort — it means freedom to learn, improve, and create without gatekeeping.”
 
 ---
+
+## 💬 Quotes
+
 > “Every project starts with curiosity. The rest is just me trying to make it work.”
