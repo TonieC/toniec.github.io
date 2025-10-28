@@ -51,7 +51,6 @@
 
   <!-- Scripts -->
   <script src="scripts.js" defer></script>
-  <script src="cursor.js" defer></script>
 
   <title>Tonie's Workshop</title>
 </head>
@@ -68,13 +67,10 @@
 
       <div class="profile-name-wrapper">
         <div class="profile-name">Tonie C.</div>
-        <div class="status-bubble" id="statusBubble" data-tooltip="Currently building cool stuff">🟢 Available</div>
       </div>
     </div>
 
     <div class="right">
-      <div id="pageGreeting"></div>
-
       <h1>Hi, I'm Tonie!</h1>
       <p class="tagline">Front-End Developer</p>
       <p class="about">
@@ -111,58 +107,6 @@
       </footer>
     </div>
   </main>
-
-  <script>
-    // Cache selectors
-    const bubble = document.getElementById("statusBubble");
-    const stackWrapper = document.getElementById("stackWrapper");
-    const stack = document.getElementById("stack");
-
-    // Stack duplicate (smooth infinite scroll)
-    const clone = stack.cloneNode(true);
-    stackWrapper.appendChild(clone);
-
-    // Tooltip variations
-    const tooltips = {
-      available: ["Currently building cool stuff", "Free and vibing", "Open to ideas, say hi", "Online and caffeinated"],
-      busy: ["Class is in session!", "Learning new stuff", "School grind mode active", "Brains loading 📚"],
-      sleep: ["Dark mode dreams in progress", "Zzz... sleeping dev", "Out cold — rebooting soon", "Silence means sleep"],
-      coding: ["Weekend grind, building magic", "Code mode: ON", "Crafting side quests", "Late night commits incoming"]
-    };
-
-    function getTooltip(key) {
-      const options = tooltips[key];
-      return options[Math.floor(Math.random() * options.length)];
-    }
-
-    function getTimeBasedStatus() {
-      const now = new Date();
-      const hour = now.getHours();
-      const day = now.getDay();
-      const isWeekend = day === 0 || day === 6;
-
-      if (!isWeekend) {
-        if (hour >= 6 && hour < 13) return { text: "📚 Busy at school", class: "busy", tooltip: getTooltip("busy") };
-        if (hour >= 23 || hour < 4) return { text: "💤 Sleeping", class: "sleep", tooltip: getTooltip("sleep") };
-        return { text: "🟢 Available", class: "available", tooltip: getTooltip("available") };
-      } else {
-        if ((hour >= 20 && hour < 22) || (hour >= 23 || hour < 6)) return { text: "👨‍💻 Coding", class: "coding", tooltip: getTooltip("coding") };
-        return { text: "🟢 Available", class: "available", tooltip: getTooltip("available") };
-      }
-    }
-
-    function updateStatus() {
-      const { text, class: statusClass, tooltip } = getTimeBasedStatus();
-      bubble.textContent = text;
-      bubble.className = `status-bubble ${statusClass}`;
-      bubble.dataset.tooltip = tooltip;
-      bubble.classList.add("pop");
-      setTimeout(() => bubble.classList.remove("pop"), 150);
-    }
-
-    updateStatus();
-    setInterval(updateStatus, 60000);
-  </script>
 
   <style>
     /* Lighter background blobs using pseudo-elements */
