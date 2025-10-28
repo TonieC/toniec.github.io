@@ -393,7 +393,20 @@ small {
   white-space: nowrap;
   flex-shrink: 0;
   transition: all 0.9s ease;
+
 }
+
+.stack-item:hover {
+  color: #39ff14;
+    transform: translateY(-5px);
+  text-shadow: 0 0 8px #39ff14;
+  animation: fadeUp 3s ease-in-out infinite;
+}
+
+@keyframes fadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
 
 .stack-item img {
   height: 1.2em;
@@ -655,6 +668,26 @@ main {
   display: inline-block;
   text-align: center;
 }
+.profile-img-container {
+  width: 250px;          /* fixed width */
+  height: 250px;         /* same as width for perfect circle */
+  border-radius: 50%;    /* makes it circular */
+  overflow: hidden;      /* ensures image stays inside circle */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.profile-img-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;  
+}
+
+.profile-img-container:hover {
+  transform: scale(1) rotate(4deg);
+  box-shadow: 0 0 16px #39ff14, 0 0 32px #39ff14, 0 0 48px rgba(57, 255, 20, 0.5);
+}
+
+
 
 .status-bubble {
   position: absolute;

@@ -51,6 +51,7 @@
 
   <!-- Scripts -->
   <script src="scripts.js" defer></script>
+<link rel="preload" href="/images/workshop.png" as="image">
 
   <title>Tonie's Workshop</title>
 
@@ -77,14 +78,27 @@
         <img src="images/images1.png" alt="Tonie" class="profile-img">
       </div>
 
-      <div class="profile-name-wrapper">
+      <div class="profile-name-wrapper"><br>
         <div class="profile-name">Tonie C.</div>
       </div>
     </div>
 
     <div class="right">
       <h1>Hi, I'm Tonie!</h1>
-      <p class="tagline">Front-End Developer</p>
+     <p class="tagline" id="typewriter"></p>
+<script>
+const text = "Front-End Developer";
+let i = 0;
+function typeWriter() {
+  if (i < text.length) {
+    document.getElementById("typewriter").innerHTML += text.charAt(i);
+    i++;
+    setTimeout(typeWriter, 100);
+  }
+}
+typeWriter();
+</script>
+
       <p class="about">
         I code out of curiosity and build for fun. I enjoy experimenting, learning, and refining experiences that feel smooth and intuitive to use.
       </p>
@@ -123,25 +137,34 @@
 
   <style>
     /* Lighter background blobs using pseudo-elements */
-    .background-blobs::before, .background-blobs::after {
-      content: "";
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      width: 800px;
-      height: 800px;
-      background: radial-gradient(circle, rgba(57, 255, 20, 0.08), transparent 70%);
-      border-radius: 50%;
-      transform: translate(-50%, -50%) scale(1);
-      filter: blur(120px);
-      z-index: -1;
-      animation: pulse 8s infinite ease-in-out alternate;
-    }
+.background-blobs::before,
+.background-blobs::after {
+  content: "";
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 800px;
+  height: 800px;
+  background: radial-gradient(circle, rgba(57, 255, 20, 0.08), transparent 70%);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  filter: blur(120px);
+  z-index: -1;
+  animation: pulse 8s infinite ease-in-out alternate,
+             move 8s infinite ease-in-out forwards alternate ;
+}
 
-    @keyframes pulse {
-      from { transform: translate(-50%, -50%) scale(1); }
-      to { transform: translate(-50%, -50%) scale(1.2); }
-    }
+@keyframes pulse {
+  from { transform: translate(-50%, -50%) scale(1); }
+  to { transform: translate(-50%, -50%) scale(1.2); }
+}
+
+@keyframes move {
+  0%   { transform: translate(-50%, -50%) translateX(0) translateY(0); }
+  50%  { transform: translate(-50%, -50%) translateX(50px) translateY(-30px); }
+  100% { transform: translate(-50%, -50%) translateX(0) translateY(0); }
+}
+
 
     /* Button with smoother hover */
     .cta-button {
