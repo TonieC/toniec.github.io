@@ -9,7 +9,6 @@ Welcome to **Tonie's Workshop** — my digital garage where I build, experiment,
 **Tonie Cadizal**  
 `Grade 11 Student | Web Dev | Freelancer | Hardware Coder`
 
-- Portfolio: [tonie.fun](https://tonie.fun)
 - GitHub: [@TonieC](https://github.com/TonieC)
 - Email: cadizal06@gmail.com
 
