@@ -614,86 +614,126 @@ form#contactForm button:hover {
 
   </div>
 
-  <style>
-    /* Horizontal scroll container */
+ <style>
+   /* Force horizontal layout */
+  .playground-list {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: flex-start;
+    justify-content: flex-start;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    gap: 2rem;
+    padding: 1rem 2rem;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+  }
+
+  /* Scroll each card as a unit */
+  .playground-list > * {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+  }
+
+  /* Custom scrollbar */
+  .playground-list::-webkit-scrollbar {
+    height: 10px;
+  }
+
+  .playground-list::-webkit-scrollbar-track {
+    background: rgba(255,255,255,0.05);
+    border-radius: 5px;
+  }
+
+  .playground-list::-webkit-scrollbar-thumb {
+    background: #39ff14;
+    border-radius: 5px;
+  }
+
+  /* Card styling */
+ .playground-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  min-width: 320px;
+  max-width: 340px;
+  flex-shrink: 0;
+  background: rgba(57, 255, 20, 0.05);
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(57, 255, 20, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;            /* 🔹 Ensures content stays inside card */
+  word-wrap: break-word;       /* 🔹 Forces text to wrap properly */
+  white-space: normal;         /* 🔹 Allows line breaks inside cards */
+}
+
+.playground-item-description {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.4;
+  margin-top: 0.4rem;
+  max-width: 100%;             /* 🔹 Prevents text from overflowing horizontally */
+  overflow: hidden;
+  text-overflow: ellipsis;     /* optional: if you want it to cut off super long lines */
+  white-space: normal;         /* 🔹 Allow text wrapping */
+}
+
+.playground-item-description:hover {
+  color: var(--text-paragraph-hover);
+  text-shadow: 0 0 6px var(--accent);
+  transform: scaleX(1000px);
+}
+
+  .playground-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 25px rgba(57, 255, 20, 0.25);
+  }
+
+  /* Image */
+  #playground-img,
+  #taskify-img,
+  #exportfolio-img {
+    transition: opacity 1s ease-in-out;
+    opacity: 1;
+    width: 100%;
+    border-radius: 12px;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  #playground-img.fade-out,
+  #taskify-img.fade-out,
+  #exportfolio-img.fade-out {
+    opacity: 0;
+  }
+
+  /* Text styling */
+  .playground-link {
+    color: var(--accent);
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-block;
+    margin-bottom: 0.5rem;
+  }
+
+  .playground-item-description {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+  }
+
+  @media(max-width: 768px){
     .playground-list {
-      display: flex;
-      overflow-x: auto;
-      gap: 2rem;
-      padding-bottom: 1rem;
-      scroll-behavior: smooth;
-    }
-
-    /* Scrollbar styling */
-    .playground-list::-webkit-scrollbar {
-      height: 10px;
-    }
-
-    .playground-list::-webkit-scrollbar-track {
-      background: rgba(255,255,255,0.05);
-      border-radius: 5px;
-    }
-
-    .playground-list::-webkit-scrollbar-thumb {
-      background: #39ff14;
-      border-radius: 5px;
+      gap: 1rem;
+      padding: 1rem;
     }
 
     .playground-item {
-      min-width: 320px;
-      flex-shrink: 0;
-      background: rgba(57, 255, 20, 0.05);
-      padding: 1rem;
-      border-radius: 12px;
-      box-shadow: 0 0 12px rgba(57, 255, 20, 0.15);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      min-width: 260px;
     }
-
-    .playground-item:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 0 25px rgba(57, 255, 20, 0.25);
-    }
-
-    #playground-img,
-    #taskify-img,
-    #exportfolio-img {
-      transition: opacity 1s ease-in-out;
-      opacity: 1;
-      width: 100%;
-      border-radius: 12px;
-      display: block;
-      margin-bottom: 0.5rem;
-    }
-
-    #playground-img.fade-out,
-    #taskify-img.fade-out,
-    #exportfolio-img.fade-out {
-      opacity: 0;
-    }
-
-    .playground-link {
-      color: var(--accent);
-      font-weight: bold;
-      text-decoration: none;
-      display: inline-block;
-      margin-bottom: 0.5rem;
-    }
-
-    .playground-item-description {
-      color: var(--text-muted);
-      font-size: 0.9rem;
-    }
-
-    @media(max-width: 768px){
-      .playground-list {
-        gap: 1rem;
-      }
-
-      .playground-item {
-        min-width: 260px;
-      }
-    }
-  </style>
+  }
+</style>
 
   <script>
     // Playground slideshow
