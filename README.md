@@ -20,36 +20,10 @@ Every project here is built with performance and simplicity in mind — no unnec
 
 **Tonie Cadizal**
 
-- GitHub: [@TonieC](https://github.com/TonieC)  
-- Email: [cadizal06@gmail.com](mailto:cadizal06@gmail.com)  
-- Website: [toniec.github.io](https://toniec.github.io)
+- Portfolio: [tonie.fun](https://tonie.fun)
+- GitHub: [@TonieC](https://github.com/TonieC)
+- Email: cadizal06@gmail.com
 
----
-
-## 💡 Philosophy
-
-I believe in **learning by doing** — breaking things, fixing them, and understanding *why* they broke.  
-My workflow mixes creativity and logic: design something that looks good, then make sure it runs fast and clean.
-
-> “I code out of curiosity, build for fun, and love blending software with hardware.”
-
----
-
-## ⚡ Tech Stack
-
-Here’s what I use most often:
-
-- **Languages:** HTML, CSS, JavaScript, C++, Python  
-- **Frameworks & Tools:** GSAP, Node.js, Arduino, Git  
-- **Design:** Figma, custom CSS animations, minimal UI design  
-- **Deployment:** Vercel, GitHub Pages  
-
----
-
-## 🧩 Featured Projects
-
-- **[Taskify](https://toniec.github.io/taskify)** — a modern to-do app built from scratch with pure HTML, CSS, and JS.  
-- **[Playground](https://toniec.github.io/playground)** —  A clean and minimal task manager that saves your tasks locally, built for productivity with a modern neon-inspired design.
 ---
 
 ## 📝 License
