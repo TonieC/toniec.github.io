@@ -23,6 +23,10 @@
   <meta property="og:url" content="https://tonie.fun">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Tonie's Workshop">
+  <meta name="keywords" content="Arduino, Frontend Developer, JavaScript, Tonie, Portfolio, C#, C++, Hardware, ESP32">
+<link rel="prefetch" href="/resume">
+<link rel="manifest" href="/manifest.json">
+
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Tonie's Workshop">
@@ -68,7 +72,7 @@
 
 
 <body>
-  
+
   <!-- Decorative blobs handled by CSS -->
   <div class="background-blobs"></div>
 
@@ -85,19 +89,39 @@
 
     <div class="right">
       <h1>Hi, I'm Tonie!</h1>
-     <p class="tagline" id="typewriter"></p>
+    <p class="tagline" id="typewriter"></p>
 <script>
-const text = "Front-End Developer";
-let i = 0;
-function typeWriter() {
-  if (i < text.length) {
-    document.getElementById("typewriter").innerHTML += text.charAt(i);
-    i++;
-    setTimeout(typeWriter, 100);
+const lines = [
+  'tonie@portfolio:~$ whoami',
+  'Front-End Developer',
+  'Hardware tinkerer & code hobbyist'
+];
+let line = 0, char = 0, typing = true;
+const el = document.getElementById('typewriter');
+
+function type() {
+  if (line < lines.length) {
+    if (typing) {
+      if (char < lines[line].length) {
+        el.innerHTML = lines[line].slice(0, ++char) + '<span class="cursor">|</span>';
+        setTimeout(type, 100);
+      } else {
+        typing = false;
+        setTimeout(() => { typing = true; char = 0; line++; type(); }, 1000);
+      }
+    }
   }
 }
-typeWriter();
+type();
 </script>
+<style>
+.cursor {
+  color: #39ff14;
+  animation: blink 1s steps(1) infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
+</style>
+
 
       <p class="about">
         I code out of curiosity and build for fun. I enjoy experimenting, learning, and refining experiences that feel smooth and intuitive to use.
@@ -105,23 +129,37 @@ typeWriter();
 
       <div class="stack-container">
         <div class="stack-wrapper" id="stackWrapper">
-          <div class="stack" id="stack">
-            <span class="stack-item"><i class="devicon-javascript-plain"></i> JavaScript</span>
-            <span class="stack-item"><i class="devicon-csharp-plain"></i> C#</span>
-            <span class="stack-item"><i class="devicon-cplusplus-plain"></i> C++</span>
-            <span class="stack-item"><i class="devicon-arduino-plain-wordmark"></i> Arduino</span>
-            <span class="stack-item"><img src="/images/esp32-icon.png" alt="ESP32"> ESP32</span>
-            <span class="stack-item"><i class="devicon-raspberrypi-line"></i> Raspberry Pi</span>
-            <span class="stack-item"><i class="devicon-python-plain"></i> Python</span>
-            <span class="stack-item"><i class="devicon-nodejs-plain"></i> Node.js</span>
-            <span class="stack-item"><i class="devicon-html5-plain"></i> HTML5</span>
-            <span class="stack-item"><i class="devicon-css3-plain"></i> CSS3</span>
-            <span class="stack-item"><i class="devicon-linux-plain"></i> Linux</span>
-            <span class="stack-item"><i class="devicon-git-plain"></i> Git</span>
-            <span class="stack-item"><i class="devicon-react-original"></i> React</span>
-            <span class="stack-item"><i class="devicon-python-plain"></i> Django</span>
-            <span class="stack-item"><i class="devicon-sass-original"></i> SASS</span>
-          </div>
+        <div class="stack" id="stack">
+  <span class="stack-item"><i class="devicon-javascript-plain"></i> JavaScript</span>
+  <span class="stack-item"><i class="devicon-csharp-plain"></i> C#</span>
+  <span class="stack-item"><i class="devicon-cplusplus-plain"></i> C++</span>
+  <span class="stack-item"><i class="devicon-python-plain"></i> Python</span>
+  <span class="stack-item"><i class="devicon-arduino-plain-wordmark"></i> Arduino</span>
+  <span class="stack-item"><img src="/images/esp32-icon.png" alt="ESP32"> ESP32</span>
+  <span class="stack-item"><i class="devicon-raspberrypi-line"></i> Raspberry Pi</span>
+  <span class="stack-item"><i class="devicon-nodejs-plain"></i> Node.js</span>
+  <span class="stack-item"><i class="devicon-express-original"></i> Express.js</span>
+  <span class="stack-item"><i class="devicon-html5-plain"></i> HTML5</span>
+  <span class="stack-item"><i class="devicon-css3-plain"></i> CSS3</span>
+  <span class="stack-item"><i class="devicon-sass-original"></i> SASS</span>
+  <span class="stack-item"><i class="devicon-tailwindcss-original"></i> Tailwind CSS</span>
+  <span class="stack-item"><i class="devicon-react-original"></i> React</span>
+  <span class="stack-item"><i class="devicon-nextjs-original"></i> Next.js</span>
+  <span class="stack-item"><i class="devicon-vitejs-plain"></i> Vite</span>
+  <span class="stack-item"><i class="devicon-typescript-plain"></i> TypeScript</span>
+  <span class="stack-item"><i class="devicon-linux-plain"></i> Linux</span>
+  <span class="stack-item"><i class="devicon-git-plain"></i> Git</span>
+  <span class="stack-item"><i class="devicon-github-original"></i> GitHub</span>
+  <span class="stack-item"><i class="devicon-visualstudio-plain"></i> Visual Studio</span>
+  <span class="stack-item"><i class="devicon-vscode-plain"></i> VS Code</span>
+  <span class="stack-item"><i class="devicon-firebase-plain"></i> Firebase</span>
+  <span class="stack-item"><i class="devicon-mongodb-plain"></i> MongoDB</span>
+  <span class="stack-item"><i class="devicon-sqlite-plain"></i> SQLite</span>
+  <span class="stack-item"><i class="devicon-docker-plain"></i> Docker</span>
+  <span class="stack-item"><i class="devicon-unity-original"></i> Unity</span>
+  <span class="stack-item"><i class="devicon-photoshop-plain"></i> Photoshop</span>
+</div>
+
         </div>
       </div>
 
@@ -186,6 +224,20 @@ typeWriter();
       box-shadow: 0 0 8px var(--accent, #39ff14);
       transform: translateY(-1px);
     }
+
+
+/* 3D tilt hover on profile image */
+.profile-img-container {
+  transition: transform 0.2s ease-out;
+  transform-style: preserve-3d;
+  perspective: 600px;
+}
+.profile-img-container:hover {
+  transform: rotateX(6deg) rotateY(-6deg) scale(1.05);
+  box-shadow: 0 0 16px #f8fff6, 0 0 32px #39ff14;
+}
+
   </style>
+  
 </body>
 </html>
