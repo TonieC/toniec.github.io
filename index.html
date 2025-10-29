@@ -259,8 +259,152 @@ body { scrollbar-width: none; -ms-overflow-style: none; }
           <p class="about">I design practical, fast front-end interfaces and tinker with microcontrollers (ESP32 / Arduino). I focus on clear code, clean UX, and shipping useful projects.</p>
 
           <div style="margin-top:12px;color:var(--muted);font-size:13px">Quick links: 
-            <a href="https://github.com/" target="_blank" rel="noopener" style="margin-left:8px">GitHub</a>
-            <a href="#" style="margin-left:8px">Resume</a>
+            <!-- Social buttons: GitHub, Facebook, Discord (copy) -->
+<style>
+  /* Social buttons (paste into your <head> or a global stylesheet) */
+  .social-row { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+
+  .social-btn {
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    padding:8px 12px;
+    border-radius:10px;
+    background: rgba(26,26,26,0.9);
+    border: 1px solid rgba(57,255,20,0.06);
+    color: var(--text, #eaeaea);
+    font-weight:700;
+    font-size:14px;
+    text-decoration:none;
+    cursor:pointer;
+    transition: transform .12s linear, box-shadow .12s linear, background .12s;
+    box-shadow: 0 6px 20px rgba(2,6,23,0.6);
+  }
+
+  .social-btn img.icon { width:20px; height:20px; display:block; object-fit:contain; }
+
+  /* neon hover */
+  .social-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(57,255,20,0.08), 0 0 28px rgba(57,255,20,0.06);
+    background: linear-gradient(180deg, rgba(57,255,20,0.03), rgba(255,255,255,0.01));
+    color: #39ff14;
+    border-color: rgba(57,255,20,0.14);
+  }
+
+  /* subtle focus for keyboard users */
+  .social-btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(57,255,20,0.06), 0 10px 30px rgba(2,6,23,0.6);
+    border-color: rgba(57,255,20,0.18);
+  }
+
+  /* small caption style for username on narrow screens */
+  .social-label { display:inline-block; white-space:nowrap; }
+
+  /* toast */
+  .social-toast {
+    position: fixed;
+    right: 18px;
+    bottom: 18px;
+    background: #121212;
+    color: #39ff14;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-weight:700;
+    box-shadow: 0 12px 40px rgba(2,6,23,0.6);
+    transform: translateY(8px);
+    opacity: 0;
+    transition: opacity .22s ease, transform .22s ease;
+    z-index: 9999;
+    pointer-events: none;
+  }
+  .social-toast.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
+</style>
+
+<div class="social-row" aria-label="Social links">
+  <!-- GitHub -->
+  <a
+    class="social-btn"
+    href="https://github.com/TonieC"
+    target="_blank"
+    rel="noopener"
+    aria-label="Open GitHub in new tab"
+  >
+    <img class="icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="" aria-hidden="true">
+    <span class="social-label">GitHub</span>
+  </a>
+
+  <!-- Facebook -->
+  <a
+    class="social-btn"
+    href="https://www.facebook.com/0tonie"
+    target="_blank"
+    rel="noopener"
+    aria-label="Open Facebook in new tab"
+  >
+    <img class="icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/facebook/facebook-original.svg" alt="" aria-hidden="true">
+    <span class="social-label">Facebook</span>
+  </a>
+
+  <!-- Discord (copy username) -->
+  <button
+    id="discordCopy"
+    class="social-btn"
+    type="button"
+    aria-label="Copy Discord username tonie06 to clipboard"
+    title="Click to copy Discord username"
+  >
+    <img class="icon" src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png" alt="" aria-hidden="true">
+    <span class="social-label">Discord</span>
+  </button>
+</div>
+
+<!-- Toast (insert once in body) -->
+<div id="socialToast" class="social-toast" role="status" aria-live="polite">Copied to clipboard</div>
+
+<script>
+  // Copy-to-clipboard for Discord with subtle toast feedback
+  (function() {
+    const btn = document.getElementById('discordCopy');
+    const toast = document.getElementById('socialToast');
+
+    // The username is not raw text here — encoded to make it slightly less obvious.
+    // It's trivial to decode for determined users but prevents casual copy-from-source.
+    const _enc = 'dG9uaWUwNg=='; // base64 of "tonie06"
+
+    function decodeUsername(encoded) {
+      try {
+        return atob(encoded);
+      } catch (e) {
+        return 'tonie06'; // fallback
+      }
+    }
+
+    function showToast(msg = 'Copied to clipboard') {
+      toast.textContent = msg;
+      toast.classList.add('show');
+      clearTimeout(toast._hideTimer);
+      toast._hideTimer = setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2200);
+    }
+
+    btn.addEventListener('click', async () => {
+      const username = decodeUsername(_enc);
+      try {
+        await navigator.clipboard.writeText(username);
+        showToast('Discord username copied: ' + username);
+      } catch (err) {
+        // fallback: select and prompt user (rare)
+        showToast('Copy failed — select and press Ctrl+C');
+        console.warn('Clipboard write failed', err);
+      }
+    });
+  })();
+</script>
+
+
           </div>
         </div>
       </div>
