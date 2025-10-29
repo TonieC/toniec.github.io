@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Test Page</title>
+<style>
+  body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(120deg, #1e1e1e, #2c2c2c);
+    color: #eaeaea;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+  }
+  .popup {
+    background: #282828;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 0 20px #39ff14;
+    text-align: center;
+  }
+  input[type="password"] {
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    margin-top: 10px;
+    width: 80%;
+  }
+  button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    background-color: #39ff14;
+    color: #121212;
+    cursor: pointer;
+    font-weight: bold;
+  }
+</style>
+</head>
+<body>
+<div class="popup">
+  <h2>Enter Access Key</h2>
+  <input id="pwInput" type="password" placeholder="Enter code here">
+  <br>
+  <button onclick="checkPassword()">Submit</button>
+  <p id="feedback" style="color:#ff3333;margin-top:10px;"></p>
+</div>
+
+<script>
+  const secret = 'wrqlhsrjl';
+
+  function checkPassword() {
+    let input = document.getElementById('pwInput').value.toLowerCase();
+    let decoded = decode(secret);
+
+    if(input === decoded) {
+      alert("Access Granted! 🎉");
+      document.body.innerHTML = "<h1 style='text-align:center;margin-top:40vh;'>Welcome to the secret test page!</h1>";
+    } else {
+      document.getElementById('feedback').innerText = "Incorrect key. Try again!";
+    }
+  }
+
+  function decode(str) {
+    // simple Caesar cipher decode (-3)
+    let res = '';
+    for(let i=0;i<str.length;i++){
+      let c = str.charCodeAt(i);
+      res += String.fromCharCode(c - 3);
+    }
+    return res;
+  }
+
+  // Just some filler JS to confuse anyone inspecting
+  const decoy = ["apple","banana","orange","grape"];
+  for(let i=0;i<decoy.length;i++){
+    console.log(decoy[i].split("").reverse().join(""));
+  }
+</script>
+</body>
+</html>

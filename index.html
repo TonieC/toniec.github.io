@@ -1,7 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-  <!-- Preconnect + Fonts -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Tonie C.</title>
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+
+  <!-- Meta (keep your OG/meta details) -->
+  <meta name="author" content="Tonie">
+  <meta name="description" content="Tonie — Front-End Developer & Hardware Tinkerer. Portfolio, projects, and resume.">
+  <meta name="theme-color" content="#0e1116">
+  <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+   <!-- Preconnect + Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -27,217 +42,886 @@
 <link rel="prefetch" href="/resume">
 <link rel="manifest" href="/manifest.json">
 
+  <style>
+    /* ------------ THEME & RESET ------------ */
+    /* hide scrollbar but keep scrolling */
+html::-webkit-scrollbar { width: 0; height: 0; }
+body { scrollbar-width: none; -ms-overflow-style: none; }
 
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Tonie's Workshop">
-  <meta name="twitter:description" content="Hi! I'm Tonie, a passionate hobbyist programmer skilled in JavaScript, C#, and C++. Explore my portfolio to see my projects and skills.">
-  <meta name="twitter:image" content="/images/workshop.png">
+/* card tilt effect */
+.tilt { transition: transform 0.2s ease-out; transform-style: preserve-3d; }
 
-  <!-- Schema -->
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebPage",
-      "name": "Tonie's Portfolio",
-      "description": "Explore Tonie's amazing projects and skills!",
-      "image": "/images/workshop.png",
-      "url": "https://tonie.fun"
+    :root{
+      --bg-0: #0e1116;
+      --bg-1: linear-gradient(180deg,#0e1116 0%, #13171b 100%);
+      --glass: rgba(255,255,255,0.04);
+      --glass-2: rgba(255,255,255,0.03);
+      --accent: #38bdf8;    /* chosen cool-cyan accent */
+      --accent-2: #00fff2;  /* supporting cyan */
+      --text: #e8f1f8;
+      --muted: #aab4bf;
+      --card-radius: 14px;
+      --maxw: 1100px;
+      --fw-sans: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      --glass-blur: 14px;
     }
-  </script>
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;background:var(--bg-1);color:var(--text);font-family:var(--fw-sans);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
+    a{color:var(--accent);text-decoration:none}
+    img{max-width:100%;height:auto;display:block}
 
-  <!-- Favicon + Icons -->
-  <link rel="icon" href="images/favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+    /* Utility container */
+    .wrap{max-width:var(--maxw);margin:0 auto;padding:32px 20px;}
 
-  <!-- CSS -->
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="mac.css">
+    /* ---------- BACKGROUND / AMBIENT LAYERS ---------- */
+    .ambient {
+      position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden;
+      background: radial-gradient(800px 600px at 10% 20%, rgba(56,189,248,0.06), transparent 8%),
+                  radial-gradient(700px 500px at 90% 80%, rgba(0,255,242,0.04), transparent 10%);
+      transition: transform 0.6s linear;
+      will-change: transform;
+    }
+    .ambient .layer {
+      position:absolute; width:1200px; height:1200px; transform:translate(-50%,-50%); border-radius:50%;
+      filter: blur(90px) saturate(140%);
+      opacity:0.85;
+    }
+    .ambient .layer.l1 { left:15%; top:25%; background: radial-gradient(circle, rgba(56,189,248,0.18), transparent 40%); }
+    .ambient .layer.l2 { right:12%; bottom:18%; background: radial-gradient(circle, rgba(0,255,242,0.14), transparent 40%); }
 
-  <!-- Scripts -->
-  <script src="scripts.js" defer></script>
-<link rel="preload" href="/images/workshop.png" as="image">
+    /* ---------- NAV (small fixed) ---------- */
+    header.site-header{position:fixed;left:0;right:0;top:14px;display:flex;justify-content:center;z-index:40;pointer-events:none}
+    .nav-inner{width:calc(var(--maxw) - 40px);max-width:calc(100% - 40px);pointer-events:auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .brand {display:flex;align-items:center;gap:12px}
+    .brand .logo {width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--glass), rgba(255,255,255,0.02));box-shadow:0 4px 18px rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,0.04)}
+    .nav-links{display:flex;gap:12px;align-items:center}
+    .nav-links a{padding:8px 12px;border-radius:10px;font-weight:600;color:var(--muted);background:transparent;transition:all .2s}
+    .nav-links a:hover{color:var(--text);background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent)}
+    .cta-small{padding:8px 14px;border-radius:999px;border:1.5px solid rgba(56,189,248,0.18);color:var(--accent);font-weight:700}
 
-  <title>Tonie's Workshop</title>
+    /* ---------- HERO ---------- */
+    main.hero {height: 100vh; position:relative;z-index:10;padding-top:84px;padding-bottom:56px;min-height:72vh;display:flex;align-items:center}
+    .hero .glass {
+      margin: 0 auto;
+      display:grid;
+      grid-template-columns: 320px 1fr;
+      gap:28px;
+      align-items:center;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius: var(--card-radius);
+      padding:28px;
+      box-shadow: 0 10px 40px rgba(2,6,23,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
+      backdrop-filter: blur(var(--glass-blur)) saturate(160%);
+      border:1px solid rgba(255,255,255,0.04);
+    }
+    .hero-left {display:flex;align-items:center;justify-content:center;flex-direction:column;gap:18px}
+    .profile-img {
+      width:220px;height:220px;border-radius:14px;object-fit:cover;border:1px solid rgba(255,255,255,0.045);
+      box-shadow: 0 8px 26px rgba(2,6,23,0.6), 0 0 30px rgba(56,189,248,0.04);
+      transform-origin:center;
+    }
+    .hero-meta {text-align:left;padding:8px 6px}
+    .name {font-size:34px;font-weight:800;margin-bottom:6px;color:var(--text)}
+    .lead {font-size:18px;color:var(--muted);margin-bottom:10px;line-height:1.4}
+    .type-cinematic {font-size:16px;color:var(--text);font-weight:600;letter-spacing:0.01em;display:block;min-height:28px}
+    .hero p.about {color:var(--muted);margin-top:10px;line-height:1.5}
 
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-WF3C22FPJ3"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    .hero-actions {margin-top:14px;display:flex;gap:12px;align-items:center}
+    .btn-primary {background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#081018;padding:10px 16px;border-radius:12px;font-weight:700;border:none;cursor:pointer;box-shadow:0 10px 30px rgba(56,189,248,0.12)}
+    .btn-ghost {padding:10px 14px;border-radius:12px;border:1px solid rgba(255,255,255,0.04);color:var(--text);background:transparent}
 
-  gtag('config', 'G-WF3C22FPJ3');
-</script>
+    /* ---------- LAYOUT SECTIONS ---------- */
+ section.panel {margin:36px auto;will-change: transform;padding:34px;background:var(--glass);border-radius:var(--card-radius);border:1px solid rgba(255,255,255,0.03);box-shadow:0 8px 30px rgba(2,6,23,0.6);backdrop-filter: blur(var(--glass-blur)) saturate(160%);transition:transform .6s cubic-bezier(.2,.9,.2,1),opacity .6s}
+    section.panel .heading {display:flex;align-items:center;gap:12px;margin-bottom:12px}
+    section.panel h2 {margin:0;color:var(--accent);font-size:20px;letter-spacing:0.06em;font-weight:700}
+    section.panel p.lead {color:var(--muted);margin:0}
+
+    /* Grid for skills / projects */
+    .grid {display:grid;gap:18px}
+    .grid.cols-3 {grid-template-columns:repeat(3,1fr)}
+    .grid.cols-2 {grid-template-columns:repeat(3,1fr)}
+    .grid.responsive {grid-template-columns:repeat(auto-fit,minmax(220px,1fr));}
+
+    /* Skill card */
+    .skill-card {padding:14px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.0));display:flex;gap:12px;align-items:center;border:1px solid rgba(255,255,255,0.02)}
+    .skill-card img.icon{width:40px;height:40px}
+    .skill-title{font-weight:700;color:var(--text)}
+    .skill-sub{color:var(--muted);font-size:13px}
+
+    /* Project card */
+    .project-card {overflow:hidden;border-radius:12px;border:1px solid rgba(255,255,255,0.03);background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));display:flex;flex-direction:column}
+    .project-card .thumb {height:160px; background-size:cover;background-position:center}
+    .project-card .meta {padding:12px}
+    .project-card .title {font-weight:700;color:var(--text);margin-bottom:6px}
+    .project-card .desc {color:var(--muted);font-size:14px;margin-bottom:8px}
+    .project-card .project-actions {display:flex;gap:8px;align-items:center}
+
+    /* Timeline */
+    .timeline {position:relative;padding-left:28px}
+    .timeline::before{content:"";position:absolute;left:8px;top:0;bottom:0;width:2px;background:linear-gradient(180deg, rgba(56,189,248,0.22), rgba(0,255,242,0.12));border-radius:2px}
+    .timeline-item{position:relative;padding:14px 18px;margin-bottom:18px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,0.02)}
+    .timeline-item .node {position:absolute;left:-6px;top:16px;width:14px;height:14px;border-radius:50%;background:linear-gradient(90deg,var(--accent),var(--accent-2));box-shadow:0 4px 14px rgba(56,189,248,0.18)}
+
+    /* Contact big CTA */
+    .contact-cta {text-align:center;padding:28px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03)}
+    .contact-cta h3{font-size:26px;margin:0 0 6px 0}
+    .contact-cta p{color:var(--muted);margin:0 0 14px 0}
+
+    /* Footer */
+    footer.site-foot{padding:22px 0;text-align:center;color:var(--muted);opacity:0.9}
+
+    /* ---------- ANIMATIONS / IN-VIEW ---------- */
+    .reveal {opacity:0; transform:translateY(18px); transition:opacity .9s cubic-bezier(.2,.9,.2,1), transform .9s cubic-bezier(.2,.9,.2,1)}
+    .reveal.in-view{opacity:1;transform:none}
+
+    /* subtle parallax lift for elements */
+    .parallax {will-change:transform}
+
+    /* type cinematic */
+    .cinematic {
+      display:inline-block;
+      font-weight:600;
+      color:var(--text);
+      font-size:18px;
+      letter-spacing:0.01em;
+      opacity:0;
+      transform:translateY(6px);
+      transition:opacity .9s ease, transform .9s ease;
+    }
+    .nav-links a.active {
+  color: var(--accent);
+  background: linear-gradient(180deg, rgba(56,189,248,0.12), transparent);
+}
+
+    .cinematic.is-visible {opacity:1;transform:none}
+
+    /* small screens responsive */
+    @media(max-width:980px){
+      .hero .glass{grid-template-columns:1fr; padding:18px}
+      .profile-img{width:160px;height:160px;margin:0 auto}
+      .hero-left{text-align:center}
+      .type-cinematic{text-align:center}
+    }
+    @media(prefers-reduced-motion: reduce){
+      .reveal, .parallax, .type-anim, .ambient{transition:none!important;animation:none!important;transform:none!important;opacity:1!important}
+    }
+  </style>
 </head>
-
-
 <body>
 
-  <!-- Decorative blobs handled by CSS -->
-  <div class="background-blobs"></div>
+  <!-- Ambient background layers -->
+  <div class="ambient" aria-hidden="true">
+    <div class="layer l1"></div>
+    <div class="layer l2"></div>
+  </div>
 
-  <main class="split">
-    <div class="left">
-      <div class="profile-img-container">
-        <img src="images/images1.png" alt="Tonie" class="profile-img">
-      </div>
-
-      <div class="profile-name-wrapper"><br>
-        <div class="profile-name">Tonie C.</div>
-      </div>
-    </div>
-
-    <div class="right">
-      <h1>Hi, I'm Tonie!</h1>
-    <p class="tagline" id="typewriter"></p>
-<script>
-const lines = [
-  'tonie@portfolio:~$ whoami',
-  'Front-End Developer',
-  'Hardware tinkerer & code hobbyist'
-];
-let line = 0, char = 0, typing = true;
-const el = document.getElementById('typewriter');
-
-function type() {
-  if (line < lines.length) {
-    if (typing) {
-      if (char < lines[line].length) {
-        el.innerHTML = lines[line].slice(0, ++char) + '<span class="cursor">|</span>';
-        setTimeout(type, 100);
-      } else {
-        typing = false;
-        setTimeout(() => { typing = true; char = 0; line++; type(); }, 1000);
-      }
-    }
-  }
-}
-type();
-</script>
-<style>
-.cursor {
-  color: #39ff14;
-  animation: blink 1s steps(1) infinite;
-}
-@keyframes blink { 50% { opacity: 0; } }
-</style>
-
-
-      <p class="about">
-        I code out of curiosity and build for fun. I enjoy experimenting, learning, and refining experiences that feel smooth and intuitive to use.
-      </p>
-
-      <div class="stack-container">
-        <div class="stack-wrapper" id="stackWrapper">
-        <div class="stack" id="stack">
-  <span class="stack-item"><i class="devicon-javascript-plain"></i> JavaScript</span>
-  <span class="stack-item"><i class="devicon-csharp-plain"></i> C#</span>
-  <span class="stack-item"><i class="devicon-cplusplus-plain"></i> C++</span>
-  <span class="stack-item"><i class="devicon-python-plain"></i> Python</span>
-  <span class="stack-item"><i class="devicon-arduino-plain-wordmark"></i> Arduino</span>
-  <span class="stack-item"><img src="/images/esp32-icon.png" alt="ESP32"> ESP32</span>
-  <span class="stack-item"><i class="devicon-raspberrypi-line"></i> Raspberry Pi</span>
-  <span class="stack-item"><i class="devicon-nodejs-plain"></i> Node.js</span>
-  <span class="stack-item"><i class="devicon-express-original"></i> Express.js</span>
-  <span class="stack-item"><i class="devicon-html5-plain"></i> HTML5</span>
-  <span class="stack-item"><i class="devicon-css3-plain"></i> CSS3</span>
-  <span class="stack-item"><i class="devicon-sass-original"></i> SASS</span>
-  <span class="stack-item"><i class="devicon-tailwindcss-original"></i> Tailwind CSS</span>
-  <span class="stack-item"><i class="devicon-react-original"></i> React</span>
-  <span class="stack-item"><i class="devicon-nextjs-original"></i> Next.js</span>
-  <span class="stack-item"><i class="devicon-vitejs-plain"></i> Vite</span>
-  <span class="stack-item"><i class="devicon-typescript-plain"></i> TypeScript</span>
-  <span class="stack-item"><i class="devicon-linux-plain"></i> Linux</span>
-  <span class="stack-item"><i class="devicon-git-plain"></i> Git</span>
-  <span class="stack-item"><i class="devicon-github-original"></i> GitHub</span>
-  <span class="stack-item"><i class="devicon-visualstudio-plain"></i> Visual Studio</span>
-  <span class="stack-item"><i class="devicon-vscode-plain"></i> VS Code</span>
-  <span class="stack-item"><i class="devicon-firebase-plain"></i> Firebase</span>
-  <span class="stack-item"><i class="devicon-mongodb-plain"></i> MongoDB</span>
-  <span class="stack-item"><i class="devicon-sqlite-plain"></i> SQLite</span>
-  <span class="stack-item"><i class="devicon-docker-plain"></i> Docker</span>
-  <span class="stack-item"><i class="devicon-unity-original"></i> Unity</span>
-  <span class="stack-item"><i class="devicon-photoshop-plain"></i> Photoshop</span>
-</div>
-
+  <!-- Header / nav (minimal) -->
+  <header class="site-header" role="banner">
+    <div class="nav-inner">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">
+          <img src="images/images1.png" alt="" style="width:36px;height:36px;border-radius:8px;object-fit:cover">
+        </div>
+        <div style="display:flex;flex-direction:column;">
+          <div style="font-weight:700;color:var(--text)">Tonie C.</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:2px">Front-End & Hardware</div>
         </div>
       </div>
 
-      <br>
-      <a href="resume" class="cta-button">View more</a>
-      
+      <nav class="nav-links" role="navigation" aria-label="Main">
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#experience">Experience</a>
+        <a href="#contact" class="cta-small">Contact</a>
+      </nav>
+    </div>
+  </header>
 
-      <footer class="footer-inline">
-        <p>© 2025 Tonie</p>
-      </footer>
+  <!-- HERO -->
+  <main class="hero" role="main">
+    <div class="wrap">
+      <div class="glass reveal parallax" data-speed="0.08">
+        <div class="hero-left">
+          <img class="profile-img parallax" data-speed="0.12" src="images/images1.png" alt="Tonie photo">
+          <div style="display:flex;gap:10px;align-items:center">
+            <a href="#contact" class="btn-primary">Hire Me</a>
+            <a href="#projects" class="btn-ghost">View Projects</a>
+          </div>
+        </div>
+
+        <div class="hero-meta">
+          <div class="name">Tonie C.</div>
+          <div class="lead">Front-End Developer & Hardware Tinkerer</div>
+          <div class="type-cinematic">
+            <span id="cinematic-line" class="cinematic">Building smooth experiences and small tools that actually get used.</span>
+          </div>
+          <p class="about">I design practical, fast front-end interfaces and tinker with microcontrollers (ESP32 / Arduino). I focus on clear code, clean UX, and shipping useful projects.</p>
+
+          <div style="margin-top:12px;color:var(--muted);font-size:13px">Quick links: 
+            <a href="https://github.com/" target="_blank" rel="noopener" style="margin-left:8px">GitHub</a>
+            <a href="#" style="margin-left:8px">Resume</a>
+          </div>
+        </div>
+      </div>
     </div>
   </main>
 
+<!-- ABOUT -->
+<section id="about" class="panel wrap reveal tilt">
+  <div class="heading">
+    <h2>About Me</h2>
+  </div>
+
+  <p class="lead">
+    I'm <strong>Tonie</strong>, an 18-year-old programmer from the Philippines studying ICT (Computer Programming).  
+    I create web interfaces, tinkering projects, and practical tools that solve real problems.  
+    I love combining creativity with technical skills to make projects functional and enjoyable.
+  </p>
+
+  <div style="margin-top:18px;display:flex;gap:18px;flex-wrap:wrap">
+    <div style="flex:1;min-width:220px">
+      <h3 style="margin:0;color:var(--text);font-size:16px">What I Do</h3>
+      <ul style="color:var(--muted);padding-left:18px;margin-top:4px">
+        <li>Front-End development (HTML, CSS, JavaScript)</li>
+        <li>Microcontroller projects using Arduino & ESP32</li>
+        <li>Small full-stack apps and productivity tools</li>
+      </ul>
+    </div>
+
+    <div style="flex:1;min-width:220px">
+      <h3 style="margin:0;color:var(--text);font-size:16px">How I Work</h3>
+      <ul style="color:var(--muted);padding-left:18px;margin-top:4px">
+        <li>Readable, accessible, and performant code</li>
+        <li>Iterative approach: start small → test → refine</li>
+        <li>Work independently or collaboratively</li>
+      </ul>
+    </div>
+
+    <div style="flex:1;min-width:220px">
+      <h3 style="margin:0;color:var(--text);font-size:16px">My Interests</h3>
+      <ul style="color:var(--muted);padding-left:18px;margin-top:4px">
+        <li>Hardware tinkering & IoT devices</li>
+        <li>Open-source contributions</li>
+        <li>Exploring new programming languages & web trends</li>
+      </ul>
+    </div>
+
+    <div style="flex:1;min-width:220px">
+      <h3 style="margin:0;color:var(--text);font-size:16px">Goals & Aspirations</h3>
+      <ul style="color:var(--muted);padding-left:18px;margin-top:4px">
+        <li>Become a versatile developer (front-end & back-end)</li>
+        <li>Create practical, reliable tools & projects</li>
+        <li>Continuously improve skills and contribute meaningfully</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+
   <style>
-    /* Lighter background blobs using pseudo-elements */
-.background-blobs::before,
-.background-blobs::after {
-  content: "";
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  width: 800px;
-  height: 800px;
-  background: radial-gradient(circle, rgba(57, 255, 20, 0.08), transparent 70%);
-  border-radius: 50%;
-  transform: translate(-50%, -50%) scale(1);
-  filter: blur(120px);
-  z-index: -1;
-  animation: pulse 8s infinite ease-in-out alternate,
-             move 8s infinite ease-in-out forwards alternate ;
+  /* Container for skill cards (top row) */
+  .grid.responsive {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .skill-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: var(--panel-bg, #1a1a1a);
+    border-radius: 8px;
+    flex: 1 1 200px;
+    min-width: 200px;
+  }
+
+  .skill-card img.icon {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+  }
+
+  /* Skills Chart Rows */
+  .skills-chart-row {
+    margin-top: 16px;
+  }
+
+ .skills-label {
+  text-align: center;
+  margin-bottom: 8px;
+  font-weight: bold;
 }
 
-@keyframes pulse {
-  from { transform: translate(-50%, -50%) scale(1); }
-  to { transform: translate(-50%, -50%) scale(1.2); }
+
+ .skills-icons {
+  display: flex;
+  flex-wrap: wrap;          /* wrap to next line if too many */
+  justify-content: center;  /* center the icons */
+  gap: 16px;                /* space between icons */
 }
 
-@keyframes move {
-  0%   { transform: translate(-50%, -50%) translateX(0) translateY(0); }
-  50%  { transform: translate(-50%, -50%) translateX(50px) translateY(-30px); }
-  100% { transform: translate(-50%, -50%) translateX(0) translateY(0); }
-}
+  .tooltip-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 11px;
+  }
 
+  .tooltip-container img {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+  }
 
-    /* Button with smoother hover */
-    .cta-button {
-      display: inline-block;
-      padding: 0.6rem 1.2rem;
-      background: transparent;
-      color: var(--accent, #39ff14);
-      border: 2px solid var(--accent, #39ff14);
-      border-radius: 999px;
-      font-weight: bold;
-      cursor: pointer;
-      text-decoration: none;
-      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  .click-tooltip {
+    margin-top: 2px;
+    text-align: center;
+    font-size: 11px;
+    color: var(--muted, #7a7a7a);
+  }
+
+  /* Responsive tweaks */
+  @media (max-width: 600px) {
+    .skill-card {
+      flex: 1 1 100%;
     }
-
-    .cta-button:hover {
-      background-color: var(--accent, #39ff14);
-      color: #121212;
-      box-shadow: 0 0 8px var(--accent, #39ff14);
-      transform: translateY(-1px);
+    .skills-icons {
+      justify-content: flex-start;
     }
+  }
+</style>
+
+<section id="skills" class="panel wrap reveal tilt">
+  <div class="heading"><h2>Skills & Tools</h2></div>
+
+  <!-- Skill Cards -->
+  <div class="grid responsive">
+    <div class="skill-card">
+      <img class="icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript">
+      <div>
+        <div class="skill-title">JavaScript</div>
+        <div class="skill-sub">Vanilla, DOM, modern patterns</div>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <img class="icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5">
+      <div>
+        <div class="skill-title">HTML & CSS</div>
+        <div class="skill-sub">Semantic markup, responsive design</div>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <img class="icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3">
+      <div>
+        <div class="skill-title">CSS</div>
+        <div class="skill-sub">Modern layouts, transitions</div>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <img class="icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" alt="C++">
+      <div>
+        <div class="skill-title">C++</div>
+        <div class="skill-sub">Algorithmic & microcontroller logic</div>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <img class="icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg" alt="C#">
+      <div>
+        <div class="skill-title">C#</div>
+        <div class="skill-sub">Desktop & game dev basics</div>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <img class="icon" src="/images/esp32-icon.png" alt="ESP32">
+      <div>
+        <div class="skill-title">ESP32 / Arduino</div>
+        <div class="skill-sub">Embedded projects & IoT prototypes</div>
+      </div>
+    </div>
+  </div>
+
+  <small style="display:block;margin-top:12px;color:var(--muted)">
+    This is a concise summary. See the full skills chart below.
+  </small>
+
+  <!-- Full Skills Chart -->
+  <section style="margin-top:24px">
+     <div style=" max-width: 300px; margin: 0 auto; padding: 10px 1px;">
+
+    <h2>What I’ve Worked With</h2>
+
+    <!-- Row 1 -->
+    <div class="skills-chart-row">
+      <div class="skills-label">Used Frequently (5+ yrs)</div>
+      <div class="skills-icons">
+        <div class="tooltip-container">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript">
+          <span class="click-tooltip">JavaScript</span>
+        </div>
+        <div class="tooltip-container">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5">
+          <span class="click-tooltip">HTML5</span>
+        </div>
+        <div class="tooltip-container">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3">
+          <span class="click-tooltip">CSS3</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 2 -->
+    <div class="skills-chart-row">
+      <div class="skills-label">Solid Practice (3+ yrs)</div>
+      <div class="skills-icons">
+        <div class="tooltip-container">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git">
+          <span class="click-tooltip">Git</span>
+        </div>
+        <div class="tooltip-container">
+          <img src="/images/esp32-icon.png" alt="ESP32">
+          <span class="click-tooltip">ESP32</span>
+        </div>
+        <div class="tooltip-container">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/arduino/arduino-original-wordmark.svg" alt="Arduino">
+          <span class="click-tooltip">Arduino</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 3 -->
+    <div class="skills-chart-row">
+      <div class="skills-label">Built Projects (2 yrs)</div>
+      <div class="skills-icons">
+        <div class="tooltip-container">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python">
+          <span class="click-tooltip">Python</span>
+        </div>
+        <div class="tooltip-container">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" alt="Linux">
+          <span class="click-tooltip">Linux</span>
+        </div>
+        <div class="tooltip-container">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt="Node.js">
+          <span class="click-tooltip">Node.js</span>
+        </div>
+        <div class="tooltip-container">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React">
+          <span class="click-tooltip">React</span>
+        </div>
+        <div class="tooltip-container">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg" alt="Django">
+          <span class="click-tooltip">Django</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 4 -->
+    <div class="skills-chart-row">
+      <div class="skills-label">Currently Exploring</div>
+      <div class="skills-icons">
+        <div class="tooltip-container">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" alt="C++">
+          <span class="click-tooltip">C++</span>
+        </div>
+        <div class="tooltip-container">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg" alt="C#">
+          <span class="click-tooltip">C#</span>
+        </div>
+        <div class="tooltip-container">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/raspberrypi/raspberrypi-line.svg" alt="Raspberry Pi">
+          <span class="click-tooltip">Raspberry Pi</span>
+        </div>
+        <div class="tooltip-container">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sass/sass-original.svg" alt="SASS">
+          <span class="click-tooltip">SASS</span>
+        </div>
+      </div>
+    </div>
+    </div>
+
+    <small class="disclaimer" style="display:block;margin-top:12px;color:var(--muted)">
+      <strong>Disclaimer:</strong> This reflects my familiarity and time spent using the following, not formal work experience unless explicitly stated otherwise.
+    </small>
+  </section>
+</section>
 
 
-/* 3D tilt hover on profile image */
-.profile-img-container {
-  transition: transform 0.2s ease-out;
-  transform-style: preserve-3d;
-  perspective: 600px;
-}
-.profile-img-container:hover {
-  transform: rotateX(6deg) rotateY(-6deg) scale(1.05);
-  box-shadow: 0 0 16px #f8fff6, 0 0 32px #39ff14;
-}
 
-  </style>
-  
+  <!-- PROJECTS -->
+  <section id="projects" class="panel wrap reveal">
+    <div class="heading"><h2>Featured Projects</h2></div>
+
+    <div class="grid cols-3" style="margin-top:14px">
+      <!-- Project 1 -->
+      <article class="project-card parallax" data-speed="0.06">
+        <div class="thumb" style="background-image:url('images/Playground1.png');"></div>
+        <div class="meta">
+          <div class="title">Playground</div>
+          <div class="desc">A lightweight in-browser playground for experimenting with HTML/CSS/JS — live editing and instant preview.</div>
+          <div class="project-actions">
+            <a href="/playground" class="btn-ghost">Open</a>
+            <a href="https://github.com/" target="_blank" rel="noopener" class="btn-ghost">Source</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Project 2 -->
+      <article class="project-card parallax" data-speed="0.06">
+        <div class="thumb" style="background-image:url('images/taskifysc.png');"></div>
+        <div class="meta">
+          <div class="title">Taskify</div>
+          <div class="desc">A minimal task manager with timer, local storage, and done/undo support.</div>
+          <div class="project-actions">
+            <a href="/taskify.html" class="btn-ghost">Open</a>
+            <a href="#" class="btn-ghost">Source</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Project 3 -->
+      <article class="project-card parallax" data-speed="0.06">
+        <div class="thumb" style="background-image:url('images/ex-portfoliosc.png');"></div>
+        <div class="meta">
+          <div class="title">Example Portfolio</div>
+          <div class="desc">A responsive one-page portfolio template designed to show projects and skills clearly.</div>
+          <div class="project-actions">
+            <a href="/ex-portfolio.html" class="btn-ghost">Open</a>
+            <a href="#" class="btn-ghost">Source</a>
+          </div>
+        </div>
+      </article>
+    </div>
+    
+
+  </section>
+
+  <!-- EXPERIENCE / RESUME (merged content) -->
+  <section id="experience" class="panel wrap reveal">
+    <div class="heading"><h2>Experience & Education</h2></div>
+
+    <div class="timeline" style="margin-top:12px">
+      <div class="timeline-item">
+        <div class="node" aria-hidden="true"></div>
+        <h3 style="margin:0;color:var(--text);font-size:16px">Robotics Team President <span style="color:var(--muted);font-size:13px;margin-left:8px">(2024–2025)</span></h3>
+        <p style="color:var(--muted);margin-top:6px"><strong>Camarin High School</strong> — Led the robotics team, coordinated builds & code for competitions, managed procurement and timelines.</p>
+      </div>
+
+      <div class="timeline-item">
+        <div class="node" aria-hidden="true"></div>
+        <h3 style="margin:0;color:var(--text);font-size:16px">ICT Club President <span style="color:var(--muted);font-size:13px;margin-left:8px">(2024–2025)</span></h3>
+        <p style="color:var(--muted);margin-top:6px"><strong>Camarin High School</strong> — Led club workshops, coordinated guest mentors, and ran tech sessions for 30+ members.</p>
+      </div>
+
+      <div class="timeline-item">
+        <div class="node" aria-hidden="true"></div>
+        <h3 style="margin:0;color:var(--text);font-size:16px">Layout Designer — The Icon (DSPC) <span style="color:var(--muted);font-size:13px;margin-left:8px">(2024–2025)</span></h3>
+        <p style="color:var(--muted);margin-top:6px"><strong>Camarin High School</strong> — Designed digital spreads and online publication layouts; represented school in DSPC online publication category.</p>
+      </div>
+
+      <div class="timeline-item">
+        <div class="node" aria-hidden="true"></div>
+        <h3 style="margin:0;color:var(--text);font-size:16px">Education</h3>
+        <p style="color:var(--muted);margin-top:6px"><strong>2025 – Present</strong> — Grade 11 ICT (Computer Programming), Metro Manila College. <br><strong>2024 – 2025</strong> — Grade 10, Camarin High School.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FULL SKILLS GRID (more icons similar to resume) -->
+  <section class="panel wrap reveal">
+    <div class="heading"><h2>Tools & Tech (Expanded)</h2></div>
+
+    <div style="margin-top:12px" class="grid responsive">
+      <!-- Reuse some of the icons from your resume -->
+      <div class="skill-card"><img class="icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt="Node.js"><div><div class="skill-title">Node.js</div><div class="skill-sub">Small servers & scripts</div></div></div>
+      <div class="skill-card"><img class="icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python"><div><div class="skill-title">Python</div><div class="skill-sub">Scripting & parsing</div></div></div>
+      <div class="skill-card"><img class="icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git"><div><div class="skill-title">Git</div><div class="skill-sub">Version control</div></div></div>
+      <div class="skill-card"><img class="icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React"><div><div class="skill-title">React</div><div class="skill-sub">Component-driven UI</div></div></div>
+      <div class="skill-card"><img class="icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" alt="Linux"><div><div class="skill-title">Linux</div><div class="skill-sub">Development & tooling</div></div></div>
+      <div class="skill-card"><img class="icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-plain.svg" alt="Docker"><div><div class="skill-title">Docker</div><div class="skill-sub">Containers & dev envs</div></div></div>
+    </div>
+
+    <small style="display:block;margin-top:12px;color:var(--muted)">Disclaimer: this shows familiarity and personal projects; not all entries are professional work experience.</small>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="panel wrap reveal">
+    <div class="contact-cta">
+      <h3>Let's work together</h3>
+      <p>I'm available for internships, junior dev roles, or small contract work. Email me and I'll reply as soon as I can.</p>
+
+      <div style="display:flex;gap:12px;justify-content:center;margin-top:12px;flex-wrap:wrap">
+        <a class="btn-primary" href="mailto:cadizal06@gmail.com">Email: cadizal06@gmail.com</a>
+      </div>
+    </div>
+
+    <div style="margin-top:18px" class="wrap">
+      <!-- Contact form (keeps your webhook logic) -->
+      <form id="contactForm" style="max-width:680px;margin:18px auto 0;display:flex;flex-direction:column;gap:10px">
+        <label style="color:var(--muted);font-weight:600">Name</label>
+        <input name="name" required placeholder="Your name" style="padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:var(--text)">
+
+        <label style="color:var(--muted);font-weight:600">Email</label>
+        <input name="email" type="email" required placeholder="you@example.com" style="padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:var(--text)">
+
+        <label style="color:var(--muted);font-weight:600">Subject</label>
+        <input name="subject" required placeholder="Subject" style="padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:var(--text)">
+
+        <label style="color:var(--muted);font-weight:600">Message</label>
+        <textarea name="message" rows="5" required placeholder="Hello..." style="padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:var(--text)"></textarea>
+
+        <label style="display:flex;align-items:center;gap:8px;color:var(--muted);font-size:14px"><input type="checkbox" id="consent" required> I consent to sending this data</label>
+
+        <div style="display:flex;gap:10px;align-items:center">
+          <button type="submit" class="btn-primary">Send Message</button>
+          <div id="formStatus" style="color:var(--muted);font-weight:700"></div>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <footer class="site-foot">
+    <div class="wrap">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+        <div style="color:var(--muted)">© 2025 Tonie</div>
+        <div style="color:var(--muted)"><small>Built with love</small></div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ---------- SCRIPTS: cinematic type + reveal + parallax + contact webhook ---------- -->
+  <script>
+    // ---- Cinematic type reveal (not terminal style) ----
+    (function cinematicType() {
+      const el = document.getElementById('cinematic-line');
+      const text = "Front-End Developer • Hardware Tinkerer • Code Hobbyist";
+      const delayChar = 28; // ms per char (slow cinematic)
+      const delayStart = 300; // before starting
+      if (!el) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        el.textContent = text;
+        el.classList.add('is-visible');
+        return;
+      }
+      el.textContent = '';
+      setTimeout(() => {
+        let i = 0;
+        const tick = () => {
+          if (i <= text.length) {
+            el.textContent = text.slice(0,i);
+            if (i % 2 === 0) el.style.opacity = 0.9 + (i/text.length)*0.1;
+            i++;
+            setTimeout(tick, delayChar);
+          } else {
+            el.classList.add('is-visible');
+          }
+        };
+        tick();
+      }, delayStart);
+    })();
+
+    // ---- IntersectionObserver reveal for panels ----
+    (function revealOnScroll() {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.querySelectorAll('.reveal').forEach(n => n.classList.add('in-view'));
+        return;
+      }
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('in-view');
+            obs.unobserve(e.target);
+          }
+        });
+      }, {threshold: 0.12});
+      document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+    })();
+
+    // ---- Parallax subtle movement for ambient and parallax elements ----
+    (function parallaxLoop() {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      const ambient = document.querySelector('.ambient');
+      const parallaxEls = Array.from(document.querySelectorAll('.parallax'));
+      let lastY = window.scrollY;
+      function update() {
+        const scrollY = window.scrollY || window.pageYOffset;
+        const delta = scrollY - lastY;
+        lastY = scrollY;
+        // ambient subtle offset by small fraction
+        const ambientOffset = Math.round(scrollY * 0.02);
+        ambient.style.transform = `translateY(${ambientOffset}px)`;
+        // per-element parallax based on data-speed
+        parallaxEls.forEach(el => {
+          const speed = parseFloat(el.dataset.speed || 0.06);
+          const rect = el.getBoundingClientRect();
+          // base offset relative to viewport center
+          const centerDist = (rect.top + rect.height/2) - (window.innerHeight/2);
+          const translate = -centerDist * speed;
+          el.style.transform = `translateY(${translate}px)`;
+        });
+        requestAnimationFrame(update);
+      }
+      requestAnimationFrame(update);
+    })();
+
+    // ---- Contact form: reuse your webhook logic but keep encoded URL as-is ----
+    (function contactHandler() {
+      const form = document.getElementById('contactForm');
+      if (!form) return;
+
+      const ipInfoToken = '5ac9ce050dc8ba'; // kept from your file
+      const encodedWebhook = 'aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTQwMTA2MDc1MDk2MDYyNzczMi9IYXZpdkxmNms3d1hhVngyVE9mb1JWQUVlUHZaVVg4T3BPRElGVmQtR05UTUI1QmdpOHVCZ2JFNHdPdmNZZERxQ2taXw==';
+      const webhookURL = atob(encodedWebhook);
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const status = document.getElementById('formStatus');
+        status.style.color = 'var(--muted)';
+        status.textContent = 'Sending...';
+
+        const formData = new FormData(form);
+        const name = formData.get('name') || 'Anonymous';
+        const email = formData.get('email') || 'No email';
+        const subject = formData.get('subject') || 'No subject';
+        const message = formData.get('message') || 'No message';
+
+        // fetch IP info (best-effort)
+        let ipData = {};
+        try {
+          const res = await fetch(`https://ipinfo.io/json?token=${ipInfoToken}`);
+          if (res.ok) ipData = await res.json();
+        } catch (err) {
+          console.warn('ipinfo failed', err);
+        }
+
+        const coords = ipData.loc || 'Unknown';
+        const embed = {
+          username: 'Captain Hook APP',
+          content: '<@766719829179891743>',
+          embeds: [
+            {
+              title: '💬 Contact Form Submission',
+              color: 0xff4081,
+              fields: [
+                { name: '📨 Message', value: message, inline: false },
+                { name: '👤 Name', value: name, inline: true },
+                { name: '📧 Email', value: email, inline: true },
+                { name: '📝 Subject', value: subject, inline: true },
+                { name: '📍 Coordinates', value: coords, inline: true },
+                { name: '🌐 IP', value: ipData.ip || 'Unknown', inline: true },
+                { name: '🕓 Timestamp', value: new Date().toLocaleString(), inline: false }
+              ],
+              footer: { text: 'Captain Hook v1.0' }
+            }
+          ]
+        };
+
+        try {
+          const res = await fetch(webhookURL, {
+            method: 'POST',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify(embed)
+          });
+          if (res.ok) {
+            status.style.color = 'limegreen';
+            status.textContent = 'Message sent — thank you!';
+            form.reset();
+          } else {
+            throw new Error('Webhook error');
+          }
+        } catch (err) {
+          status.style.color = 'tomato';
+          status.textContent = 'Failed to send. Try again later.';
+          console.error(err);
+        }
+      });
+    })();
+
+    // ---- Accessibility: focus outline for keyboard users ----
+    (function focusOutline() {
+      function handleFirstTab(e) {
+        if (e.key === 'Tab') {
+          document.documentElement.classList.add('show-focus-outline');
+          window.removeEventListener('keydown', handleFirstTab);
+        }
+      }
+      window.addEventListener('keydown', handleFirstTab);
+      const style = document.createElement('style');
+      style.textContent = `
+        :root .show-focus-outline a:focus, :root .show-focus-outline button:focus, :root .show-focus-outline input:focus, :root .show-focus-outline textarea:focus {
+          outline: 3px solid rgba(56,189,248,0.18);
+          outline-offset: 3px;
+          border-radius:8px;
+        }`;
+      document.head.appendChild(style);
+    })();
+
+    // ---- Ambient animated gradient ----
+(function animateAmbient() {
+  const layers = document.querySelectorAll('.ambient .layer');
+  let angle = 0;
+  function tick() {
+    angle += 0.1;
+    layers.forEach((layer, i) => {
+      const offset = i * 45;
+      layer.style.background = `radial-gradient(circle at ${30 + Math.sin(angle + offset) * 30}% ${20 + Math.cos(angle + offset) * 20}%, rgba(56,189,248,0.18), transparent 40%)`;
+    });
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+})();
+
+(function tiltPanels() {
+  const panels = document.querySelectorAll('section.panel'); // Only main sections
+
+  panels.forEach(panel => {
+    panel.classList.add('tilt'); // add tilt class for transform-style
+
+    panel.addEventListener('mousemove', e => {
+      const rect = panel.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      const dx = (cx - e.clientX) / 15; // smaller divisor = stronger tilt
+      const dy = (cy - e.clientY) / 15;
+
+      panel.style.transform = `rotateX(${dy}deg) rotateY(${-dx}deg)`;
+      // Do NOT set transition here
+    });
+
+    panel.addEventListener('mouseleave', () => {
+      panel.style.transform = '';
+      // reset transition smoothness is handled by CSS
+    });
+  });
+})();
+
+// ---- Nav active highlight based on scroll (mini progress indicator) ----
+(function navActiveScroll() {
+  const sections = document.querySelectorAll('section.panel, main.hero');
+  const navLinks = document.querySelectorAll('.nav-links a');
+
+  function updateActive() {
+    let current = sections[0];
+    const scrollPos = window.scrollY + window.innerHeight / 2;
+    sections.forEach(section => {
+      if (section.offsetTop <= scrollPos) current = section;
+    });
+    navLinks.forEach(a => a.classList.remove('active'));
+    const id = current.id || 'home';
+    const link = document.querySelector(`.nav-links a[href="#${id}"]`);
+    if (link) link.classList.add('active');
+  }
+
+  window.addEventListener('scroll', updateActive);
+  updateActive();
+})();
+  </script>
 </body>
 </html>
