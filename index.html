@@ -415,16 +415,14 @@ body { scrollbar-width: none; -ms-overflow-style: none; }
 
         <div class="hero-meta">
           <div class="name">Tonie C.</div>
-          <div class="lead">Front-End Developer & Hardware Tinkerer</div>
           <div class="type-cinematic">
             <span id="cinematic-line" class="cinematic">Building smooth experiences and small tools that actually get used.</span>
           </div>
-          <p class="about">I design practical, fast front-end interfaces and tinker with microcontrollers (ESP32 / Arduino). I focus on clear code, clean UX, and shipping useful projects.</p>
+         <p class="about">I design intuitive and efficient interfaces, prioritizing clear code, smooth user experiences, and practical results.</p>
 
           <div style="margin-top:12px;color:var(--muted);font-size:13px">Quick links: 
             <!-- Social buttons: GitHub, Facebook, Discord (copy) -->
 <style>
-  /* Social buttons (paste into your <head> or a global stylesheet) */
   .social-row { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
 
   .social-btn {
@@ -1092,7 +1090,8 @@ setInterval(() => {
   showNotification();
   const last = document.querySelectorAll('.windows-notif');
   last.forEach(n => n.classList.add('show'));
-}, Math.random() * 10000 + 12000);
+}, Math.random() * 30000 + 30000); // 30k–60k ms = 30–60 seconds
+
 
 // Show one immediately
 showNotification();
