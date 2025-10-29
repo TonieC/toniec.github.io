@@ -1,388 +1,176 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
-
-  <head>
-  <!-- Preconnect + Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link 
-    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" 
-    rel="stylesheet">
-
-  <!-- Meta Tags -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="author" content="Tonie">
-  <meta name="description" content="A showcase of my projects, skills, and programming journey.">
-  <meta name="robots" content="index, follow">
-  <meta name="theme-color" content="#121212">
-
-  <!-- Open Graph / Twitter Card -->
-  <meta property="og:title" content="404">
-  <meta property="og:description" content="Hi! I'm Tonie, a hobbyist programmer passionate about building creative and useful things.">
-  <meta property="og:image" content="/images/workshop.png">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="404">
-
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="404">
-  <meta name="twitter:description" content="A portfolio showcasing Tonie's programming skills and projects.">
-  <meta name="twitter:image" content="/images/workshop.png">
-
-  <!-- Schema.org Structured Data -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "name": "Tonie's Workshop",
-    "description": "Explore Tonie's projects, skills, and programming journey.",
-    "image": "/images/workshop.png"
-  }
-  </script>
-
-  <!-- Favicon + Icons -->
-  <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
-
-  <!-- Shared Scripts -->
-  <script src="/scripts.js" defer></script>
-
-  <title>Go Back!</title>
-</head>
+  <title>404 - Lost...</title>
   <style>
-    :root {
-      --accent: #4caf50; /* Green accent */
-      --text-paragraph: #b9b8b8;
-      --contact-bg: #1b3a24; /* Dark green button bg */
-      --contact-hover-bg: #2e7d32; /* Lighter hover green */
-      --contact-hover-color: #fff;
-      --contact-hover-shadow1: rgba(76, 175, 80, 0.3); /* Green glow */
-      --contact-hover-shadow2: rgba(76, 175, 80, 0.6);
-      --bg: #121a13; /* Dark greenish background */
-      --text: #f5f5f5;
-      --bonk-color: #66ff66; /* Neon green BONK text */
-    }
-
     body {
       margin: 0;
-      background: var(--bg);
-      color: var(--text);
-      font-family: "Segoe UI", sans-serif;
-      overflow: hidden; /* disable scrollbars */
-    }
-
-    .error-container {
-      min-height: 100vh;
+      height: 100vh;
+      background-color: #121212;
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
+      flex-direction: column;
+      font-family: 'Arial', sans-serif;
+      color: #eaeaea;
+      overflow: hidden;
+    }
+
+    .glitch {
+      position: relative;
+      color: #ff0000;
+      font-size: 4em;
+      font-weight: bold;
+      text-transform: uppercase;
+      text-shadow: 2px 0 #39ff14, -2px 0 #ff00ff;
+      animation: glitch 1s infinite;
+    }
+
+    .glitch::before,
+    .glitch::after {
+      content: attr(data-text);
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      color: #ff0000;
+      background: #121212;
+      overflow: hidden;
+      clip: rect(0, 900px, 0, 0);
+    }
+
+    .glitch::before {
+      left: 2px;
+      text-shadow: -2px 0 #39ff14;
+      animation: glitchTop 1s infinite linear alternate-reverse;
+    }
+
+    .glitch::after {
+      left: -2px;
+      text-shadow: 2px 0 #ff00ff;
+      animation: glitchBottom 1s infinite linear alternate-reverse;
+    }
+
+    @keyframes glitch {
+      0% { text-shadow: 2px 0 #39ff14, -2px 0 #ff00ff; }
+      20% { text-shadow: -2px -2px #39ff14, 2px 2px #ff00ff; }
+      40% { text-shadow: 2px 2px #39ff14, -2px -2px #ff00ff; }
+      60% { text-shadow: -2px 2px #39ff14, 2px -2px #ff00ff; }
+      80% { text-shadow: 2px -2px #39ff14, -2px 2px #ff00ff; }
+      100% { text-shadow: 2px 0 #39ff14, -2px 0 #ff00ff; }
+    }
+
+    @keyframes glitchTop {
+      0% { clip: rect(0, 9999px, 0, 0); transform: translate(-2px, -2px); }
+      20% { clip: rect(10px, 9999px, 50px, 0); transform: translate(2px, 2px); }
+      40% { clip: rect(30px, 9999px, 80px, 0); transform: translate(-2px, 1px); }
+      60% { clip: rect(50px, 9999px, 90px, 0); transform: translate(1px, -1px); }
+      80% { clip: rect(70px, 9999px, 120px, 0); transform: translate(-1px, 2px); }
+      100% { clip: rect(0, 9999px, 0, 0); transform: translate(0,0); }
+    }
+
+    @keyframes glitchBottom {
+      0% { clip: rect(0, 9999px, 0, 0); transform: translate(2px, 2px); }
+      20% { clip: rect(10px, 9999px, 40px, 0); transform: translate(-2px, -2px); }
+      40% { clip: rect(20px, 9999px, 60px, 0); transform: translate(2px, 1px); }
+      60% { clip: rect(40px, 9999px, 100px, 0); transform: translate(-1px, -1px); }
+      80% { clip: rect(60px, 9999px, 120px, 0); transform: translate(1px, 2px); }
+      100% { clip: rect(0, 9999px, 0, 0); transform: translate(0,0); }
+    }
+
+    .message {
+      font-size: 1.5em;
+      color: #b5b5b5;
       text-align: center;
-      padding: 2rem;
+      max-width: 400px;
+      margin-bottom: 1em;
       position: relative;
     }
 
-    .error-code {
-      font-size: 6rem;
-      font-weight: 800;
-      color: var(--accent);
-      animation: popIn1 1s ease-out forwards;
-      position: relative;
-      z-index: 1;
+    .message.glitch {
+      animation: glitch 1.5s infinite;
     }
 
-    .digit {
+    .eye-container {
+      position: relative;
+      width: 200px;
+      height: 200px;
+      margin-bottom: 2em;
+      display: flex;
+    }
+
+    .eye {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: radial-gradient(circle at 50% 50%, #242121 40%, #5c4e4e 50%, #574040 51%, #965a5a 100%);
+      position: relative;
+      box-shadow: inset 0 0 20px #3d3a3a, 0 0 30px #494646;
+      animation: eyeBlink 5s infinite;
+    }
+
+    .pupil {
+      width: 40px;
+      height: 40px;
+      background-color: #000;
+      border-radius: 50%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      box-shadow: 0 0 15px #000;
+    }
+
+    @keyframes eyeBlink {
+      0%, 95%, 100% { transform: scaleY(1); }
+      97% { transform: scaleY(0.1); }
+    }
+
+    .blood {
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle at 50% 50%, transparent 60%, #8B0000 100%);
+      border-radius: 50%;
+      mix-blend-mode: multiply;
+      animation: bleed 4s infinite;
+    }
+
+    @keyframes bleed {
+      0%, 100% { transform: translate(0,0); opacity: 0.5; }
+      50% { transform: translate(5px,5px); opacity: 0.8; }
+    }
+
+    .back-btn {
       display: inline-block;
-      transition: transform 0.2s ease;
-      position: relative;
-    }
-
-    .digit.zero {
-      position: relative;
-      clip-path: inset(0 0 0 0 round 9999px);
-    }
-
-    .digit.squish {
-      animation: squish 0.75s ease-in-out;
-    }
-
-    @keyframes squish {
-      0% { transform: scale(1); }
-      50% { transform: scaleX(1.3) scaleY(0.7); }
-      100% { transform: scale(1); }
-    }
-
-    .error-message {
-      font-size: 1.5rem;
-      color: var(--text-paragraph);
-      margin-top: 1rem;
-      animation: fadeInUp 1s ease-out 0.5s forwards;
-      opacity: 0;
-    }
-
-    .error-btn {
-      margin-top: 2rem;
-      padding: 0.75rem 1.5rem;
-      font-size: 1rem;
-      font-weight: 600;
-      border: none;
-      border-radius: 30px;
-      background: var(--contact-bg);
-      color: #fff;
+      padding: 12px 24px;
+      color: #070707;
       text-decoration: none;
-      box-shadow: 0 0 12px var(--contact-hover-shadow1);
+      border-radius: 8px;
+      font-weight: bold;
       transition: all 0.3s ease;
     }
 
-    .error-btn:hover {
-      background: var(--contact-hover-bg);
-      color: var(--contact-hover-color);
-      box-shadow: 0 0 24px var(--contact-hover-shadow2);
-      transform: scale(1.05);
+    .back-btn:hover {
+      color: #7a7676;
     }
 
-    /* Hammer */
-    .hammer {
-      position: absolute;
-      top: calc(50% - 240px);
-      left: 58%;
-      transform-origin: bottom center;
-      width: 100px;
-      height: 180px;
-      z-index: 2;
-    }
-
-    .hammer-head {
-      width: 100px;
-      height: 30px;
-      background: linear-gradient(to bottom, #bbb, #777);
-      border-radius: 6px;
-      position: absolute;
-      top: 0;
-      left: 0;
-      box-shadow: inset 0 2px 6px rgba(255, 255, 255, 0.3),
-                  inset 0 -2px 6px rgba(0, 0, 0, 0.4),
-                  0 3px 6px rgba(0, 0, 0, 0.5);
-    }
-
-    .hammer-claw {
-      position: absolute;
-      top: 0;
-      right: -18px;
-      width: 20px;
-      height: 30px;
-      background: linear-gradient(to bottom, #999, #555);
-      clip-path: polygon(0 0, 100% 20%, 80% 50%, 100% 80%, 0 100%);
-      box-shadow: inset 0 -2px 4px rgba(0, 0, 0, 0.5);
-      border-radius: 2px;
-    }
-
-    .hammer-bolt {
-      position: absolute;
-      top: 8px;
-      left: 20px;
-      width: 6px;
-      height: 6px;
-      background: radial-gradient(circle, #ddd, #555);
-      border-radius: 50%;
-      box-shadow: 30px 0 #666, 60px 0 #666;
-    }
-
-    .hammer-handle {
-      width: 16px;
-      height: 140px;
-      background: linear-gradient(to bottom, #6a3e1f, #3b2412);
-      border-radius: 8px;
-      position: absolute;
-      bottom: 0;
-      left: 42px;
-      box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.5),
-                  0 0 6px rgba(0, 0, 0, 0.3);
-    }
-
-    .hammer-grip {
-      position: absolute;
-      bottom: 0;
-      left: 42px;
-      width: 16px;
-      height: 50px;
-      background: repeating-linear-gradient(
-        to bottom,
-        #222,
-        #444 6px,
-        #222 12px
-      );
-      border-radius: 8px;
-      box-shadow: inset 0 0 4px rgba(255, 255, 255, 0.2);
-    }
-
-    .bonk-text {
-      position: absolute;
-      top: 40%;
-      left: 50%;
-      transform: translate(-50%, -150%);
-      font-size: 2rem;
-      font-weight: 900;
-      color: var(--bonk-color);
-      opacity: 0;
-      pointer-events: none;
-      z-index: 3;
-      animation: none;
-    }
-
-    .bonk-text.show {
-      animation: bonkText 0.75s ease forwards;
-    }
-
-    @keyframes bonkSwing {
-      0% { transform: translateX(-50%) rotate(-30deg); }
-      50% { transform: translateX(-50%) rotate(-90deg); }
-      100% { transform: translateX(-50%) rotate(-30deg); }
-    }
-
-    @keyframes bonkText {
-      0% { opacity: 0; transform: translate(-50%, -150%) scale(0.8); }
-      30% { opacity: 1; transform: translate(-50%, -160%) scale(1); }
-      100% { opacity: 0; transform: translate(-50%, -180%) scale(1.3); }
-    }
-
-    @keyframes popIn1 {
-      from { transform: scale(0); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
-
-    @keyframes fadeInUp {
-      from { transform: translateY(20px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
-
-    #gravity-wrapper {
-      position: relative;
-      height: 100%;
-      width: 100%;
-      overflow: hidden;
-    }
-
-    /* Glitch mode styles */
-    .glitch-mode h1,
-    .glitch-mode h2,
-    .glitch-mode h3,
-    .glitch-mode h4,
-    .glitch-mode h5,
-    .glitch-mode h6,
-    .glitch-mode p,
-    .glitch-mode span,
-    .glitch-mode a,
-    .glitch-mode button,
-    .glitch-mode .error-code,
-    .glitch-mode .error-message {
-      text-shadow: 1px 0 red, -1px 0 cyan;
-      transition: all 0.2s ease;
-    }
-
-    body.glitch-mode {
-      overflow: hidden;
-    }
-
-    .scanlines {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: repeating-linear-gradient(
-        to bottom,
-        rgba(255, 255, 255, 0.02),
-        rgba(255, 255, 255, 0.02) 2px,
-        transparent 2px,
-        transparent 4px
-      );
-      pointer-events: none;
-      z-index: 9999;
-      mix-blend-mode: overlay;
-    }
   </style>
 </head>
 <body>
-  <div id="gravity-wrapper">
-    <main class="error-container">
-      <!-- Hammer (FIXED: id added) -->
-      <div class="hammer" id="hammer">
-        <div class="hammer-head"></div>
-        <div class="hammer-claw"></div>
-        <div class="hammer-bolt"></div>
-        <div class="hammer-handle"></div>
-        <div class="hammer-grip"></div>
-      </div>
+  <div class="eye-container">
 
-      <!-- BONK Text -->
-      <div class="bonk-text" id="bonk">B0nkED!</div>
+    <div class="eye">
+      <div class="pupil"></div>
+      <div class="blood"></div>
+      
+    </div>
 
-      <!-- Split 404 digits -->
-      <div class="error-code">
-        <span class="digit zero" id="zero">4</span>
-        <span class="digit zero">0</span>
-        <span class="digit zero">4</span>
-      </div>
-
-      <div class="error-message">Oops. You wandered too far. This page doesn’t exist.</div>
-      <a href="/" class="error-btn">Take me back</a>
-    </main>
   </div>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const hammer = document.getElementById("hammer");
-      const zero = document.getElementById("zero");
-      const bonkText = document.getElementById("bonk");
-
-      if (!hammer || !zero || !bonkText) {
-        console.warn("Hammer, Zero, or Bonk element not found in DOM.");
-        return;
-      }
-
-      const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-
-      function playBonkSound() {
-        if (audioCtx.state === "suspended") audioCtx.resume();
-        const now = audioCtx.currentTime;
-
-        const baseOsc = audioCtx.createOscillator();
-        const baseGain = audioCtx.createGain();
-        baseOsc.type = "triangle";
-        baseOsc.frequency.setValueAtTime(80, now);
-        baseGain.gain.setValueAtTime(0.4, now);
-        baseGain.gain.exponentialRampToValueAtTime(0.01, now + 0.25);
-
-        const snapOsc = audioCtx.createOscillator();
-        const snapGain = audioCtx.createGain();
-        snapOsc.type = "square";
-        snapOsc.frequency.setValueAtTime(500 + Math.random() * 200, now);
-        snapGain.gain.setValueAtTime(0.2, now);
-        snapGain.gain.exponentialRampToValueAtTime(0.01, now + 0.08);
-
-        baseOsc.connect(baseGain).connect(audioCtx.destination);
-        snapOsc.connect(snapGain).connect(audioCtx.destination);
-
-        baseOsc.start(now); snapOsc.start(now);
-        baseOsc.stop(now + 0.25); snapOsc.stop(now + 0.1);
-      }
-
-      function doBonk() {
-        hammer.style.animation = "bonkSwing 0.75s ease-in-out forwards";
-        zero.classList.add("squish");
-        bonkText.classList.add("show");
-        playBonkSound();
-
-        setTimeout(() => {
-          hammer.style.animation = "";
-          zero.classList.remove("squish");
-          bonkText.classList.remove("show");
-        }, 750);
-      }
-
-      setInterval(doBonk, 2000);
-    });
-  </script>
+  <h1 class="glitch" data-text="I SEE U">I SEE U</h1>
+  <p class="message glitch" data-text="The eye sees you… you’re lost. Go back while you can.">The eye sees you… you’re lost. Go back while you can.</p>
+  <a class="back-btn" href="javascript:history.back()" data-text="RETURN">GO BACK</a>
 </body>
 </html>
