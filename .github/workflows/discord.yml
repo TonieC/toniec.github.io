@@ -3,7 +3,7 @@ name: Discord Notification
 on:
   push:
     branches:
-      - main   
+      - main
 
 jobs:
   notify-discord:
@@ -14,8 +14,8 @@ jobs:
         with:
           url: ${{ secrets.DISCORD_WEBHOOK }}
           method: POST
-          content-type: application/json
-          body: |
+          contentType: json
+          data: |
             {
               "username": "GitHub Bot",
               "avatar_url": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
