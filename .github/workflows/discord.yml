@@ -1,0 +1,23 @@
+name: Discord Notification
+
+on:
+  push:
+    branches:
+      - main   
+
+jobs:
+  notify-discord:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Discord Webhook
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: ${{ secrets.DISCORD_WEBHOOK }}
+          method: POST
+          content-type: application/json
+          body: |
+            {
+              "username": "GitHub Bot",
+              "avatar_url": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
+              "content": "New commit pushed to **${{ github.repository }}** by **${{ github.actor }}**: ${{ github.event.head_commit.message }}"
+            }
