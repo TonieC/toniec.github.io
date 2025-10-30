@@ -13,7 +13,9 @@ jobs:
   notify-discord:
     runs-on: ubuntu-latest
     steps:
-      - name: Send Discord Webhook
+      # Push Notification
+      - name: Send Push Notification
+        if: github.event_name == 'push'
         uses: fjogeleit/http-request-action@v1
         with:
           url: ${{ secrets.DISCORD_WEBHOOK }}
@@ -23,6 +25,32 @@ jobs:
             {
               "username": "GitHub Bot",
               "avatar_url": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
-              "content": "${{ github.event_name == 'push' && '**New Commit Pushed to ' }}${{ github.repository }}${{ github.event_name == 'push' && '**\n\n**Author:** ' }}${{ github.actor }}${{ github.event_name == 'push' && '\n**Branch:** ' }}${{ github.ref_name }}${{ github.event_name == 'push' && '\n**Commit Message:** ' }}${{ github.event.head_commit.message }}${{ github.event_name == 'push' && '\n**Commit URL:** ' }}${{ github.event.head_commit.url }}${{ github.event_name == 'push' && '\n**Files Added:** ' }}${{ join(github.event.head_commit.added, ', ') }}${{ github.event_name == 'push' && '\n**Files Modified:** ' }}${{ join(github.event.head_commit.modified, ', ') }}${{ github.event_name == 'push' && '\n**Files Removed:** ' }}${{ join(github.event.head_commit.removed, ', ') }}${{ github.event_name == 'push' && '\n\nPlease review the commit carefully and verify that all automated tests pass. Stay alert for follow-up commits that may depend on this update.' }}
-              
-            }
+              "content": "**New Commit Pushed to ${{ github.repository }}**\n\n**Author:** ${{ github.actor }}\n**Branch:** ${{ github.ref_name }}\n**Commit Message:** ${{ github.event.head_commit.message }}\n**Commit URL:** ${{ github.event.head_commit.url }}\n**Files Added:** ${{ join(github.event.head_commit.added, ', ') }}\n**Files Modified:** ${{ join(github.event.head_commit.modified, ', ') }}\n**Files Removed:** ${{ join(github.event.head_commit.removed, ', ') }}\n\nPlease review the commit carefully and verify that all automated tests pass. Stay alert for follow-up commits or PRs that may depend on this update."
+      
+      # Pull Request Notification
+      - name: Send Pull Request Notification
+        if: github.event_name == 'pull_request'
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: ${{ secrets.DISCORD_WEBHOOK }}
+          method: POST
+          contentType: application/json
+          data: |
+            {
+              "username": "GitHub Bot",
+              "avatar_url": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
+              "content": "**Pull Request ${{ github.event.action }}: ${{ github.event.pull_request.title }}**\n\n**Author:** ${{ github.event.pull_request.user.login }}\n**PR URL:** ${{ github.event.pull_request.html_url }}\n**Base Branch:** ${{ github.event.pull_request.base.ref }}\n**Head Branch:** ${{ github.event.pull_request.head.ref }}\n\n**Description:**\n${{ github.event.pull_request.body }}\n\nThis pull request contains proposed changes for review. Team members should check code quality, run tests locally if necessary, and leave comments or approve the PR accordingly. Merging this PR will integrate the requested features or fixes into the main branch."
+      
+      # Release Notification
+      - name: Send Release Notification
+        if: github.event_name == 'release'
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: ${{ secrets.DISCORD_WEBHOOK }}
+          method: POST
+          contentType: application/json
+          data: |
+            {
+              "username": "GitHub Bot",
+              "avatar_url": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
+              "content": "**New Release Published: ${{ github.event.release.tag_name }}**\n\n**Author:** ${{ github.event.release.author.login }}\n**Release Name:** ${{ github.event.release.name }}\n**Release URL:** ${{ github.event.release.html_url }}\n\n**Release Notes:**\n${{ github.event.release.body }}\n\nThis release includes all the latest updates, bug fixes, and features. Team members and users are encouraged to review the release notes and update their deployments accordingly."
