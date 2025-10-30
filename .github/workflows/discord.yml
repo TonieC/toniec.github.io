@@ -1,9 +1,13 @@
-name: Discord Notification
+name: Discord Notifications
 
 on:
   push:
     branches:
       - main
+  pull_request:
+    types: [opened, closed, merged]
+  release:
+    types: [published]
 
 jobs:
   notify-discord:
@@ -19,5 +23,31 @@ jobs:
             {
               "username": "GitHub Bot",
               "avatar_url": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
-              "content": "New commit pushed to **${{ github.repository }}** by **${{ github.actor }}**: ${{ github.event.head_commit.message }}"
-            }
+              "content": ${{ 
+                github.event_name == 'push' && format("📦 **New Commit Pushed to {0}**\n\n**Author:** {1}\n**Branch:** {2}\n**Commit Message:** {3}\n**Commit URL:** {4}\n\n**Files Changed:**\n{5}\n\nThis commit includes all recent changes made to the repository, ensuring the main branch stays up to date. Please review the changes carefully and verify that all automated tests pass.\n\n---\nStay alert for follow-up commits or PRs that may depend on this update.", 
+                  github.repository,
+                  github.actor,
+                  github.ref_name,
+                  github.event.head_commit.message,
+                  github.event.head_commit.url,
+                  join(github.event.head_commit.added, "\n") + join(github.event.head_commit.modified, "\n") + join(github.event.head_commit.removed, "\n")
+                ) ||
+
+                github.event_name == 'pull_request' && format("🔀 **Pull Request {0}: {1}**\n\n**Author:** {2}\n**PR URL:** {3}\n**Action:** {0}\n**Base Branch:** {4}\n**Head Branch:** {5}\n\n**Description:**\n{6}\n\nThis pull request contains the proposed changes for review. Team members should check code quality, run tests locally if necessary, and leave comments or approve the PR accordingly.\n\n---\nMerging this PR will integrate the requested features or fixes into the main branch.", 
+                  github.event.action,
+                  github.event.pull_request.title,
+                  github.event.pull_request.user.login,
+                  github.event.pull_request.html_url,
+                  github.event.pull_request.base.ref,
+                  github.event.pull_request.head.ref,
+                  github.event.pull_request.body
+                ) ||
+
+                github.event_name == 'release' && format("🏷️ **New Release Published: {0}**\n\n**Author:** {1}\n**Release Name:** {2}\n**Tag:** {0}\n**Release URL:** {3}\n\n**Release Notes:**\n{4}\n\nThis release includes all the latest updates, bug fixes, and features that have been merged into the repository. Team members and users are encouraged to review the release notes and update their deployments accordingly.\n\n---\nRemember to check for related pull requests or issues that may be affected by this release.", 
+                  github.event.release.tag_name,
+                  github.event.release.author.login,
+                  github.event.release.name,
+                  github.event.release.html_url,
+                  github.event.release.body
+                )
+              }}
