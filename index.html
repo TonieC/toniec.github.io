@@ -243,6 +243,11 @@ a { color:var(--accent); text-decoration:none; }
     /* hide scrollbars in modern browsers */
     html::-webkit-scrollbar { width: 0; height: 0; }
     body { scrollbar-width: none; -ms-overflow-style: none; }
+    .nav-links a.active {
+  color: #39ff14; 
+  transform: scale(1.2);
+  transition: all 0.3s ease;
+}
   </style>
 </head>
 <body>
@@ -267,119 +272,248 @@ a { color:var(--accent); text-decoration:none; }
         </div>
       </div>
 
-      <nav class="nav-links" aria-label="Primary">
-        <a href="#about" class="nav-icon" title="About"><i class="fas fa-user"></i></a>
-        <a href="#skills" class="nav-icon" title="Skills"><i class="fas fa-code"></i></a>
-        <a href="#projects" class="nav-icon" title="Projects"><i class="fas fa-folder-open"></i></a>
-        <a href="#experience" class="nav-icon" title="Experience"><i class="fas fa-briefcase"></i></a>
-        <a href="#contact" class="nav-icon" title="Contact"><i class="fas fa-envelope"></i></a>
-      </nav>
+<audio id="nav-sound" src="images/navclick.mp3" preload="auto"></audio>
+
+<nav class="nav-links" aria-label="Primary">
+  <a href="#about" class="nav-icon" title="About"><i class="fas fa-user"></i></a>
+  <a href="#skills" class="nav-icon" title="Skills"><i class="fas fa-code"></i></a>
+  <a href="#projects" class="nav-icon" title="Projects"><i class="fas fa-folder-open"></i></a>
+  <a href="#experience" class="nav-icon" title="Experience"><i class="fas fa-briefcase"></i></a>
+  <a href="#contact" class="nav-icon" title="Contact"><i class="fas fa-envelope"></i></a>
+</nav>
+
+<script>
+  const navSound = document.getElementById('nav-sound');
+  document.querySelectorAll('.nav-icon').forEach(link => {
+    link.addEventListener('click', (e) => {
+      // Play sound
+      navSound.currentTime = 0;
+      navSound.play();
+
+      // Delay the default anchor navigation slightly to allow the sound to play
+      const target = link.getAttribute('href');
+      if(target.startsWith('#')) {
+        e.preventDefault();
+        setTimeout(() => {
+          document.querySelector(target).scrollIntoView({ behavior: 'smooth' });
+        }, 100); // delay in ms
+      }
+    });
+  });
+</script>
+
     </div>
   </header>
+<script>
+  const sections = document.querySelectorAll("section");
+  const navLinks = document.querySelectorAll(".nav-links a");
 
-  <!-- HERO -->
-  <main class="hero" role="main" id="home">
-    <div class="wrap">
-      <div class="glass reveal parallax" data-speed="0.06">
-        <div class="hero-left" style="display:flex;flex-direction:column;align-items:center;gap:18px">
-          <!-- swap with your actual photo -->
-          <img src="images/images1.png" alt="Tonie photo" class="profile-img parallax" data-speed="0.12" />
-          <div class="hero-actions">
-            <a href="#contact" class="btn-primary">Hire me</a>
-            <a href="#projects" class="btn-ghost">View projects</a>
-          </div>
-        </div>
+  window.addEventListener("scroll", () => {
+    let currentSection = "";
+    
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop - 100; // offset for better trigger
+      const sectionHeight = section.offsetHeight;
+      if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+        currentSection = section.getAttribute("id");
+      }
+    });
 
-        <div class="hero-meta">
-          <div class="name">Tonie C.</div>
-          <div class="type-cinematic"><span id="cinematic-line" class="cinematic">Building clean interfaces & practical tools.</span></div>
-         <p class="lead" style="margin-top:12px">
-Hello, I’m Tonie. I specialize in front-end development, building user interfaces that are clear, responsive, and easy to use. I enjoy translating ideas into interactive designs, solving layout challenges, and ensuring that every application is both functional and user-friendly.
-</p>
+    navLinks.forEach(link => {
+      link.classList.remove("active");
+      if (link.getAttribute("href") === "#" + currentSection) {
+        link.classList.add("active");
+      }
+    });
+  });
+</script>
 
-             <p class="lead" style="margin-top:10px; font-size:0.80rem; color:#7a7a7a;">Quick links:</p>
+<main class="hero" role="main" id="home">
+  <div class="wrap" style="position: relative;">
+    <!-- Spinning circular text -->
+    <div class="circle-text-wrapper" style="width: 450px; height: 450px; margin: 50px auto; position: relative;">
+      <svg width="450" height="450" viewBox="0 0 400 400">
+        <defs>
+          <path id="circlePath" d="M200,200 m-180,0 a180,180 0 1,0 360,0 a180,180 0 1,0 -360,0" />
+        </defs>
+        <g class="spin">
+          <text>
+            <textPath href="#circlePath" startOffset="0%">
+              Tonie C. • Front-End Dev • React • HTML • CSS • JavaScript • Responsive Design • UI/UX •
+            </textPath>
+          </text>
+        </g>
+      </svg>
 
-
-          <div style="margin-top:14px;color:var(--muted);font-size:13px;display:flex;gap:10px;flex-wrap:wrap;align-items:center">
-            <!-- Social row -->
-            <div class="social-row" aria-label="Social links" style="display:flex;gap:10px;">
-              <a class="social-btn" href="https://github.com/TonieC" target="_blank" rel="noopener" aria-label="GitHub" style="display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:10px;background:rgba(20,16,14,0.8);border:1px solid rgba(255,230,200,0.04);color:var(--text);font-weight:700;">
-                <img class="icon" src="https://cdn.jsdelivr.net/npm/simple-icons@v8/icons/github.svg" alt="" style="width:18px;height:18px;filter:invert(1) hue-rotate(10deg) saturate(.9) brightness(.9)">
-                <span style="font-size:13px">GitHub</span>
-              </a>
-
-              <a class="social-btn" href="https://www.facebook.com/0tonie" target="_blank" rel="noopener" aria-label="Facebook" style="display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:10px;background:rgba(20,16,14,0.8);border:1px solid rgba(255,230,200,0.04);color:var(--text);font-weight:700;">
-                <img class="icon" src="https://cdn.jsdelivr.net/npm/simple-icons@v8/icons/facebook.svg" alt="" style="width:18px;height:18px;filter:invert(1)">
-                <span style="font-size:13px">Facebook</span>
-              </a>
-
-              <button id="discordCopy" class="social-btn" aria-label="Copy Discord username" title="Click to copy Discord username" style="display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:10px;background:rgba(20,16,14,0.8);border:1px solid rgba(255,230,200,0.04);color:var(--text);font-weight:700;">
-                <img class="icon" src="https://cdn.jsdelivr.net/npm/simple-icons@v8/icons/discord.svg" alt="" style="width:18px;height:18px;filter:invert(1)">
-                <span style="font-size:13px">Discord</span>
-              </button>
-            </div>
-          </div>
-
-        </div>
-      </div>
+      <!-- Hover button -->
+      <a href="#about" class="circle-hover-btn">
+  <img src="images/viewmore.gif" alt="View More" style="width:200px; height:200px;" />
+  <span style="color:#fafffa; font-weight:700; margin-top:8px; font-size:1rem;">View More</span>
+</a>
     </div>
-  </main>
+  </div>
+
+  <!-- Audio element -->
+  <audio id="hoverSound" src="images/introhover.mp3" preload="auto"></audio>
+</main>
+
+<script>
+  const wrapper = document.querySelector('.circle-text-wrapper');
+  const audio = document.getElementById('hoverSound');
+
+  wrapper.addEventListener('mouseenter', () => {
+    audio.currentTime = 0; // restart the sound
+    audio.play();
+  });
+
+  wrapper.addEventListener('mouseleave', () => {
+    audio.pause();
+    audio.currentTime = 0;
+  });
+</script>
+
+
+<style>
+/* Spinning animation */
+.spin {
+  transform-origin: 50% 50%;
+  animation: spin 12s linear infinite;
+}
+
+.circle-text-wrapper svg text {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-size: 26px;
+  font-weight: 600;
+  fill: #39ff14;
+  letter-spacing: 1px;
+}
+
+/* Hover button */
+.circle-hover-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+}
+
+.circle-hover-btn img {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 5px;
+}
+
+/* Show button on hover */
+.circle-text-wrapper:hover .circle-hover-btn {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+</style>
+
+
 
   <!-- ABOUT -->
-  <section id="about" class="panel wrap reveal tilt" aria-labelledby="about-heading">
-    <div class="heading"><h2 id="about-heading">About Me</h2></div>
-    <p class="lead">I'm <strong>Tonie</strong>, an 18-year-old programmer from the Philippines studying ICT (Computer Programming). I create web interfaces, microcontroller projects, and practical tools that solve real problems.</p>
+ <section id="about" class="panel wrap reveal tilt" aria-labelledby="about-heading">
+  <header class="about-header">
+    <h2 id="about-heading">About Me</h2>
+   <p class="lead">
+  I'm <strong>Tonie</strong>, an 18-year-old programmer from the Philippines currently surviving ICT, which stands for Computer Programming but often feels like a full-time adventure in debugging. I spend my days building web interfaces that don’t make users cry, tinkering with microcontrollers until they do what I want, and creating practical tools that actually solve real problems instead of just looking cool. I like learning new tricks, breaking things to understand how they work, and occasionally pretending that my code knows what it’s doing. If you ever need something designed, coded, or magically made to work, I am your person.
+</p>
 
-    <div style="margin-top:18px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px">
-      <div>
-        <h3 style="margin:0 0 8px 0;color:var(--text)">What I Do</h3>
-        <ul style="color:var(--muted);padding-left:18px;margin-top:6px">
-          <li>Front-End development (HTML, CSS, JavaScript)</li>
-          <li>Microcontrollers & IoT (Arduino, ESP32)</li>
-          <li>Designing practical UIs and tools</li>
-        </ul>
-      </div>
+  </header>
 
-      <div>
-        <h3 style="margin:0 0 8px 0;color:var(--text)">How I Work</h3>
-        <ul style="color:var(--muted);padding-left:18px;margin-top:6px">
-          <li>Readable, accessible, performant code</li>
-          <li>Iterate: prototype → test → ship</li>
-          <li>Prefer small wins & measurable outcomes</li>
-        </ul>
-      </div>
+  <div class="about-grid" style="margin-top:24px; display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:20px;">
 
-      <div>
-        <h3 style="margin:0 0 8px 0;color:var(--text)">Interests</h3>
-        <ul style="color:var(--muted);padding-left:18px;margin-top:6px">
-          <li>Website developments</li>
-          <li>Open-source contributions</li>
-          <li>Learning new web and embedded tech</li>
-        </ul>
-      </div>
+  <div class="about-item">
+    <h3>What I Do</h3>
+    <ul>
+      <li>Build web pages that actually look good and don’t make users cry</li>
+      <li>Tinker with microcontrollers and IoT gadgets until they do my bidding (Arduino, ESP32, you name it)</li>
+      <li>Design UIs and tools that are useful, not just flashy</li>
+    </ul>
+  </div>
 
-      <div>
-        <h3 style="margin:0 0 8px 0;color:var(--text)">Goals</h3>
-        <ul style="color:var(--muted);padding-left:18px;margin-top:6px">
-          <li>Ship useful products</li>
-          <li>Grow as a reliable full-stack dev</li>
-          <li>Contribute to community projects</li>
-        </ul>
-      </div>
-    </div>
-  </section>
+  <div class="about-item">
+    <h3>How I Work</h3>
+    <ul>
+      <li>Write code that is readable, accessible, and doesn’t secretly hate me</li>
+      <li>Follow the sacred cycle: prototype, test, ship, repeat</li>
+      <li>Focus on small wins and things you can actually measure</li>
+    </ul>
+  </div>
 
-  <!-- SKILLS -->
-<section id="skills" class="panel wrap reveal" aria-labelledby="skills-heading">
-  <div class="heading"><h2 id="skills-heading">Skills & Tools</h2></div>
+  <div class="about-item">
+    <h3>Interests</h3>
+    <ul>
+      <li>Building websites and experimenting with new tech</li>
+      <li>Contributing to open-source projects because sharing is caring</li>
+      <li>Learning all the cool new stuff in web and embedded development</li>
+    </ul>
+  </div>
 
-  <div class="grid responsive" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px">
+  <div class="about-item">
+    <h3>Goals</h3>
+    <ul>
+      <li>Create products that people actually find useful</li>
+      <li>Grow into a full-stack developer people can rely on</li>
+      <li>Give back to the programming community in any way I can</li>
+    </ul>
+  </div>
+
+</div>
+
+</section>
+
+<style>
+  #about {
+    color: var(--text);
+  }
+
+  .about-header h2 {
+    margin-bottom: 12px;
+  }
+
+  .about-header .lead {
+    color: var(--muted);
+    margin-top: 8px;
+  }
+
+  .about-item h3 {
+    margin-bottom: 8px;
+    color: var(--text);
+  }
+
+  .about-item ul {
+    color: var(--muted);
+    padding-left: 18px;
+    margin-top: 6px;
+  }
+</style>
+
+
+  <section id="skills" class="panel wrap reveal" aria-labelledby="skills-heading">
+  <div class="heading">
+    <h2 id="skills-heading">Skills & Tools</h2>
+  </div>
+
+  <div class="grid responsive" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px; margin-top:16px;">
 
     <div class="skill-card">
       <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript" style="width:36px;height:36px">
       <div>
         <div style="font-weight:700">JavaScript</div>
-        <div style="color:var(--muted);font-size:13px">ES6+, DOM, Fetch</div>
+        <div style="color:var(--muted);font-size:13px">ES6+, DOM wizardry, Fetch magic, and occasionally convincing the browser to behave</div>
       </div>
     </div>
 
@@ -387,7 +521,7 @@ Hello, I’m Tonie. I specialize in front-end development, building user interfa
       <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5" style="width:36px;height:36px">
       <div>
         <div style="font-weight:700">HTML5</div>
-        <div style="color:var(--muted);font-size:13px">Semantic markup & accessibility</div>
+        <div style="color:var(--muted);font-size:13px">Semantic markup that keeps screen readers happy and browsers content</div>
       </div>
     </div>
 
@@ -395,7 +529,7 @@ Hello, I’m Tonie. I specialize in front-end development, building user interfa
       <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3" style="width:36px;height:36px">
       <div>
         <div style="font-weight:700">CSS</div>
-        <div style="color:var(--muted);font-size:13px">Layout, animations, responsive</div>
+        <div style="color:var(--muted);font-size:13px">Layouts, animations, responsive design, and occasional pixel-perfect obsession</div>
       </div>
     </div>
 
@@ -403,7 +537,7 @@ Hello, I’m Tonie. I specialize in front-end development, building user interfa
       <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" style="width:36px;height:36px">
       <div>
         <div style="font-weight:700">Python</div>
-        <div style="color:var(--muted);font-size:13px">Scripting & prototypes</div>
+        <div style="color:var(--muted);font-size:13px">Scripting, automating tasks, and prototyping things faster than coffee consumption</div>
       </div>
     </div>
 
@@ -411,7 +545,7 @@ Hello, I’m Tonie. I specialize in front-end development, building user interfa
       <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg" alt="C" style="width:36px;height:36px">
       <div>
         <div style="font-weight:700">C</div>
-        <div style="color:var(--muted);font-size:13px">Low-level programming & algorithms</div>
+        <div style="color:var(--muted);font-size:13px">Low-level programming, algorithms, and feeling like a wizard controlling memory</div>
       </div>
     </div>
 
@@ -419,7 +553,7 @@ Hello, I’m Tonie. I specialize in front-end development, building user interfa
       <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" alt="C++" style="width:36px;height:36px">
       <div>
         <div style="font-weight:700">C++</div>
-        <div style="color:var(--muted);font-size:13px">OOP, STL, and system programming</div>
+        <div style="color:var(--muted);font-size:13px">OOP, STL, and occasionally yelling at memory management</div>
       </div>
     </div>
 
@@ -427,7 +561,7 @@ Hello, I’m Tonie. I specialize in front-end development, building user interfa
       <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" alt="Linux" style="width:36px;height:36px">
       <div>
         <div style="font-weight:700">Linux</div>
-        <div style="color:var(--muted);font-size:13px">Command line, shell scripting, environment setup</div>
+        <div style="color:var(--muted);font-size:13px">Command line sorcery, shell scripting, and managing environments without tears</div>
       </div>
     </div>
 
@@ -435,7 +569,7 @@ Hello, I’m Tonie. I specialize in front-end development, building user interfa
       <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/arduino/arduino-original.svg" alt="Arduino" style="width:36px;height:36px">
       <div>
         <div style="font-weight:700">Arduino / ESP</div>
-        <div style="color:var(--muted);font-size:13px">Microcontroller projects</div>
+        <div style="color:var(--muted);font-size:13px">Making microcontrollers do cool stuff and gadgets that actually work</div>
       </div>
     </div>
 
@@ -443,14 +577,17 @@ Hello, I’m Tonie. I specialize in front-end development, building user interfa
       <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git" style="width:36px;height:36px">
       <div>
         <div style="font-weight:700">Git</div>
-        <div style="color:var(--muted);font-size:13px">Version control & workflows</div>
+        <div style="color:var(--muted);font-size:13px">Version control, branching chaos, and workflow survival skills</div>
       </div>
     </div>
 
   </div>
 
-  <small style="display:block;margin-top:12px;color:var(--muted)">This reflects familiarity and projects, not formal employment unless stated.</small>
+  <small style="display:block; margin-top:12px; color:var(--muted)">
+    These are the tools and skills I actually use in real projects. Not all are from formal employment unless stated.
+  </small>
 </section>
+
 
 
   <!-- PROJECTS -->
@@ -497,51 +634,70 @@ Hello, I’m Tonie. I specialize in front-end development, building user interfa
     </div>
   </section>
 
-  <!-- EXPERIENCE -->
-  <section id="experience" class="panel wrap reveal" aria-labelledby="exp-heading">
-    <div class="heading"><h2 id="exp-heading">Experience & Education</h2></div>
+ <!-- EXPERIENCE -->
+<section id="experience" class="panel wrap reveal" aria-labelledby="exp-heading">
+  <div class="heading">
+    <h2 id="exp-heading">Experience & Education</h2>
+  </div>
 
-    <div class="timeline" style="margin-top:12px">
-      <div class="timeline-item">
-        <div class="node" aria-hidden="true"></div>
-        <h3 style="margin:0;color:var(--text);font-size:16px">Robotics Team President <span style="color:var(--muted);font-size:13px;margin-left:8px">(2024–2025)</span></h3>
-        <p style="color:var(--muted);margin-top:6px"><strong>Camarin High School</strong> — Led the robotics team; coordinated builds, code, and procurement.</p>
-      </div>
+  <div class="timeline" style="margin-top:12px">
 
-      <div class="timeline-item">
-        <div class="node" aria-hidden="true"></div>
-        <h3 style="margin:0;color:var(--text);font-size:16px">ICT Club President <span style="color:var(--muted);font-size:13px;margin-left:8px">(2024–2025)</span></h3>
-        <p style="color:var(--muted);margin-top:6px"><strong>Camarin High School</strong> — Ran workshops and sessions for club members.</p>
-      </div>
-
-      <div class="timeline-item">
-        <div class="node" aria-hidden="true"></div>
-        <h3 style="margin:0;color:var(--text);font-size:16px">Layout Designer — The Icon (DSPC) <span style="color:var(--muted);font-size:13px;margin-left:8px">(2024–2025)</span></h3>
-        <p style="color:var(--muted);margin-top:6px"><strong>Camarin High School</strong> — Designed digital spreads for publication.</p>
-      </div>
-
-      <div class="timeline-item">
-        <div class="node" aria-hidden="true"></div>
-        <h3 style="margin:0;color:var(--text);font-size:16px">Education</h3>
-        <p style="color:var(--muted);margin-top:6px"><strong>2025 – Present</strong> — Grade 11 ICT (Computer Programming), Metro Manila College.</p>
-      </div>
+    <div class="timeline-item">
+      <div class="node" aria-hidden="true"></div>
+      <h3 style="margin:0;color:var(--text);font-size:16px">
+        Robotics Team President 
+        <span style="color:var(--muted);font-size:13px;margin-left:8px">(2024–2025)</span>
+      </h3>
+      <p style="color:var(--muted);margin-top:6px">
+        <strong>Camarin High School</strong> — I led the robotics squad, coordinated builds, managed code, and made sure nothing exploded… mostly.
+      </p>
     </div>
-  </section>
+
+    <div class="timeline-item">
+      <div class="node" aria-hidden="true"></div>
+      <h3 style="margin:0;color:var(--text);font-size:16px">
+        ICT Club President 
+        <span style="color:var(--muted);font-size:13px;margin-left:8px">(2024–2025)</span>
+      </h3>
+      <p style="color:var(--muted);margin-top:6px">
+        <strong>Camarin High School</strong> — Ran workshops and sessions for curious coders and tech explorers.
+      </p>
+    </div>
+
+    <div class="timeline-item">
+      <div class="node" aria-hidden="true"></div>
+      <h3 style="margin:0;color:var(--text);font-size:16px">
+        Layout Designer — The Icon (DSPC) 
+        <span style="color:var(--muted);font-size:13px;margin-left:8px">(2024–2025)</span>
+      </h3>
+      <p style="color:var(--muted);margin-top:6px">
+        <strong>Camarin High School</strong> — Crafted digital spreads and layouts for our publication without breaking Photoshop (mostly).
+      </p>
+    </div>
+
+    <div class="timeline-item">
+      <div class="node" aria-hidden="true"></div>
+      <h3 style="margin:0;color:var(--text);font-size:16px">Education</h3>
+      <p style="color:var(--muted);margin-top:6px">
+        <strong>2025 – Present</strong> — Grade 11 ICT (Computer Programming) at Metro Manila College. Learning, coding, and surviving high school one class at a time.
+      </p>
+    </div>
+
+  </div>
+</section>
+
 
   <!-- CONTACT -->
   <section id="contact" class="wrap reveal" aria-labelledby="contact-heading">
-
-    <div class="contact-cta">
-      <h3>Let's work together</h3>
-      <p>I'm available for internships, junior roles, or small contract work. Email me and I’ll reply as soon as I can.</p>
-      <div style="margin-top:12px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
-        <a class="btn-primary" href="mailto:cadizal06@gmail.com">Email: cadizal06@gmail.com</a>
-        <a class="btn-ghost" href="/resume" style="align-self:center">Resume</a>
-      </div>
-    </div>
-    <div class="heading" style="text-align: center;">
-  <h2 id="contact-heading">Contact Form</h2>
+<div class="contact-cta">
+  <h3>Let's team up!</h3>
+  <p>Whether it’s an internship, a junior developer role, or a small project that needs a little magic, I’m your guy. Shoot me an email and I’ll get back to you faster than I can debug a broken loop.</p>
+  <div style="margin-top:12px; display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+    <a class="btn-primary" href="mailto:cadizal06@gmail.com">Email me: cadizal06@gmail.com</a>
+  </div>
 </div>
+
+    </div>
     <div style="margin-top:10px" class="wrap">
       <form id="contactForm" style="max-width:680px;margin:18px auto 0;display:flex;flex-direction:column;gap:10px">
         <label style="color:var(--muted);font-weight:600">Name</label>
@@ -784,10 +940,10 @@ Hello, I’m Tonie. I specialize in front-end development, building user interfa
 
       // show one immediately, then interval
       createNote();
-      setInterval(createNote, Math.random()*30000 + 30000);
+      setInterval(createNote, Math.random()*150000 + 150000); // 2.5 to 5 minutes
     })();
 
-    /* ---------- Social copy (Discord) ---------- */
+    /* ---------- Social copy (Discord) ---------- */ 
     (function setupDiscordCopy() {
       const btn = document.getElementById('discordCopy');
       const toast = document.getElementById('socialToast');
@@ -995,6 +1151,53 @@ if (distMouse < repelRadius) {
 animate();
 </script>
 
+<!-- Background music -->
+<audio id="bg-music" src="images/perfect-beauty-191271.mp3" loop preload="auto"></audio>
+
+<!-- Music toggle button (icon only) -->
+<button id="music-toggle" style="
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 999;
+  background: rgba(28,28,28,0.9);
+  padding: 8px;
+  border-radius: 50%;
+  font-size: 18px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+">
+  🔊
+</button>
+
+<script>
+  const music = document.getElementById('bg-music');
+  music.volume = 0.3;
+  const toggleBtn = document.getElementById('music-toggle');
+  let isPlaying = false;
+
+  toggleBtn.addEventListener('click', () => {
+    if (isPlaying) {
+      music.pause();
+      toggleBtn.textContent = '🔇'; // mute icon
+    } else {
+      music.play().catch(() => {
+        alert('Click anywhere on the page to enable audio.');
+      });
+      toggleBtn.textContent = '🔊'; // sound on icon
+    }
+    isPlaying = !isPlaying;
+  });
+
+  // Hover glow effect
+  toggleBtn.addEventListener('mouseenter', () => {
+    toggleBtn.style.boxShadow = '0 0 20px rgba(57, 255, 20, 0.7)';
+  });
+  toggleBtn.addEventListener('mouseleave', () => {
+    toggleBtn.style.boxShadow = '2px 2px 8px rgba(0,0,0,0.5)';
+  });
+</script>
 
 </body>
 </html>
