@@ -261,7 +261,6 @@ a { color:var(--accent); text-decoration:none; }
   <header class="site-header" role="banner">
     <div class="nav-inner" role="navigation" aria-label="Main navigation">
       <div class="brand" aria-hidden="true">
-        <div class="logo">TC</div>
         <div>
           <div class="title">Tonie C.</div>
           <div class="subtitle">Front-End Dev</div>
@@ -294,7 +293,7 @@ a { color:var(--accent); text-decoration:none; }
         <div class="hero-meta">
           <div class="name">Tonie C.</div>
           <div class="type-cinematic"><span id="cinematic-line" class="cinematic">Building clean interfaces & practical tools.</span></div>
-          <p class="lead" style="margin-top:12px">I design and build small, pragmatic products — from front-end interfaces to microcontroller tools. I focus on clarity, performance, and shipping useful things fast.</p>
+          <p class="lead" style="margin-top:12px">I design and build small, pragmatic products from front-end interfaces to microcontroller tools. I focus on clarity, performance, and shipping useful things fast.</p>
 
           <div style="margin-top:14px;color:var(--muted);font-size:13px;display:flex;gap:10px;flex-wrap:wrap;align-items:center">
             <!-- Social row -->
@@ -348,7 +347,7 @@ a { color:var(--accent); text-decoration:none; }
       <div>
         <h3 style="margin:0 0 8px 0;color:var(--text)">Interests</h3>
         <ul style="color:var(--muted);padding-left:18px;margin-top:6px">
-          <li>Hardware tinkering & robotics</li>
+          <li>Website developments</li>
           <li>Open-source contributions</li>
           <li>Learning new web and embedded tech</li>
         </ul>
@@ -419,7 +418,7 @@ a { color:var(--accent); text-decoration:none; }
       </div>
     </div>
 
-    <small style="display:block;margin-top:12px;color:var(--muted)">This reflects familiarity and projects — not formal employment details unless stated.</small>
+    <small style="display:block;margin-top:12px;color:var(--muted)">This reflects familiarity and projects not formal employment details unless stated.</small>
   </section>
 
   <!-- PROJECTS -->
@@ -536,13 +535,13 @@ a { color:var(--accent); text-decoration:none; }
   <footer class="site-foot" style="z-index:20">
     <div class="wrap" style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
       <div style="color:var(--muted)">© <span id="year"></span> Tonie C.</div>
-      <div style="color:var(--muted)"><small>Built with love ✨</small></div>
+      <div style="color:var(--muted)"><small>hire me pls</small></div>
     </div>
   </footer>
 
   <!-- notification container -->
   <div id="notification-container" style="position:fixed;bottom:16px;right:16px;display:flex;flex-direction:column;gap:12px;z-index:9999;"></div>
-  <audio id="notif-sound" src="https://actions.google.com/sounds/v1/cartoon/clang_and_wobble.ogg" preload="auto"></audio>
+<audio id="notif-sound" src="/images/new-notification-022-370046.mp3" preload="auto"></audio>
   <div id="socialToast" class="social-toast" role="status" aria-live="polite">Copied to clipboard</div>
 
   <script>
@@ -568,7 +567,7 @@ a { color:var(--accent); text-decoration:none; }
     // cinematic typing line
     (function cinematicType() {
       const el = document.getElementById('cinematic-line');
-      const text = "Front-End Developer • Hardware Tinkerer • Code Hobbyist";
+      const text = "Front-End Developer";
       const delayChar = 26;
       const delayStart = 260;
       if (!el) return;
@@ -751,7 +750,7 @@ a { color:var(--accent); text-decoration:none; }
 
       // show one immediately, then interval
       createNote();
-      setInterval(createNote, Math.random()*60000 + 80000);
+      setInterval(createNote, Math.random()*30000 + 30000);
     })();
 
     /* ---------- Social copy (Discord) ---------- */
@@ -856,7 +855,7 @@ function makeParticle() {
 }
 
 // Generate particles (more dense network)
-for (let i = 0; i < 180; i++) {
+for (let i = 0; i < 100; i++) {
   particles.push(makeParticle());
 }
 
