@@ -407,13 +407,18 @@ setTimeout(() => {
   // Show press-any-key message
   startMessage.style.display = 'block';
 
-  // Wait for key press to fully hide loader
-  document.addEventListener('keydown', () => {
+  const hideLoader = () => {
     const loader = document.getElementById('loader');
     loader.style.opacity = '0';
     loader.addEventListener('transitionend', () => loader.style.display = 'none', { once: true });
-  }, { once: true });
+  };
 
+  // Listen for key press (desktop)
+  document.addEventListener('keydown', hideLoader, { once: true });
+
+  // Listen for tap/click (mobile and desktop)
+  document.addEventListener('touchstart', hideLoader, { once: true });
+  document.addEventListener('click', hideLoader, { once: true });
 }, totalTime);
 </script>
 
