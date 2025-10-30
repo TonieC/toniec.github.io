@@ -14,7 +14,7 @@ jobs:
         with:
           url: ${{ secrets.DISCORD_WEBHOOK }}
           method: POST
-          contentType: json
+          contentType: application/json
           data: |
             {
               "username": "GitHub Bot",
