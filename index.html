@@ -230,12 +230,69 @@ a { color:var(--accent); text-decoration:none; }
       outline: 3px solid rgba(255,179,71,0.12); outline-offset: 3px; border-radius:8px;
     }
 
-    /* small helper styles used by JS notifications */
-    .windows-notif { display:flex; justify-content:space-between; align-items:center; min-width:260px; max-width:320px; background:#fff7ee; border:1px solid rgba(0,0,0,0.08); border-radius:8px; box-shadow:0 8px 30px rgba(2,6,23,0.18); padding:10px 12px; font-family:Segoe UI, Roboto, sans-serif; color:#2b1708; cursor:default; opacity:0; transform:translateX(100%); transition:all .4s ease; }
-    .windows-notif.show { opacity:1; transform:translateX(0); }
-    .windows-notif img { width:32px; height:32px; border-radius:50%; }
-    .windows-notif .notif-close { border: none; background: transparent; font-size:16px; font-weight:700; color:#6b3b17; cursor:pointer; }
+  /* Windows 10 style toast notifications */
+.windows-notif {
+  width: 220px;
+  background: rgba(243, 243, 243, 0.95); /* slightly transparent */
+  border-left: 4px solid #39ff14;        /* neon accent */
+  padding: 8px 10px;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  opacity: 0;
+  transform: translateX(120%);           /* slide in from right */
+  transition: transform 0.4s ease, opacity 0.4s ease;
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  font-size: 13px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
 
+.windows-notif.show {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.windows-notif .notif-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.windows-notif img {
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+}
+
+.windows-notif .notif-text {
+  color: #2b1708;
+  font-weight: 600;
+  line-height: 1.2;
+  word-break: break-word;
+}
+
+.windows-notif .notif-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+.notif-close, .notif-contact {
+  background: #39ff14;
+  border: none;
+  color: #121212;
+  font-weight: bold;
+  padding: 3px 7px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 11px;
+  transition: 0.2s;
+}
+
+.notif-close:hover, .notif-contact:hover {
+  background: #7aff57;
+}
     /* social toast */
     .social-toast { position: fixed; right: 18px; bottom: 18px; background: #14100E; color: var(--accent); border-radius:10px; padding:10px 14px; font-weight:700; box-shadow: 0 12px 40px rgba(2,6,23,0.6); transform: translateY(8px); opacity:0; transition: opacity .22s ease, transform .22s ease; z-index:9999; pointer-events:none; }
     .social-toast.show { opacity:1; transform: translateY(0); pointer-events:auto; }
@@ -251,6 +308,117 @@ a { color:var(--accent); text-decoration:none; }
   </style>
 </head>
 <body>
+  <!-- Loading Screen -->
+<div id="loader">
+  <div id="codeContainer"></div>
+  <div class="circle-fade" id="circleFade"></div>
+  <div id="startMessage" style="color:#39ff14; font-family:'Courier New', monospace; margin-top:10px; display:none;">
+    Press any key to continue...
+  </div>
+</div>
+
+<style>
+#loader {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: #121212;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  z-index: 9999;
+  transition: opacity 1s ease;
+}
+#codeContainer {
+  z-index: 10000;
+  font-family: 'Courier New', monospace;
+  font-size: 16px;
+  line-height: 1.5;
+}
+.code-line span.keyword { color: #39ff14; }
+.code-line span.string { color: #CE9178; }
+.code-line span.number { color: #B5CEA8; }
+.code-line span.comment { color: #6A9955; }
+.circle-fade {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: #121212;
+  top: 0;
+  left: 0;
+  opacity: 1;
+  transform: scale(2);
+  transition: opacity 1s ease, transform 1s ease;
+}
+</style>
+
+<script>
+const codeLines = [
+  "const websiteName = 'TonieC Portfolio';",
+  "let purpose = 'Showcase programming projects and skills';",
+  "function loadFeatures() { return ['Projects', 'About', 'Contact', 'Blog']; }",
+  "console.log('Loading portfolio components...');",
+  "for(let i=0;i<loadFeatures().length;i++){console.log(loadFeatures()[i]);}",
+  "document.querySelector('#app');",
+  "// Loading: 0%"
+];
+
+const container = document.getElementById('codeContainer');
+const startMessage = document.getElementById('startMessage');
+
+function highlightJS(line){
+  return line
+    .replace(/(const|let|function|for|return)/g, '<span class="keyword">$1</span>')
+    .replace(/('[^']*'|`[^`]*`)/g, '<span class="string">$1</span>')
+    .replace(/\b(\d+)\b/g, '<span class="number">$1</span>')
+    .replace(/(\/\/.*)/g, '<span class="comment">$1</span>');
+}
+
+// Render code lines immediately
+codeLines.forEach(line => {
+  const div = document.createElement('div');
+  div.classList.add('code-line');
+  div.innerHTML = highlightJS(line);
+  container.appendChild(div);
+});
+
+// Dynamic loading percentage
+const lastLine = container.lastChild;
+let progress = 0;
+const interval = 50;
+const totalTime = 5000;
+const step = Math.ceil(100 / (totalTime / interval));
+
+const timer = setInterval(() => {
+  progress += step;
+  if(progress > 100) progress = 100;
+  lastLine.innerHTML = highlightJS(`// Loading: ${progress}%`);
+  if(progress >= 100) clearInterval(timer);
+}, interval);
+
+// After loading finishes
+setTimeout(() => {
+  const circle = document.getElementById('circleFade');
+  circle.style.transform = "scale(0)";
+  circle.style.opacity = "0";
+
+  // Show press-any-key message
+  startMessage.style.display = 'block';
+
+  // Wait for key press to fully hide loader
+  document.addEventListener('keydown', () => {
+    const loader = document.getElementById('loader');
+    loader.style.opacity = '0';
+    loader.addEventListener('transitionend', () => loader.style.display = 'none', { once: true });
+  }, { once: true });
+
+}, totalTime);
+</script>
+
+
+
   <canvas id="web-bg"></canvas>
 
   <!-- ambient background -->
@@ -908,40 +1076,58 @@ a { color:var(--accent); text-decoration:none; }
       window.addEventListener('keydown', handleFirstTab);
     })();
 
-    /* ---------- Notifications (Windows style) ---------- */
-    const messages = [
-      "Convinced yet? Hire me now!",
-      "Looking for a developer? I'm available!",
-      "Your next project deserves me!",
-      "Want quality code? Hire me today!"
-    ];
+    /* ---------- Notifications---------- */
+const messages = [
+  "Convinced yet? Hire me now!",
+  "Looking for a developer? I'm available!",
+  "Your next project deserves me!",
+  "Want quality code? Hire me today!"
+];
 
-    (function showNotifications() {
-      const container = document.getElementById('notification-container');
-      function createNote() {
-        const notif = document.createElement('div');
-        notif.className = 'windows-notif';
-        notif.innerHTML = `
-          <div style="display:flex;align-items:center;gap:8px">
-            <img src="images/images1.png" alt="Me">
-            <div style="font-size:13px;font-weight:700;color:#2b1708">${messages[Math.floor(Math.random()*messages.length)]}</div>
-          </div>
-          <button class="notif-close" aria-label="Close">×</button>
-        `;
-        container.appendChild(notif);
-        // show
-        requestAnimationFrame(()=> notif.classList.add('show'));
-        // sound
-        document.getElementById('notif-sound').play().catch(()=>{});
-        // close logic
-        notif.querySelector('.notif-close').addEventListener('click', () => notif.remove());
-        setTimeout(() => { if (notif.parentElement) notif.remove(); }, 7000);
-      }
+(function showNotifications() {
+  const container = document.getElementById('notification-container');
 
-      // show one immediately, then interval
-      createNote();
-      setInterval(createNote, Math.random()*150000 + 150000); // 2.5 to 5 minutes
-    })();
+  function createNote() {
+    const notif = document.createElement('div');
+    notif.className = 'windows-notif';
+    notif.innerHTML = `
+  <div class="notif-header">
+    <img src="images/images1.png" alt="Me">
+    <div class="notif-text">${messages[Math.floor(Math.random()*messages.length)]}</div>
+  </div>
+  <div class="notif-actions">
+    <button class="notif-contact" aria-label="Contact">Contact Me</button>
+    <button class="notif-close" aria-label="Close">×</button>
+  </div>
+`;  
+    container.appendChild(notif);
+
+    // show animation
+    requestAnimationFrame(() => notif.classList.add('show'));
+
+    // play sound
+    document.getElementById('notif-sound').play().catch(() => {});
+
+    // contact button redirects
+    notif.querySelector('.notif-contact').addEventListener('click', () => {
+      window.location.href = "#contact";
+    });
+
+    // close button
+    notif.querySelector('.notif-close').addEventListener('click', () => notif.remove());
+
+    // auto-remove after 7 seconds
+    setTimeout(() => { if (notif.parentElement) notif.remove(); }, 7000);
+  }
+
+  // Wait at least 10 seconds before first call
+  setTimeout(() => {
+    createNote();
+    
+    // repeat at random interval 2.5 to 5 minutes
+    setInterval(createNote, Math.random() * 150000 + 150000);
+  }, 100000);
+})();
 
     /* ---------- Social copy (Discord) ---------- */ 
     (function setupDiscordCopy() {
