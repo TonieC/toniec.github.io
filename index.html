@@ -440,9 +440,6 @@ window.addEventListener('load', () => {
     <div class="layer l2"></div>
   </div>
 
-  <!-- scroll progress bar -->
-  <div id="scroll-progress" role="progressbar" aria-hidden="true"></div>
-
   <!-- header / nav -->
   <header class="site-header" role="banner">
     <div class="nav-inner" role="navigation" aria-label="Main navigation">
@@ -489,11 +486,23 @@ window.addEventListener('load', () => {
     </div>
   </header>
 
-<main class="hero" role="main" id="home">
+  <!-- HERO SECTION -->
+   <main class="hero" role="main" id="home">
   <div class="wrap" style="position: relative;">
-    <!-- Spinning circular text -->
     <div class="circle-text-wrapper" style="width: 450px; height: 450px; margin: 50px auto; position: relative;">
-      <svg width="450" height="450" viewBox="0 0 400 400">
+      
+      <!-- Your Photo -->
+      <div class="image-3d-wrapper">
+        <img src="images/images1.png" alt="Tonie" class="portrait" />
+        <!-- Hover me message -->
+        <div class="hover-message">
+          <span>Hover me</span>
+          <div class="arrow">↑</div>
+        </div>
+      </div>
+
+      <!-- Spinning circular text (hidden until hover) -->
+      <svg class="circle-text" width="450" height="450" viewBox="0 0 400 400">
         <defs>
           <path id="circlePath" d="M200,200 m-180,0 a180,180 0 1,0 360,0 a180,180 0 1,0 -360,0" />
         </defs>
@@ -505,41 +514,54 @@ window.addEventListener('load', () => {
           </text>
         </g>
       </svg>
-
-      <!-- Hover button -->
-      <a href="#about" class="circle-hover-btn">
-  <img src="images/viewmore.gif" alt="View More" style="width:200px; height:200px;" />
-  <span style="color:#fafffa; font-weight:700; margin-top:8px; font-size:1rem;">View More</span>
-</a>
     </div>
   </div>
 
-  <!-- Audio element -->
   <audio id="hoverSound" src="images/introhover.mp3" preload="auto"></audio>
 </main>
 
 <script>
-  const wrapper = document.querySelector('.circle-text-wrapper');
+  const imageWrapper = document.querySelector('.image-3d-wrapper');
+  const portrait = document.querySelector('.portrait');
+  const circleText = document.querySelector('.circle-text');
+  const hoverMessage = document.querySelector('.hover-message');
   const audio = document.getElementById('hoverSound');
 
-  // Set volume to 30%
   audio.volume = 0.1;
 
-  wrapper.addEventListener('mouseenter', () => {
-    audio.currentTime = 0; // restart the sound
+  // Hover behavior
+  imageWrapper.addEventListener('mouseenter', () => {
+    audio.currentTime = 0;
     audio.play();
+    circleText.classList.add('visible');
+    hoverMessage.classList.add('hidden');
   });
 
-  wrapper.addEventListener('mouseleave', () => {
+  imageWrapper.addEventListener('mouseleave', () => {
     audio.pause();
     audio.currentTime = 0;
+    circleText.classList.remove('visible');
+    hoverMessage.classList.remove('hidden');
+    portrait.style.transform = `rotateY(0deg) rotateX(0deg) scale(1)`;
+  });
+
+  // Subtle 3D tilt on mouse move
+  imageWrapper.addEventListener('mousemove', (e) => {
+    const rect = imageWrapper.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+
+    const rotateX = ((y - centerY) / centerY) * -10;
+    const rotateY = ((x - centerX) / centerX) * 10;
+
+    portrait.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
   });
 </script>
 
-
-
 <style>
-/* Spinning animation */
+/* Spinning text */
 .spin {
   transform-origin: 50% 50%;
   animation: spin 12s linear infinite;
@@ -553,39 +575,81 @@ window.addEventListener('load', () => {
   letter-spacing: 1px;
 }
 
-/* Hover button */
-.circle-hover-btn {
+/* Circle text hidden by default */
+.circle-text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+/* Show spinning text on hover */
+.circle-text.visible {
+  opacity: 1;
+}
+
+/* Image wrapper */
+.image-3d-wrapper {
   position: absolute;
   top: 50%;
   left: 50%;
+  width: 300px;
+  height: 300px;
   transform: translate(-50%, -50%);
+  perspective: 800px;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  opacity: 0;
-  pointer-events: none;
-  text-decoration: none;
+  flex-direction: column;
+}
+
+/* Portrait styling */
+.portrait {
+  width: 100%;
+  border-radius: 50%;
+  transition: transform 0.2s ease;
+  will-change: transform;
+}
+
+/* Hover message */
+.hover-message {
+  position: absolute;
+  bottom: -60px;
+  text-align: center;
+  color: #cfcfcf;
+  font-size: 1rem;
+  font-weight: 500;
+  animation: bounce 2s infinite ease-in-out;
   transition: opacity 0.3s ease;
 }
 
-.circle-hover-btn img {
-  width: 80px;
-  height: 80px;
-  margin-bottom: 5px;
+.hover-message .arrow {
+  font-size: 1.5rem;
+  line-height: 1;
 }
 
-/* Show button on hover */
-.circle-text-wrapper:hover .circle-hover-btn {
-  opacity: 1;
-  pointer-events: auto;
+.hover-message.hidden {
+  opacity: 0;
 }
 
+/* Bounce animation */
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Spin animation */
 @keyframes spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
 </style>
-
 
 
   <!-- ABOUT -->
@@ -904,47 +968,6 @@ window.addEventListener('load', () => {
     document.getElementById('year').innerText = new Date().getFullYear();
 
     /* ---------- Small utilities & animations ---------- */
-
-    // scroll progress bar: color shift across warm palette
-    (function scrollProgress() {
-      const progressBar = document.getElementById('scroll-progress');
-      const colors = ['#fff7ee','#fff1df','#ffe9cf','#ffe0bf','#ffd6af','#ffcf9a','#ffc87c','#ffb347','#ff9a2a','#ff7e29'];
-      window.addEventListener('scroll', () => {
-        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-        const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
-        const pct = scrollHeight > 0 ? Math.min(100, (scrollTop / scrollHeight) * 100) : 0;
-        progressBar.style.width = pct + '%';
-        const idx = Math.floor((pct / 100) * (colors.length - 1));
-        progressBar.style.backgroundColor = colors[idx];
-      });
-    })();
-
-    // cinematic typing line
-    (function cinematicType() {
-      const el = document.getElementById('cinematic-line');
-      const text = "Front-End Developer";
-      const delayChar = 26;
-      const delayStart = 260;
-      if (!el) return;
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        el.textContent = text; el.classList.add('is-visible'); return;
-      }
-      el.textContent = '';
-      setTimeout(() => {
-        let i = 0;
-        const tick = () => {
-          if (i <= text.length) {
-            el.textContent = text.slice(0, i);
-            i++;
-            setTimeout(tick, delayChar);
-          } else {
-            el.classList.add('is-visible');
-          }
-        };
-        tick();
-      }, delayStart);
-    })();
-
     // reveal on scroll
     (function revealOnScroll() {
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -1202,7 +1225,7 @@ const messages = [
       });
     })();
   </script>
-  <script>
+ <script>
 const canvas = document.getElementById('web-bg');
 const ctx = canvas.getContext('2d');
 let particles = [];
@@ -1216,19 +1239,19 @@ function resizeCanvas() {
 window.addEventListener('resize', resizeCanvas);
 resizeCanvas();
 
-// Create a particle object
+// Create particle
 function makeParticle() {
   return {
     x: Math.random() * canvas.width,
     y: Math.random() * canvas.height,
-    vx: (Math.random() - 0.5) * 0.4,
-    vy: (Math.random() - 0.5) * 0.4,
+    vx: (Math.random() - 0.5) * 0.05,  // slow natural drift
+    vy: (Math.random() - 0.5) * 0.05,
     radius: Math.random() * 1.5 + 0.5
   };
 }
 
-// Generate particles (more dense network)
-for (let i = 0; i < 100; i++) {
+// Generate particles
+for (let i = 0; i < 200; i++) {
   particles.push(makeParticle());
 }
 
@@ -1239,11 +1262,10 @@ window.addEventListener('mousemove', e => {
   mouse.moved = true;
 });
 
-// Animation loop
 function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  // Smooth parallax
+  // Smooth parallax effect
   if (mouse.moved) {
     const targetX = (mouse.x - canvas.width / 2) * 0.02;
     const targetY = (mouse.y - canvas.height / 2) * 0.02;
@@ -1260,59 +1282,49 @@ function animate() {
   for (let i = 0; i < particles.length; i++) {
     const p = particles[i];
 
-    // Natural drift
-    p.x += p.vx;
-    p.y += p.vy;
+    // Gentle continuous movement
+    p.x += p.vx * 10.8;
+    p.y += p.vy * 10.8;
 
-    // Respawn if off-screen
-    if (p.x < -50 || p.x > canvas.width + 50 || p.y < -50 || p.y > canvas.height + 50) {
-      particles[i] = makeParticle();
-      continue;
+    // Bounce softly on edges
+    if (p.x <= 0 || p.x >= canvas.width) p.vx *= -1;
+    if (p.y <= 0 || p.y >= canvas.height) p.vy *= -1;
+
+    // Mouse repulsion
+    const dxm = p.x - mouse.x;
+    const dym = p.y - mouse.y;
+    const distMouse = Math.sqrt(dxm * dxm + dym * dym);
+    if (distMouse < repelRadius) {
+      const angle = Math.atan2(dym, dxm);
+      const force = ((repelRadius - distMouse) / repelRadius) * (repelStrength * 0.3);
+      p.vx += Math.cos(angle) * force * 0.2;
+      p.vy += Math.sin(angle) * force * 0.2;
     }
 
-    // Mouse repulsion (subtle version)
-const dxm = p.x - mouse.x;
-const dym = p.y - mouse.y;
-const distMouse = Math.sqrt(dxm * dxm + dym * dym);
-if (distMouse < repelRadius) {
-  const angle = Math.atan2(dym, dxm);
-
-  // make the force curve smoother and weaker
-  const force = ((repelRadius - distMouse) / repelRadius) * (repelStrength * 0.3);
-
-  // apply smaller velocity shift (gentler push)
-  p.vx += Math.cos(angle) * force * 0.3;
-  p.vy += Math.sin(angle) * force * 0.3;
-}
-
-
-    // Draw point
+    // Draw particle
     ctx.beginPath();
     ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
     ctx.fillStyle = "rgba(90, 200, 255, 0.3)";
     ctx.fill();
 
-    // Connect nearby lines
+    // Connect nearby particles
     for (let j = i + 1; j < particles.length; j++) {
       const p2 = particles[j];
       const dx = p.x - p2.x;
       const dy = p.y - p2.y;
       const dist = Math.sqrt(dx * dx + dy * dy);
       if (dist < 120) {
-        // Fade lines near mouse
         const midX = (p.x + p2.x) / 2;
         const midY = (p.y + p2.y) / 2;
         const dxm = midX - mouse.x;
         const dym = midY - mouse.y;
         const mouseDist = Math.sqrt(dxm * dxm + dym * dym);
         let alpha = 1 - dist / 120;
-
         if (mouseDist < repelRadius) {
           const fade = mouseDist / repelRadius;
           alpha *= fade * 0.5;
-          if (fade < 0.3) continue; // detach completely
+          if (fade < 0.3) continue;
         }
-
         ctx.strokeStyle = `rgba(255, 179, 71, ${alpha * 0.6})`;
         ctx.lineWidth = 0.4;
         ctx.beginPath();
@@ -1322,9 +1334,9 @@ if (distMouse < repelRadius) {
       }
     }
 
-    // Slow velocity decay
-    p.vx *= 0.98;
-    p.vy *= 0.98;
+    // Velocity damping for smoother motion
+    p.vx *= 0.99;
+    p.vy *= 0.99;
   }
 
   ctx.restore();
@@ -1333,6 +1345,7 @@ if (distMouse < repelRadius) {
 
 animate();
 </script>
+
 
 <!-- Background music -->
 <audio id="bg-music" src="images/perfect-beauty-191271.mp3" loop preload="auto"></audio>
