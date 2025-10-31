@@ -349,10 +349,13 @@ a { color:var(--accent); text-decoration:none; }
   top: 0;
   left: 0;
   opacity: 1;
-  transform: scale(2);
-  transition: opacity 1s ease, transform 1s ease;
+  transform: scale(5);
+  transition: opacity 2.5s ease, transform 1s ease;
 }
 </style>
+<audio id="startupSound" src="images/Microsoft Windows XP Startup Sound.mp3" preload="auto"></audio>
+
+<audio id="startupSound" src="images/Microsoft Windows XP Startup Sound.mp3" preload="auto"></audio>
 
 <script>
 const codeLines = [
@@ -368,7 +371,7 @@ const codeLines = [
 const container = document.getElementById('codeContainer');
 const startMessage = document.getElementById('startMessage');
 
-function highlightJS(line){
+function highlightJS(line) {
   return line
     .replace(/(const|let|function|for|return)/g, '<span class="keyword">$1</span>')
     .replace(/('[^']*'|`[^`]*`)/g, '<span class="string">$1</span>')
@@ -384,42 +387,63 @@ codeLines.forEach(line => {
   container.appendChild(div);
 });
 
-// Dynamic loading percentage
+// Dynamic loading percentage (simulated until full load)
 const lastLine = container.lastChild;
 let progress = 0;
-const interval = 50;
-const totalTime = 5000;
-const step = Math.ceil(100 / (totalTime / interval));
+let loading = true;
 
+// Smoothly increase percentage while waiting for actual load
 const timer = setInterval(() => {
-  progress += step;
-  if(progress > 100) progress = 100;
-  lastLine.innerHTML = highlightJS(`// Loading: ${progress}%`);
-  if(progress >= 100) clearInterval(timer);
-}, interval);
+  if (!loading) return;
+  progress += Math.random() * 5;
+  if (progress > 95) progress = 95; // stop just before 100
+  lastLine.innerHTML = highlightJS(`// Loading: ${Math.floor(progress)}%`);
+}, 100);
 
-// After loading finishes
-setTimeout(() => {
-  const circle = document.getElementById('circleFade');
-  circle.style.transform = "scale(0)";
-  circle.style.opacity = "0";
+// When everything actually finishes loading
+window.addEventListener('load', () => {
+  loading = false;
+  clearInterval(timer);
 
-  // Show press-any-key message
-  startMessage.style.display = 'block';
+  // Fill to 100% smoothly
+  let finish = progress;
+  const complete = setInterval(() => {
+    finish += 2;
+    if (finish >= 100) {
+      clearInterval(complete);
+      lastLine.innerHTML = highlightJS(`// Loading: 100%`);
 
-  const hideLoader = () => {
-    const loader = document.getElementById('loader');
-    loader.style.opacity = '0';
-    loader.addEventListener('transitionend', () => loader.style.display = 'none', { once: true });
-  };
+      // Now trigger your original loader ending logic
+      const circle = document.getElementById('circleFade');
+      circle.style.transform = "scale(0)";
+      circle.style.opacity = "0";
 
-  // Listen for key press (desktop)
-  document.addEventListener('keydown', hideLoader, { once: true });
+      // Show press-any-key message
+      startMessage.style.display = 'block';
 
-  // Listen for tap/click (mobile and desktop)
-  document.addEventListener('touchstart', hideLoader, { once: true });
-  document.addEventListener('click', hideLoader, { once: true });
-}, totalTime);
+      const hideLoader = () => {
+        const loader = document.getElementById('loader');
+        const audio = document.getElementById('startupSound');
+
+        // Play XP startup sound
+        audio.currentTime = 0;
+        audio.play().catch(err => console.log('Audio play blocked:', err));
+
+        // Smooth fade-out
+        loader.style.transition = "opacity 1s ease";
+        loader.style.opacity = "0";
+        loader.addEventListener("transitionend", () => loader.style.display = "none", { once: true });
+      };
+
+      // Interaction listeners
+      document.addEventListener('keydown', hideLoader, { once: true });
+      document.addEventListener('touchstart', hideLoader, { once: true });
+      document.addEventListener('click', hideLoader, { once: true });
+    } else {
+      lastLine.innerHTML = highlightJS(`// Loading: ${Math.floor(finish)}%`);
+    }
+  }, 50);
+});
 </script>
 
 
