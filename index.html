@@ -353,10 +353,6 @@ a { color:var(--accent); text-decoration:none; }
   transition: opacity 2.5s ease, transform 1s ease;
 }
 </style>
-<audio id="startupSound" src="images/Microsoft Windows XP Startup Sound.mp3" preload="auto"></audio>
-
-<audio id="startupSound" src="images/Microsoft Windows XP Startup Sound.mp3" preload="auto"></audio>
-
 <script>
 const codeLines = [
   "const websiteName = 'TonieC Portfolio';",
@@ -387,25 +383,22 @@ codeLines.forEach(line => {
   container.appendChild(div);
 });
 
-// Dynamic loading percentage (simulated until full load)
+// Dynamic loading percentage
 const lastLine = container.lastChild;
 let progress = 0;
 let loading = true;
 
-// Smoothly increase percentage while waiting for actual load
 const timer = setInterval(() => {
   if (!loading) return;
   progress += Math.random() * 5;
-  if (progress > 95) progress = 95; // stop just before 100
+  if (progress > 95) progress = 95;
   lastLine.innerHTML = highlightJS(`// Loading: ${Math.floor(progress)}%`);
 }, 100);
 
-// When everything actually finishes loading
 window.addEventListener('load', () => {
   loading = false;
   clearInterval(timer);
 
-  // Fill to 100% smoothly
   let finish = progress;
   const complete = setInterval(() => {
     finish += 2;
@@ -413,29 +406,19 @@ window.addEventListener('load', () => {
       clearInterval(complete);
       lastLine.innerHTML = highlightJS(`// Loading: 100%`);
 
-      // Now trigger your original loader ending logic
       const circle = document.getElementById('circleFade');
       circle.style.transform = "scale(0)";
       circle.style.opacity = "0";
 
-      // Show press-any-key message
       startMessage.style.display = 'block';
 
       const hideLoader = () => {
         const loader = document.getElementById('loader');
-        const audio = document.getElementById('startupSound');
-
-        // Play XP startup sound
-        audio.currentTime = 0;
-        audio.play().catch(err => console.log('Audio play blocked:', err));
-
-        // Smooth fade-out
         loader.style.transition = "opacity 1s ease";
         loader.style.opacity = "0";
         loader.addEventListener("transitionend", () => loader.style.display = "none", { once: true });
       };
 
-      // Interaction listeners
       document.addEventListener('keydown', hideLoader, { once: true });
       document.addEventListener('touchstart', hideLoader, { once: true });
       document.addEventListener('click', hideLoader, { once: true });
@@ -445,6 +428,7 @@ window.addEventListener('load', () => {
   }, 50);
 });
 </script>
+
 
 
 
@@ -481,6 +465,8 @@ window.addEventListener('load', () => {
 
 <script>
   const navSound = document.getElementById('nav-sound');
+  navSound.volume = 0.1; // Set volume to 10%
+
   document.querySelectorAll('.nav-icon').forEach(link => {
     link.addEventListener('click', (e) => {
       // Play sound
@@ -489,7 +475,7 @@ window.addEventListener('load', () => {
 
       // Delay the default anchor navigation slightly to allow the sound to play
       const target = link.getAttribute('href');
-      if(target.startsWith('#')) {
+      if (target.startsWith('#')) {
         e.preventDefault();
         setTimeout(() => {
           document.querySelector(target).scrollIntoView({ behavior: 'smooth' });
@@ -499,31 +485,9 @@ window.addEventListener('load', () => {
   });
 </script>
 
+
     </div>
   </header>
-<script>
-  const sections = document.querySelectorAll("section");
-  const navLinks = document.querySelectorAll(".nav-links a");
-
-  window.addEventListener("scroll", () => {
-    let currentSection = "";
-    
-    sections.forEach(section => {
-      const sectionTop = section.offsetTop - 100; // offset for better trigger
-      const sectionHeight = section.offsetHeight;
-      if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
-        currentSection = section.getAttribute("id");
-      }
-    });
-
-    navLinks.forEach(link => {
-      link.classList.remove("active");
-      if (link.getAttribute("href") === "#" + currentSection) {
-        link.classList.add("active");
-      }
-    });
-  });
-</script>
 
 <main class="hero" role="main" id="home">
   <div class="wrap" style="position: relative;">
@@ -558,6 +522,9 @@ window.addEventListener('load', () => {
   const wrapper = document.querySelector('.circle-text-wrapper');
   const audio = document.getElementById('hoverSound');
 
+  // Set volume to 30%
+  audio.volume = 0.1;
+
   wrapper.addEventListener('mouseenter', () => {
     audio.currentTime = 0; // restart the sound
     audio.play();
@@ -568,6 +535,7 @@ window.addEventListener('load', () => {
     audio.currentTime = 0;
   });
 </script>
+
 
 
 <style>
@@ -1388,19 +1356,42 @@ animate();
 
 <script>
   const music = document.getElementById('bg-music');
-  music.volume = 0.3;
   const toggleBtn = document.getElementById('music-toggle');
   let isPlaying = false;
+  let hasInteracted = false;
 
+  music.volume = 0.3;
+
+  // Function to start playing music after first user interaction
+  function startMusicOnce() {
+    if (!hasInteracted) {
+      music.play().then(() => {
+        isPlaying = true;
+        toggleBtn.textContent = '🔊';
+      }).catch(() => {
+        console.warn('Autoplay blocked until interaction.');
+      });
+      hasInteracted = true;
+      // Remove listener after first interaction
+      document.removeEventListener('click', startMusicOnce);
+      document.removeEventListener('touchstart', startMusicOnce);
+    }
+  }
+
+  // Listen for first click or tap
+  document.addEventListener('click', startMusicOnce);
+  document.addEventListener('touchstart', startMusicOnce);
+
+  // Toggle button to manually control music
   toggleBtn.addEventListener('click', () => {
     if (isPlaying) {
       music.pause();
-      toggleBtn.textContent = '🔇'; // mute icon
+      toggleBtn.textContent = '🔇';
     } else {
       music.play().catch(() => {
-        alert('Click anywhere on the page to enable audio.');
+        console.warn('Audio requires user interaction.');
       });
-      toggleBtn.textContent = '🔊'; // sound on icon
+      toggleBtn.textContent = '🔊';
     }
     isPlaying = !isPlaying;
   });
@@ -1413,6 +1404,7 @@ animate();
     toggleBtn.style.boxShadow = '2px 2px 8px rgba(0,0,0,0.5)';
   });
 </script>
+
 
 </body>
 </html>
