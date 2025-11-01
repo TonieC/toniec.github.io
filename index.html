@@ -186,10 +186,58 @@ a { color:var(--accent); text-decoration:none; }
     /* skill card */
     .skill-card { padding:12px; border-radius:12px; background: linear-gradient(180deg, rgba(255,230,200,0.01), rgba(255,230,200,0.0)); display:flex; gap:12px; align-items:center; border:1px solid rgba(255,230,200,0.02); }
 
-    /* project card */
-    .project-card { overflow:hidden; border-radius:12px; border:1px solid rgba(255,230,200,0.03); background:linear-gradient(180deg, rgba(255,230,200,0.02), rgba(255,230,200,0.01)); transition: transform .3s, box-shadow .3s; }
-    .project-card:hover { transform: translateY(-8px); box-shadow: 0 22px 60px rgba(255,126,41,0.08); }
-    .project-card .thumb { height:160px; background-size:cover; background-position:center; display:flex; align-items:center; justify-content:center; color:var(--muted); }
+    /* Project Card Container */
+#projects .grid {
+  display: flex;
+  justify-content: center; /* center the single card */
+  gap: 20px; /* spacing if more projects are added later */
+  margin-top: 14px;
+}
+
+/* Single Project Card */
+.project-card {
+  width: 400px; /* fixed width so it doesn't stretch */
+  overflow: hidden;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 230, 200, 0.03);
+  background: linear-gradient(180deg, rgba(255, 230, 200, 0.02), rgba(255, 230, 200, 0.01));
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.project-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 22px 60px rgba(255, 126, 41, 0.08);
+}
+
+.project-card .thumb {
+  height: 160px;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+}
+
+.project-card .meta {
+  padding: 12px;
+}
+
+.project-card .meta > div:first-child {
+  font-weight: 700;
+}
+
+.project-card .meta > div:nth-child(2) {
+  color: var(--muted);
+  font-size: 14px;
+  margin-top: 6px;
+}
+
+.project-card .meta > div:nth-child(3) {
+  margin-top: 10px;
+  display: flex;
+  gap: 8px;
+}
 
     /* timeline */
     .timeline { position:relative; padding-left:28px; }
@@ -800,48 +848,25 @@ a { color:var(--accent); text-decoration:none; }
 
 
   <!-- PROJECTS -->
-  <section id="projects" class="panel wrap reveal" aria-labelledby="projects-heading">
-    <div class="heading"><h2 id="projects-heading">Featured Projects</h2></div>
+<section id="projects" class="panel wrap reveal" aria-labelledby="projects-heading">
+  <div class="heading"><h2 id="projects-heading">Featured Projects</h2></div>
 
-    <div class="grid cols-3" style="margin-top:14px">
-      <article class="project-card parallax" data-speed="0.06">
-        <div class="thumb" style="background-image:url('images/Playground1.png');background-color:#1B1614;height:160px"></div>
-        <div class="meta" style="padding:12px">
-          <div style="font-weight:700">Playground</div>
-          <div style="color:var(--muted);font-size:14px;margin-top:6px">In-browser playground for quick HTML/CSS/JS prototyping with instant preview.</div>
-          <div style="margin-top:10px;display:flex;gap:8px">
-            <a class="btn-ghost" href="/playground">Open</a>
-            <a class="btn-ghost" href="#" target="_blank" rel="noopener">Source</a>
-          </div>
+  <div class="grid cols-3" style="margin-top:14px">
+
+    <article class="project-card parallax" data-speed="0.06">
+      <div class="thumb" style="background-image:url('images/taskifysc.png');background-color:#1B1614;height:160px"></div>
+      <div class="meta" style="padding:12px">
+        <div style="font-weight:700">Taskify</div>
+        <div style="color:var(--muted);font-size:14px;margin-top:6px">A minimal task manager with timers and local storage.</div>
+        <div style="margin-top:10px;display:flex;gap:8px">
+          <a class="btn-ghost" href="/taskify.html">Open</a>
+          <a class="btn-ghost" href="#">Source</a>
         </div>
-      </article>
+      </div>
+    </article>
 
-      <article class="project-card parallax" data-speed="0.06">
-        <div class="thumb" style="background-image:url('images/taskifysc.png');background-color:#1B1614;height:160px"></div>
-        <div class="meta" style="padding:12px">
-          <div style="font-weight:700">Taskify</div>
-          <div style="color:var(--muted);font-size:14px;margin-top:6px">A minimal task manager with timers and local storage.</div>
-          <div style="margin-top:10px;display:flex;gap:8px">
-            <a class="btn-ghost" href="/taskify.html">Open</a>
-            <a class="btn-ghost" href="#">Source</a>
-          </div>
-        </div>
-      </article>
-
-      <article class="project-card parallax" data-speed="0.06">
-  <div class="thumb" style="background-image:url('images/notepadsc.png');background-color:#1B1614;height:160px"></div>
-  <div class="meta" style="padding:12px">
-    <div style="font-weight:700">Notepad</div>
-    <div style="color:var(--muted);font-size:14px;margin-top:6px">A simple, functional notepad web app for taking quick notes.</div>
-    <div style="margin-top:10px;display:flex;gap:8px">
-      <a class="btn-ghost" href="/notepad.html">Open</a>
-      <a class="btn-ghost" href="#">Source</a>
-    </div>
   </div>
-</article>
-
-    </div>
-  </section>
+</section>
 
  <!-- EXPERIENCE -->
 <section id="experience" class="panel wrap reveal" aria-labelledby="exp-heading">
