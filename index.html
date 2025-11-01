@@ -1246,6 +1246,8 @@ const messages = [
 const canvas = document.getElementById('web-bg');
 const ctx = canvas.getContext('2d');
 let particles = [];
+let explosions = [];
+let shockwaves = [];
 let mouse = { x: 0, y: 0, moved: false };
 let parallaxX = 0, parallaxY = 0;
 
@@ -1256,33 +1258,95 @@ function resizeCanvas() {
 window.addEventListener('resize', resizeCanvas);
 resizeCanvas();
 
-// Create particle
 function makeParticle() {
   return {
     x: Math.random() * canvas.width,
     y: Math.random() * canvas.height,
-    vx: (Math.random() - 0.5) * 0.05,  // slow natural drift
-    vy: (Math.random() - 0.5) * 0.05,
-    radius: Math.random() * 1.5 + 0.5
+    vx: (Math.random() - 0.5) * 0.5,
+    vy: (Math.random() - 0.5) * 0.5,
+    radius: Math.random() * 1.5 + 0.5,
+    mass: 1
   };
 }
 
-// Generate particles
-for (let i = 0; i < 200; i++) {
-  particles.push(makeParticle());
-}
+for (let i = 0; i < 300; i++) particles.push(makeParticle());
 
-// Track mouse
 window.addEventListener('mousemove', e => {
   mouse.x = e.clientX;
   mouse.y = e.clientY;
   mouse.moved = true;
 });
 
+function makeExplosion(x, y) {
+  for (let i = 0; i < 10; i++) {
+    explosions.push({
+      x,
+      y,
+      vx: (Math.random() - 0.5) * 3,
+      vy: (Math.random() - 0.5) * 3,
+      life: 20,
+      radius: Math.random() * 2 + 1
+    });
+  }
+  shockwaves.push({
+    x,
+    y,
+    radius: 0,
+    maxRadius: 80 + Math.random() * 40,
+    alpha: 0.6
+  });
+}
+
+function handleCollisions() {
+  for (let i = 0; i < particles.length; i++) {
+    for (let j = i + 1; j < particles.length; j++) {
+      const p1 = particles[i];
+      const p2 = particles[j];
+      const dx = p2.x - p1.x;
+      const dy = p2.y - p1.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      const minDist = p1.radius + p2.radius;
+
+      if (dist < minDist) {
+        const overlap = (minDist - dist) / 2;
+        const nx = dx / dist;
+        const ny = dy / dist;
+        p1.x -= nx * overlap;
+        p1.y -= ny * overlap;
+        p2.x += nx * overlap;
+        p2.y += ny * overlap;
+
+        const dvx = p1.vx - p2.vx;
+        const dvy = p1.vy - p2.vy;
+        const dot = dvx * nx + dvy * ny;
+        if (dot > 0) continue;
+
+        const impulse = (2 * dot) / (p1.mass + p2.mass);
+        p1.vx -= impulse * p2.mass * nx;
+        p1.vy -= impulse * p2.mass * ny;
+        p2.vx += impulse * p1.mass * nx;
+        p2.vy += impulse * p1.mass * ny;
+
+        const impactSpeed = Math.abs(dot);
+        if (impactSpeed > 0.5) {
+          const midX = (p1.x + p2.x) / 2;
+          const midY = (p1.y + p2.y) / 2;
+          makeExplosion(midX, midY);
+          particles.splice(j, 1);
+          particles.splice(i, 1);
+          particles.push(makeParticle());
+          particles.push(makeParticle());
+          i--;
+          break;
+        }
+      }
+    }
+  }
+}
+
 function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  // Smooth parallax effect
   if (mouse.moved) {
     const targetX = (mouse.x - canvas.width / 2) * 0.02;
     const targetY = (mouse.y - canvas.height / 2) * 0.02;
@@ -1298,24 +1362,20 @@ function animate() {
 
   for (let i = 0; i < particles.length; i++) {
     const p = particles[i];
+    p.x += p.vx;
+    p.y += p.vy;
 
-    // Gentle continuous movement
-    p.x += p.vx * 10.8;
-    p.y += p.vy * 10.8;
-
-    // Bounce softly on edges
     if (p.x <= 0 || p.x >= canvas.width) p.vx *= -1;
     if (p.y <= 0 || p.y >= canvas.height) p.vy *= -1;
 
-    // Mouse repulsion
     const dxm = p.x - mouse.x;
     const dym = p.y - mouse.y;
     const distMouse = Math.sqrt(dxm * dxm + dym * dym);
     if (distMouse < repelRadius) {
       const angle = Math.atan2(dym, dxm);
       const force = ((repelRadius - distMouse) / repelRadius) * (repelStrength * 0.3);
-      p.vx += Math.cos(angle) * force * 0.2;
-      p.vy += Math.sin(angle) * force * 0.2;
+      p.vx += Math.cos(angle) * force;
+      p.vy += Math.sin(angle) * force;
     }
 
     // Draw particle
@@ -1324,7 +1384,7 @@ function animate() {
     ctx.fillStyle = "rgba(90, 200, 255, 0.3)";
     ctx.fill();
 
-    // Connect nearby particles
+    // Draw connecting lines
     for (let j = i + 1; j < particles.length; j++) {
       const p2 = particles[j];
       const dx = p.x - p2.x;
@@ -1351,9 +1411,36 @@ function animate() {
       }
     }
 
-    // Velocity damping for smoother motion
     p.vx *= 0.99;
     p.vy *= 0.99;
+  }
+
+  handleCollisions();
+
+  // Explosion sparks
+  for (let i = explosions.length - 1; i >= 0; i--) {
+    const e = explosions[i];
+    e.x += e.vx;
+    e.y += e.vy;
+    e.life--;
+    ctx.beginPath();
+    ctx.arc(e.x, e.y, e.radius, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(255,150,50,${e.life / 20})`;
+    ctx.fill();
+    if (e.life <= 0) explosions.splice(i, 1);
+  }
+
+  // Shockwave rings
+  for (let i = shockwaves.length - 1; i >= 0; i--) {
+    const s = shockwaves[i];
+    s.radius += 2;
+    s.alpha *= 0.96;
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
+    ctx.strokeStyle = `rgba(255, 200, 100, ${s.alpha})`;
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+    if (s.radius > s.maxRadius || s.alpha < 0.02) shockwaves.splice(i, 1);
   }
 
   ctx.restore();
