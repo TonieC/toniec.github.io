@@ -393,128 +393,6 @@ a { color:var(--accent); text-decoration:none; }
 })();
 </script>
 
-  <!-- Loading Screen -->
-<div id="loader">
-  <div id="codeContainer"></div>
-  <div class="circle-fade" id="circleFade"></div>
-  <div id="startMessage" style="color:#39ff14; font-family:'Courier New', monospace; margin-top:10px; display:none;">
-    Press any key to continue...
-  </div>
-</div>
-
-<style>
-#loader {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100vw; height: 100vh;
-  background: #121212;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  z-index: 9999;
-  transition: opacity 1s ease;
-}
-#codeContainer {
-  z-index: 10000;
-  font-family: 'Courier New', monospace;
-  font-size: 16px;
-  line-height: 1.5;
-}
-.code-line span.keyword { color: #39ff14; }
-.code-line span.string { color: #CE9178; }
-.code-line span.number { color: #B5CEA8; }
-.code-line span.comment { color: #6A9955; }
-.circle-fade {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  background: #121212;
-  top: 0;
-  left: 0;
-  opacity: 1;
-  transform: scale(5);
-  transition: opacity 2.5s ease, transform 1s ease;
-}
-</style>
-<script>
-const codeLines = [
-  "const websiteName = 'TonieC Portfolio';",
-  "let purpose = 'Showcase programming projects and skills';",
-  "function loadFeatures() { return ['Projects', 'About', 'Contact', 'Blog']; }",
-  "console.log('Loading portfolio components...');",
-  "for(let i=0;i<loadFeatures().length;i++){console.log(loadFeatures()[i]);}",
-  "document.querySelector('#app');",
-  "// Loading: 0%"
-];
-
-const container = document.getElementById('codeContainer');
-const startMessage = document.getElementById('startMessage');
-
-function highlightJS(line) {
-  return line
-    .replace(/(const|let|function|for|return)/g, '<span class="keyword">$1</span>')
-    .replace(/('[^']*'|`[^`]*`)/g, '<span class="string">$1</span>')
-    .replace(/\b(\d+)\b/g, '<span class="number">$1</span>')
-    .replace(/(\/\/.*)/g, '<span class="comment">$1</span>');
-}
-
-// Render code lines immediately
-codeLines.forEach(line => {
-  const div = document.createElement('div');
-  div.classList.add('code-line');
-  div.innerHTML = highlightJS(line);
-  container.appendChild(div);
-});
-
-// Dynamic loading percentage
-const lastLine = container.lastChild;
-let progress = 0;
-let loading = true;
-
-const timer = setInterval(() => {
-  if (!loading) return;
-  progress += Math.random() * 5;
-  if (progress > 95) progress = 95;
-  lastLine.innerHTML = highlightJS(`// Loading: ${Math.floor(progress)}%`);
-}, 100);
-
-window.addEventListener('load', () => {
-  loading = false;
-  clearInterval(timer);
-
-  let finish = progress;
-  const complete = setInterval(() => {
-    finish += 2;
-    if (finish >= 100) {
-      clearInterval(complete);
-      lastLine.innerHTML = highlightJS(`// Loading: 100%`);
-
-      const circle = document.getElementById('circleFade');
-      circle.style.transform = "scale(0)";
-      circle.style.opacity = "0";
-
-      startMessage.style.display = 'block';
-
-      const hideLoader = () => {
-        const loader = document.getElementById('loader');
-        loader.style.transition = "opacity 1s ease";
-        loader.style.opacity = "0";
-        loader.addEventListener("transitionend", () => loader.style.display = "none", { once: true });
-      };
-
-      document.addEventListener('keydown', hideLoader, { once: true });
-      document.addEventListener('touchstart', hideLoader, { once: true });
-      document.addEventListener('click', hideLoader, { once: true });
-    } else {
-      lastLine.innerHTML = highlightJS(`// Loading: ${Math.floor(finish)}%`);
-    }
-  }, 50);
-});
-</script>
-
-
 
 
   <canvas id="web-bg"></canvas>
@@ -759,7 +637,7 @@ window.addEventListener('load', () => {
   <header class="about-header">
     <h2 id="about-heading">About Me</h2>
    <p class="lead">
-  I'm <strong>Tonie</strong>, an 18-year-old programmer from the Philippines currently surviving ICT, which stands for Computer Programming but often feels like a full-time adventure in debugging. I spend my days building web interfaces that don’t make users cry, tinkering with microcontrollers until they do what I want, and creating practical tools that actually solve real problems instead of just looking cool. I like learning new tricks, breaking things to understand how they work, and occasionally pretending that my code knows what it’s doing. If you ever need something designed, coded, or magically made to work, I am your person.
+  I'm <strong>Tonie</strong>, an 18-year-old programmer from the Philippines currently surviving ICT, which stands for Information Communication and Technology but often feels like a full-time adventure in debugging. I spend my days building web interfaces that don’t make users cry, tinkering with microcontrollers until they do what I want, and creating practical tools that actually solve real problems instead of just looking cool. I like learning new tricks, breaking things to understand how they work, and occasionally pretending that my code knows what it’s doing. If you ever need something designed, coded, or magically made to work, I am your person.
 </p>
 
   </header>
@@ -1354,7 +1232,7 @@ function makeParticle() {
   };
 }
 
-for (let i = 0; i < 300; i++) particles.push(makeParticle());
+for (let i = 0; i < 200; i++) particles.push(makeParticle());
 
 window.addEventListener('mousemove', e => {
   mouse.x = e.clientX;
