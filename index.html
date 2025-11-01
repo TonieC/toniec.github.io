@@ -460,9 +460,6 @@ a { color:var(--accent); text-decoration:none; }
           <div class="subtitle">Front-End Dev</div>
         </div>
       </div>
-
-<audio id="nav-sound" src="images/navclick.mp3" preload="auto"></audio>
-
 <nav class="nav-links" aria-label="Primary">
   <a href="#about" class="nav-icon" title="About"><i class="fas fa-user"></i></a>
   <a href="#skills" class="nav-icon" title="Skills"><i class="fas fa-code"></i></a>
@@ -541,7 +538,7 @@ a { color:var(--accent); text-decoration:none; }
         <g class="spin">
           <text>
             <textPath href="#circlePath" startOffset="0%">
-              Tonie C. • Front-End Developer • React • JavaScript • HTML • CSS • UI/UX •
+              • Tonie C. • Front-End Dev • React • JavaScript • CSS • UI/UX • JSX • UXD
             </textPath>
           </text>
         </g>
@@ -550,6 +547,7 @@ a { color:var(--accent); text-decoration:none; }
   </div>
 
   <audio id="hoverSound" src="images/introhover.mp3" preload="auto"></audio>
+
 </main>
 
 <script>
@@ -756,10 +754,19 @@ a { color:var(--accent); text-decoration:none; }
     padding-left: 18px;
     margin-top: 6px;
   }
+
+  .skill-card img {
+  transition: transform 0.5s ease; /* smooth rotation */
+}
+
+.skill-card:hover img {
+  transform: rotate(360deg); /* full spin on hover */
+}
+
 </style>
 
 
-  <section id="skills" class="panel wrap reveal" aria-labelledby="skills-heading">
+ <section id="skills" class="panel wrap reveal" aria-labelledby="skills-heading">
   <div class="heading">
     <h2 id="skills-heading">Skills & Tools</h2>
   </div>
@@ -771,6 +778,54 @@ a { color:var(--accent); text-decoration:none; }
       <div>
         <div style="font-weight:700">JavaScript</div>
         <div style="color:var(--muted);font-size:13px">ES6+, DOM wizardry, Fetch magic, and occasionally convincing the browser to behave</div>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" alt="TypeScript" style="width:36px;height:36px">
+      <div>
+        <div style="font-weight:700">TypeScript</div>
+        <div style="color:var(--muted);font-size:13px">Typed JavaScript, safer code, fewer runtime surprises, and confidence in big projects</div>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React" style="width:36px;height:36px">
+      <div>
+        <div style="font-weight:700">React</div>
+        <div style="color:var(--muted);font-size:13px">Component-based UIs, hooks magic, and making SPAs feel alive</div>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg" alt="Vue" style="width:36px;height:36px">
+      <div>
+        <div style="font-weight:700">Vue</div>
+        <div style="color:var(--muted);font-size:13px">Reactive views, simplicity, and getting stuff done without overcomplication</div>
+      </div>
+    </div>
+
+    <div class="skill-card">
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg" alt="TailwindCSS" style="width:36px;height:36px">
+      <div>
+        <div style="font-weight:700">TailwindCSS</div>
+        <div style="color:var(--muted);font-size:13px">Utility-first styling, responsive design, and making layouts look fancy in record time</div>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt="Node.js" style="width:36px;height:36px">
+      <div>
+        <div style="font-weight:700">Node.js</div>
+        <div style="color:var(--muted);font-size:13px">JavaScript on the server, fast APIs, and keeping backend code as familiar as the frontend</div>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg" alt="Express.js" style="width:36px;height:36px">
+      <div>
+        <div style="font-weight:700">Express.js</div>
+        <div style="color:var(--muted);font-size:13px">Minimalist web framework, routing wizardry, and making APIs behave</div>
       </div>
     </div>
 
@@ -905,7 +960,7 @@ a { color:var(--accent); text-decoration:none; }
         <span style="color:var(--muted);font-size:13px;margin-left:8px">(2024–2025)</span>
       </h3>
       <p style="color:var(--muted);margin-top:6px">
-        <strong>Camarin High School</strong> — Crafted digital spreads and layouts for our publication without breaking Photoshop (mostly).
+        <strong>Camarin High School</strong> — Crafted digital spreads and layouts for our publication without breaking wordpress.
       </p>
     </div>
 
@@ -1048,11 +1103,11 @@ a { color:var(--accent); text-decoration:none; }
       const dx = (e.clientX - cx) / rect.width;
       const dy = (e.clientY - cy) / rect.height;
 
-      const tiltX = dy * 15;  // degrees
-      const tiltY = -dx * 15; // degrees
+      const tiltX = dy * 5;  // degrees
+      const tiltY = -dx * 5; // degrees
 
       // Actual 3D rotation
-      panel.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg) translateZ(15px)`;
+      panel.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg) translateZ(5px)`;
 
       // Moving warm glow to simulate light source
       const glowX = 50 + dx * 50;
@@ -1073,25 +1128,6 @@ a { color:var(--accent); text-decoration:none; }
     });
   });
 })();
-
-
-
-    // nav active highlight on scroll
-    (function navActiveScroll() {
-      const sections = document.querySelectorAll('section.panel, main.hero');
-      const navLinks = document.querySelectorAll('.nav-links a');
-      function updateActive() {
-        let current = sections[0];
-        const scrollPos = window.scrollY + window.innerHeight / 2;
-        sections.forEach(section => { if (section.offsetTop <= scrollPos) current = section; });
-        navLinks.forEach(a => a.classList.remove('active'));
-        const id = current.id || 'home';
-        const link = document.querySelector(`.nav-links a[href="#${id}"]`);
-        if (link) link.classList.add('active');
-      }
-      window.addEventListener('scroll', updateActive);
-      updateActive();
-    })();
 
     // focus outline for keyboard users
     (function focusOutline() {
@@ -1437,79 +1473,6 @@ function animate() {
 
 animate();
 </script>
-
-
-<!-- Background music -->
-<audio id="bg-music" src="images/perfect-beauty-191271.mp3" loop preload="auto"></audio>
-
-<!-- Music toggle button (icon only) -->
-<button id="music-toggle" style="
-  position: fixed;
-  bottom: 20px;
-  left: 20px;
-  z-index: 999;
-  background: rgba(28,28,28,0.9);
-  padding: 8px;
-  border-radius: 50%;
-  font-size: 18px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  border: none;
-">
-  🔊
-</button>
-
-<script>
-  const music = document.getElementById('bg-music');
-  const toggleBtn = document.getElementById('music-toggle');
-  let isPlaying = false;
-  let hasInteracted = false;
-
-  music.volume = 0.3;
-
-  // Function to start playing music after first user interaction
-  function startMusicOnce() {
-    if (!hasInteracted) {
-      music.play().then(() => {
-        isPlaying = true;
-        toggleBtn.textContent = '🔊';
-      }).catch(() => {
-        console.warn('Autoplay blocked until interaction.');
-      });
-      hasInteracted = true;
-      // Remove listener after first interaction
-      document.removeEventListener('click', startMusicOnce);
-      document.removeEventListener('touchstart', startMusicOnce);
-    }
-  }
-
-  // Listen for first click or tap
-  document.addEventListener('click', startMusicOnce);
-  document.addEventListener('touchstart', startMusicOnce);
-
-  // Toggle button to manually control music
-  toggleBtn.addEventListener('click', () => {
-    if (isPlaying) {
-      music.pause();
-      toggleBtn.textContent = '🔇';
-    } else {
-      music.play().catch(() => {
-        console.warn('Audio requires user interaction.');
-      });
-      toggleBtn.textContent = '🔊';
-    }
-    isPlaying = !isPlaying;
-  });
-
-  // Hover glow effect
-  toggleBtn.addEventListener('mouseenter', () => {
-    toggleBtn.style.boxShadow = '0 0 20px rgba(57, 255, 20, 0.7)';
-  });
-  toggleBtn.addEventListener('mouseleave', () => {
-    toggleBtn.style.boxShadow = '2px 2px 8px rgba(0,0,0,0.5)';
-  });
-</script>
-
 
 </body>
 </html>
