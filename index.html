@@ -486,14 +486,35 @@ window.addEventListener('load', () => {
     </div>
   </header>
 
-  <!-- HERO SECTION -->
-   <main class="hero" role="main" id="home">
+ <!-- HERO SECTION -->
+<main class="hero" role="main" id="home">
   <div class="wrap" style="position: relative;">
     <div class="circle-text-wrapper" style="width: 450px; height: 450px; margin: 50px auto; position: relative;">
-      
-      <!-- Your Photo -->
+
+      <!-- 3D SVG Portrait -->
       <div class="image-3d-wrapper">
-        <img src="images/images1.png" alt="Tonie" class="portrait" />
+        <svg class="portrait-svg" viewBox="0 0 200 200" width="100%" height="100%">
+          <defs>
+            <radialGradient id="gradGlow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#121212" />
+              <stop offset="100%" stop-color="#1e1e1e" />
+            </radialGradient>
+          </defs>
+
+          <!-- Circle base -->
+          <circle cx="100" cy="100" r="95" fill="url(#gradGlow)" stroke="rgba(57,255,20,0.3)" stroke-width="2" />
+
+          <!-- Tonie C. text above -->
+          <text x="50%" y="80" text-anchor="middle" fill="#39ff14" font-size="14" font-family="Consolas, monospace" letter-spacing="1">
+            Tonie C.
+          </text>
+
+          <!-- </> symbol -->
+          <text x="50%" y="120" text-anchor="middle" dominant-baseline="middle" fill="#39ff14" font-size="22" font-family="Consolas, monospace">
+            &lt;/&gt;
+          </text>
+        </svg>
+
         <!-- Hover me message -->
         <div class="hover-message">
           <span>Hover me</span>
@@ -501,7 +522,7 @@ window.addEventListener('load', () => {
         </div>
       </div>
 
-      <!-- Spinning circular text (hidden until hover) -->
+      <!-- Spinning circular text -->
       <svg class="circle-text" width="450" height="450" viewBox="0 0 400 400">
         <defs>
           <path id="circlePath" d="M200,200 m-180,0 a180,180 0 1,0 360,0 a180,180 0 1,0 -360,0" />
@@ -509,7 +530,7 @@ window.addEventListener('load', () => {
         <g class="spin">
           <text>
             <textPath href="#circlePath" startOffset="0%">
-              Tonie C. • Front-End Dev • React • HTML • CSS • JavaScript • Responsive Design • UI/UX •
+              Tonie C. • Front-End Developer • React • JavaScript • HTML • CSS • UI/UX •
             </textPath>
           </text>
         </g>
@@ -522,14 +543,13 @@ window.addEventListener('load', () => {
 
 <script>
   const imageWrapper = document.querySelector('.image-3d-wrapper');
-  const portrait = document.querySelector('.portrait');
+  const portraitSVG = document.querySelector('.portrait-svg');
   const circleText = document.querySelector('.circle-text');
   const hoverMessage = document.querySelector('.hover-message');
   const audio = document.getElementById('hoverSound');
 
   audio.volume = 0.1;
 
-  // Hover behavior
   imageWrapper.addEventListener('mouseenter', () => {
     audio.currentTime = 0;
     audio.play();
@@ -542,10 +562,9 @@ window.addEventListener('load', () => {
     audio.currentTime = 0;
     circleText.classList.remove('visible');
     hoverMessage.classList.remove('hidden');
-    portrait.style.transform = `rotateY(0deg) rotateX(0deg) scale(1)`;
+    portraitSVG.style.transform = `rotateY(0deg) rotateX(0deg) scale(1)`;
   });
 
-  // Subtle 3D tilt on mouse move
   imageWrapper.addEventListener('mousemove', (e) => {
     const rect = imageWrapper.getBoundingClientRect();
     const x = e.clientX - rect.left;
@@ -556,7 +575,7 @@ window.addEventListener('load', () => {
     const rotateX = ((y - centerY) / centerY) * -10;
     const rotateY = ((x - centerX) / centerX) * 10;
 
-    portrait.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
+    portraitSVG.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
   });
 </script>
 
@@ -568,14 +587,13 @@ window.addEventListener('load', () => {
 }
 
 .circle-text-wrapper svg text {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  font-size: 26px;
+  font-family: 'Courier New', monospace;
+  font-size: 24px;
   font-weight: 600;
   fill: #39ff14;
   letter-spacing: 1px;
 }
 
-/* Circle text hidden by default */
 .circle-text {
   position: absolute;
   top: 0;
@@ -585,12 +603,11 @@ window.addEventListener('load', () => {
   pointer-events: none;
 }
 
-/* Show spinning text on hover */
 .circle-text.visible {
   opacity: 1;
 }
 
-/* Image wrapper */
+/* 3D Wrapper */
 .image-3d-wrapper {
   position: absolute;
   top: 50%;
@@ -605,15 +622,15 @@ window.addEventListener('load', () => {
   flex-direction: column;
 }
 
-/* Portrait styling */
-.portrait {
+.portrait-svg {
   width: 100%;
   border-radius: 50%;
   transition: transform 0.2s ease;
   will-change: transform;
+  box-shadow: 0 0 25px rgba(57, 255, 20, 0.15);
 }
 
-/* Hover message */
+/* Hover text */
 .hover-message {
   position: absolute;
   bottom: -60px;
@@ -634,22 +651,22 @@ window.addEventListener('load', () => {
   opacity: 0;
 }
 
-/* Bounce animation */
 @keyframes bounce {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
 }
 
-/* Spin animation */
 @keyframes spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+/* No section background */
+.hero {
+  background: none !important;
+}
 </style>
+
 
 
   <!-- ABOUT -->
