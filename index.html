@@ -308,6 +308,91 @@ a { color:var(--accent); text-decoration:none; }
   </style>
 </head>
 <body>
+
+  <script>
+(() => {
+  // Quietly block context menu, mouse right-click, and common inspect/view-source shortcuts.
+  function handlePrevent(e) {
+    if (!e) return;
+    // Block context menu (right-click)
+    if (e.type === 'contextmenu') {
+      e.preventDefault();
+      e.stopImmediatePropagation?.();
+      return false;
+    }
+
+    // Normalize key info
+    const key = (e.key || '').toUpperCase();
+    const code = e.code || '';
+    const kc = e.keyCode || e.which || 0;
+    const ctrl = e.ctrlKey || e.metaKey; // metaKey for Mac command
+    const shift = e.shiftKey;
+    const alt = e.altKey;
+
+    // Block F12
+    if (key === 'F12' || kc === 123 || code === 'F12') {
+      e.preventDefault();
+      e.stopImmediatePropagation?.();
+      return false;
+    }
+
+    // Block Ctrl/Cmd + Shift + I/J/C/K (DevTools shortcuts)
+    if (ctrl && shift && (key === 'I' || key === 'J' || key === 'C' || key === 'K' ||
+                          kc === 73 || kc === 74 || kc === 67 || kc === 75)) {
+      e.preventDefault();
+      e.stopImmediatePropagation?.();
+      return false;
+    }
+
+    // Block Ctrl/Cmd + U (view source) and Ctrl/Cmd + S (save page)
+    if (ctrl && (key === 'U' || key === 'S' || kc === 85 || kc === 83)) {
+      e.preventDefault();
+      e.stopImmediatePropagation?.();
+      return false;
+    }
+
+    // Block Ctrl/Cmd+Shift+C (element picker)
+    if (ctrl && shift && key === 'C') {
+      e.preventDefault();
+      e.stopImmediatePropagation?.();
+      return false;
+    }
+
+    // Block F10 (some browsers map menu/dev tools), optionally block other suspect combos
+    if (key === 'F10' || kc === 121) {
+      e.preventDefault();
+      e.stopImmediatePropagation?.();
+      return false;
+    }
+  }
+
+  // Attach as capturing listeners so they run early
+  document.addEventListener('contextmenu', handlePrevent, { capture: true, passive: false });
+  document.addEventListener('mousedown', function(e){ if (e.button === 2) { e.preventDefault(); e.stopImmediatePropagation?.(); return false; } }, { capture: true, passive: false });
+  document.addEventListener('keydown', handlePrevent, { capture: true, passive: false });
+  window.addEventListener('keydown', handlePrevent, { capture: true, passive: false });
+
+  // Minimal attempt to stop console.open via common programmatic checks:
+  // (This is shallow — won't stop determined users.)
+  try {
+    // override console methods to make casual console logging less useful
+    const noop = function(){};
+    console.debug = noop;
+    console.info  = noop;
+    // keep console.log if you want; otherwise override too
+    // console.log = noop;
+  } catch (err) { /* silent */ }
+
+  // Small, silent integrity: reapply listeners if removed
+  const reapply = () => {
+    if (!document.hasListenerFlag) {
+      document.hasListenerFlag = true;
+    }
+  };
+  // Not doing any visible fallback or message.
+})();
+</script>
+
   <!-- Loading Screen -->
 <div id="loader">
   <div id="codeContainer"></div>
