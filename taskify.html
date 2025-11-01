@@ -1,20 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Preconnect + Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-  <!-- Meta Tags -->
+  <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="author" content="Tonie">
-  <meta name="description" content="A showcase of my skills and projects.">
-  <meta name="robots" content="index, follow">
-  <meta name="theme-color" content="#121212">
   <title>Taskify | Tonie C.</title>
-
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #121212;
@@ -26,30 +17,16 @@
       --error: #ff3333;
     }
 
-    * {
-      box-sizing: border-box;
-      font-family: "Poppins", sans-serif;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; font-family: "Poppins", sans-serif; margin: 0; padding: 0; }
 
     body {
       background: var(--bg);
       color: var(--text);
-      min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
+      min-height: 100vh;
       overflow-x: hidden;
-      position: relative;
-    }
-
-    #particles {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      z-index: 0;
-      pointer-events: none;
     }
 
     header {
@@ -58,10 +35,8 @@
       justify-content: flex-start;
       width: 100%;
       max-width: 1000px;
-      margin-top: 2rem;
-      margin-bottom: 1rem;
+      margin: 2rem 0 1rem 2rem;
       gap: 1rem;
-      padding-left: 2rem;
       z-index: 2;
     }
 
@@ -70,50 +45,30 @@
       filter: drop-shadow(0 0 6px var(--accent));
     }
 
-    h1 {
-      color: var(--accent);
-      font-weight: 600;
-      font-size: 1.5rem;
-    }
-
     .task-container, .timer-container {
-      position: relative;
       background: var(--card-bg);
       box-shadow: 0 0 12px var(--shadow);
       border-radius: 12px;
-      width: 100%;
+      width: 90%;
       max-width: 600px;
       padding: 1.5rem;
       margin-bottom: 2rem;
-      z-index: 2;
     }
 
-    .task-input {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      margin-bottom: 1rem;
-    }
-
-    .row {
-      display: flex;
-      gap: 0.5rem;
-    }
+    .task-input { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1rem; }
+    .row { display: flex; gap: 0.5rem; flex-wrap: wrap; }
 
     input, select {
       padding: 0.6rem 1rem;
       border: none;
-      outline: none;
       border-radius: 999px;
       background: rgba(255, 255, 255, 0.08);
       color: var(--text);
       flex: 1;
+      min-width: 120px;
     }
 
-    select option {
-      background: #1c1c1c;
-      color: #fff;
-    }
+    select option { background: #1c1c1c; color: #fff; }
 
     button {
       background: var(--accent);
@@ -126,17 +81,9 @@
       color: #000;
     }
 
-    button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 0 8px var(--accent);
-    }
+    button:hover { transform: translateY(-2px); box-shadow: 0 0 8px var(--accent); }
 
-    ul {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
-    }
+    ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
 
     li {
       background: rgba(255, 255, 255, 0.05);
@@ -146,124 +93,61 @@
       flex-direction: column;
       gap: 0.3rem;
       position: relative;
-      opacity: 0;
-      transform: translateY(10px);
-      animation: fadeIn 0.3s forwards;
-    }
-
-    @keyframes fadeIn {
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .priority {
-      font-size: 0.8rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      padding: 0.2rem 0.5rem;
-      border-radius: 6px;
-      display: inline-block;
-    }
-
-    .low { color: #00ff9d; }
-    .medium { color: #ffd633; }
-    .high { color: #ff3333; }
-
-    .task-time {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-    }
-
-    .buttons {
-      display: flex;
-      gap: 0.5rem;
-      margin-top: 0.3rem;
-    }
-
-    .btn {
-      background: transparent;
-      border: none;
-      color: var(--accent);
-      cursor: pointer;
-      font-size: 0.9rem;
-      transition: 0.2s;
-    }
-
-    .btn:hover {
-      color: #fff;
-      transform: scale(1.1);
+      cursor: grab;
+      transition: all 0.3s ease;
     }
 
     li.completed {
       text-decoration: line-through;
       opacity: 0.6;
+      transform: scale(0.98);
     }
 
-    .no-tasks {
-      text-align: center;
-      color: var(--text-muted);
-      font-size: 0.9rem;
-      margin-top: 1rem;
+    .priority { font-size: 0.8rem; font-weight: 600; text-transform: uppercase; padding: 0.2rem 0.5rem; border-radius: 6px; display: inline-block; }
+    .low { color: #00ff9d; } .medium { color: #ffd633; } .high { color: #ff3333; }
+     li.low { border-left: 4px solid #00ff9d; }
+  li.medium { border-left: 4px solid #ffd633; }
+  li.high { border-left: 4px solid #ff3333; }
+
+    .task-time { font-size: 0.75rem; color: var(--text-muted); }
+
+    .buttons { display: flex; gap: 0.5rem; margin-top: 0.3rem; }
+    .btn { background: transparent; border: none; color: var(--accent); cursor: pointer; font-size: 0.9rem; transition: 0.2s; }
+    .btn:hover { color: #fff; transform: scale(1.1); }
+
+    .no-tasks { text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-top: 1rem; }
+
+    .popup { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--card-bg); border: 1px solid var(--error); color: var(--error); padding: 1rem 1.5rem; border-radius: 10px; box-shadow: 0 0 15px rgba(255, 50, 50, 0.4); font-size: 1rem; text-align: center; opacity: 0; animation: popIn 0.3s forwards, fadeOut 2s 1.5s forwards; z-index: 999; }
+
+    @keyframes popIn { to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeOut { to { opacity: 0; } }
+
+    /* TIMER */
+    .timer-container h2 { color: var(--accent); margin-bottom: 1rem; text-align: center; }
+    .timer-display { font-size: 2.5rem; text-align: center; margin-bottom: 1rem; color: var(--text); text-shadow: 0 0 8px var(--accent); }
+    .timer-controls { display: flex; justify-content: center; gap: 0.6rem; flex-wrap: wrap; }
+    .timer-controls input { width: 80px; text-align: center; }
+
+    @media (max-width: 500px) {
+      .row { flex-direction: column; }
+      button, input, select { width: 100%; }
     }
-
-.popup {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: var(--card-bg);
-  border: 1px solid var(--error);
-  color: var(--error);
-  padding: 1rem 1.5rem;
-  border-radius: 10px;
-  box-shadow: 0 0 15px rgba(255, 50, 50, 0.4);
-  font-size: 1rem;
-  text-align: center;
-  opacity: 0;
-  animation: popIn 0.3s forwards, fadeOut 2s 1.5s forwards;
-  z-index: 999;
-}
-
-
-    @keyframes popIn {
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* TIMER STYLES */
-    .timer-container h2 {
-      color: var(--accent);
-      margin-bottom: 1rem;
-      text-align: center;
-    }
-
-    .timer-display {
-      font-size: 2.5rem;
-      text-align: center;
-      margin-bottom: 1rem;
-      color: var(--text);
-      text-shadow: 0 0 8px var(--accent);
-    }
-
-    .timer-controls {
-      display: flex;
-      justify-content: center;
-      gap: 0.6rem;
-    }
-
-    .timer-controls input {
-      width: 80px;
-      text-align: center;
-    }
-
   </style>
 </head>
 <body>
-  <canvas id="particles"></canvas>
-
   <header>
     <img src="/images/taskify-logo.png" alt="Taskify Logo">
   </header>
 
   <div class="task-container">
+    <div class="row" style="margin-bottom: 1rem;">
+  <label for="sortTasks" style="margin-right: 0.5rem; font-size:0.9rem; color:var(--text-muted)">Sort by:</label>
+  <select id="sortTasks">
+    <option value="default">Default</option>
+    <option value="priority">Priority</option>
+    <option value="duedate">Due Date</option>
+  </select>
+</div>
     <div class="task-input">
       <div class="row">
         <input type="text" id="taskInput" placeholder="Task name..." />
@@ -284,30 +168,27 @@
     <p id="noTasksText" class="no-tasks">No tasks yet. Add one!</p>
   </div>
 
- <!-- TIMER FEATURE -->
-<div class="timer-container">
-  <h2>Timer</h2>
-  <div class="timer-display" id="timerDisplay">00:00</div>
-   <div id="timerStatus" style="text-align:center; color: var(--accent); font-size: 0.9rem; margin-bottom: 1rem; display:none;">
-    ⏸️ Paused
+  <!-- TIMER FEATURE -->
+  <div class="timer-container">
+    <h2>Timer</h2>
+    <div class="timer-display" id="timerDisplay">00:00</div>
+    <div id="timerStatus" style="text-align:center; color: var(--accent); font-size: 0.9rem; margin-bottom: 1rem; display:none;">⏸️ Paused</div>
+    <div class="timer-controls">
+      <input type="number" id="minutesInput" min="0" max="120" placeholder="Min">
+      <input type="number" id="secondsInput" min="0" max="59" placeholder="Sec">
+      <button id="startTimer">Start</button>
+      <button id="pauseTimer">Pause</button>
+      <button id="resetTimer">Reset</button>
+    </div>
   </div>
-  <div class="timer-controls">
-    <input type="number" id="minutesInput" min="0" max="120" placeholder="Min">
-    <input type="number" id="secondsInput" min="0" max="59" placeholder="Sec">
-    <button id="startTimer">Start</button>
-    <button id="pauseTimer">Pause</button>
-    <button id="resetTimer">Reset</button>
-  </div>
-</div>
 
-  <footer style="margin-top: 2rem; color: var(--text-muted); font-size: 0.8rem;">
-    © 2025 Tonie — Taskify
+  <footer style="margin-top:40px; text-align:center; font-size:0.85rem; color:var(--text-muted); opacity:0.7;">
+    <p>© 2025 Tonie — Taskify</p>
   </footer>
 
   <audio id="alarmSound" src="https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg"></audio>
 
   <script>
-    // === TASKIFY LOGIC ===
     const taskInput = document.getElementById('taskInput');
     const dueDate = document.getElementById('dueDate');
     const priority = document.getElementById('priority');
@@ -324,24 +205,14 @@
       const text = taskInput.value.trim();
       const prio = priority.value;
       const date = dueDate.value;
-
       if (!text) return showError("Task name can't be empty.");
       if (!prio) return showError("Please choose a priority.");
 
-      const newTask = {
-        text,
-        completed: false,
-        priority: prio,
-        date: date || 'No due date',
-        added: new Date().toLocaleString()
-      };
-
+      const newTask = { text, completed: false, priority: prio, date: date || 'No due date', added: new Date().toLocaleString() };
       tasks.push(newTask);
       saveTasks();
       renderTasks();
-      taskInput.value = '';
-      priority.value = '';
-      dueDate.value = '';
+      taskInput.value = ''; priority.value = ''; dueDate.value = '';
     }
 
     function toggleTask(i) {
@@ -362,16 +233,14 @@
 
     function renderTasks() {
       taskList.innerHTML = '';
-      if (tasks.length === 0) {
-        noTasksText.style.display = 'block';
-        return;
-      }
+      if (tasks.length === 0) { noTasksText.style.display = 'block'; return; }
       noTasksText.style.display = 'none';
 
       tasks.forEach((task, i) => {
         const li = document.createElement('li');
+        li.setAttribute('draggable', 'true');
+        li.dataset.index = i;
         if (task.completed) li.classList.add('completed');
-
         li.innerHTML = `
           <strong>${task.text}</strong>
           <span class="priority ${task.priority}">${task.priority} priority</span>
@@ -383,6 +252,12 @@
           </div>
         `;
         taskList.append(li);
+
+        // Drag events
+        li.addEventListener('dragstart', dragStart);
+        li.addEventListener('dragover', dragOver);
+        li.addEventListener('drop', drop);
+        li.addEventListener('dragend', dragEnd);
       });
     }
 
@@ -394,110 +269,167 @@
       setTimeout(() => popup.remove(), 2000);
     }
 
- // === TIMER LOGIC ===
-const timerDisplay = document.getElementById("timerDisplay");
-const minutesInput = document.getElementById("minutesInput");
-const secondsInput = document.getElementById("secondsInput");
-const startBtn = document.getElementById("startTimer");
-const pauseBtn = document.getElementById("pauseTimer");
-const resetBtn = document.getElementById("resetTimer");
-const timerStatus = document.getElementById("timerStatus");
-const alarmSound = document.getElementById("alarmSound");
-
-let timer;
-let remainingTime = 0;
-let isRunning = false;
-
-startBtn.onclick = () => {
-  if (isRunning) return;
-
-  if (!remainingTime) {
-    const mins = parseInt(minutesInput.value) || 0;
-    const secs = parseInt(secondsInput.value) || 0;
-    const total = mins * 60 + secs;
-    if (total <= 0) return showError("Enter valid time!");
-    remainingTime = total;
-  }
-
-  isRunning = true;
-  timerStatus.style.display = "none";
-  timer = setInterval(updateTimer, 1000);
-};
-
-pauseBtn.onclick = () => {
-  clearInterval(timer);
-  isRunning = false;
-  timerStatus.style.display = "block";
-  timerStatus.textContent = "⏸️ Paused";
-};
-
-resetBtn.onclick = () => {
-  clearInterval(timer);
-  isRunning = false;
-  remainingTime = 0;
-  updateDisplay();
-  timerStatus.style.display = "none";
-};
-
-function updateTimer() {
-  if (remainingTime <= 0) {
-    clearInterval(timer);
-    isRunning = false;
-    alarmSound.play();
-    showError("⏰ Time's up!");
-    timerStatus.style.display = "none";
-    return;
-  }
-  remainingTime--;
-  updateDisplay();
-}
-
-function updateDisplay() {
-  const mins = Math.floor(remainingTime / 60);
-  const secs = remainingTime % 60;
-  timerDisplay.textContent =
-    `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
-}
-
-
-    // === PARTICLES ===
-    const canvas = document.getElementById("particles");
-    const ctx = canvas.getContext("2d");
-    let particles = [];
-    function resize() { canvas.width = innerWidth; canvas.height = innerHeight; }
-    window.addEventListener("resize", resize);
-    resize();
-
-    for (let i = 0; i < 80; i++) {
-      particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        r: Math.random() * 2,
-        dx: (Math.random() - 0.5) * 0.5,
-        dy: (Math.random() - 0.5) * 0.5,
-      });
+    // === Drag & Drop ===
+    let draggedIndex = null;
+    function dragStart(e) { draggedIndex = e.target.dataset.index; e.target.style.opacity = '0.5'; }
+    function dragOver(e) { e.preventDefault(); }
+    function drop(e) {
+      const targetIndex = e.target.closest('li').dataset.index;
+      const draggedTask = tasks[draggedIndex];
+      tasks.splice(draggedIndex, 1);
+      tasks.splice(targetIndex, 0, draggedTask);
+      saveTasks();
+      renderTasks();
     }
+    function dragEnd(e) { e.target.style.opacity = '1'; }
 
-    function animate() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = "rgba(57,255,20,0.6)";
-      for (let p of particles) {
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fill();
-        p.x += p.dx; p.y += p.dy;
-        if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
-        if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+    // === TIMER LOGIC ===
+    const timerDisplay = document.getElementById("timerDisplay");
+    const minutesInput = document.getElementById("minutesInput");
+    const secondsInput = document.getElementById("secondsInput");
+    const startBtn = document.getElementById("startTimer");
+    const pauseBtn = document.getElementById("pauseTimer");
+    const resetBtn = document.getElementById("resetTimer");
+    const timerStatus = document.getElementById("timerStatus");
+    const alarmSound = document.getElementById("alarmSound");
+
+    let timer, remainingTime = 0, isRunning = false;
+
+    startBtn.onclick = () => {
+      if (isRunning) return;
+      if (!remainingTime) {
+        const mins = parseInt(minutesInput.value)||0;
+        const secs = parseInt(secondsInput.value)||0;
+        const total = mins*60 + secs;
+        if(total<=0) return showError("Enter valid time!");
+        remainingTime = total;
       }
-      requestAnimationFrame(animate);
+      isRunning=true; timerStatus.style.display="none"; timer=setInterval(updateTimer,1000);
     }
-    animate();
-  </script>
-  <footer style="margin-top:40px; text-align:center; font-size:0.85rem; color:var(--muted); opacity:0.7;">
-  <p>
-    This Taskify page is provided as an example project. Any unexpected behavior or bugs are non-critical and part of the demonstration.
-  </p>
-</footer>
 
+    pauseBtn.onclick = () => { clearInterval(timer); isRunning=false; timerStatus.style.display="block"; timerStatus.textContent="⏸️ Paused"; }
+    resetBtn.onclick = () => { clearInterval(timer); isRunning=false; remainingTime=0; updateDisplay(); timerStatus.style.display="none"; }
+
+    function updateTimer() {
+      if(remainingTime<=0){ clearInterval(timer); isRunning=false; alarmSound.play(); showError("⏰ Time's up!"); timerStatus.style.display="none"; return; }
+      remainingTime--; updateDisplay();
+    }
+    function updateDisplay() {
+      const mins=Math.floor(remainingTime/60), secs=remainingTime%60;
+      timerDisplay.textContent=`${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;
+    }
+
+    // Add sorting logic
+const sortSelect = document.getElementById('sortTasks');
+
+sortSelect.addEventListener('change', () => {
+  const value = sortSelect.value;
+  if(value === 'priority'){
+    tasks.sort((a,b) => {
+      const map = { high: 0, medium: 1, low: 2 }; // High first
+      return map[a.priority] - map[b.priority];
+    });
+  } else if(value === 'duedate'){
+    tasks.sort((a,b) => {
+      if(a.date === 'No due date') return 1;
+      if(b.date === 'No due date') return -1;
+      return new Date(a.date) - new Date(b.date);
+    });
+  }
+  renderTasks();
+});
+
+// Update renderTasks to include priority border
+function renderTasks() {
+  taskList.innerHTML = '';
+  if(tasks.length === 0){ noTasksText.style.display='block'; return; }
+  noTasksText.style.display='none';
+
+  tasks.forEach((task,i)=>{
+    const li = document.createElement('li');
+    li.setAttribute('draggable','true');
+    li.dataset.index = i;
+    li.classList.add(task.priority); // adds low/medium/high border
+    if(task.completed) li.classList.add('completed');
+
+    li.innerHTML = `
+      <strong>${task.text}</strong>
+      <span class="priority ${task.priority}">${task.priority} priority</span>
+      <span class="task-time">Added: ${task.added}</span>
+      <span class="task-time">Due: ${task.date}</span>
+      <div class="buttons">
+        <button class="btn" onclick="toggleTask(${i})">${task.completed?'Undo':'Done'}</button>
+        <button class="btn" onclick="deleteTask(${i})">Delete</button>
+      </div>
+    `;
+    taskList.append(li);
+
+    li.addEventListener('dragstart', dragStart);
+    li.addEventListener('dragover', dragOver);
+    li.addEventListener('drop', drop);
+    li.addEventListener('dragend', dragEnd);
+  });
+}
+
+  </script>
+  <script>
+    // === Undo / Copy / Paste ===
+let lastDeleted = null;
+
+// Override deleteTask to store last deleted task
+function deleteTask(i) {
+  lastDeleted = tasks[i];
+  tasks.splice(i, 1);
+  saveTasks();
+  renderTasks();
+}
+
+// Keyboard shortcuts
+document.addEventListener('keydown', async (e) => {
+  // Ctrl+Z → Undo last deletion
+  if (e.ctrlKey && e.key.toLowerCase() === 'z') {
+    if (lastDeleted) {
+      tasks.push(lastDeleted);
+      saveTasks();
+      renderTasks();
+      lastDeleted = null;
+      showError("Undo: Task restored");
+    }
+  }
+
+  // Ctrl+C → Copy selected task text
+  if (e.ctrlKey && e.key.toLowerCase() === 'c') {
+    const selected = document.activeElement;
+    if (selected.tagName === 'LI' || selected.tagName === 'BUTTON') {
+      const text = selected.querySelector('strong')?.textContent || '';
+      if (text) {
+        await navigator.clipboard.writeText(text);
+        showError("Copied task text");
+      }
+    }
+  }
+
+  // Ctrl+V → Paste clipboard text as a new low-priority task
+  if (e.ctrlKey && e.key.toLowerCase() === 'v') {
+    const text = await navigator.clipboard.readText();
+    if (!text) return;
+
+    const newTask = {
+      text: text,
+      completed: false,
+      priority: 'low',
+      date: 'No due date',
+      added: new Date().toLocaleString()
+    };
+
+    tasks.push(newTask);
+    saveTasks();
+    renderTasks();
+    showError("Pasted task");
+  }
+});
+
+  </script>
 </body>
 </html>
+  
