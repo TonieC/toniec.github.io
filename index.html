@@ -678,56 +678,56 @@ a { color:var(--accent); text-decoration:none; }
 
 
 
-  <!-- ABOUT -->
- <section id="about" class="panel wrap reveal tilt" aria-labelledby="about-heading">
+<!-- ABOUT -->
+<section id="about" class="panel wrap reveal tilt" aria-labelledby="about-heading">
   <header class="about-header">
     <h2 id="about-heading">About Me</h2>
-   <p class="lead">
-  I'm <strong>Tonie</strong>, an 18-year-old programmer from the Philippines currently surviving ICT, which stands for Information Communication and Technology but often feels like a full-time adventure in debugging. I spend my days building web interfaces that don’t make users cry, tinkering with microcontrollers until they do what I want, and creating practical tools that actually solve real problems instead of just looking cool. I like learning new tricks, breaking things to understand how they work, and occasionally pretending that my code knows what it’s doing. If you ever need something designed, coded, or magically made to work, I am your person.
-</p>
+    <p class="lead">
+      I'm <strong>Tonie</strong>, an 18-year-old programmer from the Philippines currently surviving ICT, which stands for Information Communication and Technology but often feels like a full-time adventure in debugging. I spend my days building web interfaces that don’t make users cry, tinkering with microcontrollers until they do what I want, and creating practical tools that actually solve real problems instead of just looking cool. I like learning new tricks, breaking things to understand how they work, and occasionally pretending that my code knows what it’s doing. If you ever need something designed, coded, or magically made to work, I am your person.
+    </p>
+
+    <!-- Download Resume Button -->
+    <a href="images/resume.pdf" download class="download-btn">Download Resume</a>
 
   </header>
 
   <div class="about-grid" style="margin-top:24px; display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:20px;">
+    <div class="about-item">
+      <h3>What I Do</h3>
+      <ul>
+        <li>Build web pages that actually look good and don’t make users cry</li>
+        <li>Tinker with microcontrollers and IoT gadgets until they do my bidding (Arduino, ESP32, you name it)</li>
+        <li>Design UIs and tools that are useful, not just flashy</li>
+      </ul>
+    </div>
 
-  <div class="about-item">
-    <h3>What I Do</h3>
-    <ul>
-      <li>Build web pages that actually look good and don’t make users cry</li>
-      <li>Tinker with microcontrollers and IoT gadgets until they do my bidding (Arduino, ESP32, you name it)</li>
-      <li>Design UIs and tools that are useful, not just flashy</li>
-    </ul>
+    <div class="about-item">
+      <h3>How I Work</h3>
+      <ul>
+        <li>Write code that is readable, accessible, and doesn’t secretly hate me</li>
+        <li>Follow the sacred cycle: prototype, test, ship, repeat</li>
+        <li>Focus on small wins and things you can actually measure</li>
+      </ul>
+    </div>
+
+    <div class="about-item">
+      <h3>Interests</h3>
+      <ul>
+        <li>Building websites and experimenting with new tech</li>
+        <li>Contributing to open-source projects because sharing is caring</li>
+        <li>Learning all the cool new stuff in web and embedded development</li>
+      </ul>
+    </div>
+
+    <div class="about-item">
+      <h3>Goals</h3>
+      <ul>
+        <li>Create products that people actually find useful</li>
+        <li>Grow into a full-stack developer people can rely on</li>
+        <li>Give back to the programming community in any way I can</li>
+      </ul>
+    </div>
   </div>
-
-  <div class="about-item">
-    <h3>How I Work</h3>
-    <ul>
-      <li>Write code that is readable, accessible, and doesn’t secretly hate me</li>
-      <li>Follow the sacred cycle: prototype, test, ship, repeat</li>
-      <li>Focus on small wins and things you can actually measure</li>
-    </ul>
-  </div>
-
-  <div class="about-item">
-    <h3>Interests</h3>
-    <ul>
-      <li>Building websites and experimenting with new tech</li>
-      <li>Contributing to open-source projects because sharing is caring</li>
-      <li>Learning all the cool new stuff in web and embedded development</li>
-    </ul>
-  </div>
-
-  <div class="about-item">
-    <h3>Goals</h3>
-    <ul>
-      <li>Create products that people actually find useful</li>
-      <li>Grow into a full-stack developer people can rely on</li>
-      <li>Give back to the programming community in any way I can</li>
-    </ul>
-  </div>
-
-</div>
-
 </section>
 
 <style>
@@ -755,15 +755,37 @@ a { color:var(--accent); text-decoration:none; }
     margin-top: 6px;
   }
 
+  /* Download Resume Button */
+  .download-btn {
+    display: inline-block;
+    align-items: center;
+    margin-top: 16px;
+    padding: 10px 18px;
+    border-radius: 8px;
+    background: var(--accent);
+    color: var(--text-light);
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px var(--stack-shadow);
+  }
+
+  .download-btn:hover {
+    background: rgba(57, 255, 20, 0.2);
+    color: var(--accent);
+    box-shadow: 0 0 15px var(--contact-hover-shadow1);
+    transform: scale(1.05);
+  }
+
   .skill-card img {
-  transition: transform 0.5s ease; /* smooth rotation */
-}
+    transition: transform 0.5s ease;
+  }
 
-.skill-card:hover img {
-  transform: rotate(360deg); /* full spin on hover */
-}
-
+  .skill-card:hover img {
+    transform: rotate(360deg);
+  }
 </style>
+
 
 
  <section id="skills" class="panel wrap reveal" aria-labelledby="skills-heading">
