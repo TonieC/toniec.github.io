@@ -683,7 +683,7 @@ a { color:var(--accent); text-decoration:none; }
   <header class="about-header">
     <h2 id="about-heading">About Me</h2>
     <p class="lead">
-      I'm <strong>Tonie</strong>, an 18-year-old programmer from the Philippines currently surviving ICT, which stands for Information Communication and Technology but often feels like a full-time adventure in debugging. I spend my days building web interfaces that don’t make users cry, tinkering with microcontrollers until they do what I want, and creating practical tools that actually solve real problems instead of just looking cool. I like learning new tricks, breaking things to understand how they work, and occasionally pretending that my code knows what it’s doing. If you ever need something designed, coded, or magically made to work, I am your person.
+      I'm <strong>Tonie</strong>, an 18-year-old programmer from the Philippines surviving ICT—Information Communication and Technology—but mostly debugging adventures. I spend my days building web interfaces that don’t frustrate users, tinkering with microcontrollers until they obey, and creating practical tools that solve real problems. I enjoy learning new tricks, breaking things to understand them, and occasionally pretending my code knows what it’s doing. Need something designed, coded, or magically fixed? I’m your person.
     </p>
 
     <!-- Download Resume Button -->
@@ -691,54 +691,60 @@ a { color:var(--accent); text-decoration:none; }
 
     <!-- Last Updated -->
     <p class="last-updated">Last updated: Nov 1, 2025</p>
-
   </header>
 
-
-  <div class="about-grid" style="margin-top:24px; display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:20px;">
+  <div class="about-grid">
     <div class="about-item">
       <h3>What I Do</h3>
       <ul>
-        <li>Build web pages that actually look good and don’t make users cry</li>
-        <li>Tinker with microcontrollers and IoT gadgets until they do my bidding (Arduino, ESP32, you name it)</li>
-        <li>Design UIs and tools that are useful, not just flashy</li>
+        <li>Build web pages that are functional and user-friendly</li>
+        <li>Tinker with microcontrollers and IoT gadgets (Arduino, ESP32, etc.)</li>
+        <li>Design UIs and tools that are practical, not just flashy</li>
       </ul>
     </div>
 
     <div class="about-item">
       <h3>How I Work</h3>
       <ul>
-        <li>Write code that is readable, accessible, and doesn’t secretly hate me</li>
-        <li>Follow the sacred cycle: prototype, test, ship, repeat</li>
-        <li>Focus on small wins and things you can actually measure</li>
+        <li>Write readable, maintainable, and accessible code</li>
+        <li>Follow the cycle: prototype, test, ship, repeat</li>
+        <li>Focus on measurable, achievable wins</li>
       </ul>
     </div>
 
     <div class="about-item">
       <h3>Interests</h3>
       <ul>
-        <li>Building websites and experimenting with new tech</li>
-        <li>Contributing to open-source projects because sharing is caring</li>
-        <li>Learning all the cool new stuff in web and embedded development</li>
+        <li>Building websites and exploring new technologies</li>
+        <li>Contributing to open-source projects</li>
+        <li>Learning emerging trends in web and embedded development</li>
       </ul>
     </div>
 
     <div class="about-item">
       <h3>Goals</h3>
       <ul>
-        <li>Create products that people actually find useful</li>
-        <li>Grow into a full-stack developer people can rely on</li>
-        <li>Give back to the programming community in any way I can</li>
+        <li>Create products that users actually find useful</li>
+        <li>Grow into a reliable full-stack developer</li>
+        <li>Give back to the programming community</li>
       </ul>
     </div>
   </div>
 </section>
+
 
 <style>
   .last-updated {
   font-size: 0.75rem; /* small text */
   color: #777;        /* lighter tone */
   margin-top: 6px;
+}
+
+.about-grid {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
 }
 
   #about {
@@ -803,134 +809,124 @@ a { color:var(--accent); text-decoration:none; }
     <h2 id="skills-heading">Skills & Tools</h2>
   </div>
 
-  <div class="grid responsive" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px; margin-top:16px;">
+  <div class="grid responsive" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:16px; margin-top:16px;">
 
-    <div class="skill-card">
-      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript" style="width:36px;height:36px">
+    <!-- Frontend -->
+    <div class="skill-card" style="display:flex; align-items:center; gap:8px;">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript" style="width:24px; height:24px;">
       <div>
-        <div style="font-weight:700">JavaScript</div>
-        <div style="color:var(--muted);font-size:13px">ES6+, DOM wizardry, Fetch magic, and occasionally convincing the browser to behave</div>
+        <div style="font-weight:700;">JavaScript</div>
+        <div style="font-size:13px; color:var(--muted);">ES6+, DOM manipulation, and making browsers behave.</div>
       </div>
     </div>
 
-    <div class="skill-card">
-      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" alt="TypeScript" style="width:36px;height:36px">
+    <div class="skill-card" style="display:flex; align-items:center; gap:8px;">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" alt="TypeScript" style="width:24px; height:24px;">
       <div>
-        <div style="font-weight:700">TypeScript</div>
-        <div style="color:var(--muted);font-size:13px">Typed JavaScript, safer code, fewer runtime surprises, and confidence in big projects</div>
+        <div style="font-weight:700;">TypeScript</div>
+        <div style="font-size:13px; color:var(--muted);">Typed JS for safer, maintainable projects.</div>
       </div>
     </div>
 
-    <div class="skill-card">
-      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React" style="width:36px;height:36px">
+    <div class="skill-card" style="display:flex; align-items:center; gap:8px;">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React" style="width:24px; height:24px;">
       <div>
-        <div style="font-weight:700">React</div>
-        <div style="color:var(--muted);font-size:13px">Component-based UIs, hooks magic, and making SPAs feel alive</div>
+        <div style="font-weight:700;">React</div>
+        <div style="font-size:13px; color:var(--muted);">Component-based UIs, hooks, and SPAs that feel alive.</div>
       </div>
     </div>
 
-    <div class="skill-card">
-      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg" alt="Vue" style="width:36px;height:36px">
+    <div class="skill-card" style="display:flex; align-items:center; gap:8px;">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg" alt="TailwindCSS" style="width:24px; height:24px;">
       <div>
-        <div style="font-weight:700">Vue</div>
-        <div style="color:var(--muted);font-size:13px">Reactive views, simplicity, and getting stuff done without overcomplication</div>
+        <div style="font-weight:700;">TailwindCSS</div>
+        <div style="font-size:13px; color:var(--muted);">Utility-first styling and responsive layouts.</div>
       </div>
     </div>
 
-    <div class="skill-card">
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg" alt="TailwindCSS" style="width:36px;height:36px">
+    <!-- Backend -->
+    <div class="skill-card" style="display:flex; align-items:center; gap:8px;">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt="Node.js" style="width:24px; height:24px;">
       <div>
-        <div style="font-weight:700">TailwindCSS</div>
-        <div style="color:var(--muted);font-size:13px">Utility-first styling, responsive design, and making layouts look fancy in record time</div>
+        <div style="font-weight:700;">Node.js</div>
+        <div style="font-size:13px; color:var(--muted);">Fast JS backend and APIs.</div>
       </div>
     </div>
 
-    <div class="skill-card">
-      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt="Node.js" style="width:36px;height:36px">
+    <div class="skill-card" style="display:flex; align-items:center; gap:8px;">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg" alt="Express.js" style="width:24px; height:24px;">
       <div>
-        <div style="font-weight:700">Node.js</div>
-        <div style="color:var(--muted);font-size:13px">JavaScript on the server, fast APIs, and keeping backend code as familiar as the frontend</div>
+        <div style="font-weight:700;">Express.js</div>
+        <div style="font-size:13px; color:var(--muted);">Minimalist web framework and routing magic.</div>
       </div>
     </div>
 
-    <div class="skill-card">
-      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg" alt="Express.js" style="width:36px;height:36px">
+    <!-- Core / Markup -->
+    <div class="skill-card" style="display:flex; align-items:center; gap:8px;">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5" style="width:24px; height:24px;">
       <div>
-        <div style="font-weight:700">Express.js</div>
-        <div style="color:var(--muted);font-size:13px">Minimalist web framework, routing wizardry, and making APIs behave</div>
+        <div style="font-weight:700;">HTML5</div>
+        <div style="font-size:13px; color:var(--muted);">Semantic markup for accessible, robust websites.</div>
       </div>
     </div>
 
-    <div class="skill-card">
-      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5" style="width:36px;height:36px">
+    <div class="skill-card" style="display:flex; align-items:center; gap:8px;">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3" style="width:24px; height:24px;">
       <div>
-        <div style="font-weight:700">HTML5</div>
-        <div style="color:var(--muted);font-size:13px">Semantic markup that keeps screen readers happy and browsers content</div>
+        <div style="font-weight:700;">CSS</div>
+        <div style="font-size:13px; color:var(--muted);">Layouts, animations, and responsive design.</div>
       </div>
     </div>
 
-    <div class="skill-card">
-      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3" style="width:36px;height:36px">
+    <!-- Programming / Embedded -->
+    <div class="skill-card" style="display:flex; align-items:center; gap:8px;">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" style="width:24px; height:24px;">
       <div>
-        <div style="font-weight:700">CSS</div>
-        <div style="color:var(--muted);font-size:13px">Layouts, animations, responsive design, and occasional pixel-perfect obsession</div>
+        <div style="font-weight:700;">Python</div>
+        <div style="font-size:13px; color:var(--muted);">Scripting, automation, and rapid prototyping.</div>
       </div>
     </div>
 
-    <div class="skill-card">
-      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" style="width:36px;height:36px">
+    <div class="skill-card" style="display:flex; align-items:center; gap:8px;">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg" alt="C" style="width:24px; height:24px;">
       <div>
-        <div style="font-weight:700">Python</div>
-        <div style="color:var(--muted);font-size:13px">Scripting, automating tasks, and prototyping things faster than coffee consumption</div>
+        <div style="font-weight:700;">C / C++</div>
+        <div style="font-size:13px; color:var(--muted);">Low-level programming and memory management.</div>
       </div>
     </div>
 
-    <div class="skill-card">
-      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg" alt="C" style="width:36px;height:36px">
+    <div class="skill-card" style="display:flex; align-items:center; gap:8px;">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/arduino/arduino-original.svg" alt="Arduino" style="width:24px; height:24px;">
       <div>
-        <div style="font-weight:700">C</div>
-        <div style="color:var(--muted);font-size:13px">Low-level programming, algorithms, and feeling like a wizard controlling memory</div>
+        <div style="font-weight:700;">Arduino / ESP</div>
+        <div style="font-size:13px; color:var(--muted);">Microcontrollers and IoT projects that work.</div>
       </div>
     </div>
 
-    <div class="skill-card">
-      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" alt="C++" style="width:36px;height:36px">
+    <!-- Tools -->
+    <div class="skill-card" style="display:flex; align-items:center; gap:8px;">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git" style="width:24px; height:24px;">
       <div>
-        <div style="font-weight:700">C++</div>
-        <div style="color:var(--muted);font-size:13px">OOP, STL, and occasionally yelling at memory management</div>
+        <div style="font-weight:700;">Git</div>
+        <div style="font-size:13px; color:var(--muted);">Version control and collaboration workflow.</div>
       </div>
     </div>
 
-    <div class="skill-card">
-      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" alt="Linux" style="width:36px;height:36px">
+    <div class="skill-card" style="display:flex; align-items:center; gap:8px;">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" alt="Linux" style="width:24px; height:24px;">
       <div>
-        <div style="font-weight:700">Linux</div>
-        <div style="color:var(--muted);font-size:13px">Command line sorcery, shell scripting, and managing environments without tears</div>
-      </div>
-    </div>
-
-    <div class="skill-card">
-      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/arduino/arduino-original.svg" alt="Arduino" style="width:36px;height:36px">
-      <div>
-        <div style="font-weight:700">Arduino / ESP</div>
-        <div style="color:var(--muted);font-size:13px">Making microcontrollers do cool stuff and gadgets that actually work</div>
-      </div>
-    </div>
-
-    <div class="skill-card">
-      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git" style="width:36px;height:36px">
-      <div>
-        <div style="font-weight:700">Git</div>
-        <div style="color:var(--muted);font-size:13px">Version control, branching chaos, and workflow survival skills</div>
+        <div style="font-weight:700;">Linux</div>
+        <div style="font-size:13px; color:var(--muted);">Command line, scripting, and environment management.</div>
       </div>
     </div>
 
   </div>
 
-  <small style="display:block; margin-top:12px; color:var(--muted)">
-    These are the tools and skills I actually use in real projects. Not all are from formal employment unless stated.
+  <small style="display:block; margin-top:12px; color:var(--muted);">
+    Tools and skills I actively use in real projects.
   </small>
 </section>
+
 
 
 
@@ -965,6 +961,17 @@ a { color:var(--accent); text-decoration:none; }
     <div class="timeline-item">
       <div class="node" aria-hidden="true"></div>
       <h3 style="margin:0;color:var(--text);font-size:16px">
+        Founder — Survwin 
+        <span style="color:var(--muted);font-size:13px;margin-left:8px">(2025–Present)</span>
+      </h3>
+      <p style="color:var(--muted);margin-top:6px">
+        Created and manage <strong>Survwin</strong>, a platform rewarding users for completing surveys. Oversee development, automation, and community growth while ensuring smooth operations.
+      </p>
+    </div>
+
+    <div class="timeline-item">
+      <div class="node" aria-hidden="true"></div>
+      <h3 style="margin:0;color:var(--text);font-size:16px">
         Robotics Team President 
         <span style="color:var(--muted);font-size:13px;margin-left:8px">(2024–2025)</span>
       </h3>
@@ -991,7 +998,7 @@ a { color:var(--accent); text-decoration:none; }
         <span style="color:var(--muted);font-size:13px;margin-left:8px">(2024–2025)</span>
       </h3>
       <p style="color:var(--muted);margin-top:6px">
-        <strong>Camarin High School</strong> — Crafted digital spreads and layouts for our publication without breaking wordpress.
+        <strong>Camarin High School</strong> — Crafted digital spreads and layouts for our publication without breaking WordPress.
       </p>
     </div>
 
@@ -1005,7 +1012,7 @@ a { color:var(--accent); text-decoration:none; }
 
   </div>
 </section>
-
+ 
 
   <!-- CONTACT -->
   <section id="contact" class="wrap reveal" aria-labelledby="contact-heading">
@@ -1297,9 +1304,10 @@ const messages = [
       });
     })();
   </script>
- <script>
+<script>
 const canvas = document.getElementById('web-bg');
 const ctx = canvas.getContext('2d');
+
 let particles = [];
 let explosions = [];
 let shockwaves = [];
@@ -1313,18 +1321,21 @@ function resizeCanvas() {
 window.addEventListener('resize', resizeCanvas);
 resizeCanvas();
 
+// Reduce particle count for performance
+const PARTICLE_COUNT = 100;
+
 function makeParticle() {
   return {
     x: Math.random() * canvas.width,
     y: Math.random() * canvas.height,
-    vx: (Math.random() - 0.5) * 0.5,
-    vy: (Math.random() - 0.5) * 0.5,
-    radius: Math.random() * 1.5 + 0.5,
+    vx: (Math.random() - 0.5) * 0.3,
+    vy: (Math.random() - 0.5) * 0.3,
+    radius: Math.random() * 1.2 + 0.5,
     mass: 1
   };
 }
 
-for (let i = 0; i < 200; i++) particles.push(makeParticle());
+for (let i = 0; i < PARTICLE_COUNT; i++) particles.push(makeParticle());
 
 window.addEventListener('mousemove', e => {
   mouse.x = e.clientX;
@@ -1333,71 +1344,26 @@ window.addEventListener('mousemove', e => {
 });
 
 function makeExplosion(x, y) {
-  for (let i = 0; i < 10; i++) {
+  const count = 5; // fewer sparks
+  for (let i = 0; i < count; i++) {
     explosions.push({
       x,
       y,
-      vx: (Math.random() - 0.5) * 3,
-      vy: (Math.random() - 0.5) * 3,
-      life: 20,
+      vx: (Math.random() - 0.5) * 2,
+      vy: (Math.random() - 0.5) * 2,
+      life: 15,
       radius: Math.random() * 2 + 1
     });
   }
   shockwaves.push({
-    x,
-    y,
+    x, y,
     radius: 0,
-    maxRadius: 80 + Math.random() * 40,
+    maxRadius: 60 + Math.random() * 20,
     alpha: 0.6
   });
 }
 
-function handleCollisions() {
-  for (let i = 0; i < particles.length; i++) {
-    for (let j = i + 1; j < particles.length; j++) {
-      const p1 = particles[i];
-      const p2 = particles[j];
-      const dx = p2.x - p1.x;
-      const dy = p2.y - p1.y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      const minDist = p1.radius + p2.radius;
-
-      if (dist < minDist) {
-        const overlap = (minDist - dist) / 2;
-        const nx = dx / dist;
-        const ny = dy / dist;
-        p1.x -= nx * overlap;
-        p1.y -= ny * overlap;
-        p2.x += nx * overlap;
-        p2.y += ny * overlap;
-
-        const dvx = p1.vx - p2.vx;
-        const dvy = p1.vy - p2.vy;
-        const dot = dvx * nx + dvy * ny;
-        if (dot > 0) continue;
-
-        const impulse = (2 * dot) / (p1.mass + p2.mass);
-        p1.vx -= impulse * p2.mass * nx;
-        p1.vy -= impulse * p2.mass * ny;
-        p2.vx += impulse * p1.mass * nx;
-        p2.vy += impulse * p1.mass * ny;
-
-        const impactSpeed = Math.abs(dot);
-        if (impactSpeed > 0.5) {
-          const midX = (p1.x + p2.x) / 2;
-          const midY = (p1.y + p2.y) / 2;
-          makeExplosion(midX, midY);
-          particles.splice(j, 1);
-          particles.splice(i, 1);
-          particles.push(makeParticle());
-          particles.push(makeParticle());
-          i--;
-          break;
-        }
-      }
-    }
-  }
-}
+// Skip pairwise collisions for performance
 
 function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -1412,11 +1378,10 @@ function animate() {
   ctx.save();
   ctx.translate(parallaxX, parallaxY);
 
-  const repelRadius = 100;
-  const repelStrength = 1.15;
+  const repelRadius = 80;
+  const repelStrength = 0.5;
 
-  for (let i = 0; i < particles.length; i++) {
-    const p = particles[i];
+  for (let p of particles) {
     p.x += p.vx;
     p.y += p.vy;
 
@@ -1425,77 +1390,50 @@ function animate() {
 
     const dxm = p.x - mouse.x;
     const dym = p.y - mouse.y;
-    const distMouse = Math.sqrt(dxm * dxm + dym * dym);
-    if (distMouse < repelRadius) {
+    const distMouseSq = dxm*dxm + dym*dym;
+
+    if (distMouseSq < repelRadius * repelRadius) {
+      const dist = Math.sqrt(distMouseSq);
+      const force = ((repelRadius - dist) / repelRadius) * repelStrength;
       const angle = Math.atan2(dym, dxm);
-      const force = ((repelRadius - distMouse) / repelRadius) * (repelStrength * 0.3);
       p.vx += Math.cos(angle) * force;
       p.vy += Math.sin(angle) * force;
     }
 
     // Draw particle
     ctx.beginPath();
-    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-    ctx.fillStyle = "rgba(90, 200, 255, 0.3)";
+    ctx.arc(p.x, p.y, p.radius, 0, Math.PI*2);
+    ctx.fillStyle = "rgba(90,200,255,0.3)";
     ctx.fill();
-
-    // Draw connecting lines
-    for (let j = i + 1; j < particles.length; j++) {
-      const p2 = particles[j];
-      const dx = p.x - p2.x;
-      const dy = p.y - p2.y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      if (dist < 120) {
-        const midX = (p.x + p2.x) / 2;
-        const midY = (p.y + p2.y) / 2;
-        const dxm = midX - mouse.x;
-        const dym = midY - mouse.y;
-        const mouseDist = Math.sqrt(dxm * dxm + dym * dym);
-        let alpha = 1 - dist / 120;
-        if (mouseDist < repelRadius) {
-          const fade = mouseDist / repelRadius;
-          alpha *= fade * 0.5;
-          if (fade < 0.3) continue;
-        }
-        ctx.strokeStyle = `rgba(255, 179, 71, ${alpha * 0.6})`;
-        ctx.lineWidth = 0.4;
-        ctx.beginPath();
-        ctx.moveTo(p.x, p.y);
-        ctx.lineTo(p2.x, p2.y);
-        ctx.stroke();
-      }
-    }
 
     p.vx *= 0.99;
     p.vy *= 0.99;
   }
 
-  handleCollisions();
-
-  // Explosion sparks
+  // Draw explosions
   for (let i = explosions.length - 1; i >= 0; i--) {
     const e = explosions[i];
     e.x += e.vx;
     e.y += e.vy;
     e.life--;
     ctx.beginPath();
-    ctx.arc(e.x, e.y, e.radius, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(255,150,50,${e.life / 20})`;
+    ctx.arc(e.x, e.y, e.radius, 0, Math.PI*2);
+    ctx.fillStyle = `rgba(255,150,50,${e.life/15})`;
     ctx.fill();
-    if (e.life <= 0) explosions.splice(i, 1);
+    if (e.life <= 0) explosions.splice(i,1);
   }
 
-  // Shockwave rings
+  // Draw shockwaves
   for (let i = shockwaves.length - 1; i >= 0; i--) {
     const s = shockwaves[i];
     s.radius += 2;
     s.alpha *= 0.96;
     ctx.beginPath();
-    ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
-    ctx.strokeStyle = `rgba(255, 200, 100, ${s.alpha})`;
-    ctx.lineWidth = 1.5;
+    ctx.arc(s.x, s.y, s.radius, 0, Math.PI*2);
+    ctx.strokeStyle = `rgba(255,200,100,${s.alpha})`;
+    ctx.lineWidth = 1.2;
     ctx.stroke();
-    if (s.radius > s.maxRadius || s.alpha < 0.02) shockwaves.splice(i, 1);
+    if (s.radius > s.maxRadius || s.alpha < 0.02) shockwaves.splice(i,1);
   }
 
   ctx.restore();
@@ -1504,6 +1442,7 @@ function animate() {
 
 animate();
 </script>
+
 
 </body>
 </html>
