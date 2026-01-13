@@ -399,14 +399,12 @@ a { color:var(--accent); text-decoration:none; }
       return false;
     }
 
-    // Block Ctrl/Cmd+Shift+C (element picker)
     if (ctrl && shift && key === 'C') {
       e.preventDefault();
       e.stopImmediatePropagation?.();
       return false;
     }
 
-    // Block F10 (some browsers map menu/dev tools), optionally block other suspect combos
     if (key === 'F10' || kc === 121) {
       e.preventDefault();
       e.stopImmediatePropagation?.();
@@ -414,30 +412,22 @@ a { color:var(--accent); text-decoration:none; }
     }
   }
 
-  // Attach as capturing listeners so they run early
   document.addEventListener('contextmenu', handlePrevent, { capture: true, passive: false });
   document.addEventListener('mousedown', function(e){ if (e.button === 2) { e.preventDefault(); e.stopImmediatePropagation?.(); return false; } }, { capture: true, passive: false });
   document.addEventListener('keydown', handlePrevent, { capture: true, passive: false });
   window.addEventListener('keydown', handlePrevent, { capture: true, passive: false });
 
-  // Minimal attempt to stop console.open via common programmatic checks:
-  // (This is shallow — won't stop determined users.)
   try {
-    // override console methods to make casual console logging less useful
     const noop = function(){};
     console.debug = noop;
     console.info  = noop;
-    // keep console.log if you want; otherwise override too
-    // console.log = noop;
   } catch (err) { /* silent */ }
 
-  // Small, silent integrity: reapply listeners if removed
   const reapply = () => {
     if (!document.hasListenerFlag) {
       document.hasListenerFlag = true;
     }
   };
-  // Not doing any visible fallback or message.
 })();
 </script>
 
@@ -445,13 +435,12 @@ a { color:var(--accent); text-decoration:none; }
 
   <canvas id="web-bg"></canvas>
 
-  <!-- ambient background -->
   <div class="ambient" aria-hidden="true">
     <div class="layer l1"></div>
     <div class="layer l2"></div>
   </div>
 
-  <script>console.log("Test")</script>
+  <script>console.("Test")</script>
 
   <!-- header / nav -->
   <header class="site-header" role="banner">
@@ -462,6 +451,8 @@ a { color:var(--accent); text-decoration:none; }
           <div class="subtitle">Front-End Dev</div>
         </div>
       </div>
+
+
 <nav class="nav-links" aria-label="Primary">
   <a href="#about" class="nav-icon" title="About"><i class="fas fa-user"></i></a>
   <a href="#skills" class="nav-icon" title="Skills"><i class="fas fa-code"></i></a>
@@ -496,7 +487,6 @@ a { color:var(--accent); text-decoration:none; }
 
     </div>
   </header>
-
  <!-- HERO SECTION -->
 <main class="hero" role="main" id="home">
   <div class="wrap" style="position: relative;">
