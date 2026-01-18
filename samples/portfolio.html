@@ -1,0 +1,567 @@
+<!doctype html>
+<html lang="en">
+<head>
+        <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Portfolio — Sample</title>
+  <meta name="description" content="A realistic portfolio sample page (placeholders)." />
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#0f172a;
+      --muted:#475569;
+      --line:#e2e8f0;
+      --soft:#f8fafc;
+      --shadow: 0 10px 28px rgba(2,6,23,.08);
+      --r:16px;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Liberation Sans", sans-serif;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --accent:#2563eb;
+    }
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: var(--sans);
+      color: var(--text);
+      background: radial-gradient(1200px 600px at 70% -10%, #dbeafe 0, rgba(219,234,254,0) 60%),
+                  radial-gradient(1000px 600px at 0% 20%, #fef3c7 0, rgba(254,243,199,0) 55%),
+                  var(--bg);
+    }
+    a{ color:inherit; text-decoration:none; }
+    .wrap{ max-width: 1120px; margin:0 auto; padding: 20px; }
+
+    /* Top nav (not “cardy”, more real portfolio style) */
+    .top{
+      position: sticky; top:0; z-index:20;
+      background: rgba(255,255,255,.82);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+    }
+    .top .inner{
+      max-width:1120px; margin:0 auto;
+      padding: 12px 20px;
+      display:flex; align-items:center; justify-content:space-between; gap:14px;
+    }
+    .id{
+      display:flex; flex-direction:column;
+      gap:2px;
+      min-width: 0;
+    }
+    .id b{
+      font-size: 14px;
+      letter-spacing:.2px;
+    }
+    .id span{
+      font-size: 12px;
+      color: var(--muted);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    nav{
+      display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+      font-size: 13px;
+    }
+    nav a{
+      color: var(--muted);
+      padding: 8px 10px;
+      border-radius: 999px;
+      transition: background .15s ease, color .15s ease;
+    }
+    nav a:hover{ background: var(--soft); color: var(--text); }
+    .pill{
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--text);
+    }
+
+    /* Hero */
+    .hero{
+      padding: 34px 0 18px;
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 18px;
+      align-items:start;
+    }
+    .headline{
+      font-size: 44px;
+      line-height: 1.05;
+      letter-spacing: -1px;
+      margin:0;
+    }
+    .lead{
+      margin: 12px 0 0;
+      color: var(--muted);
+      line-height:1.6;
+      font-size: 15px;
+      max-width: 68ch;
+    }
+    .cta{
+      display:flex; gap:10px; margin-top: 16px; flex-wrap:wrap;
+    }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background:#fff;
+      font-weight: 700;
+      font-size: 13px;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+      box-shadow: 0 6px 18px rgba(2,6,23,.06);
+    }
+    .btn:hover{ transform: translateY(-1px); box-shadow: 0 10px 22px rgba(2,6,23,.10); }
+    .btn.primary{
+      background: var(--accent);
+      border-color: rgba(37,99,235,.25);
+      color:#fff;
+      box-shadow: 0 10px 22px rgba(37,99,235,.20);
+    }
+    .btn.primary:hover{ box-shadow: 0 14px 28px rgba(37,99,235,.24); }
+
+    /* Right summary card */
+    .summary{
+      border: 1px solid var(--line);
+      border-radius: var(--r);
+      background: rgba(255,255,255,.85);
+      box-shadow: var(--shadow);
+      padding: 14px;
+    }
+    .summary h3{
+      margin:0;
+      font-size: 13px;
+      letter-spacing: .2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-family: var(--mono);
+    }
+    .kv{
+      margin-top: 10px;
+      display:grid;
+      gap:10px;
+    }
+    .kv .row{
+      display:grid;
+      grid-template-columns: 120px 1fr;
+      gap:10px;
+      align-items:baseline;
+    }
+    .kv .k{ color: var(--muted); font-size: 12px; }
+    .kv .v{ font-size: 13px; }
+    .kv .v code{
+      font-family: var(--mono);
+      font-size: 12px;
+      background: var(--soft);
+      border: 1px solid var(--line);
+      padding: 2px 6px;
+      border-radius: 999px;
+    }
+
+    /* Sections */
+    section{ scroll-margin-top: 72px; }
+    .section-head{
+      margin-top: 18px;
+      display:flex; align-items:flex-end; justify-content:space-between; gap:12px;
+    }
+    .section-head h2{
+      margin:0;
+      font-size: 18px;
+      letter-spacing:-.2px;
+    }
+    .section-head p{
+      margin:0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .divider{
+      margin-top: 12px;
+      border-top: 1px solid var(--line);
+    }
+
+    /* Projects grid (future-proof: copy/paste one <article>) */
+    .projects{
+      margin-top: 14px;
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .project{
+      border: 1px solid var(--line);
+      border-radius: var(--r);
+      background:#fff;
+      overflow:hidden;
+      box-shadow: 0 8px 22px rgba(2,6,23,.06);
+      transition: transform .15s ease, box-shadow .15s ease;
+      display:flex; flex-direction:column;
+      min-height: 280px;
+    }
+    .project:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 14px 30px rgba(2,6,23,.10);
+    }
+    .cover{
+      height: 150px;
+      border-bottom: 1px solid var(--line);
+      background:
+        radial-gradient(circle at 30% 30%, rgba(37,99,235,.18), transparent 42%),
+        radial-gradient(circle at 80% 20%, rgba(249,115,22,.16), transparent 45%),
+        linear-gradient(135deg, #f8fafc, #ffffff);
+      position:relative;
+    }
+    .label{
+      position:absolute; top:10px; left:10px;
+      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.9);
+      color: var(--muted);
+    }
+    .body{
+      padding: 12px;
+      display:flex; flex-direction:column; gap:8px;
+      flex:1;
+    }
+    .title{
+      margin:0;
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing:-.1px;
+    }
+    .desc{
+      margin:0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height:1.5;
+      flex:1;
+    }
+    .meta{
+      display:flex; gap:8px; flex-wrap:wrap;
+    }
+    .tag{
+      font-family: var(--mono);
+      font-size: 11px;
+      color: #0f172a;
+      background: var(--soft);
+      border: 1px solid var(--line);
+      padding: 4px 8px;
+      border-radius: 999px;
+    }
+    .actions{
+      display:flex; gap:10px; flex-wrap:wrap;
+      margin-top: 2px;
+    }
+    .link{
+      font-size: 13px;
+      font-weight: 750;
+      color: var(--accent);
+      padding: 8px 10px;
+      border-radius: 12px;
+      border: 1px solid rgba(37,99,235,.18);
+      background: rgba(37,99,235,.06);
+      display:inline-flex; align-items:center; gap:8px;
+    }
+    .link:hover{ background: rgba(37,99,235,.10); }
+
+    /* About layout */
+    .about{
+      margin-top: 14px;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .panel{
+      border: 1px solid var(--line);
+      border-radius: var(--r);
+      background:#fff;
+      box-shadow: 0 8px 22px rgba(2,6,23,.06);
+      padding: 14px;
+    }
+    .panel h3{
+      margin:0 0 8px;
+      font-size: 14px;
+      letter-spacing:-.1px;
+    }
+    .panel p{
+      margin:0;
+      color: var(--muted);
+      line-height:1.6;
+      font-size: 13px;
+    }
+    .list{
+      margin-top: 10px;
+      display:grid;
+      gap:8px;
+    }
+    .li{
+      display:flex; justify-content:space-between; gap:10px;
+      padding: 10px 10px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: var(--soft);
+      font-size: 13px;
+    }
+    .li span{ color: var(--muted); font-size: 12px; }
+
+    /* Contact */
+    form{
+      margin-top: 14px;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .field{
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background:#fff;
+      padding: 10px 12px;
+      display:grid;
+      gap: 6px;
+    }
+    .field label{
+      font-family: var(--mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      color: var(--muted);
+      letter-spacing:.2px;
+    }
+    .field input, .field textarea{
+      border:none; outline:none;
+      font: inherit;
+      background: transparent;
+      color: var(--text);
+      font-size: 13px;
+      resize: vertical;
+    }
+    .span2{ grid-column: span 2; }
+    .field textarea{ min-height: 110px; }
+    .foot{
+      margin-top: 26px;
+      padding: 18px 0 6px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 12px;
+      display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;
+    }
+
+    @media (max-width: 980px){
+      .hero{ grid-template-columns: 1fr; }
+      .projects{ grid-template-columns: repeat(2, 1fr); }
+      .about{ grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px){
+      .projects{ grid-template-columns: 1fr; }
+      form{ grid-template-columns: 1fr; }
+      .span2{ grid-column: span 1; }
+      .headline{ font-size: 34px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="top">
+    <div class="inner">
+      <div class="id">
+        <b>Lorem Ipsum</b>
+        <span>Product Designer & Front-end Developer</span>
+      </div>
+      <nav aria-label="Primary">
+        <a href="#work">Work</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+        <a class="pill" href="index.html">Back</a>
+      </nav>
+    </div>
+  </div>
+
+  <main class="wrap">
+    <section class="hero" aria-label="Intro">
+      <div>
+        <h1 class="headline">Designing digital products that ship.</h1>
+        <p class="lead">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vitae justo sed arcu
+          accumsan dignissim. Sed ut perspiciatis unde omnis iste natus error sit voluptatem.
+        </p>
+        <div class="cta">
+          <a class="btn primary" href="#work">View selected work</a>
+          <a class="btn" href="#contact">Contact</a>
+        </div>
+      </div>
+
+      <aside class="summary" aria-label="Quick info">
+        <h3>Snapshot</h3>
+        <div class="kv">
+          <div class="row">
+            <div class="k">Role</div>
+            <div class="v">Lorem ipsum · UI/UX · Front-end</div>
+          </div>
+          <div class="row">
+            <div class="k">Location</div>
+            <div class="v">Metro Manila · <code>UTC+8</code></div>
+          </div>
+          <div class="row">
+            <div class="k">Tools</div>
+            <div class="v"><code>Figma</code> <code>HTML</code> <code>CSS</code> <code>JS</code></div>
+          </div>
+          <div class="row">
+            <div class="k">Availability</div>
+            <div class="v">Lorem ipsum dolor</div>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <div class="section-head" id="work">
+      <div>
+        <h2>Selected work</h2>
+        <p>Three case-study style projects (placeholders).</p>
+      </div>
+      <div class="muted" style="font-size:12px;font-family:var(--mono);">2026</div>
+    </div>
+    <div class="divider"></div>
+
+    <section class="projects" aria-label="Projects">
+      <!-- TEMPLATE: copy/paste this <article class="project"> for new projects -->
+      <article class="project">
+        <div class="cover">
+          <span class="label">Case study</span>
+        </div>
+        <div class="body">
+          <h3 class="title">Project Alpha</h3>
+          <p class="desc">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero.
+          </p>
+          <div class="meta">
+            <span class="tag">UI</span>
+            <span class="tag">Design system</span>
+            <span class="tag">Responsive</span>
+          </div>
+          <div class="actions">
+            <a class="link" href="#">View case study</a>
+            <a class="link" href="#" style="background:#f8fafc;border-color:var(--line);color:var(--text);">Live preview</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="project">
+        <div class="cover">
+          <span class="label">Build</span>
+        </div>
+        <div class="body">
+          <h3 class="title">Project Beta</h3>
+          <p class="desc">
+            Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque.
+          </p>
+          <div class="meta">
+            <span class="tag">Front-end</span>
+            <span class="tag">Performance</span>
+            <span class="tag">Accessibility</span>
+          </div>
+          <div class="actions">
+            <a class="link" href="#">View details</a>
+            <a class="link" href="#" style="background:#f8fafc;border-color:var(--line);color:var(--text);">Repository</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="project">
+        <div class="cover">
+          <span class="label">Experiment</span>
+        </div>
+        <div class="body">
+          <h3 class="title">Project Gamma</h3>
+          <p class="desc">
+            Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam.
+          </p>
+          <div class="meta">
+            <span class="tag">Prototyping</span>
+            <span class="tag">Motion</span>
+            <span class="tag">Components</span>
+          </div>
+          <div class="actions">
+            <a class="link" href="#">Read write-up</a>
+            <a class="link" href="#" style="background:#f8fafc;border-color:var(--line);color:var(--text);">Demo</a>
+          </div>
+        </div>
+      </article>
+      <!-- END TEMPLATE -->
+    </section>
+
+    <div class="section-head" id="about" style="margin-top:22px;">
+      <div>
+        <h2>About</h2>
+        <p>A short profile and what you do (placeholders).</p>
+      </div>
+    </div>
+    <div class="divider"></div>
+
+    <section class="about" aria-label="About panels">
+      <div class="panel">
+        <h3>Profile</h3>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+          ut labore et dolore magna aliqua. Ut enim ad minim veniam.
+        </p>
+        <div class="list">
+          <div class="li"><b>Specialties</b><span>UI, systems, web apps</span></div>
+          <div class="li"><b>Working style</b><span>Iterate fast, ship clean</span></div>
+          <div class="li"><b>Current focus</b><span>Interfaces & performance</span></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>Services</h3>
+        <p>
+          Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
+          laudantium, totam rem aperiam.
+        </p>
+        <div class="list">
+          <div class="li"><b>Landing pages</b><span>Lorem ipsum</span></div>
+          <div class="li"><b>E-commerce UI</b><span>Lorem ipsum</span></div>
+          <div class="li"><b>Dashboards</b><span>Lorem ipsum</span></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-head" id="contact" style="margin-top:22px;">
+      <div>
+        <h2>Contact</h2>
+        <p>Simple contact form (client-side only).</p>
+      </div>
+    </div>
+    <div class="divider"></div>
+
+    <form aria-label="Contact form" onsubmit="event.preventDefault(); alert('Message sent.');">
+      <div class="field">
+        <label>Name</label>
+        <input required placeholder="Lorem Ipsum" />
+      </div>
+      <div class="field">
+        <label>Email</label>
+        <input required type="email" placeholder="lorem@example.com" />
+      </div>
+      <div class="field span2">
+        <label>Message</label>
+        <textarea required placeholder="Lorem ipsum dolor sit amet..."></textarea>
+      </div>
+      <div class="span2" style="display:flex; gap:10px; flex-wrap:wrap;">
+        <button class="btn primary" type="submit">Send message</button>
+        <a class="btn" href="index.html">Back to samples</a>
+      </div>
+    </form>
+
+    <div class="foot">
+      <div>© <span id="y"></span> Lorem Ipsum</div>
+      <div style="font-family:var(--mono);">Placeholders only</div>
+    </div>
+  </main>
+
+  <script>
+    document.getElementById("y").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

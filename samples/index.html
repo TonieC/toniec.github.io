@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+      <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Samples</title>
+  <meta name="description" content="Project samples." />
+  <style>
+    :root{
+      --bg:#0b0f1a;
+      --card:#121a2a;
+      --line:rgba(255,255,255,.10);
+      --text:#e9eefc;
+      --muted:rgba(233,238,252,.72);
+      --radius:16px;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Liberation Sans", sans-serif;
+    }
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: var(--sans);
+      color: var(--text);
+      background: var(--bg);
+    }
+    a{ color:inherit; text-decoration:none; }
+    .wrap{ max-width: 1100px; margin: 0 auto; padding: 22px; }
+
+    header{
+      display:flex; align-items:flex-end; justify-content:space-between; gap:12px;
+      padding: 10px 0 18px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 18px;
+    }
+    .title{
+      margin:0;
+      font-size: 20px;
+      letter-spacing:-.2px;
+      font-weight: 800;
+    }
+    .sub{
+      margin:6px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height:1.4;
+    }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid var(--line);
+      font-weight: 700;
+      font-size: 13px;
+      transition: transform .15s ease, background .15s ease, border-color .15s ease;
+      white-space:nowrap;
+    }
+    .btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.14); }
+    .btn:active{ transform: translateY(0px) scale(.99); }
+
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    /* Card (future-proof: copy/paste one <article>) */
+    .card{
+      background: rgba(255,255,255,.04);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow:hidden;
+      box-shadow: var(--shadow);
+      transition: transform .15s ease, border-color .15s ease, background .15s ease;
+      display:flex;
+      flex-direction:column;
+      min-height: 260px;
+    }
+    .card:hover{
+      transform: translateY(-2px);
+      border-color: rgba(255,255,255,.16);
+      background: rgba(255,255,255,.06);
+    }
+
+    .thumb{
+      height: 140px;
+      background: #0f1524;
+      background-size: cover;
+      background-position: center;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .body{
+      padding: 12px;
+      display:flex;
+      flex-direction:column;
+      gap: 8px;
+      flex:1;
+    }
+    .name{
+      margin:0;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing:-.1px;
+    }
+    .desc{
+      margin:0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height:1.45;
+      flex:1;
+    }
+    .actions{
+      display:flex;
+      gap:10px;
+      margin-top: 6px;
+    }
+
+    /* Responsive */
+    @media (max-width: 980px){ .grid{ grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 560px){ .grid{ grid-template-columns: 1fr; } .wrap{ padding: 16px; } header{ gap:10px; } }
+  </style>
+</head>
+
+<body>
+  <main class="wrap">
+    <header>
+      <div>
+        <h1 class="title">Samples</h1>
+        <p class="sub">A collection of project samples.</p>
+      </div>
+      <a class="btn" href="/">Home</a>
+    </header>
+
+    <section class="grid" aria-label="Sample projects">
+
+      <!-- =========================================================
+        TEMPLATE: Copy this <article> to add more samples.
+        Change:
+          - thumb image url
+          - title
+          - description
+          - link href
+      ========================================================== -->
+      <article class="card">
+        <div class="thumb" style="background-image:url('../images/samples.png');"></div>
+        <div class="body">
+          <h3 class="name">Shop</h3>
+          <p class="desc">Storefront layout with product browsing and cart flow.</p>
+          <div class="actions">
+            <a class="btn" href="shop.html">Open</a>
+          </div>
+        </div>
+      </article>
+      <!-- ========================================================= -->
+       <article class="card">
+  <div class="thumb" style="background-image:url('../images/port.png');"></div>
+  <div class="body">
+    <h3 class="name">Portfolio</h3>
+    <p class="desc">Minimal personal site layout with sections, cards, and contact form.</p>
+    <div class="actions">
+      <a class="btn" href="portfolio.html">Open</a>
+    </div>
+  </div>
+</article>
+
+
+    </section>
+  </main>
+</body>
+</html>

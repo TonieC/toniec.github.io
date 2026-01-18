@@ -430,9 +430,6 @@ a { color:var(--accent); text-decoration:none; }
   };
 })();
 </script>
-
-
-
   <canvas id="web-bg"></canvas>
 
   <div class="ambient" aria-hidden="true">
@@ -923,12 +920,18 @@ a { color:var(--accent); text-decoration:none; }
 
 
 
-  <!-- SURVWIN -->
 <section id="projects" class="panel wrap reveal" aria-labelledby="projects-heading">
-  <div class="heading"><h2 id="projects-heading">Featured Projects</h2></div>
+  <div class="heading">
+    <h2 id="projects-heading">Featured Projects</h2>
+  </div>
+
   <div class="grid cols-3" style="margin-top:14px">
+
+    <!-- Survwin -->
     <article class="project-card parallax" data-speed="0.06">
-      <div class="thumb" style="background-image:url('images/survwin.png');background-color:#1B1614;height:160px"></div>
+      <div class="thumb"
+        style="background-image:url('images/survwin.png');background-color:#1B1614;height:160px">
+      </div>
       <div class="meta" style="padding:12px">
         <div style="font-weight:700">Survwin</div>
         <div style="color:var(--muted);font-size:14px;margin-top:6px">
@@ -939,8 +942,26 @@ a { color:var(--accent); text-decoration:none; }
         </div>
       </div>
     </article>
+
+    <!-- Samples -->
+    <article class="project-card parallax" data-speed="0.08">
+      <div class="thumb"
+        style="background-image:url('images/samples.png');background-color:#0b1020;height:160px">
+      </div>
+      <div class="meta" style="padding:12px">
+        <div style="font-weight:700">Samples</div>
+        <div style="color:var(--muted);font-size:14px;margin-top:6px">
+          A collection of UI and web interface samples showcasing layout, interaction, and visual design.
+        </div>
+        <div style="margin-top:10px;display:flex;gap:8px">
+          <a class="btn-ghost" href="/sample/">Open</a>
+        </div>
+      </div>
+    </article>
+
   </div>
 </section>
+
 
 
  <!-- EXPERIENCE -->
