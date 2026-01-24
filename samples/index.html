@@ -1,66 +1,159 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="paper-dark">
 <head>
-      <!-- Favicon -->
+  <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
   <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico" />
+
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Samples</title>
   <meta name="description" content="Project samples." />
+
+  <!-- Fonts (match main site vibe) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
   <style>
     :root{
-      --bg:#0b0f1a;
-      --card:#121a2a;
-      --line:rgba(255,255,255,.10);
-      --text:#e9eefc;
-      --muted:rgba(233,238,252,.72);
-      --radius:16px;
-      --shadow: 0 10px 30px rgba(0,0,0,.35);
-      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Liberation Sans", sans-serif;
-    }
-    *{ box-sizing:border-box; }
-    html,body{ height:100%; }
-    body{
-      margin:0;
-      font-family: var(--sans);
-      color: var(--text);
-      background: var(--bg);
-    }
-    a{ color:inherit; text-decoration:none; }
-    .wrap{ max-width: 1100px; margin: 0 auto; padding: 22px; }
+      --maxw: 1100px;
 
-    header{
-      display:flex; align-items:flex-end; justify-content:space-between; gap:12px;
-      padding: 10px 0 18px;
-      border-bottom: 1px solid var(--line);
-      margin-bottom: 18px;
+      --fw-serif: "Playfair Display", ui-serif, Georgia, "Times New Roman", serif;
+      --fw-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+      --pad-x: 22px;
+      --radius: 16px;
+
+      --focus: 0 0 0 3px rgba(120, 120, 120, 0.25);
+      --ease: cubic-bezier(.2,.8,.2,1);
+
+      /* Default dark (paper-dark) */
+      --paper: #0f0f0f;
+      --paper-2: #141414;
+      --ink: #f4f1ea;
+      --muted: rgba(244, 241, 234, 0.72);
+      --rule: rgba(244, 241, 234, 0.16);
+      --shadow: 0 12px 30px rgba(0,0,0,.35);
+      color-scheme: dark;
     }
+
+    html[data-theme="paper-light"]{
+      --paper: #fbfaf7;
+      --paper-2: #ffffff;
+      --ink: #141414;
+      --muted: rgba(20, 20, 20, 0.66);
+      --rule: rgba(20, 20, 20, 0.12);
+      --shadow: 0 12px 30px rgba(0,0,0,.10);
+      color-scheme: light;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; margin:0; }
+    body{
+      font-family: var(--fw-sans);
+      color: var(--ink);
+      background: var(--paper);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+      opacity: 0;
+    }
+    body.page-ready{ opacity: 1; transition: opacity 500ms var(--ease); }
+
+    a{
+      color: var(--ink);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-thickness: 1px;
+      transition: text-decoration-thickness 180ms var(--ease), opacity 180ms var(--ease), transform 180ms var(--ease);
+    }
+    a:hover{ text-decoration-thickness: 2px; opacity: .92; }
+
+    .wrap{ max-width: var(--maxw); margin: 0 auto; padding: 22px var(--pad-x); }
+
+    /* Sticky header like main site */
+    header.site-header{
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background: color-mix(in srgb, var(--paper) 92%, transparent);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid var(--rule);
+      transform: translateY(-6px);
+      opacity: 0;
+      transition: transform 700ms var(--ease), opacity 700ms var(--ease);
+    }
+    body.page-ready header.site-header{
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .head-inner{
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 14px var(--pad-x);
+      display:flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
     .title{
       margin:0;
+      font-family: var(--fw-serif);
       font-size: 20px;
-      letter-spacing:-.2px;
-      font-weight: 800;
+      letter-spacing: .01em;
+      font-weight: 700;
+      line-height: 1.1;
     }
     .sub{
       margin:6px 0 0;
       color: var(--muted);
       font-size: 13px;
-      line-height:1.4;
+      line-height: 1.4;
     }
+
+    .head-actions{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
     .btn{
-      display:inline-flex; align-items:center; justify-content:center;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap: 8px;
       padding: 10px 12px;
-      border-radius: 12px;
-      background: rgba(255,255,255,.06);
-      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--paper-2);
+      border: 1px solid var(--rule);
       font-weight: 700;
       font-size: 13px;
-      transition: transform .15s ease, background .15s ease, border-color .15s ease;
-      white-space:nowrap;
+      text-decoration: none;
+      color: var(--ink);
+      transition: transform 180ms var(--ease), opacity 180ms var(--ease), border-color 180ms var(--ease);
+      white-space: nowrap;
+      user-select: none;
     }
-    .btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.14); }
+    .btn:hover{ transform: translateY(-1px); opacity: .95; border-color: color-mix(in srgb, var(--rule) 30%, var(--ink)); }
     .btn:active{ transform: translateY(0px) scale(.99); }
+    .btn:focus{ outline:none; box-shadow: var(--focus); }
+
+    .theme-toggle .dot{
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      border: 1px solid var(--rule);
+      background: var(--ink);
+      transition: transform 240ms var(--ease);
+    }
+    .theme-toggle:hover .dot{ transform: scale(1.1); }
+
+    /* Content spacing like main site */
+    .content{ padding-top: 18px; }
 
     .grid{
       display:grid;
@@ -68,30 +161,30 @@
       gap: 12px;
     }
 
-    /* Card (future-proof: copy/paste one <article>) */
     .card{
-      background: rgba(255,255,255,.04);
-      border: 1px solid var(--line);
+      background: color-mix(in srgb, var(--paper-2) 92%, transparent);
+      border: 1px solid var(--rule);
       border-radius: var(--radius);
       overflow:hidden;
       box-shadow: var(--shadow);
-      transition: transform .15s ease, border-color .15s ease, background .15s ease;
+      transition: transform 220ms var(--ease), border-color 220ms var(--ease), opacity 220ms var(--ease);
       display:flex;
       flex-direction:column;
       min-height: 260px;
     }
     .card:hover{
       transform: translateY(-2px);
-      border-color: rgba(255,255,255,.16);
-      background: rgba(255,255,255,.06);
+      border-color: color-mix(in srgb, var(--rule) 30%, var(--ink));
+      opacity: .98;
     }
 
     .thumb{
       height: 140px;
-      background: #0f1524;
+      background: color-mix(in srgb, var(--paper) 86%, var(--paper-2));
       background-size: cover;
       background-position: center;
-      border-bottom: 1px solid var(--line);
+      border-bottom: 1px solid var(--rule);
+      filter: saturate(1.05) contrast(1.02);
     }
 
     .body{
@@ -101,51 +194,81 @@
       gap: 8px;
       flex:1;
     }
+
     .name{
       margin:0;
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 800;
-      letter-spacing:-.1px;
+      letter-spacing: -.1px;
     }
+
     .desc{
       margin:0;
       color: var(--muted);
       font-size: 13px;
-      line-height:1.45;
+      line-height: 1.45;
       flex:1;
     }
+
     .actions{
       display:flex;
       gap:10px;
       margin-top: 6px;
+      flex-wrap: wrap;
+    }
+
+    /* reveal */
+    .reveal{
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 700ms var(--ease), transform 700ms var(--ease);
+    }
+    .reveal.in-view{
+      opacity: 1;
+      transform: translateY(0);
     }
 
     /* Responsive */
     @media (max-width: 980px){ .grid{ grid-template-columns: repeat(2, 1fr); } }
-    @media (max-width: 560px){ .grid{ grid-template-columns: 1fr; } .wrap{ padding: 16px; } header{ gap:10px; } }
+    @media (max-width: 560px){
+      .grid{ grid-template-columns: 1fr; }
+      .wrap{ padding: 16px; }
+      .head-inner{ padding: 14px 16px; align-items: center; }
+    }
+
+    /* reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      *{ transition:none !important; animation:none !important; }
+      body{ opacity: 1 !important; }
+      header.site-header{ transform:none !important; opacity: 1 !important; }
+      .reveal{ opacity: 1 !important; transform:none !important; }
+    }
   </style>
 </head>
 
 <body>
-  <main class="wrap">
-    <header>
+  <header class="site-header" role="banner">
+    <div class="head-inner">
       <div>
         <h1 class="title">Samples</h1>
         <p class="sub">A collection of project samples.</p>
       </div>
-      <a class="btn" href="/">Home</a>
-    </header>
 
-    <section class="grid" aria-label="Sample projects">
+      <div class="head-actions">
+        <a class="btn" href="/">Home</a>
 
-      <!-- =========================================================
-        TEMPLATE: Copy this <article> to add more samples.
-        Change:
-          - thumb image url
-          - title
-          - description
-          - link href
-      ========================================================== -->
+        <button id="themeToggle" class="btn theme-toggle" type="button" aria-label="Toggle theme">
+          <span class="dot" aria-hidden="true"></span>
+          <span id="themeLabel">Dark</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap content">
+    <section class="grid reveal" aria-label="Sample projects">
+
+      <!-- TEMPLATE: Copy this <article> to add more samples -->
       <article class="card">
         <div class="thumb" style="background-image:url('../images/samples.png');"></div>
         <div class="body">
@@ -156,20 +279,72 @@
           </div>
         </div>
       </article>
-      <!-- ========================================================= -->
-       <article class="card">
-  <div class="thumb" style="background-image:url('../images/port.png');"></div>
-  <div class="body">
-    <h3 class="name">Portfolio</h3>
-    <p class="desc">Minimal personal site layout with sections, cards, and contact form.</p>
-    <div class="actions">
-      <a class="btn" href="portfolio.html">Open</a>
-    </div>
-  </div>
-</article>
 
+      <article class="card">
+        <div class="thumb" style="background-image:url('../images/port.png');"></div>
+        <div class="body">
+          <h3 class="name">Portfolio</h3>
+          <p class="desc">Minimal personal site layout with sections, cards, and contact info.</p>
+          <div class="actions">
+            <a class="btn" href="portfolio.html">Open</a>
+          </div>
+        </div>
+      </article>
 
     </section>
   </main>
+
+  <script>
+    // page ready
+    window.addEventListener('load', () => {
+      document.body.classList.add('page-ready');
+    });
+
+    // Theme Toggle (Default: Dark) + smooth crossfade
+    (function themeToggle() {
+      const html = document.documentElement;
+      const btn = document.getElementById('themeToggle');
+      const label = document.getElementById('themeLabel');
+      const KEY = 'paperTheme';
+
+      function apply(theme) {
+        html.style.transition = 'background-color 240ms cubic-bezier(.2,.8,.2,1), color 240ms cubic-bezier(.2,.8,.2,1)';
+        html.setAttribute('data-theme', theme);
+        const isDark = theme === 'paper-dark';
+        label.textContent = isDark ? 'Dark' : 'Light';
+        btn.setAttribute('aria-label', isDark ? 'Switch to light theme' : 'Switch to dark theme');
+        setTimeout(() => { html.style.transition = ''; }, 260);
+      }
+
+      const saved = localStorage.getItem(KEY);
+      if (saved === 'paper-light' || saved === 'paper-dark') apply(saved);
+      else apply('paper-dark');
+
+      btn.addEventListener('click', () => {
+        const current = html.getAttribute('data-theme') || 'paper-dark';
+        const next = current === 'paper-dark' ? 'paper-light' : 'paper-dark';
+        localStorage.setItem(KEY, next);
+        apply(next);
+      });
+    })();
+
+    // Reveal on scroll (subtle)
+    (function revealOnScroll() {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.querySelectorAll('.reveal').forEach(el => el.classList.add('in-view'));
+        return;
+      }
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('in-view');
+            obs.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.12 });
+
+      document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+    })();
+  </script>
 </body>
 </html>
