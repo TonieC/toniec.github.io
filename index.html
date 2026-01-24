@@ -64,6 +64,9 @@
       /* subtle motion */
       --ease: cubic-bezier(.2,.8,.2,1);
       --dur: 700ms;
+
+      /* "research paper" text feel */
+      --para-indent: 2ch;
     }
 
     html[data-theme="paper-dark"] {
@@ -95,6 +98,7 @@
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       overflow-x: hidden;
+      padding-top: 64px; /* header is fixed */
     }
 
     a {
@@ -114,59 +118,52 @@
       padding: 36px var(--pad-x);
     }
 
-    /* ---------- subtle page fade-in ---------- */
+    /* subtle page fade-in */
     body { opacity: 0; }
     body.page-ready { opacity: 1; transition: opacity 500ms var(--ease); }
 
-    /* ---------- HEADER (sticky forever) ---------- */
-   header.site-header{
-  position: fixed;       /* was: sticky */
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 50;
-  background: color-mix(in srgb, var(--paper) 92%, transparent);
-  backdrop-filter: blur(6px);
-  border-bottom: 1px solid var(--rule);
+    /* HEADER (fixed) */
+    header.site-header{
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 50;
+      background: color-mix(in srgb, var(--paper) 92%, transparent);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border-bottom: 1px solid var(--rule);
 
-  transform: translateY(-6px);
-  opacity: 0;
-  transition: transform var(--dur) var(--ease), opacity var(--dur) var(--ease);
-}
-  body.page-ready header.site-header{
-  transform: translateY(0);
-  opacity: 1;
-}
+      transform: translateY(-6px);
+      opacity: 0;
+      transition: transform var(--dur) var(--ease), opacity var(--dur) var(--ease);
+    }
+    body.page-ready header.site-header{
+      transform: translateY(0);
+      opacity: 1;
+    }
 
+    /* centered, single-line navbar */
     .nav-inner {
       max-width: var(--maxw);
       margin: 0 auto;
-      padding: 14px var(--pad-x);
+      padding: 10px var(--pad-x);
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 12px;
+      justify-content: center;
+      gap: 10px;
+      min-height: 54px;
     }
 
-    .brand .title {
-      font-family: var(--fw-serif);
-      font-weight: 700;
-      letter-spacing: 0.01em;
-      font-size: 18px;
-      line-height: 1.1;
-    }
-    .brand .subtitle {
-      font-size: 12px;
-      color: var(--muted);
-      margin-top: 4px;
-    }
+    .brand { display: none; }
 
     nav.nav-links {
       display: flex;
       align-items: center;
-      gap: 14px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
+      justify-content: center;
+      flex-wrap: nowrap;
+      gap: 12px;
+      white-space: nowrap;
+      overflow: hidden;
+      max-width: 100%;
     }
 
     nav.nav-links a {
@@ -176,16 +173,12 @@
       padding: 6px 2px;
       border-bottom: 1px solid transparent;
       transition: border-color 200ms var(--ease), transform 200ms var(--ease), opacity 200ms var(--ease);
+      flex: 0 0 auto;
     }
     nav.nav-links a:hover { border-bottom-color: var(--ink); transform: translateY(-1px); opacity: .92; }
+    nav.nav-links a.is-active { border-bottom-color: var(--ink); opacity: 1; }
 
-    /* active section highlight */
-    nav.nav-links a.is-active {
-      border-bottom-color: var(--ink);
-      opacity: 1;
-    }
-
-    /* ---------- THEME TOGGLE BUTTON ---------- */
+    /* THEME TOGGLE */
     .theme-toggle {
       display: inline-flex;
       align-items: center;
@@ -200,6 +193,7 @@
       line-height: 1;
       user-select: none;
       transition: transform 200ms var(--ease), border-color 200ms var(--ease), opacity 200ms var(--ease);
+      flex: 0 0 auto;
     }
     .theme-toggle:hover { transform: translateY(-1px); opacity: .95; }
     .theme-toggle:focus { outline: none; box-shadow: var(--focus); }
@@ -212,57 +206,28 @@
     }
     .theme-toggle:hover .theme-dot { transform: scale(1.1); }
 
-    /* ---------- HERO ---------- */
+    /* HERO (original styles kept, but your v2 hero uses isolated classes below) */
     main.hero {
       padding-top: 44px;
       padding-bottom: 22px;
     }
 
-    .hero h1 {
-      font-family: var(--fw-serif);
-      font-size: clamp(40px, 5vw, 62px);
-      line-height: 1.04;
-      margin: 0 0 12px 0;
-      letter-spacing: 0.01em;
+    /* Research-paper paragraph treatment */
+    p, li, .lead, .intro, .timeline-item p, .project p {
+      text-align: justify;
+      text-justify: inter-word;
     }
-
+    p, .lead, .intro, .timeline-item p, .project p {
+      text-indent: var(--para-indent);
+    }
+    .last-updated,
+    footer p,
     .hero .role {
-      font-size: 16px;
-      color: var(--muted);
-      margin: 0 0 18px 0;
+      text-indent: 0;
+      text-align: left;
     }
 
-    .hero .intro {
-      font-size: 18px;
-      line-height: 1.7;
-      margin: 0 0 18px 0;
-      max-width: 62ch;
-    }
-
-    .hero-actions {
-      display: flex;
-      gap: 14px;
-      flex-wrap: wrap;
-      margin-top: 10px;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      border: 1px solid var(--rule);
-      background: transparent;
-      color: var(--ink);
-      border-radius: var(--radius);
-      padding: 10px 14px;
-      font-size: 14px;
-      text-decoration: none;
-      transition: transform 200ms var(--ease), opacity 200ms var(--ease), border-color 200ms var(--ease);
-    }
-    .btn:hover { transform: translateY(-2px); opacity: .95; border-color: color-mix(in srgb, var(--rule) 30%, var(--ink)); }
-    .btn.primary { background: var(--paper-2); }
-
-    /* ---------- SECTIONS ---------- */
+    /* SECTIONS */
     .section { padding-top: var(--section-gap); }
 
     .section-title {
@@ -327,6 +292,7 @@
       padding-left: 18px;
       line-height: 1.7;
     }
+    .skills-block li { text-indent: 0; }
 
     /* Projects */
     .project-list {
@@ -401,7 +367,7 @@
       font-size: 13px;
     }
 
-    /* ---------- reveal animation ---------- */
+    /* reveal */
     .reveal {
       opacity: 0;
       transform: translateY(14px);
@@ -412,16 +378,184 @@
       transform: translateY(0);
     }
 
-    /* Respect reduced motion */
     @media (prefers-reduced-motion: reduce) {
       * { transition: none !important; animation: none !important; }
-      body { padding-top: 50px; opacity: 1 !important; }
+      body { opacity: 1 !important; }
       header.site-header { transform: none !important; opacity: 1 !important; }
       .reveal { opacity: 1 !important; transform: none !important; }
     }
 
     @media (max-width: 680px) {
-      .hero .intro { font-size: 17px; }
+      :root { --pad-x: 14px; }
+      body { padding-top: 58px; }
+      .nav-inner { padding: 8px var(--pad-x); min-height: 50px; }
+      nav.nav-links { gap: 10px; }
+      nav.nav-links a { font-size: 12px; padding: 6px 1px; }
+      .theme-toggle { padding: 7px 10px; font-size: 12px; }
+    }
+
+    @media (max-width: 380px) {
+      nav.nav-links { gap: 8px; }
+      nav.nav-links a { font-size: 11px; }
+      .theme-toggle { padding: 6px 9px; }
+      #themeLabel { display: none; }
+    }
+
+    /* ===== HERO V2 CENTERED (isolated; moved to main stylesheet) ===== */
+    .hero-v2{
+      padding-top: 64px;
+      padding-bottom: 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-v2--center{
+      display: flex;
+      justify-content: center;
+    }
+
+    .hero-v2__inner{
+      max-width: 72ch;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-v2__inner--center{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .hero-v2::before{
+      content:"";
+      position:absolute;
+      inset:-120px -140px auto -140px;
+      height: 420px;
+      background:
+        radial-gradient(closest-side,
+          color-mix(in srgb, var(--ink) 12%, transparent),
+          transparent 70%),
+        radial-gradient(closest-side,
+          color-mix(in srgb, var(--ink) 8%, transparent),
+          transparent 72%);
+      filter: blur(10px);
+      opacity: .55;
+      pointer-events:none;
+    }
+
+    .hero-v2::after{
+      content:"";
+      position:absolute;
+      inset: 0;
+      background:
+        radial-gradient(1200px 500px at 30% 0%,
+          color-mix(in srgb, var(--paper-2) 20%, transparent),
+          transparent 55%),
+        radial-gradient(900px 520px at 70% 20%,
+          color-mix(in srgb, var(--paper-2) 14%, transparent),
+          transparent 60%);
+      pointer-events:none;
+      opacity: .9;
+    }
+
+    .hero-v2__title{
+      font-family: var(--fw-serif);
+      font-size: clamp(44px, 6vw, 72px);
+      line-height: 1.02;
+      margin: 0 0 10px 0;
+      letter-spacing: 0.01em;
+      text-indent: 0;
+      text-align: center;
+    }
+
+    .hero-v2__role{
+      margin: 0 0 18px 0;
+      color: var(--muted);
+      font-size: 15px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      text-indent: 0;
+      text-align: center;
+    }
+
+    .hero-v2__badge{
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.75;
+      padding: 14px 22px;
+      border-radius: 18px;
+      border: 1px solid color-mix(in srgb, var(--rule) 70%, transparent);
+
+      background: linear-gradient(
+        135deg,
+        color-mix(in srgb, var(--paper-2) 92%, transparent),
+        color-mix(in srgb, var(--paper) 88%, transparent)
+      );
+
+      backdrop-filter: blur(10px) saturate(120%);
+      -webkit-backdrop-filter: blur(10px) saturate(120%);
+
+      box-shadow:
+        0 10px 34px rgba(0,0,0,.26),
+        inset 0 1px 0 rgba(255,255,255,.05);
+
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      max-width: fit-content;
+
+      /* IMPORTANT: avoid global paragraph indent + justify */
+      text-indent: 0;
+      text-align: center;
+    }
+
+    .hero-v2__actions{
+      display:flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+      justify-content: center;
+    }
+
+    .hero-v2__btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap: 10px;
+      padding: 10px 16px;
+      border-radius: 12px;
+      border: 1px solid var(--rule);
+      background: transparent;
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 14px;
+      transition: transform 220ms var(--ease), opacity 220ms var(--ease), border-color 220ms var(--ease), background 220ms var(--ease);
+    }
+
+    .hero-v2__btn:hover{
+      transform: translateY(-2px);
+      opacity: .95;
+      border-color: color-mix(in srgb, var(--rule) 30%, var(--ink));
+    }
+
+    .hero-v2__btn--primary{
+      background: color-mix(in srgb, var(--paper-2) 90%, transparent);
+      box-shadow: 0 10px 24px rgba(0,0,0,.18);
+    }
+
+    .hero-v2__btn--primary:hover{
+      background: color-mix(in srgb, var(--paper-2) 96%, transparent);
+      box-shadow: 0 14px 30px rgba(0,0,0,.24);
+    }
+
+    @media (max-width: 680px){
+      .hero-v2{ padding-top: 54px; }
+      .hero-v2__role{ letter-spacing: .16em; }
+      .hero-v2__badge{
+        font-size: 17px;
+        padding: 12px 18px;
+        border-radius: 16px;
+      }
     }
   </style>
 </head>
@@ -430,11 +564,6 @@
 
   <header class="site-header" role="banner" id="topHeader">
     <div class="nav-inner" role="navigation" aria-label="Main navigation">
-      <div class="brand" aria-hidden="true">
-        <div class="title">Tonie C.</div>
-        <div class="subtitle">Front-End Dev</div>
-      </div>
-
       <nav class="nav-links" aria-label="Primary" id="topNav">
         <a href="#home" data-section="home">Intro</a>
         <a href="#about" data-section="about">About</a>
@@ -452,16 +581,18 @@
   </header>
 
   <!-- HERO -->
-  <main class="hero wrap reveal" role="main" id="home" data-watch="home">
-    <h1>Tonie C.</h1>
-    <p class="role">Front-End Developer</p>
-    <p class="intro">
-      I build clean, functional web interfaces and practical tools—web UI, automation, and embedded projects that solve real problems.
-    </p>
+  <main class="hero wrap reveal hero-v2 hero-v2--center" role="main" id="home" data-watch="home">
+    <div class="hero-v2__inner hero-v2__inner--center">
+      <h1 class="hero-v2__title">Tonie C.</h1>
+      <p class="hero-v2__role">Front-End Developer</p>
 
-    <div class="hero-actions">
-      <a class="btn primary" href="#projects">View Projects</a>
-      <a class="btn" href="mailto:cadizal06@gmail.com">Email Me</a>
+      <p class="hero-v2__badge">
+        I turn ideas into clean, working systems.
+      </p>
+
+      <div class="hero-v2__actions">
+        <a class="hero-v2__btn hero-v2__btn--primary" href="#projects">View Projects</a>
+      </div>
     </div>
   </main>
 
@@ -584,26 +715,25 @@
     </div>
   </section>
 
-<!-- CONTACT / IDENTITY -->
-<section id="contact" class="wrap section reveal" aria-labelledby="contact-heading" data-watch="contact">
-  <h2 class="section-title" id="contact-heading">Let’s Build Something</h2>
-  <hr class="rule" />
+  <!-- CONTACT -->
+  <section id="contact" class="wrap section reveal" aria-labelledby="contact-heading" data-watch="contact">
+    <h2 class="section-title" id="contact-heading">Let’s Build Something</h2>
+    <hr class="rule" />
 
-  <p class="lead">
-    I’m always open to building useful tools, learning from real projects, and working with people
-    who care about clean code and real-world impact.
-  </p>
+    <p class="lead">
+      I’m always open to building useful tools, learning from real projects, and working with people
+      who care about clean code and real-world impact.
+    </p>
 
-  <div style="display:flex;gap:18px;flex-wrap:wrap;margin-top:10px;">
-    <a class="btn primary" href="mailto:cadizal06@gmail.com">Email Me</a>
-    <a class="btn" href="https://github.com/toniec" target="_blank">GitHub</a>
-  </div>
+    <div style="display:flex;gap:18px;flex-wrap:wrap;margin-top:10px;">
+      <a class="download-btn" href="mailto:cadizal06@gmail.com">Email Me</a>
+      <a class="download-btn" href="https://github.com/toniec" target="_blank" rel="noopener">GitHub</a>
+    </div>
 
-  <p style="margin-top:12px;font-size:13px;color:var(--muted);">
-    Based in the Philippines • Remote-ready • Student developer
-  </p>
-</section>
-
+    <p style="margin-top:12px;font-size:13px;color:var(--muted); text-indent:0; text-align:left;">
+      Based in the Philippines • Student developer • Front-end focused • Remote-ready • Open to projects
+    </p>
+  </section>
 
   <footer class="site-foot" role="contentinfo">
     <div class="foot-inner">
@@ -621,7 +751,7 @@
       document.body.classList.add('page-ready');
     });
 
-    // Theme Toggle (Default: Dark) + smooth crossfade
+    // Theme Toggle (Default: Dark)
     (function themeToggle() {
       const html = document.documentElement;
       const btn = document.getElementById('themeToggle');
@@ -649,7 +779,7 @@
       });
     })();
 
-    // Reveal on scroll (subtle)
+    // Reveal on scroll
     (function revealOnScroll() {
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         document.querySelectorAll('.reveal').forEach(el => el.classList.add('in-view'));
@@ -667,7 +797,7 @@
       document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
     })();
 
-    // Active section highlight for the sticky TOP NAV
+    // Active section highlight + smooth scroll
     (function activeNav() {
       const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -675,7 +805,6 @@
       const topLinks = Array.from(topNav.querySelectorAll('a[data-section]'));
       const watchEls = Array.from(document.querySelectorAll('[data-watch]'));
 
-      // smooth scroll for nav links
       function smoothTo(hash) {
         const el = document.querySelector(hash);
         if (!el) return;
