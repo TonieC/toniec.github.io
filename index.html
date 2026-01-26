@@ -60,7 +60,6 @@
 
       /* JS will update this to real innerHeight for mobile */
       --view-h: 100vh;
-      --deck-y: 0px;
     }
 
     html[data-theme="paper-dark"]{
@@ -90,14 +89,14 @@
     html, body{
       overflow-y:auto;
       overflow-x:hidden;
-      scrollbar-width:none;        /* Firefox */
-      -ms-overflow-style:none;     /* IE/legacy */
+      scrollbar-width:none;
+      -ms-overflow-style:none;
     }
     html::-webkit-scrollbar,
     body::-webkit-scrollbar{
       width:0;
       height:0;
-      display:none;                /* WebKit */
+      display:none;
     }
 
     body{
@@ -168,7 +167,7 @@
       flex-wrap:nowrap;
       white-space:nowrap;
       max-width:100%;
-      overflow:hidden; /* prevents header horizontal scroll */
+      overflow:hidden;
     }
 
     nav.nav-links a{
@@ -223,30 +222,26 @@
     }
     .theme-toggle:hover .theme-dot{ transform:scale(1.1); }
 
-  
-.panel{
-  min-height: calc(var(--view-h) - var(--header-h)); /* still feels "100%" */
-  height: auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-  padding: 40px 0;              /* gives space so content doesn’t feel cramped */
-}
+    /* Sections should not hide behind fixed header */
+    .panel{
+      scroll-margin-top: calc(var(--header-h) + 14px);
+      min-height: calc(var(--view-h) - var(--header-h));
+      height: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      padding: 40px 0;
+    }
 
-/* Always visible content (no is-active dependency) */
-.panel__inner{
-  width: 100%;
-  padding: 22px 0;
-  transform: none;
-  opacity: 1;
-  transition: none;
-}
-    .panel.is-active .panel__inner{
-      transform:translateY(0);
-      opacity:1;
+    .panel__inner{
+      width: 100%;
+      padding: 22px 0;
+      transform: none;
+      opacity: 1;
+      transition: none;
     }
 
     .section-title{
@@ -372,11 +367,6 @@
       font-weight:500;
       letter-spacing:0.01em;
       max-width:fit-content;
-      transform:translateY(0);
-      transition:transform 420ms var(--ease);
-    }
-    .panel.is-active .hero-v2__badge{
-      transform:translateY(-2px);
     }
 
     .hero-v2__actions{
@@ -425,16 +415,10 @@
       width:100%;
     }
     @media (max-width: 980px){
-      .skills-grid{
-        grid-template-columns:repeat(2, minmax(0, 1fr));
-        gap:16px 16px;
-      }
+      .skills-grid{ grid-template-columns:repeat(2, minmax(0, 1fr)); gap:16px 16px; }
     }
     @media (max-width: 520px){
-      .skills-grid{
-        grid-template-columns:1fr;
-        gap:14px;
-      }
+      .skills-grid{ grid-template-columns:1fr; gap:14px; }
     }
 
     .skills-block{
@@ -470,14 +454,10 @@
       line-height:1.8;
       color:color-mix(in srgb, var(--ink) 92%, transparent);
     }
-    .skills-block li{
-      overflow-wrap:anywhere;
-      word-break:break-word;
-    }
+    .skills-block li{ overflow-wrap:anywhere; word-break:break-word; }
 
     /* PROJECTS / TIMELINE */
-    .project-list,
-    .timeline{
+    .project-list, .timeline{
       display:grid;
       gap:14px;
       margin-top:18px;
@@ -485,12 +465,10 @@
       width:100%;
     }
     @media (max-width: 520px){
-      .project-list,
-      .timeline{ gap:12px; }
+      .project-list, .timeline{ gap:12px; }
     }
 
-    .project,
-    .timeline-item{
+    .project, .timeline-item{
       min-width:0;
       width:100%;
       border:1px solid var(--rule);
@@ -500,14 +478,12 @@
       transition:transform 260ms var(--ease), border-color 260ms var(--ease), opacity 260ms var(--ease);
       overflow:hidden;
     }
-    .project:hover,
-    .timeline-item:hover{
+    .project:hover, .timeline-item:hover{
       transform:translateY(-2px);
       border-color:color-mix(in srgb, var(--rule) 30%, var(--ink));
       opacity:.98;
     }
-    .project h3,
-    .timeline-item h3{
+    .project h3, .timeline-item h3{
       margin:0 0 8px 0;
       font-size:18px;
       font-weight:800;
@@ -515,8 +491,7 @@
       overflow-wrap:anywhere;
       word-break:break-word;
     }
-    .project p,
-    .timeline-item p{
+    .project p, .timeline-item p{
       margin:0 auto;
       color:var(--muted);
       line-height:1.7;
@@ -532,11 +507,7 @@
       margin-top:10px;
       font-size:14px;
     }
-    .project .links a{
-      white-space:normal;
-      overflow-wrap:anywhere;
-      word-break:break-word;
-    }
+    .project .links a{ white-space:normal; overflow-wrap:anywhere; word-break:break-word; }
 
     /* CONTACT */
     .contact-actions{
@@ -581,6 +552,7 @@
       body{ opacity:1 !important; }
       header.site-header{ transform:none !important; opacity:1 !important; }
       .panel__inner{ opacity:1 !important; transform:none !important; }
+      html{ scroll-behavior:auto !important; }
     }
 
     @media (max-width: 680px){
@@ -794,6 +766,9 @@
   </div>
 
   <script>
+    // Always show page once JS is loaded (avoids "blank forever" if something fails later)
+    document.documentElement.classList.add("js");
+
     document.getElementById("year").innerText = new Date().getFullYear();
 
     window.addEventListener("load", () => {
@@ -807,10 +782,8 @@
         document.documentElement.style.setProperty("--view-h", `${h}px`);
       };
       set();
-
-      // resize fires a lot on mobile; keep it lightweight
-      window.addEventListener("resize", set);
-      window.addEventListener("orientationchange", set);
+      window.addEventListener("resize", set, { passive: true });
+      window.addEventListener("orientationchange", set, { passive: true });
     })();
 
     (function themeToggle() {
@@ -840,20 +813,78 @@
       });
     })();
 
-      // handle back/forward navigation
-      window.addEventListener("hashchange", () => {
-        const id = (location.hash || "#home").slice(1);
-        goTo(id, false);
+    // Smooth scroll for internal links (nav + buttons)
+    (function smoothAnchors() {
+      const headerH = () => {
+        const v = getComputedStyle(document.documentElement).getPropertyValue("--header-h").trim();
+        const n = parseInt(v, 10);
+        return Number.isFinite(n) ? n : 64;
+      };
+
+      function scrollToId(id) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const y = el.getBoundingClientRect().top + window.scrollY - (headerH() + 10);
+        window.scrollTo({ top: y, behavior: "smooth" });
+      }
+
+      document.addEventListener("click", (e) => {
+        const a = e.target.closest('a[href^="#"]');
+        if (!a) return;
+
+        const href = a.getAttribute("href");
+        const id = (href || "").slice(1);
+        if (!id) return;
+
+        e.preventDefault();
+        history.pushState(null, "", `#${id}`);
+        scrollToId(id);
+      }, { passive: false });
+
+      // If user opens with a hash, align nicely under header
+      window.addEventListener("load", () => {
+        const id = (location.hash || "").slice(1);
+        if (id) scrollToId(id);
+      });
+    })();
+
+    // Active section highlighting
+    (function activeNav() {
+      const links = Array.from(document.querySelectorAll('nav.nav-links a[data-section]'));
+      const sections = links
+        .map(a => document.getElementById(a.dataset.section))
+        .filter(Boolean);
+
+      function setActive(id) {
+        links.forEach(a => a.classList.toggle("is-active", a.dataset.section === id));
+      }
+
+      // Fallback if IO isn't supported
+      if (!("IntersectionObserver" in window)) {
+        setActive((location.hash || "#home").slice(1));
+        return;
+      }
+
+      const obs = new IntersectionObserver((entries) => {
+        const visible = entries
+          .filter(en => en.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+        if (visible && visible.target && visible.target.id) {
+          setActive(visible.target.id);
+        }
+      }, {
+        root: null,
+        // Activate when section is near the top portion of the screen
+        rootMargin: "-25% 0px -60% 0px",
+        threshold: [0.05, 0.1, 0.2, 0.35, 0.5]
       });
 
-      // keep correct position on resize
-      window.addEventListener("resize", () => {
-        const id = (location.hash || "#home").slice(1);
-        goTo(id, false);
-      });
+      sections.forEach(sec => obs.observe(sec));
 
-      const initial = (location.hash || "#home").slice(1);
-      goTo(initial, false);
+      // Set initial active state
+      setActive((location.hash || "#home").slice(1));
+      window.addEventListener("hashchange", () => setActive((location.hash || "#home").slice(1)));
     })();
   </script>
 </body>
