@@ -339,47 +339,13 @@
       letter-spacing: 0.01em;
     }
 
-   .hero-v2__role {
-  margin: 0 0 18px 0;
-  color: var(--muted);
-  font-size: 15px;
-  letter-spacing: .22em;
-  text-transform: uppercase;
-
-  display: inline-block;
-  white-space: nowrap;
-  overflow: hidden;
-  border-right: 2px solid color-mix(in srgb, var(--ink) 55%, transparent);
-
-  width: 0;
-  animation:
-    roleTyping 1.35s steps(18, end) 650ms forwards,
-    roleCaret 700ms step-end 650ms infinite;
-}
-
-.panel.is-active .hero-v2__role {
-  animation:
-    roleTyping 1.35s steps(18, end) 650ms forwards,
-    roleCaret 700ms step-end 650ms 6;
-}
-
-@keyframes roleTyping {
-  from { width: 0; }
-  to { width: 21ch; } /* adjust if you change the text */
-}
-
-@keyframes roleCaret {
-  50% { border-right-color: transparent; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-v2__role {
-    width: auto;
-    overflow: visible;
-    border-right: none;
-    animation: none !important;
-  }
-}
+    .hero-v2__role {
+      margin: 0 0 18px 0;
+      color: var(--muted);
+      font-size: 15px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+    }
 
     .hero-v2__badge {
       margin: 0 auto;
