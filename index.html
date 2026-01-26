@@ -83,8 +83,21 @@
     }
 
     * { box-sizing: border-box; }
-    html, body { height: 100%; margin: 0; }
-    html, body { overflow: hidden; }
+    html, body { height: 100%; margin: 0; overflow: auto;}
+
+/* Hide scrollbar but keep scroll */
+html, body {
+  scrollbar-width: none;        /* Firefox */
+  -ms-overflow-style: none;     /* IE 10+ */
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;                /* Chrome, Safari, Edge */
+}
+
 
     body {
       background: var(--paper);
@@ -112,6 +125,7 @@
       max-width: var(--maxw);
       margin: 0 auto;
       padding: 0 var(--pad-x);
+      width: 100%;
     }
 
     /* HEADER */
@@ -152,7 +166,6 @@
       gap: 12px;
       flex-wrap: nowrap;
       white-space: nowrap;
-      overflow: hidden;
       max-width: 100%;
     }
 
@@ -225,7 +238,6 @@
       justify-content: center;
       text-align: center;
       position: relative;
-      overflow: hidden;
     }
 
     .panel__inner {
@@ -263,6 +275,7 @@
       margin: 0 auto;
       font-size: 16px;
       max-width: 72ch;
+      word-break: break-word;
     }
 
     .download-btn {
@@ -290,7 +303,7 @@
       margin-top: 10px;
     }
 
-    /* HERO V2 */
+    /* HERO */
     .hero-v2::before {
       content: "";
       position: absolute;
@@ -337,6 +350,7 @@
       line-height: 1.02;
       margin: 0 0 10px 0;
       letter-spacing: 0.01em;
+      word-break: break-word;
     }
 
     .hero-v2__role {
@@ -411,154 +425,134 @@
     }
 
     /* SKILLS */
-.skills-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 18px 26px;
-  margin-top: 18px;
-  text-align: center;
-  width: 100%;
-}
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px 26px;
+      margin-top: 18px;
+      text-align: center;
+      width: 100%;
+    }
 
-@media (max-width: 980px) {
-  .skills-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 16px 16px;
-  }
-}
+    @media (max-width: 980px) {
+      .skills-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px 16px;
+      }
+    }
 
-@media (max-width: 520px) {
-  .skills-grid {
-    grid-template-columns: 1fr;
-    gap: 14px;
-  }
-}
+    @media (max-width: 520px) {
+      .skills-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+    }
 
-/* IMPORTANT: prevent overflow on mobile */
-.skills-block {
-  min-width: 0;
-  width: 100%;
-  border: 1px solid var(--rule);
-  border-radius: 16px;
-  padding: 14px 14px;
-  background: color-mix(in srgb, var(--paper-2) 70%, transparent);
-  transition: transform 260ms var(--ease), opacity 260ms var(--ease), border-color 260ms var(--ease);
-  transform: translateY(0);
-}
+    .skills-block {
+      min-width: 0;
+      width: 100%;
+      border: 1px solid var(--rule);
+      border-radius: 16px;
+      padding: 14px 14px;
+      background: color-mix(in srgb, var(--paper-2) 70%, transparent);
+      transition: transform 260ms var(--ease), opacity 260ms var(--ease), border-color 260ms var(--ease);
+      transform: translateY(0);
+    }
 
-.skills-block:hover {
-  transform: translateY(-2px);
-  border-color: color-mix(in srgb, var(--rule) 30%, var(--ink));
-  opacity: .98;
-}
+    .skills-block:hover {
+      transform: translateY(-2px);
+      border-color: color-mix(in srgb, var(--rule) 30%, var(--ink));
+      opacity: .98;
+    }
 
-.skills-block h3 {
-  margin: 0 0 10px 0;
-  font-size: 13px;
-  text-transform: uppercase;
-  letter-spacing: 0.10em;
-  color: var(--muted);
-  font-weight: 700;
-}
+    .skills-block h3 {
+      margin: 0 0 10px 0;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.10em;
+      color: var(--muted);
+      font-weight: 700;
+      word-break: break-word;
+    }
 
-/* IMPORTANT: allow long items to wrap instead of forcing overflow */
-.skills-block ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  line-height: 1.8;
-  color: color-mix(in srgb, var(--ink) 92%, transparent);
-}
+    .skills-block ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      line-height: 1.8;
+      color: color-mix(in srgb, var(--ink) 92%, transparent);
+    }
 
-.skills-block li {
-  overflow-wrap: anywhere;
-  word-break: break-word;
-}
+    .skills-block li {
+      word-break: break-word;
+    }
 
+    /* PROJECTS / TIMELINE */
+    .project-list,
+    .timeline {
+      display: grid;
+      gap: 14px;
+      margin-top: 18px;
+      text-align: center;
+      width: 100%;
+    }
 
-   /* PROJECTS / TIMELINE */
-.project-list,
-.timeline {
-  display: grid;
-  gap: 14px;
-  margin-top: 18px;
-  text-align: center;
-  width: 100%;
-}
+    @media (max-width: 520px) {
+      .project-list,
+      .timeline {
+        gap: 12px;
+      }
+    }
 
-/* mobile-safe grid behavior */
-@media (max-width: 980px) {
-  .project-list,
-  .timeline {
-    gap: 14px;
-  }
-}
+    .project,
+    .timeline-item {
+      min-width: 0;
+      width: 100%;
+      border: 1px solid var(--rule);
+      border-radius: 16px;
+      padding: 14px 16px;
+      background: color-mix(in srgb, var(--paper-2) 70%, transparent);
+      transition: transform 260ms var(--ease), border-color 260ms var(--ease), opacity 260ms var(--ease);
+    }
 
-@media (max-width: 520px) {
-  .project-list,
-  .timeline {
-    gap: 12px;
-  }
-}
+    .project:hover,
+    .timeline-item:hover {
+      transform: translateY(-2px);
+      border-color: color-mix(in srgb, var(--rule) 30%, var(--ink));
+      opacity: .98;
+    }
 
-/* cards */
-.project,
-.timeline-item {
-  min-width: 0;              /* prevent overflow */
-  width: 100%;
-  border: 1px solid var(--rule);
-  border-radius: 16px;
-  padding: 14px 16px;
-  background: color-mix(in srgb, var(--paper-2) 70%, transparent);
-  transition: transform 260ms var(--ease), border-color 260ms var(--ease), opacity 260ms var(--ease);
-  overflow: hidden;          /* contain long content */
-}
+    .project h3,
+    .timeline-item h3 {
+      margin: 0 0 8px 0;
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: 0.01em;
+      word-break: break-word;
+    }
 
-.project:hover,
-.timeline-item:hover {
-  transform: translateY(-2px);
-  border-color: color-mix(in srgb, var(--rule) 30%, var(--ink));
-  opacity: .98;
-}
+    .project p,
+    .timeline-item p {
+      margin: 0 auto;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 72ch;
+      word-break: break-word;
+    }
 
-/* titles */
-.project h3,
-.timeline-item h3 {
-  margin: 0 0 8px 0;
-  font-size: 18px;
-  font-weight: 800;
-  letter-spacing: 0.01em;
-  overflow-wrap: anywhere;   /* long titles safe */
-  word-break: break-word;
-}
+    .project .links {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+      font-size: 14px;
+    }
 
-/* text */
-.project p,
-.timeline-item p {
-  margin: 0 auto;
-  color: var(--muted);
-  line-height: 1.7;
-  max-width: 72ch;
-  overflow-wrap: anywhere;   /* prevent mobile overflow */
-  word-break: break-word;
-}
-
-/* links */
-.project .links {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  flex-wrap: wrap;
-  margin-top: 10px;
-  font-size: 14px;
-}
-
-.project .links a {
-  white-space: normal;
-  overflow-wrap: anywhere;
-  word-break: break-word;
-}
-
+    .project .links a {
+      white-space: normal;
+      word-break: break-word;
+    }
 
     /* CONTACT */
     .contact-actions {
@@ -573,6 +567,7 @@
       margin-top: 12px;
       font-size: 13px;
       color: var(--muted);
+      word-break: break-word;
     }
 
     /* FOOTER */
@@ -593,6 +588,7 @@
       flex-wrap: wrap;
       color: var(--muted);
       font-size: 13px;
+      word-break: break-word;
     }
 
     /* ACCESSIBILITY / MOTION */
@@ -643,7 +639,6 @@
   </header>
 
   <div id="deck" aria-live="polite">
-    <!-- HOME -->
     <section class="panel hero-v2 wrap" id="home" data-watch="home" aria-label="Intro">
       <div class="panel__inner">
         <h1 class="hero-v2__title">Tonie C.</h1>
@@ -660,7 +655,6 @@
       </div>
     </section>
 
-    <!-- ABOUT -->
     <section class="panel wrap" id="about" data-watch="about" aria-labelledby="about-heading">
       <div class="panel__inner">
         <h2 class="section-title" id="about-heading">About Me</h2>
@@ -675,16 +669,16 @@
       </div>
     </section>
 
-    <!-- SKILLS -->
     <section class="panel wrap" id="skills" data-watch="skills" aria-labelledby="skills-heading">
       <div class="panel__inner">
         <h2 class="section-title" id="skills-heading">Skills & Tools</h2>
         <hr class="rule" />
- <p class="lead" style="margin-top: 14px;">
+
+        <p class="lead" style="margin-top: 14px;">
           Tools and skills I actively use in real projects.
         </p>
+
         <div class="skills-grid">
-          
           <div class="skills-block">
             <h3>Frontend</h3>
             <ul>
@@ -710,6 +704,10 @@
             <ul>
               <li>Arduino / ESP32</li>
               <li>C / C++</li>
+              <li>GPIO / PWM / ADC</li>
+              <li>I2C / SPI / UART</li>
+              <li>Sensor integration</li>
+              <li>WiFi / Bluetooth (BLE)</li>
             </ul>
           </div>
 
@@ -722,12 +720,9 @@
             </ul>
           </div>
         </div>
-
-  
       </div>
     </section>
 
-    <!-- PROJECTS -->
     <section class="panel wrap" id="projects" data-watch="projects" aria-labelledby="projects-heading">
       <div class="panel__inner">
         <h2 class="section-title" id="projects-heading">Featured Projects</h2>
@@ -753,7 +748,6 @@
       </div>
     </section>
 
-    <!-- EXPERIENCE -->
     <section class="panel wrap" id="experience" data-watch="experience" aria-labelledby="exp-heading">
       <div class="panel__inner">
         <h2 class="section-title" id="exp-heading">Experience & Education</h2>
@@ -788,7 +782,6 @@
       </div>
     </section>
 
-    <!-- CONTACT -->
     <section class="panel wrap" id="contact" data-watch="contact" aria-labelledby="contact-heading">
       <div class="panel__inner">
         <h2 class="section-title" id="contact-heading">Let’s Build Something</h2>
@@ -823,18 +816,6 @@
     window.addEventListener("load", () => {
       document.body.classList.add("page-ready");
     });
-
-    (function lockScroll() {
-      const prevent = (e) => e.preventDefault();
-      const preventKeys = (e) => {
-        const keys = ["ArrowUp", "ArrowDown", "PageUp", "PageDown", "Home", "End", " "];
-        if (keys.includes(e.key)) e.preventDefault();
-      };
-
-      window.addEventListener("wheel", prevent, { passive: false });
-      window.addEventListener("touchmove", prevent, { passive: false });
-      window.addEventListener("keydown", preventKeys, { passive: false });
-    })();
 
     (function setViewportVars() {
       const set = () => {
@@ -893,17 +874,16 @@
         sections.forEach(s => s.classList.toggle("is-active", s.id === id));
       }
 
-      function applyDeckPosition(i) {
-        const y = -(i * (window.innerHeight - getHeaderH()));
-        document.documentElement.style.setProperty("--deck-y", `${y}px`);
-        if (prefersReduced) deck.style.transition = "none";
-        else deck.style.transition = "";
-      }
-
       function getHeaderH() {
         const h = getComputedStyle(document.documentElement).getPropertyValue("--header-h").trim();
         const n = parseFloat(h);
         return Number.isFinite(n) ? n : 64;
+      }
+
+      function applyDeckPosition(i) {
+        const y = -(i * (window.innerHeight - getHeaderH()));
+        document.documentElement.style.setProperty("--deck-y", `${y}px`);
+        deck.style.transition = prefersReduced ? "none" : "";
       }
 
       function goTo(id, push = true) {
@@ -923,8 +903,7 @@
 
         a.addEventListener("click", (e) => {
           e.preventDefault();
-          const id = a.dataset.section;
-          goTo(id, true);
+          goTo(a.dataset.section, true);
         });
       });
 
