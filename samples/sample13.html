@@ -1,0 +1,1483 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Company Name Here</title>
+  <meta name="description" content="Company Name Here — Simple company landing page with localStorage admin dashboard." />
+
+  <style>
+    :root{
+      --bg:#0b1220;
+      --panel:#0f172a;
+      --card:#111c33;
+      --line:rgba(255,255,255,.08);
+      --text:#eaf0ff;
+      --muted:rgba(234,240,255,.72);
+      --accent:#4ea1ff;
+      --good:#22c55e;
+      --warn:#f59e0b;
+      --bad:#ef4444;
+      --radius:16px;
+      --shadow: 0 18px 50px rgba(0,0,0,.35);
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Liberation Sans", sans-serif;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:var(--sans);
+      background:
+        radial-gradient(900px 500px at 15% 10%, rgba(78,161,255,.18), transparent 60%),
+        radial-gradient(700px 450px at 85% 10%, rgba(34,197,94,.12), transparent 60%),
+        linear-gradient(180deg, #071025, #040818);
+      color:var(--text);
+      line-height:1.6;
+      overflow-x:hidden;
+    }
+
+    a{color:inherit}
+    .container{width:min(1120px, 92vw); margin:0 auto}
+
+    /* Top bar */
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:20;
+      backdrop-filter: blur(14px);
+      background: linear-gradient(180deg, rgba(8,14,30,.85), rgba(8,14,30,.55));
+      border-bottom:1px solid var(--line);
+    }
+    .topbar-inner{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      padding:12px 0;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      text-decoration:none;
+      user-select:none;
+    }
+    .logo{
+      width:38px; height:38px;
+      border-radius:12px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(78,161,255,.9), transparent 45%),
+        radial-gradient(circle at 70% 70%, rgba(34,197,94,.65), transparent 55%),
+        linear-gradient(135deg, rgba(255,255,255,.10), rgba(255,255,255,.03));
+      border:1px solid rgba(255,255,255,.10);
+      box-shadow: 0 10px 30px rgba(0,0,0,.25);
+    }
+    .brand-title{
+      display:flex;
+      flex-direction:column;
+      line-height:1.15;
+    }
+    .brand-title strong{font-size:14px; letter-spacing:.2px}
+    .brand-title span{font-size:12px; color:var(--muted)}
+    nav{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .chip{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.04);
+      padding:8px 10px;
+      border-radius:999px;
+      font-size:13px;
+      text-decoration:none;
+      user-select:none;
+      transition:transform .12s ease, background .12s ease;
+      cursor:pointer;
+    }
+    .chip:hover{transform:translateY(-1px); background:rgba(255,255,255,.06)}
+    .chip.accent{
+      border-color: rgba(78,161,255,.35);
+      background: rgba(78,161,255,.14);
+    }
+
+    /* Sections */
+    .hero{
+      padding:56px 0 28px;
+    }
+    .hero-card{
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border:1px solid var(--line);
+      border-radius: calc(var(--radius) + 6px);
+      box-shadow: var(--shadow);
+      padding:28px;
+      overflow:hidden;
+      position:relative;
+    }
+    .hero-card:before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background:
+        radial-gradient(600px 260px at 25% 0%, rgba(78,161,255,.25), transparent 60%),
+        radial-gradient(600px 260px at 75% 0%, rgba(34,197,94,.18), transparent 60%);
+      pointer-events:none;
+      filter:saturate(1.2);
+      opacity:.8;
+    }
+    .hero-grid{
+      position:relative;
+      display:grid;
+      grid-template-columns: 1.3fr .7fr;
+      gap:18px;
+      align-items:start;
+    }
+    .hero h1{
+      margin:0 0 10px;
+      font-size: clamp(28px, 4vw, 44px);
+      letter-spacing:-.4px;
+    }
+    .hero p{
+      margin:0;
+      color:var(--muted);
+      font-size:15px;
+      max-width:62ch;
+    }
+    .hero-actions{
+      margin-top:16px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.05);
+      color:var(--text);
+      text-decoration:none;
+      user-select:none;
+      cursor:pointer;
+      transition:transform .12s ease, background .12s ease, border-color .12s ease;
+      font-weight:600;
+      font-size:14px;
+    }
+    .btn:hover{transform:translateY(-1px); background:rgba(255,255,255,.07)}
+    .btn.primary{
+      border-color: rgba(78,161,255,.45);
+      background: rgba(78,161,255,.16);
+    }
+    .hero-side{
+      border-left:1px solid var(--line);
+      padding-left:18px;
+    }
+    .mini{
+      border:1px solid var(--line);
+      background:rgba(0,0,0,.18);
+      border-radius:14px;
+      padding:14px;
+    }
+    .mini strong{display:block; font-size:14px}
+    .mini span{display:block; color:var(--muted); font-size:13px; margin-top:6px}
+
+    .section{
+      padding:26px 0;
+    }
+    .panel{
+      background: rgba(255,255,255,.03);
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      padding:22px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.25);
+    }
+    .panel h2{
+      margin:0 0 8px;
+      font-size:18px;
+      letter-spacing:.2px;
+    }
+    .panel p{margin:0; color:var(--muted)}
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:14px;
+      margin-top:14px;
+    }
+    .card{
+      border:1px solid var(--line);
+      background: rgba(0,0,0,.20);
+      border-radius:14px;
+      padding:16px;
+    }
+    .card h3{margin:0 0 6px; font-size:14px}
+    .card p{margin:0; color:var(--muted); font-size:13px}
+
+    .gallery{
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap:12px;
+      margin-top:14px;
+    }
+    .thumb{
+      border:1px dashed rgba(255,255,255,.20);
+      background: rgba(0,0,0,.20);
+      border-radius:14px;
+      height:140px;
+      overflow:hidden;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:var(--muted);
+      font-size:12px;
+      position:relative;
+    }
+    .thumb img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+    .thumb .cap{
+      position:absolute;
+      left:10px; right:10px; bottom:10px;
+      font-size:12px;
+      color:rgba(255,255,255,.92);
+      text-shadow:0 6px 18px rgba(0,0,0,.65);
+      background:rgba(0,0,0,.35);
+      border:1px solid rgba(255,255,255,.10);
+      padding:8px 10px;
+      border-radius:12px;
+      backdrop-filter: blur(10px);
+      display:none;
+    }
+    .thumb.has-caption .cap{display:block}
+    .contact{
+      margin-top:14px;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+    }
+    .info{
+      border:1px solid var(--line);
+      background: rgba(0,0,0,.20);
+      border-radius:14px;
+      padding:14px;
+      color:rgba(234,240,255,.92);
+      font-size:14px;
+    }
+    .info small{display:block; color:var(--muted); margin-top:6px; font-size:12px}
+
+    footer{
+      padding:28px 0 36px;
+      color:var(--muted);
+      font-size:13px;
+      text-align:center;
+      border-top:1px solid var(--line);
+      margin-top:26px;
+      background:rgba(0,0,0,.10);
+    }
+
+    /* Admin modal */
+    .overlay{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.65);
+      backdrop-filter: blur(10px);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      z-index:100;
+    }
+    .overlay.show{display:flex}
+    .modal{
+      width:min(980px, 96vw);
+      max-height:86vh;
+      overflow:auto;
+      border-radius:18px;
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border:1px solid rgba(255,255,255,.10);
+      box-shadow: 0 24px 80px rgba(0,0,0,.45);
+      padding:18px;
+    }
+    .modal header{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:14px;
+      padding:0;
+      margin:0 0 12px;
+      text-align:left;
+    }
+    .modal header h2{margin:0; font-size:16px}
+    .modal header p{margin:4px 0 0; color:var(--muted); font-size:13px}
+    .close{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.04);
+      color:var(--text);
+      border-radius:12px;
+      padding:8px 10px;
+      cursor:pointer;
+      user-select:none;
+    }
+    .form{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+    }
+    .field{
+      border:1px solid var(--line);
+      background:rgba(0,0,0,.18);
+      border-radius:14px;
+      padding:12px;
+    }
+    .field label{
+      display:block;
+      font-size:12px;
+      color:var(--muted);
+      margin-bottom:8px;
+    }
+    input, textarea{
+      width:100%;
+      border:1px solid rgba(255,255,255,.08);
+      background:rgba(255,255,255,.04);
+      color:var(--text);
+      border-radius:12px;
+      padding:10px 10px;
+      font-size:14px;
+      outline:none;
+    }
+    textarea{min-height:110px; resize:vertical}
+    .rowspan{grid-column:1 / -1}
+
+    .toolbar{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:12px;
+      align-items:center;
+      justify-content:space-between;
+    }
+    .toolbar .left, .toolbar .right{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:center;
+    }
+    .badge{
+      font-size:12px;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.04);
+      color:var(--muted);
+      user-select:none;
+    }
+    .badge.good{border-color: rgba(34,197,94,.35); background: rgba(34,197,94,.12); color:rgba(220,255,235,.9)}
+    .badge.warn{border-color: rgba(245,158,11,.35); background: rgba(245,158,11,.12); color:rgba(255,245,220,.9)}
+
+    .list{
+      margin-top:12px;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+    }
+    .list .card{padding:14px}
+    .list .card input{margin-top:8px}
+    .list .card .mini-actions{margin-top:10px; display:flex; gap:10px; flex-wrap:wrap}
+
+    /* "Sample Page" - text scrolling everywhere */
+    .page{
+      display:none;
+    }
+    .page.show{
+      display:block;
+    }
+    .sample-wrap{
+      min-height: calc(100vh - 64px);
+      padding: 28px 0 40px;
+    }
+    .sample-stage{
+      border:1px solid var(--line);
+      background: rgba(0,0,0,.22);
+      border-radius: 18px;
+      overflow:hidden;
+      position:relative;
+      box-shadow: var(--shadow);
+    }
+    .sample-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:14px 16px;
+      border-bottom:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+    }
+    .sample-top strong{font-size:14px}
+    .sample-top span{color:var(--muted); font-size:12px}
+
+    .ticker-area{
+      height: 72vh;
+      position:relative;
+      overflow:hidden;
+      padding: 0 16px;
+    }
+
+    .ticker-col{
+      position:absolute;
+      top:100%;
+      width:calc(50% - 10px);
+      padding:18px 10px;
+      color:rgba(234,240,255,.85);
+      font-size:14px;
+      line-height:1.9;
+      opacity:.95;
+      filter: drop-shadow(0 10px 25px rgba(0,0,0,.35));
+      animation: scrollUp 24s linear infinite;
+      user-select:none;
+      pointer-events:none;
+      white-space:pre-wrap;
+    }
+    .ticker-col.right{
+      left:50%;
+      width:calc(50% - 10px);
+      animation-duration: 28s;
+      opacity:.8;
+    }
+    .ticker-col.left{
+      left:0%;
+      animation-duration: 22s;
+    }
+
+    .ticker-strip{
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(180deg, rgba(4,8,24,.95), rgba(4,8,24,.15) 18%, rgba(4,8,24,.10) 82%, rgba(4,8,24,.95)),
+        repeating-linear-gradient(
+          135deg,
+          rgba(78,161,255,.06) 0px,
+          rgba(78,161,255,.06) 12px,
+          rgba(34,197,94,.05) 12px,
+          rgba(34,197,94,.05) 24px
+        );
+      pointer-events:none;
+      mix-blend-mode:screen;
+      opacity:.35;
+    }
+
+    @keyframes scrollUp{
+      0%{ transform: translateY(0); }
+      100%{ transform: translateY(-220%); }
+    }
+
+    @media (max-width: 900px){
+      .hero-grid{grid-template-columns:1fr}
+      .hero-side{border-left:none; padding-left:0}
+      .grid{grid-template-columns:1fr}
+      .gallery{grid-template-columns:repeat(2, 1fr)}
+      .contact{grid-template-columns:1fr}
+      .form{grid-template-columns:1fr}
+      .list{grid-template-columns:1fr}
+      .ticker-col{width:100% !important; left:0 !important}
+      .ticker-col.right{display:none}
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Top bar -->
+  <div class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="#home" id="brandLink">
+        <div class="logo" aria-hidden="true"></div>
+        <div class="brand-title">
+          <strong id="uiCompanyName">Company Name Here</strong>
+          <span id="uiTagline">Company background, legitimacy gallery, and warranty support</span>
+        </div>
+      </a>
+      <nav>
+        <a class="chip" href="#home">Home</a>
+        <a class="chip" href="#home" data-scroll="about">About</a>
+        <a class="chip" href="#home" data-scroll="services">Services</a>
+        <a class="chip" href="#home" data-scroll="gallery">Gallery</a>
+        <a class="chip" href="#home" data-scroll="contact">Contact</a>
+        <a class="chip" href="#sample">Sample Page</a>
+        <button class="chip accent" id="openAdminBtn" type="button">Admin</button>
+      </nav>
+    </div>
+  </div>
+
+  <!-- HOME PAGE -->
+  <div id="pageHome" class="page show">
+    <section class="hero">
+      <div class="container">
+        <div class="hero-card">
+          <div class="hero-grid">
+            <div>
+              <h1 id="uiHeroTitle">Company Name Here</h1>
+              <p id="uiHeroDesc">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+              </p>
+
+              <div class="hero-actions">
+                <a class="btn primary" href="#home" data-scroll="contact">Warranty & Support</a>
+                <a class="btn" href="#home" data-scroll="gallery">View Customer Gallery</a>
+                <button class="btn" type="button" id="copyContactBtn">Copy Contact Info</button>
+              </div>
+            </div>
+
+            <div class="hero-side">
+              <div class="mini">
+                <strong>Purpose</strong>
+                <span id="uiPurpose">
+                  This website is focused on customer support and warranty contact, and it shows buyer photos for legitimacy.
+                </span>
+              </div>
+              <div style="height:12px"></div>
+              <div class="mini">
+                <strong>Note</strong>
+                <span>
+                  The admin dashboard saves content locally in your browser (localStorage). This is simple for now, but not secure for multi-device use.
+                </span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="container">
+        <div class="panel">
+          <h2>About the Company</h2>
+          <p id="uiAbout">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="services">
+      <div class="container">
+        <div class="panel">
+          <h2>Services</h2>
+          <p id="uiServicesDesc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Services overview goes here.</p>
+
+          <div class="grid" id="uiServicesGrid">
+            <!-- injected -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="gallery">
+      <div class="container">
+        <div class="panel">
+          <h2>Customer Gallery</h2>
+          <p id="uiGalleryDesc">Photos of customers and units for legitimacy and proof of transactions.</p>
+
+          <div class="gallery" id="uiGalleryGrid">
+            <!-- injected -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="container">
+        <div class="panel">
+          <h2>Contact & Warranty Support</h2>
+          <p id="uiContactDesc">
+            For warranty concerns and service support, please contact us. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          </p>
+
+          <div class="contact">
+            <div class="info" id="uiPhone">📞 +63 900 000 0000
+              <small>Hotline / Contact Number</small>
+            </div>
+            <div class="info" id="uiEmail">📧 company@email.com
+              <small>Email Address</small>
+            </div>
+            <div class="info" id="uiAddress">📍 Business Address Here
+              <small>Service Address</small>
+            </div>
+            <div class="info" id="uiHours">🕒 Mon–Sat, 9:00 AM – 6:00 PM
+              <small>Support Hours</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        <div id="uiFooter">© 2026 Company Name Here. All rights reserved.</div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- SAMPLE PAGE -->
+  <div id="pageSample" class="page">
+    <div class="sample-wrap">
+      <div class="container">
+        <div class="sample-stage">
+          <div class="sample-top">
+            <strong>Sample Page (Text Scrolling Everywhere)</strong>
+            <span>Display-only demo</span>
+          </div>
+
+          <div class="ticker-area">
+            <div class="ticker-strip" aria-hidden="true"></div>
+
+            <div class="ticker-col left" id="tickerLeft"></div>
+            <div class="ticker-col right" id="tickerRight"></div>
+          </div>
+        </div>
+
+        <div style="height:14px"></div>
+        <div class="panel">
+          <h2>Back to Website</h2>
+          <p>Use the navigation bar and click “Home” to return to the main landing page.</p>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="container">
+        © 2026 Company Name Here — Sample Page
+      </div>
+    </footer>
+  </div>
+
+  <!-- ADMIN OVERLAY -->
+  <div class="overlay" id="adminOverlay" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true">
+      <header>
+        <div>
+          <h2>Local Admin Dashboard</h2>
+          <p>
+            Changes are saved in your browser using localStorage. This is simple for now and works on one device/browser only.
+          </p>
+        </div>
+        <button class="close" id="closeAdminBtn" type="button">Close</button>
+      </header>
+
+      <div class="toolbar">
+        <div class="left">
+          <span class="badge warn" id="adminStatus">Not logged in</span>
+          <span class="badge" id="saveStatus">No unsaved changes</span>
+        </div>
+        <div class="right">
+          <button class="btn" type="button" id="btnExport">Export JSON</button>
+          <button class="btn" type="button" id="btnImport">Import JSON</button>
+          <button class="btn" type="button" id="btnReset">Reset to Default</button>
+          <button class="btn primary" type="button" id="btnSave">Save Changes</button>
+        </div>
+      </div>
+
+      <div style="height:12px"></div>
+
+      <div class="form">
+        <div class="field">
+          <label>Company Name</label>
+          <input id="fCompanyName" placeholder="Company Name Here" />
+        </div>
+
+        <div class="field">
+          <label>Tagline</label>
+          <input id="fTagline" placeholder="Company background, legitimacy gallery, and warranty support" />
+        </div>
+
+        <div class="field rowspan">
+          <label>Hero Description</label>
+          <textarea id="fHeroDesc" placeholder="Lorem ipsum..."></textarea>
+        </div>
+
+        <div class="field rowspan">
+          <label>About Text</label>
+          <textarea id="fAbout" placeholder="Lorem ipsum..."></textarea>
+        </div>
+
+        <div class="field">
+          <label>Phone</label>
+          <input id="fPhone" placeholder="+63 900 000 0000" />
+        </div>
+
+        <div class="field">
+          <label>Email</label>
+          <input id="fEmail" placeholder="company@email.com" />
+        </div>
+
+        <div class="field">
+          <label>Address</label>
+          <input id="fAddress" placeholder="Business Address Here" />
+        </div>
+
+        <div class="field">
+          <label>Support Hours</label>
+          <input id="fHours" placeholder="Mon–Sat, 9:00 AM – 6:00 PM" />
+        </div>
+
+        <div class="field rowspan">
+          <label>Contact Section Description</label>
+          <textarea id="fContactDesc" placeholder="Lorem ipsum..."></textarea>
+        </div>
+      </div>
+
+      <div style="height:12px"></div>
+
+      <div class="panel">
+        <h2>Services Editor</h2>
+        <p>Update the service cards shown on the landing page. You can add or remove items anytime.</p>
+
+        <div class="toolbar" style="margin-top:12px">
+          <div class="left">
+            <span class="badge" id="servicesCount">0 services</span>
+          </div>
+          <div class="right">
+            <button class="btn" type="button" id="btnAddService">Add Service</button>
+          </div>
+        </div>
+
+        <div class="list" id="servicesList"></div>
+      </div>
+
+      <div style="height:12px"></div>
+
+      <div class="panel">
+        <h2>Gallery Editor</h2>
+        <p>
+          Add images by URL for now. If you need direct uploading later, that requires a real backend or file hosting.
+        </p>
+
+        <div class="toolbar" style="margin-top:12px">
+          <div class="left">
+            <span class="badge" id="galleryCount">0 images</span>
+          </div>
+          <div class="right">
+            <button class="btn" type="button" id="btnAddImage">Add Image</button>
+          </div>
+        </div>
+
+        <div class="list" id="galleryList"></div>
+      </div>
+
+      <div style="height:14px"></div>
+
+      <div class="panel">
+        <h2>Admin Password (Local)</h2>
+        <p>
+          This password is stored locally and is only meant as a simple gate for now. You can change it below.
+        </p>
+
+        <div class="form" style="margin-top:12px">
+          <div class="field">
+            <label>Current Password</label>
+            <input id="fPassCurrent" type="password" placeholder="Enter current password" />
+          </div>
+          <div class="field">
+            <label>New Password</label>
+            <input id="fPassNew" type="password" placeholder="Enter new password" />
+          </div>
+          <div class="field rowspan">
+            <button class="btn primary" type="button" id="btnChangePass">Change Password</button>
+            <span style="display:block; color:var(--muted); font-size:12px; margin-top:8px">
+              Default password: <strong>admin123</strong>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div style="height:12px"></div>
+    </div>
+  </div>
+
+  <script>
+    /******************************************************************
+      SIMPLE CONTENT MODEL (localStorage)
+      - This is a single-file demo layout with a local admin dashboard.
+      - All content is stored in localStorage under one key.
+      - Works best for one browser/device as requested.
+    ******************************************************************/
+
+    const STORAGE_KEY = "companyLandingDemo_v1";
+    const PASS_KEY = "admin";
+    const SESSION_KEY = "companyLandingDemo_adminSession_v1";
+
+    const DEFAULT_DATA = {
+      companyName: "Company Name Here",
+      tagline: "Company background, legitimacy gallery, and warranty support",
+      heroTitle: "Company Name Here",
+      heroDesc:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. " +
+        "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+      purpose:
+        "This website is focused on customer support and warranty contact, and it shows buyer photos for legitimacy.",
+      about:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. " +
+        "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. " +
+        "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+      servicesDesc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Services overview goes here.",
+      services: [
+        { title: "Service One", desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit." },
+        { title: "Service Two", desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit." },
+        { title: "Service Three", desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit." }
+      ],
+      galleryDesc: "Photos of customers and units for legitimacy and proof of transactions.",
+      gallery: [
+        { url: "", caption: "Image Placeholder" },
+        { url: "", caption: "Image Placeholder" },
+        { url: "", caption: "Image Placeholder" },
+        { url: "", caption: "Image Placeholder" }
+      ],
+      contactDesc:
+        "For warranty concerns and service support, please contact us. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      phone: "+63 900 000 0000",
+      email: "company@email.com",
+      address: "Business Address Here",
+      hours: "Mon–Sat, 9:00 AM – 6:00 PM",
+      footer: "© 2026 Company Name Here. All rights reserved."
+    };
+
+    function getPass(){
+      return localStorage.getItem(PASS_KEY) || "admin123";
+    }
+    function setPass(next){
+      localStorage.setItem(PASS_KEY, next);
+    }
+    function isLoggedIn(){
+      return localStorage.getItem(SESSION_KEY) === "ok";
+    }
+    function setSession(val){
+      if(val) localStorage.setItem(SESSION_KEY, "ok");
+      else localStorage.removeItem(SESSION_KEY);
+    }
+
+    function loadData(){
+      try{
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if(!raw) return structuredClone(DEFAULT_DATA);
+        const parsed = JSON.parse(raw);
+        return { ...structuredClone(DEFAULT_DATA), ...parsed };
+      }catch{
+        return structuredClone(DEFAULT_DATA);
+      }
+    }
+
+    function saveData(data){
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    }
+
+    let data = loadData();
+    let dirty = false;
+
+    /******************************************************************
+      ROUTER (hash) for Home and Sample Page
+    ******************************************************************/
+    const pageHome = document.getElementById("pageHome");
+    const pageSample = document.getElementById("pageSample");
+
+    function showPage(hash){
+      const h = (hash || "#home").toLowerCase();
+      if(h === "#sample"){
+        pageHome.classList.remove("show");
+        pageSample.classList.add("show");
+        window.scrollTo({ top: 0, behavior: "instant" });
+      }else{
+        pageSample.classList.remove("show");
+        pageHome.classList.add("show");
+      }
+    }
+
+    window.addEventListener("hashchange", () => showPage(location.hash));
+    showPage(location.hash);
+
+    /******************************************************************
+      RENDER MAIN UI
+    ******************************************************************/
+    function render(){
+      // Brand + Hero
+      document.getElementById("uiCompanyName").textContent = data.companyName;
+      document.getElementById("uiTagline").textContent = data.tagline;
+
+      document.getElementById("uiHeroTitle").textContent = data.heroTitle || data.companyName;
+      document.getElementById("uiHeroDesc").textContent = data.heroDesc;
+      document.getElementById("uiPurpose").textContent = data.purpose;
+
+      // Sections
+      document.getElementById("uiAbout").textContent = data.about;
+
+      document.getElementById("uiServicesDesc").textContent = data.servicesDesc;
+
+      const sg = document.getElementById("uiServicesGrid");
+      sg.innerHTML = "";
+      data.services.forEach(s => {
+        const el = document.createElement("div");
+        el.className = "card";
+        el.innerHTML = `<h3>${escapeHtml(s.title)}</h3><p>${escapeHtml(s.desc)}</p>`;
+        sg.appendChild(el);
+      });
+
+      document.getElementById("uiGalleryDesc").textContent = data.galleryDesc;
+
+      const gg = document.getElementById("uiGalleryGrid");
+      gg.innerHTML = "";
+      data.gallery.forEach(g => {
+        const t = document.createElement("div");
+        t.className = "thumb";
+
+        const hasUrl = (g.url || "").trim().length > 0;
+        const cap = (g.caption || "").trim();
+
+        if(hasUrl){
+          const img = document.createElement("img");
+          img.src = g.url;
+          img.alt = cap || "Gallery image";
+          img.loading = "lazy";
+          img.referrerPolicy = "no-referrer";
+          img.addEventListener("error", () => {
+            t.innerHTML = "Image failed to load";
+          });
+          t.appendChild(img);
+        }else{
+          t.textContent = cap || "Image Placeholder";
+        }
+
+        if(cap && hasUrl){
+          t.classList.add("has-caption");
+          const c = document.createElement("div");
+          c.className = "cap";
+          c.textContent = cap;
+          t.appendChild(c);
+        }
+
+        gg.appendChild(t);
+      });
+
+      document.getElementById("uiContactDesc").textContent = data.contactDesc;
+      document.getElementById("uiPhone").firstChild.textContent = "📞 " + data.phone;
+      document.getElementById("uiEmail").firstChild.textContent = "📧 " + data.email;
+      document.getElementById("uiAddress").firstChild.textContent = "📍 " + data.address;
+      document.getElementById("uiHours").firstChild.textContent = "🕒 " + data.hours;
+
+      document.getElementById("uiFooter").textContent = data.footer.replace("Company Name Here", data.companyName);
+
+      // Sample ticker text
+      const sampleText =
+`COMPANY NAME HERE
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+WARRANTY SUPPORT
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+
+CUSTOMER LEGITIMACY GALLERY
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+
+CONTACT
++63 900 000 0000
+company@email.com
+Business Address Here
+
+(Repeat)
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+`;
+
+      document.getElementById("tickerLeft").textContent = sampleText.replaceAll("COMPANY NAME HERE", data.companyName);
+      document.getElementById("tickerRight").textContent = sampleText.replaceAll("COMPANY NAME HERE", data.companyName);
+    }
+
+    function escapeHtml(str){
+      return String(str ?? "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    render();
+
+    /******************************************************************
+      Smooth scroll from nav chips that have data-scroll
+    ******************************************************************/
+    document.querySelectorAll("[data-scroll]").forEach(el => {
+      el.addEventListener("click", (e) => {
+        const targetId = el.getAttribute("data-scroll");
+        if(!targetId) return;
+        if(location.hash.toLowerCase() !== "#home"){
+          location.hash = "#home";
+          setTimeout(() => {
+            const node = document.getElementById(targetId);
+            if(node) node.scrollIntoView({ behavior:"smooth", block:"start" });
+          }, 60);
+          e.preventDefault();
+          return;
+        }
+        const node = document.getElementById(targetId);
+        if(node) node.scrollIntoView({ behavior:"smooth", block:"start" });
+        e.preventDefault();
+      });
+    });
+
+    /******************************************************************
+      Copy contact info button
+    ******************************************************************/
+    document.getElementById("copyContactBtn").addEventListener("click", async () => {
+      const text =
+`${data.companyName}
+Phone: ${data.phone}
+Email: ${data.email}
+Address: ${data.address}
+Hours: ${data.hours}`;
+      try{
+        await navigator.clipboard.writeText(text);
+        toast("Contact info copied.", "good");
+      }catch{
+        toast("Copy failed (browser blocked).", "warn");
+      }
+    });
+
+    /******************************************************************
+      ADMIN MODAL
+    ******************************************************************/
+    const adminOverlay = document.getElementById("adminOverlay");
+    const openAdminBtn = document.getElementById("openAdminBtn");
+    const closeAdminBtn = document.getElementById("closeAdminBtn");
+
+    const adminStatus = document.getElementById("adminStatus");
+    const saveStatus = document.getElementById("saveStatus");
+
+    const fCompanyName = document.getElementById("fCompanyName");
+    const fTagline = document.getElementById("fTagline");
+    const fHeroDesc = document.getElementById("fHeroDesc");
+    const fAbout = document.getElementById("fAbout");
+    const fPhone = document.getElementById("fPhone");
+    const fEmail = document.getElementById("fEmail");
+    const fAddress = document.getElementById("fAddress");
+    const fHours = document.getElementById("fHours");
+    const fContactDesc = document.getElementById("fContactDesc");
+
+    const servicesList = document.getElementById("servicesList");
+    const galleryList = document.getElementById("galleryList");
+    const servicesCount = document.getElementById("servicesCount");
+    const galleryCount = document.getElementById("galleryCount");
+
+    function openAdmin(){
+      // Ask password if not logged in
+      if(!isLoggedIn()){
+        const attempt = prompt("Enter admin password:");
+        if(attempt === null) return;
+        if(attempt !== getPass()){
+          toast("Incorrect password.", "bad");
+          return;
+        }
+        setSession(true);
+      }
+
+      syncAdminStatus();
+      fillAdminFields();
+      renderEditors();
+      adminOverlay.classList.add("show");
+      adminOverlay.setAttribute("aria-hidden", "false");
+    }
+
+    function closeAdmin(){
+      adminOverlay.classList.remove("show");
+      adminOverlay.setAttribute("aria-hidden", "true");
+    }
+
+    openAdminBtn.addEventListener("click", openAdmin);
+    closeAdminBtn.addEventListener("click", closeAdmin);
+    adminOverlay.addEventListener("click", (e) => {
+      if(e.target === adminOverlay) closeAdmin();
+    });
+
+    function syncAdminStatus(){
+      if(isLoggedIn()){
+        adminStatus.textContent = "Logged in (local)";
+        adminStatus.className = "badge good";
+      }else{
+        adminStatus.textContent = "Not logged in";
+        adminStatus.className = "badge warn";
+      }
+      updateSaveStatus();
+    }
+
+    function updateSaveStatus(){
+      if(dirty){
+        saveStatus.textContent = "Unsaved changes";
+        saveStatus.className = "badge warn";
+      }else{
+        saveStatus.textContent = "No unsaved changes";
+        saveStatus.className = "badge";
+      }
+    }
+
+    function fillAdminFields(){
+      fCompanyName.value = data.companyName;
+      fTagline.value = data.tagline;
+      fHeroDesc.value = data.heroDesc;
+      fAbout.value = data.about;
+      fPhone.value = data.phone;
+      fEmail.value = data.email;
+      fAddress.value = data.address;
+      fHours.value = data.hours;
+      fContactDesc.value = data.contactDesc;
+    }
+
+    function markDirty(){
+      dirty = true;
+      updateSaveStatus();
+    }
+
+    // live field update
+    [fCompanyName, fTagline, fHeroDesc, fAbout, fPhone, fEmail, fAddress, fHours, fContactDesc].forEach(inp => {
+      inp.addEventListener("input", () => markDirty());
+    });
+
+    function renderEditors(){
+      // Services
+      servicesList.innerHTML = "";
+      servicesCount.textContent = `${data.services.length} services`;
+
+      data.services.forEach((s, idx) => {
+        const block = document.createElement("div");
+        block.className = "card";
+        block.innerHTML = `
+          <label style="display:block; font-size:12px; color:var(--muted)">Service Title</label>
+          <input data-s-title="${idx}" value="${escapeAttr(s.title)}" placeholder="Service title" />
+          <label style="display:block; font-size:12px; color:var(--muted); margin-top:10px">Service Description</label>
+          <input data-s-desc="${idx}" value="${escapeAttr(s.desc)}" placeholder="Service description" />
+          <div class="mini-actions">
+            <button class="btn" type="button" data-s-up="${idx}">Move Up</button>
+            <button class="btn" type="button" data-s-down="${idx}">Move Down</button>
+            <button class="btn" type="button" data-s-del="${idx}">Remove</button>
+          </div>
+        `;
+        servicesList.appendChild(block);
+      });
+
+      // Gallery
+      galleryList.innerHTML = "";
+      galleryCount.textContent = `${data.gallery.length} images`;
+
+      data.gallery.forEach((g, idx) => {
+        const block = document.createElement("div");
+        block.className = "card";
+        block.innerHTML = `
+          <label style="display:block; font-size:12px; color:var(--muted)">Image URL</label>
+          <input data-g-url="${idx}" value="${escapeAttr(g.url)}" placeholder="https://example.com/image.jpg" />
+          <label style="display:block; font-size:12px; color:var(--muted); margin-top:10px">Caption (optional)</label>
+          <input data-g-cap="${idx}" value="${escapeAttr(g.caption)}" placeholder="Buyer photo caption" />
+          <div class="mini-actions">
+            <button class="btn" type="button" data-g-up="${idx}">Move Up</button>
+            <button class="btn" type="button" data-g-down="${idx}">Move Down</button>
+            <button class="btn" type="button" data-g-del="${idx}">Remove</button>
+          </div>
+        `;
+        galleryList.appendChild(block);
+      });
+
+      // Wire inputs + buttons
+      servicesList.querySelectorAll("input").forEach(inp => {
+        inp.addEventListener("input", () => {
+          const iTitle = inp.getAttribute("data-s-title");
+          const iDesc = inp.getAttribute("data-s-desc");
+          if(iTitle !== null) data.services[Number(iTitle)].title = inp.value;
+          if(iDesc !== null) data.services[Number(iDesc)].desc = inp.value;
+          markDirty();
+        });
+      });
+
+      servicesList.querySelectorAll("button").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const up = btn.getAttribute("data-s-up");
+          const down = btn.getAttribute("data-s-down");
+          const del = btn.getAttribute("data-s-del");
+
+          if(del !== null){
+            data.services.splice(Number(del), 1);
+            markDirty();
+            renderEditors();
+            return;
+          }
+          if(up !== null){
+            const i = Number(up);
+            if(i > 0){
+              [data.services[i-1], data.services[i]] = [data.services[i], data.services[i-1]];
+              markDirty();
+              renderEditors();
+            }
+            return;
+          }
+          if(down !== null){
+            const i = Number(down);
+            if(i < data.services.length-1){
+              [data.services[i+1], data.services[i]] = [data.services[i], data.services[i+1]];
+              markDirty();
+              renderEditors();
+            }
+            return;
+          }
+        });
+      });
+
+      galleryList.querySelectorAll("input").forEach(inp => {
+        inp.addEventListener("input", () => {
+          const iUrl = inp.getAttribute("data-g-url");
+          const iCap = inp.getAttribute("data-g-cap");
+          if(iUrl !== null) data.gallery[Number(iUrl)].url = inp.value;
+          if(iCap !== null) data.gallery[Number(iCap)].caption = inp.value;
+          markDirty();
+        });
+      });
+
+      galleryList.querySelectorAll("button").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const up = btn.getAttribute("data-g-up");
+          const down = btn.getAttribute("data-g-down");
+          const del = btn.getAttribute("data-g-del");
+
+          if(del !== null){
+            data.gallery.splice(Number(del), 1);
+            markDirty();
+            renderEditors();
+            return;
+          }
+          if(up !== null){
+            const i = Number(up);
+            if(i > 0){
+              [data.gallery[i-1], data.gallery[i]] = [data.gallery[i], data.gallery[i-1]];
+              markDirty();
+              renderEditors();
+            }
+            return;
+          }
+          if(down !== null){
+            const i = Number(down);
+            if(i < data.gallery.length-1){
+              [data.gallery[i+1], data.gallery[i]] = [data.gallery[i], data.gallery[i+1]];
+              markDirty();
+              renderEditors();
+            }
+            return;
+          }
+        });
+      });
+    }
+
+    function escapeAttr(str){
+      return String(str ?? "")
+        .replaceAll("&","&amp;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;");
+    }
+
+    document.getElementById("btnAddService").addEventListener("click", () => {
+      data.services.push({ title:"New Service", desc:"Lorem ipsum dolor sit amet, consectetur adipiscing elit." });
+      markDirty();
+      renderEditors();
+    });
+
+    document.getElementById("btnAddImage").addEventListener("click", () => {
+      data.gallery.push({ url:"", caption:"Image Placeholder" });
+      markDirty();
+      renderEditors();
+    });
+
+    document.getElementById("btnSave").addEventListener("click", () => {
+      // Apply field changes into model
+      data.companyName = fCompanyName.value.trim() || DEFAULT_DATA.companyName;
+      data.tagline = fTagline.value.trim() || DEFAULT_DATA.tagline;
+      data.heroTitle = data.companyName;
+      data.heroDesc = fHeroDesc.value.trim() || DEFAULT_DATA.heroDesc;
+      data.about = fAbout.value.trim() || DEFAULT_DATA.about;
+      data.phone = fPhone.value.trim() || DEFAULT_DATA.phone;
+      data.email = fEmail.value.trim() || DEFAULT_DATA.email;
+      data.address = fAddress.value.trim() || DEFAULT_DATA.address;
+      data.hours = fHours.value.trim() || DEFAULT_DATA.hours;
+      data.contactDesc = fContactDesc.value.trim() || DEFAULT_DATA.contactDesc;
+      data.footer = `© 2026 ${data.companyName}. All rights reserved.`;
+
+      saveData(data);
+      dirty = false;
+      syncAdminStatus();
+      render();
+      toast("Saved to localStorage.", "good");
+    });
+
+    document.getElementById("btnReset").addEventListener("click", () => {
+      const ok = confirm("Reset all content to default?");
+      if(!ok) return;
+      data = structuredClone(DEFAULT_DATA);
+      saveData(data);
+      dirty = false;
+      fillAdminFields();
+      renderEditors();
+      syncAdminStatus();
+      render();
+      toast("Reset complete.", "warn");
+    });
+
+    document.getElementById("btnExport").addEventListener("click", async () => {
+      const payload = JSON.stringify(data, null, 2);
+      try{
+        await navigator.clipboard.writeText(payload);
+        toast("Export JSON copied to clipboard.", "good");
+      }catch{
+        toast("Copy failed. You can manually copy from prompt.", "warn");
+        prompt("Copy your JSON here:", payload);
+      }
+    });
+
+    document.getElementById("btnImport").addEventListener("click", () => {
+      const raw = prompt("Paste JSON to import:");
+      if(raw === null) return;
+      try{
+        const parsed = JSON.parse(raw);
+        data = { ...structuredClone(DEFAULT_DATA), ...parsed };
+        saveData(data);
+        dirty = false;
+        fillAdminFields();
+        renderEditors();
+        syncAdminStatus();
+        render();
+        toast("Import complete.", "good");
+      }catch{
+        toast("Invalid JSON.", "bad");
+      }
+    });
+
+    // Password change
+    document.getElementById("btnChangePass").addEventListener("click", () => {
+      const cur = document.getElementById("fPassCurrent").value;
+      const next = document.getElementById("fPassNew").value;
+      if(!cur || !next){
+        toast("Please enter both current and new password.", "warn");
+        return;
+      }
+      if(cur !== getPass()){
+        toast("Current password is incorrect.", "bad");
+        return;
+      }
+      if(next.length < 6){
+        toast("New password should be at least 6 characters.", "warn");
+        return;
+      }
+      setPass(next);
+      document.getElementById("fPassCurrent").value = "";
+      document.getElementById("fPassNew").value = "";
+      toast("Password updated (local).", "good");
+    });
+
+    /******************************************************************
+      Simple toast
+    ******************************************************************/
+    let toastTimer = null;
+    function toast(msg, kind){
+      clearTimeout(toastTimer);
+
+      let el = document.getElementById("toast");
+      if(!el){
+        el = document.createElement("div");
+        el.id = "toast";
+        el.style.position = "fixed";
+        el.style.left = "50%";
+        el.style.bottom = "18px";
+        el.style.transform = "translateX(-50%)";
+        el.style.zIndex = "999";
+        el.style.padding = "12px 14px";
+        el.style.borderRadius = "14px";
+        el.style.border = "1px solid rgba(255,255,255,.10)";
+        el.style.background = "rgba(0,0,0,.55)";
+        el.style.backdropFilter = "blur(12px)";
+        el.style.color = "rgba(234,240,255,.95)";
+        el.style.fontSize = "13px";
+        el.style.boxShadow = "0 18px 60px rgba(0,0,0,.45)";
+        el.style.maxWidth = "92vw";
+        document.body.appendChild(el);
+      }
+
+      el.textContent = msg;
+
+      if(kind === "good"){
+        el.style.borderColor = "rgba(34,197,94,.30)";
+      }else if(kind === "warn"){
+        el.style.borderColor = "rgba(245,158,11,.35)";
+      }else if(kind === "bad"){
+        el.style.borderColor = "rgba(239,68,68,.40)";
+      }else{
+        el.style.borderColor = "rgba(255,255,255,.10)";
+      }
+
+      el.style.opacity = "1";
+      toastTimer = setTimeout(() => {
+        el.style.opacity = "0";
+      }, 2200);
+    }
+
+    /******************************************************************
+      Disable right-click + common devtools shortcuts (basic)
+      - This is only a deterrent. Browsers/users can still inspect in other ways.
+    ******************************************************************/
+    document.addEventListener("contextmenu", (e) => {
+      e.preventDefault();
+    });
+
+    document.addEventListener("keydown", (e) => {
+      const key = (e.key || "").toLowerCase();
+
+      // F12
+      if(e.key === "F12"){
+        e.preventDefault();
+        return;
+      }
+
+      // Ctrl+Shift+I/J/C (devtools)
+      if(e.ctrlKey && e.shiftKey && (key === "i" || key === "j" || key === "c")){
+        e.preventDefault();
+        return;
+      }
+
+      // Ctrl+U (view source)
+      if(e.ctrlKey && key === "u"){
+        e.preventDefault();
+        return;
+      }
+    });
+
+    /******************************************************************
+      Small quality-of-life: close admin with Escape
+    ******************************************************************/
+    document.addEventListener("keydown", (e) => {
+      if(e.key === "Escape" && adminOverlay.classList.contains("show")){
+        closeAdmin();
+      }
+    });
+  </script>
+</body>
+</html>
