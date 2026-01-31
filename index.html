@@ -87,6 +87,7 @@
 
     /* enable scrolling (but hide the scrollbar) */
     html, body{
+    scroll-behavior: smooth;
       overflow-y:auto;
       overflow-x:hidden;
       scrollbar-width:none;
@@ -813,40 +814,41 @@
       });
     })();
 
-    // Smooth scroll for internal links (nav + buttons)
-    (function smoothAnchors() {
-      const headerH = () => {
-        const v = getComputedStyle(document.documentElement).getPropertyValue("--header-h").trim();
-        const n = parseInt(v, 10);
-        return Number.isFinite(n) ? n : 64;
-      };
+ // Smooth scroll for internal links (nav + buttons) — more reliable
+  (function smoothAnchors() {
+    function scrollToId(id) {
+      const el = document.getElementById(id);
+      if (!el) return;
 
-      function scrollToId(id) {
-        const el = document.getElementById(id);
-        if (!el) return;
-        const y = el.getBoundingClientRect().top + window.scrollY - (headerH() + 10);
-        window.scrollTo({ top: y, behavior: "smooth" });
-      }
+      // Uses .panel { scroll-margin-top: ... } so the fixed header won't cover it
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
 
-      document.addEventListener("click", (e) => {
-        const a = e.target.closest('a[href^="#"]');
-        if (!a) return;
+    document.addEventListener("click", (e) => {
+      const a = e.target.closest('a[href^="#"]');
+      if (!a) return;
 
-        const href = a.getAttribute("href");
-        const id = (href || "").slice(1);
-        if (!id) return;
+      const href = a.getAttribute("href") || "";
+      const id = href.slice(1);
+      if (!id) return;
 
-        e.preventDefault();
-        history.pushState(null, "", `#${id}`);
-        scrollToId(id);
-      }, { passive: false });
+      e.preventDefault();
 
-      // If user opens with a hash, align nicely under header
-      window.addEventListener("load", () => {
-        const id = (location.hash || "").slice(1);
-        if (id) scrollToId(id);
-      });
-    })();
+      // Update URL hash in the simplest/most compatible way
+      if (location.hash !== `#${id}`) location.hash = id;
+
+      scrollToId(id);
+    });
+
+    // If user opens with a hash, align nicely under header
+    window.addEventListener("load", () => {
+      const id = (location.hash || "").slice(1);
+      if (!id) return;
+
+      // Wait a frame so layout/--view-h is settled
+      requestAnimationFrame(() => scrollToId(id));
+    });
+  })();
 
     // Active section highlighting
     (function activeNav() {
