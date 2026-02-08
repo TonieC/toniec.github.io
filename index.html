@@ -62,25 +62,27 @@
       --view-h: 100vh;
     }
 
-    html[data-theme="paper-dark"]{
-      --paper:#0f0f0f;
-      --paper-2:#141414;
-      --ink:#f4f1ea;
-      --muted:rgba(244, 241, 234, 0.72);
-      --rule:rgba(244, 241, 234, 0.16);
-      --link:#f4f1ea;
-      color-scheme:dark;
-    }
+ html[data-theme="paper-dark"] {
+  --paper: #181818;          /* slightly brighter than pure black */
+  --paper-2: #1e1e1e;        /* soft secondary background */
+  --ink: #eae6dd;            /* softer off-white for text */
+  --muted: rgba(234, 230, 221, 0.72); /* less harsh muted text */
+  --rule: rgba(234, 230, 221, 0.18);  /* subtle lines */
+  --link: #eae6dd;           /* links slightly brighter */
+  color-scheme: dark;
+}
 
-    html[data-theme="paper-light"]{
-      --paper:#fbfaf7;
-      --paper-2:#ffffff;
-      --ink:#141414;
-      --muted:rgba(20, 20, 20, 0.66);
-      --rule:rgba(20, 20, 20, 0.12);
-      --link:#141414;
-      color-scheme:light;
-    }
+html[data-theme="paper-light"] {
+  --paper: #ece9e7;          /* very soft, warm background */
+  --paper-2: #e4dbdb;        /* gentle secondary background */
+  --ink: #2a2a2a;            /* soft dark text, easier on eyes than pure black */
+  --muted: rgba(42, 42, 42, 0.45);   /* subtle muted text */
+  --rule: rgba(42, 42, 42, 0.08);    /* very faint lines */
+  --link: #2a2a2a;           /* slightly warmer link color */
+  color-scheme: light;
+}
+
+
 
     *{ box-sizing:border-box; }
     html, body{ height:100%; margin:0; }
@@ -149,52 +151,85 @@
       opacity:1;
     }
 
-    .nav-inner{
-      max-width:var(--maxw);
-      margin:0 auto;
-      padding:10px var(--pad-x);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap:12px;
-      height:var(--header-h);
-    }
+ /* Nav container */
+.nav-inner {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 10px var(--pad-x);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  height: var(--header-h);
+}
 
-    nav.nav-links{
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap:12px;
-      flex-wrap:nowrap;
-      white-space:nowrap;
-      max-width:100%;
-      overflow:hidden;
-    }
+/* Nav links wrapper */
+nav.nav-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+  max-width: 100%;
+  overflow: hidden;
+}
 
-    nav.nav-links a{
-      color:var(--ink);
-      font-size:13px;
-      padding:6px 2px;
-      position:relative;
-      opacity:.78;
-      transition:opacity 200ms var(--ease), transform 200ms var(--ease);
-      flex:0 0 auto;
-    }
-    nav.nav-links a::after{
-      content:"";
-      position:absolute;
-      left:0; right:0; bottom:0;
-      height:1px;
-      background:var(--ink);
-      transform:scaleX(0);
-      transform-origin:center;
-      transition:transform 260ms var(--ease);
-      opacity:.9;
-    }
-    nav.nav-links a:hover{ opacity:.92; transform:translateY(-1px); }
-    nav.nav-links a:hover::after{ transform:scaleX(.85); }
-    nav.nav-links a.is-active{ opacity:1; }
-    nav.nav-links a.is-active::after{ transform:scaleX(1); }
+/* Base link style */
+nav.nav-links a {
+  position: relative;
+  display: inline-block;
+  color: #333;               /* default text color */
+  text-decoration: none;
+  font-size: 13px;
+  padding: 6px 2px;
+  opacity: 0.78;
+  transition: all 0.3s ease;
+  flex: 0 0 auto;
+}
+
+/* Underline effect */
+nav.nav-links a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 2px;
+  background-color: #ff4500; /* underline color */
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease;
+  opacity: 0.9;
+}
+
+/* Hover state */
+nav.nav-links a:hover {
+  opacity: 0.92;
+  transform: translateY(-2px) scale(1.02);
+  color: #1e90ff; /* hover color different from active */
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+nav.nav-links a:hover::after {
+  transform: scaleX(0.85);
+  transform-origin: left;
+}
+
+/* Active state */
+nav.nav-links a.is-active {
+  opacity: 1;
+  color: #ff4500;   /* active color stays orange */
+  font-weight: 500;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+nav.nav-links a.is-active::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+
 
     .theme-toggle{
       display:inline-flex;
@@ -264,42 +299,18 @@
       opacity:.9;
     }
 
-    .lead{
-      color:var(--muted);
-      line-height:1.75;
-      margin:0 auto;
-      font-size:16px;
-      max-width:72ch;
-      overflow-wrap:anywhere;
-      word-break:break-word;
-    }
+ .lead {
+  color: var(--muted);
+  line-height: 1.75;
+  margin: 0 auto 1.5em auto; /* bottom spacing for paragraph feel */
+  font-size: 16px;
+  max-width: 72ch;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  text-align: justify; /* paragraph alignment */
+  text-justify: inter-word; /* smooth justification */
+}
 
-    .download-btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      margin-top:14px;
-      border:1px solid var(--rule);
-      border-radius:var(--radius);
-      padding:10px 14px;
-      color:var(--ink);
-      background:var(--paper-2);
-      transition:transform 220ms var(--ease), opacity 220ms var(--ease), border-color 220ms var(--ease);
-    }
-    .download-btn:hover{
-      transform:translateY(-2px);
-      opacity:.95;
-      border-color:color-mix(in srgb, var(--rule) 30%, var(--ink));
-    }
-
-    .last-updated{
-      font-size:12px;
-      color:var(--muted);
-      margin-top:10px;
-    }
-
-    /* HERO */
     .hero-v2::before{
       content:"";
       position:absolute;
@@ -617,11 +628,8 @@
         <hr class="rule" />
 
         <p class="lead">
-          I'm <strong>Tonie</strong>, a 19-year-old programmer from the Philippines surviving ICT—Information Communication and Technology—but mostly debugging adventures. I build web interfaces that don’t frustrate users, tinker with microcontrollers until they obey, and ship practical tools that solve real problems.
-        </p>
-
-        <a href="images/resume.pdf" download class="download-btn">Download Resume</a>
-        <p class="last-updated">Last updated: Nov 1, 2025</p>
+  I'm <strong>Tonie</strong>, a 19-year-old programmer from the Philippines studying ICT (Information and Communication Technology) and diving deep into debugging adventures. I build web interfaces that don’t frustrate users, tinker with microcontrollers until they obey, and ship practical tools that solve real problems.
+</p>
       </div>
     </section>
 
@@ -630,53 +638,53 @@
         <h2 class="section-title" id="skills-heading">Skills & Tools</h2>
         <hr class="rule" />
 
-        <p class="lead" style="margin-top: 14px;">
-          Tools and skills I actively use in real projects.
-        </p>
-
         <div class="skills-grid">
-          <div class="skills-block">
-            <h3>Frontend</h3>
-            <ul>
-              <li>JavaScript (ES6+)</li>
-              <li>TypeScript</li>
-              <li>React</li>
-              <li>TailwindCSS</li>
-              <li>HTML5 / CSS3</li>
-            </ul>
-          </div>
+  <div class="skills-block">
+    <h3>Frontend</h3>
+    <ul>
+      <li>JavaScript (ES6+)</li>
+      <li>TypeScript</li>
+      <li>React</li>
+      <li>TailwindCSS</li>
+      <li>HTML5 / CSS3</li>
+    </ul>
+  </div>
 
-          <div class="skills-block">
-            <h3>Backend</h3>
-            <ul>
-              <li>Node.js</li>
-              <li>Express.js</li>
-              <li>REST APIs</li>
-            </ul>
-          </div>
+  <div class="skills-block">
+    <h3>Backend</h3>
+    <ul>
+      <li>Node.js</li>
+      <li>Express.js</li>
+      <li>REST APIs</li>
+      <li>Discord.js v14+</li>
+      <li>Webhook automation</li>
+    </ul>
+  </div>
 
-          <div class="skills-block">
-            <h3>Embedded</h3>
-            <ul>
-              <li>Arduino / ESP32</li>
-              <li>C / C++</li>
-              <li>GPIO / PWM / ADC</li>
-              <li>I2C / SPI / UART</li>
-              <li>Sensor integration</li>
-              <li>WiFi / Bluetooth (BLE)</li>
-            </ul>
-          </div>
+  <div class="skills-block">
+    <h3>Embedded</h3>
+    <ul>
+      <li>Arduino / ESP32</li>
+      <li>C / C++</li>
+      <li>GPIO / PWM / ADC</li>
+      <li>I2C / SPI / UART</li>
+      <li>Sensor integration</li>
+      <li>WiFi / Bluetooth (BLE)</li>
+    </ul>
+  </div>
 
-          <div class="skills-block">
-            <h3>Tools</h3>
-            <ul>
-              <li>Git</li>
-              <li>Linux</li>
-              <li>Python</li>
-            </ul>
-          </div>
-        </div>
-      </div>
+  <div class="skills-block">
+    <h3>Tools & Others</h3>
+    <ul>
+      <li>Git / GitHub</li>
+      <li>Linux</li>
+      <li>Python scripting</li>
+      <li>Web automation & scraping</li>
+      <li>Debugging & problem-solving</li>
+    </ul>
+  </div>
+</div>
+
     </section>
 
     <section class="panel wrap" id="projects" data-watch="projects" aria-labelledby="projects-heading">
@@ -704,66 +712,68 @@
       </div>
     </section>
 
-    <section class="panel wrap" id="experience" data-watch="experience" aria-labelledby="exp-heading">
-      <div class="panel__inner">
-        <h2 class="section-title" id="exp-heading">Experience & Education</h2>
-        <hr class="rule" />
+   <section class="panel wrap" id="experience" data-watch="experience" aria-labelledby="exp-heading">
+  <div class="panel__inner">
+    <h2 class="section-title" id="exp-heading">Experience & Education</h2>
+    <hr class="rule" />
 
-        <div class="timeline">
-          <div class="timeline-item">
-            <h3>Founder — Survwin <span style="color: var(--muted); font-weight: 400;">(2025–Present)</span></h3>
-            <p>Created and manage <strong>Survwin</strong>, overseeing development, automation, and community growth.</p>
-          </div>
-
-          <div class="timeline-item">
-            <h3>Robotics Team President <span style="color: var(--muted); font-weight: 400;">(2024–2025)</span></h3>
-            <p><strong>Camarin High School</strong> — Led builds, coordinated code, and managed projects.</p>
-          </div>
-
-          <div class="timeline-item">
-            <h3>ICT Club President <span style="color: var(--muted); font-weight: 400;">(2024–2025)</span></h3>
-            <p><strong>Camarin High School</strong> — Ran workshops and sessions for student developers.</p>
-          </div>
-
-          <div class="timeline-item">
-            <h3>Layout Designer — The Icon (DSPC) <span style="color: var(--muted); font-weight: 400;">(2024–2025)</span></h3>
-            <p><strong>Camarin High School</strong> — Crafted digital layouts and publication spreads.</p>
-          </div>
-
-          <div class="timeline-item">
-            <h3>Education</h3>
-            <p><strong>2025 – Present</strong> — Grade 11 ICT (Computer Programming) at Metro Manila College.</p>
-          </div>
-        </div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <h3>Founder — Survwin <span style="color: var(--muted); font-weight: 400;">(2025–Present)</span></h3>
+        <p>Build and manage <strong>Survwin</strong>, handling development and community growth.</p>
       </div>
-    </section>
 
-    <section class="panel wrap" id="contact" data-watch="contact" aria-labelledby="contact-heading">
-      <div class="panel__inner">
-        <h2 class="section-title" id="contact-heading">Let’s Build Something</h2>
-        <hr class="rule" />
-
-        <p class="lead">
-          I’m open to building useful tools, learning from real projects, and working with people who care about clean code and real-world impact.
-        </p>
-
-        <div class="contact-actions">
-          <a class="download-btn" href="mailto:cadizal06@gmail.com">Email Me</a>
-          <a class="download-btn" href="https://github.com/toniec" target="_blank" rel="noopener">GitHub</a>
-        </div>
-
-        <p class="contact-note">
-          Based in the Philippines • Student developer • Front-end focused • Remote-ready • Open to projects
-        </p>
-
-        <footer class="site-foot" role="contentinfo">
-          <div class="foot-inner">
-            <div>© <span id="year"></span> Tonie C.</div>
-            <div><small>hire me pls</small></div>
-          </div>
-        </footer>
+      <div class="timeline-item">
+        <h3>Robotics Team President <span style="color: var(--muted); font-weight: 400;">(2024–2025)</span></h3>
+        <p><strong>Camarin High School</strong> — Led builds and coordinated projects.</p>
       </div>
-    </section>
+
+      <div class="timeline-item">
+        <h3>ICT Club President <span style="color: var(--muted); font-weight: 400;">(2024–2025)</span></h3>
+        <p><strong>Camarin High School</strong> — Ran workshops for student developers.</p>
+      </div>
+
+      <div class="timeline-item">
+        <h3>Layout Designer — The Icon (DSPC) <span style="color: var(--muted); font-weight: 400;">(2024–2025)</span></h3>
+        <p><strong>Camarin High School</strong> — Created digital layouts for publications.</p>
+      </div>
+
+      <div class="timeline-item">
+        <h3>Education</h3>
+        <p><strong>2025 – Present</strong> — Grade 11 ICT (Computer Programming), Metro Manila College.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+   <section class="panel wrap" id="contact" data-watch="contact" aria-labelledby="contact-heading">
+  <div class="panel__inner">
+    <h2 class="section-title" id="contact-heading">Let’s Build Something</h2>
+    <hr class="rule" />
+
+    <p class="lead">
+      I’m open to building useful tools, learning from real projects, and working with people who care about clean code and real-world impact.
+    </p>
+
+    <div class="contact-actions">
+      <a class="download-btn" href="mailto:cadizal06@gmail.com" aria-label="Email Tonie">Email Me</a>
+      <a class="download-btn" href="https://github.com/toniec" target="_blank" rel="noopener noreferrer" aria-label="Visit Tonie's GitHub">GitHub</a>
+    </div>
+
+    <p class="contact-note">
+      Based in the Philippines • Student developer • Front-end focused • Remote-ready • Open to projects
+    </p>
+
+    <footer class="site-foot" role="contentinfo">
+      <div class="foot-inner">
+        <div>© <span id="year"></span> Tonie C.</div>
+        <div><small>hire me pls</small></div>
+      </div>
+    </footer>
+  </div>
+</section>
+
   </div>
 
   <script>
