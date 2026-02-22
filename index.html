@@ -1,47 +1,31 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="paper-dark">
 <head>
- <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Tonie C.</title>
-  <meta name="description" content="Tonie — Front-End Developer. A portfolio showcasing interactive UI and embedded design projects." />
-  <meta name="author" content="Tonie C." />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Tonie C.</title>
+<meta name="description" content="Tonie — Front-End Developer. A portfolio showcasing interactive UI and embedded design projects." />
+<meta name="author" content="Tonie C." />
 
-  <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
-  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico" />
+<link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+<link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico" />
 
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="Tonie C. — Front-End Developer" />
-  <meta property="og:description" content="A portfolio showcasing Tonie’s web interfaces, coding experiments, and hardware projects." />
-  <meta property="og:url" content="https://toniec.github.io/" />
-  <meta property="og:image" content="https://toniec.github.io/images/workshop.png" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Tonie C. — Front-End Developer" />
+<meta property="og:description" content="A portfolio showcasing Tonie’s web interfaces, coding experiments, and hardware projects." />
+<meta property="og:url" content="https://toniec.github.io/" />
+<meta property="og:image" content="https://toniec.github.io/images/workshop.png" />
 
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Tonie C. — Front-End Developer" />
-  <meta name="twitter:description" content="Explore Tonie’s interactive and hardware projects in a cinematic portfolio." />
-  <meta name="twitter:image" content="https://toniec.github.io/images/workshop.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Tonie C. — Front-End Developer" />
+<meta name="twitter:description" content="Explore Tonie’s interactive and hardware projects in a cinematic portfolio." />
+<meta name="twitter:image" content="https://toniec.github.io/images/workshop.png" />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Tonie C.",
-    "url": "https://toniec.github.io/",
-    "image": "https://toniec.github.io/images/workshop.png",
-    "jobTitle": "Front-End Developer & Hardware Tinkerer",
-    "description": "Portfolio showcasing Tonie's web, UI, and embedded hardware projects.",
-    "sameAs": [
-      "https://github.com/toniec",
-      "https://www.facebook.com/0tonie"
-    ],
-    "knowsAbout": ["Web Development", "UI Design", "Arduino", "ESP32", "Front-End Engineering"]
-  }
-  </script>
 <style>
 :root{
   --maxw: 980px;
@@ -50,7 +34,6 @@
   --fw-sans: "Inter", sans-serif;
   --ease: cubic-bezier(.2,.8,.2,1);
 }
-
 html[data-theme="paper-dark"]{
   --paper:#181818;
   --paper-2:#1e1e1e;
@@ -59,8 +42,7 @@ html[data-theme="paper-dark"]{
   --rule:rgba(234,230,221,.18);
   color-scheme:dark;
 }
-
-*{box-sizing:border-box}
+*{box-sizing:border-box;}
 html,body{
   margin:0;
   font-family:var(--fw-sans);
@@ -70,13 +52,10 @@ html,body{
 }
 body{
   background:var(--paper);
-  overflow-x:hidden; /* prevent horizontal scroll */
-  overflow-y:auto;   /* allow vertical scroll on mobile */
-  min-height:100vh;
+  overflow-x:hidden;
   display:flex;
   flex-direction:column;
 }
-
 .wrap{
   max-width:var(--maxw);
   margin:0 auto;
@@ -87,7 +66,7 @@ body{
 .panel{
   position:relative;
   width:100%;
-  min-height:100vh; /* full viewport height */
+  min-height:100vh;
   display:flex;
   flex-direction:column;
   align-items:center;
@@ -97,14 +76,12 @@ body{
   pointer-events:none;
   transform:translateY(20px) scale(0.98);
 }
-
 .panel.active{
   opacity:1;
   pointer-events:auto;
 }
 
-/* ================= NEW FX ================= */
-/* Keep your animations exactly as before */
+/* ================= ANIMATIONS ================= */
 .panel[data-fx="fade-scale"]{transform:scale(0.95);}
 .panel.active[data-fx="fade-scale"]{animation:fx-fade-scale 1.2s var(--ease) forwards;}
 @keyframes fx-fade-scale{from{opacity:0;transform:scale(0.95);}to{opacity:1;transform:scale(1);}}
@@ -136,34 +113,16 @@ body{
   margin:0 auto;
   padding:0 var(--pad-x);
 }
-
-.section-title{
-  font-family:var(--fw-serif);
-  font-size:22px;
-  margin-bottom:12px;
-  text-align:center;
-}
-.rule{
-  height:1px;
-  background:var(--rule);
-  width:min(520px,86%);
-  margin:10px auto 18px;
-  border:none;
-}
-.lead{
-  max-width:72ch;
-  margin:0 auto 1.5em;
-  line-height:1.75;
-  color:var(--muted);
-  text-align:justify;
-}
+.section-title{font-family:var(--fw-serif);font-size:22px;margin-bottom:12px;text-align:center;}
+.rule{height:1px;background:var(--rule);width:min(520px,86%);margin:10px auto 18px;border:none;}
+.lead{max-width:72ch;margin:0 auto 1.5em;line-height:1.75;color:var(--muted);text-align:justify;}
 
 /* ================= HERO ================= */
 .hero-v2__title{font-family:var(--fw-serif);font-size:clamp(44px,6vw,72px);line-height:1.02;margin:0 0 10px;}
 .hero-v2__role{margin:0 0 18px;color:var(--muted);font-size:15px;letter-spacing:.22em;text-transform:uppercase;}
 .hero-v2__badge{margin:0 auto;font-size:18px;line-height:1.75;padding:14px 22px;border-radius:18px;border:1px solid var(--rule);background:linear-gradient(135deg,var(--paper-2),var(--paper));max-width:fit-content;}
 
-/* ================= SKILLS / PROJECTS ================= */
+/* ================= SKILLS ================= */
 .skills-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px 26px;margin-top:18px;text-align:center;}
 .skills-block{border:1px solid var(--rule);border-radius:16px;padding:14px;background:var(--paper-2);transition: transform 0.3s ease, box-shadow 0.3s ease;}
 .skills-block:hover{transform:translateY(-4px);box-shadow:0 6px 20px rgba(0,0,0,0.3);}
@@ -176,25 +135,6 @@ body{
 .project h3,.timeline-item h3{margin:0 0 8px;font-size:18px;font-weight:800;}
 .project p,.timeline-item p{margin:0 auto;color:var(--muted);max-width:72ch;}
 
-/* ================= RESPONSIVE ================= */
-@media (max-width:980px){
-  .skills-grid{grid-template-columns:repeat(2,1fr)}
-  .skills-block{padding:16px}
-  .skills-block h3{font-size:14px}
-  .skills-block ul li{font-size:13px}
-}
-
-@media (max-width:520px){
-  .skills-grid{grid-template-columns:1fr;gap:10px}
-  .skills-block{padding:10px}
-  .skills-block h3{font-size:14px}
-  .skills-block ul li{font-size:12px;line-height:1.6}
-  .project,.timeline-item{padding:10px}
-  .project h3,.timeline-item h3{font-size:16px}
-  .project p,.timeline-item p{font-size:13px;line-height:1.6}
-  .project-list,.timeline{grid-template-columns:1fr}
-}
-
 /* ================= CONTACT ================= */
 .contact-actions{display:flex;gap:18px;justify-content:center;margin-top:16px;}
 .contact-actions a{padding:12px 24px;border-radius:12px;background:linear-gradient(135deg,#2a2a2a,#1a1a1a);color:var(--ink);text-decoration:none;font-weight:600;transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease), background 0.25s var(--ease);box-shadow:0 4px 12px rgba(0,0,0,0.25);}
@@ -203,15 +143,48 @@ body{
 footer{border-top:1px solid var(--rule);margin-top:24px;padding:16px 0;text-align:center;color:var(--muted);font-size:13px;letter-spacing:0.3px;position:relative;}
 footer::before{content:'';position:absolute;left:50%;top:0;transform:translateX(-50%);width:60px;height:2px;background:var(--muted);border-radius:1px;}
 
-/* ================= MOBILE SPECIFIC FIXES ================= */
-@media (max-width:768px){
+/* ================= RESPONSIVE ================= */
+@media(max-width:980px){
+  .skills-grid{grid-template-columns:repeat(2,1fr);}
+  .skills-block{padding:16px;}
+  .skills-block h3{font-size:14px;}
+  .skills-block ul li{font-size:13px;}
+}
+@media(max-width:520px){
+  .skills-grid{grid-template-columns:1fr;gap:10px;}
+  .skills-block{padding:10px;}
+  .skills-block h3{font-size:14px;}
+  .skills-block ul li{font-size:12px;line-height:1.6;}
+  .project,.timeline-item{padding:10px;}
+  .project h3,.timeline-item h3{font-size:16px;}
+  .project p,.timeline-item p{font-size:13px;line-height:1.6;}
+  .project-list,.timeline{grid-template-columns:1fr;}
+}
+
+/* ================= MOBILE FIX ================= */
+@media(max-width:768px){
   body{overflow-y:auto;}
   .panel{position:relative;min-height:auto;transform:none !important;opacity:1 !important;pointer-events:auto !important;margin-bottom:40px;}
   .panel[data-fx]{animation:none !important;}
 }
+
+/* ================= SCROLL DOWN TIP ================= */
+#scroll-tip{
+  position:absolute;
+  bottom:24px;
+  left:50%;
+  transform:translateX(-50%);
+  font-size:14px;
+  color:var(--muted);
+  opacity:0.7;
+  animation:fadeup 2s infinite alternate;
+}
+@keyframes fadeup{
+  from{transform:translateX(-50%) translateY(0);}
+  to{transform:translateX(-50%) translateY(-6px);}
+}
 </style>
 </head>
-
 <body>
 <div id="deck">
 
@@ -227,6 +200,7 @@ footer::before{content:'';position:absolute;left:50%;top:0;transform:translateX(
       Discord Bot Developer <br> Front-End Engineer & Developer
     </p>
   </div>
+  <div id="scroll-tip">Scroll down to see more</div>
 </section>
 
 <section class="panel" id="about" data-fx="slide-rotate"
@@ -234,13 +208,12 @@ footer::before{content:'';position:absolute;left:50%;top:0;transform:translateX(
   <div class="panel__inner wrap">
     <h2 class="section-title">About Me</h2>
     <hr class="rule">
- <p class="lead">
-  I'm <strong>Tonie</strong>, a programmer from the Philippines with a focus on building practical, efficient, and user-friendly systems. I create interfaces that are intuitive and frustration-free, explore embedded systems and microcontrollers, and tackle real-world challenges by designing software and experimenting with hardware. I’m constantly learning, improving my workflow, and applying new technologies to meaningful problems.
-</p>
-
-<p class="lead">
-  Outside of coding, I am a student balancing my studies with a passion for cycling, often riding early in the morning to stay active and energized. I enjoy structured problem-solving, disciplined routines, and discovering new tools or approaches that I can apply to real-world challenges. These activities help me stay focused, creative, and persistent in both my technical and personal pursuits.
-</p>
+    <p class="lead">
+      I'm <strong>Tonie</strong>, a programmer from the Philippines with a focus on building practical, efficient, and user-friendly systems. I create interfaces that are intuitive and frustration-free, explore embedded systems and microcontrollers, and tackle real-world challenges by designing software and experimenting with hardware. I’m constantly learning, improving my workflow, and applying new technologies to meaningful problems.
+    </p>
+    <p class="lead">
+      Outside of coding, I am a student balancing my studies with a passion for cycling, often riding early in the morning to stay active and energized. I enjoy structured problem-solving, disciplined routines, and discovering new tools or approaches that I can apply to real-world challenges. These activities help me stay focused, creative, and persistent in both my technical and personal pursuits.
+    </p>
   </div>
 </section>
 
@@ -303,7 +276,7 @@ footer::before{content:'';position:absolute;left:50%;top:0;transform:translateX(
         <p>Led hands-on robotics projects, coordinated team efforts, designed and tested control systems, and taught younger students microcontroller programming and sensor integration techniques.</p>
       </div>
       <div class="timeline-item">
-        <h3>Student — Metro Manila College (2025-Present ICT) </h3>
+        <h3>Student — Metro Manila College (2025-Present ICT)</h3>
         <p>Focused on Information and Communications Technology studies, developing skills in programming, embedded systems, and digital problem-solving. Balanced academic responsibilities with extracurricular technology projects and personal learning.</p>
       </div>
     </div>
@@ -334,6 +307,9 @@ const panels = [...document.querySelectorAll(".panel")];
 let current = 0;
 let lock = false;
 
+// detect mobile
+const isMobile = window.innerWidth < 768;
+
 function show(i){
   if(i < 0) i = panels.length - 1;
   if(i >= panels.length) i = 0;
@@ -341,40 +317,39 @@ function show(i){
   current = i;
 }
 
-if(window.innerWidth < 768){
-  // disable panel swipe for mobile
-  document.removeEventListener("touchstart", ...);
-  document.removeEventListener("touchend", ...);
+// scroll tip only for PC
+const scrollTip = document.getElementById("scroll-tip");
+if(!isMobile && scrollTip) scrollTip.style.display = "block";
+if(isMobile && scrollTip) scrollTip.style.display = "none";
+
+// PC full-page scroll
+if(!isMobile){
+  window.addEventListener("wheel", e=>{
+    if(lock) return;
+    lock=true;
+    const delta=e.deltaY>0?1:-1;
+    show(current+delta);
+    setTimeout(()=>lock=false,1200);
+  });
+
+  window.addEventListener("keydown", e=>{
+    if(e.key==="ArrowDown") show(current+1);
+    if(e.key==="ArrowUp") show(current-1);
+  });
 }
 
-// Smooth panel snapping using wheel (one at a time)
-addEventListener("wheel", e => {
-  if(lock) return;
-  lock = true;
-  const delta = e.deltaY > 0 ? 1 : -1;
-  show(current + delta);
-  setTimeout(() => lock = false, 1200); // longer to match animations
-});
-
-// Arrow keys
-addEventListener("keydown", e => {
-  if(e.key === "ArrowDown") show(current + 1);
-  if(e.key === "ArrowUp") show(current - 1);
-});
-
-// Touch swipe for mobile
+// mobile allows free scroll (panels stacked naturally)
 let startY = null;
-addEventListener("touchstart", e => { startY = e.touches[0].clientY; });
-addEventListener("touchend", e => {
-  if(startY === null) return;
-  let endY = e.changedTouches[0].clientY;
-  let delta = startY - endY;
-  if(Math.abs(delta) > 50){
-    show(current + (delta > 0 ? 1 : -1));
-  }
-  startY = null;
+window.addEventListener("touchstart", e=>{startY=e.touches[0].clientY;});
+window.addEventListener("touchend", e=>{
+  if(startY===null) return;
+  let endY=e.changedTouches[0].clientY;
+  let delta=startY-endY;
+  if(Math.abs(delta)>50) show(current+(delta>0?1:-1));
+  startY=null;
 });
 
+// set current year
 document.getElementById("year").textContent = new Date().getFullYear();
 </script>
 </body>
