@@ -1,7 +1,7 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en" data-theme="paper-dark">
 <head>
-  <meta charset="utf-8" />
+ <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Tonie C.</title>
   <meta name="description" content="Tonie — Front-End Developer. A portfolio showcasing interactive UI and embedded design projects." />
@@ -42,867 +42,533 @@
     "knowsAbout": ["Web Development", "UI Design", "Arduino", "ESP32", "Front-End Engineering"]
   }
   </script>
-
-  <style>
-    :root{
-      --maxw: 980px;
-      --header-h: 64px;
-      --radius: 12px;
-      --focus: 0 0 0 3px rgba(120, 120, 120, 0.25);
-
-      --fw-serif: "Playfair Display", ui-serif, Georgia, "Times New Roman", serif;
-      --fw-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-
-      --pad-x: 22px;
-
-      --ease: cubic-bezier(.2, .8, .2, 1);
-      --dur: 700ms;
-
-      /* JS will update this to real innerHeight for mobile */
-      --view-h: 100vh;
-    }
-
- html[data-theme="paper-dark"] {
-  --paper: #181818;          /* slightly brighter than pure black */
-  --paper-2: #1e1e1e;        /* soft secondary background */
-  --ink: #eae6dd;            /* softer off-white for text */
-  --muted: rgba(234, 230, 221, 0.72); /* less harsh muted text */
-  --rule: rgba(234, 230, 221, 0.18);  /* subtle lines */
-  --link: #eae6dd;           /* links slightly brighter */
-  color-scheme: dark;
+<style>
+:root{
+  --maxw: 980px;
+  --pad-x: 22px;
+  --fw-serif: "Playfair Display", serif;
+  --fw-sans: "Inter", sans-serif;
+  --ease: cubic-bezier(.2,.8,.2,1);
 }
 
-html[data-theme="paper-light"] {
-  --paper: #ece9e7;          /* very soft, warm background */
-  --paper-2: #e4dbdb;        /* gentle secondary background */
-  --ink: #2a2a2a;            /* soft dark text, easier on eyes than pure black */
-  --muted: rgba(42, 42, 42, 0.45);   /* subtle muted text */
-  --rule: rgba(42, 42, 42, 0.08);    /* very faint lines */
-  --link: #2a2a2a;           /* slightly warmer link color */
-  color-scheme: light;
+html[data-theme="paper-dark"]{
+  --paper:#181818;
+  --paper-2:#1e1e1e;
+  --ink:#eae6dd;
+  --muted:rgba(234,230,221,.7);
+  --rule:rgba(234,230,221,.18);
+  color-scheme:dark;
+}
+
+*{box-sizing:border-box}
+html,body{
+  margin:0;
+  height:100%;
+  font-family:var(--fw-sans);
+  color:var(--ink);
+}
+body{background:var(--paper);overflow:hidden}
+
+.wrap{
+  max-width:var(--maxw);
+  margin:0 auto;
+  padding:0 var(--pad-x);
+}
+
+/* ================= PANELS ================= */
+.panel{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  text-align: center;
+  justify-content:center;
+  flex-direction: column;
+  opacity:0;
+  pointer-events:none;
+  transform:translateY(20px) scale(0.98);
 }
 
 
-
-    *{ box-sizing:border-box; }
-    html, body{ height:100%; margin:0; }
-
-    /* enable scrolling (but hide the scrollbar) */
-    html, body{
-    scroll-behavior: smooth;
-      overflow-y:auto;
-      overflow-x:hidden;
-      scrollbar-width:none;
-      -ms-overflow-style:none;
-    }
-    html::-webkit-scrollbar,
-    body::-webkit-scrollbar{
-      width:0;
-      height:0;
-      display:none;
-    }
-
-    body{
-      background:var(--paper);
-      color:var(--ink);
-      font-family:var(--fw-sans);
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      opacity:0;
-    }
-    body.page-ready{
-      opacity:1;
-      transition:opacity 500ms var(--ease);
-    }
-
-    a{
-      color:var(--link);
-      text-decoration:none;
-      transition:opacity 180ms var(--ease), transform 180ms var(--ease);
-    }
-    a:hover{ opacity:.92; transform:translateY(-1px); }
-
-    img{ max-width:100%; height:auto; display:block; }
-
-    .wrap{
-      max-width:var(--maxw);
-      margin:0 auto;
-      padding:0 var(--pad-x);
-      width:100%;
-    }
-
-    /* HEADER */
-    header.site-header{
-      position:fixed;
-      top:0; left:0; right:0;
-      z-index:50;
-      height:var(--header-h);
-      background:color-mix(in srgb, var(--paper) 92%, transparent);
-      backdrop-filter:blur(8px);
-      -webkit-backdrop-filter:blur(8px);
-      border-bottom:1px solid var(--rule);
-
-      transform:translateY(-6px);
-      opacity:0;
-      transition:transform var(--dur) var(--ease), opacity var(--dur) var(--ease);
-    }
-    body.page-ready header.site-header{
-      transform:translateY(0);
-      opacity:1;
-    }
-
- /* Nav container */
-.nav-inner {
-  max-width: var(--maxw);
-  margin: 0 auto;
-  padding: 10px var(--pad-x);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  height: var(--header-h);
+.panel.active{
+  opacity:1;
+  pointer-events:auto;
 }
 
-/* Nav links wrapper */
-nav.nav-links {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  flex-wrap: nowrap;
-  white-space: nowrap;
-  max-width: 100%;
-  overflow: hidden;
+/* ================= NEW FX ================= */
+
+/* FADE + SCALE */
+.panel[data-fx="fade-scale"]{
+  transform:scale(0.95);
+}
+.panel.active[data-fx="fade-scale"]{
+  animation:fx-fade-scale 0.7s var(--ease) forwards;
+}
+@keyframes fx-fade-scale{
+  from{opacity:0; transform:scale(0.95);}
+  to{opacity:1; transform:scale(1);}
 }
 
-nav.nav-links a {
-  position: relative;
-  display: inline-block;
-  color: var(--ink);
+/* SLIDE-UP + ROTATE */
+.panel[data-fx="slide-rotate"]{
+  transform:translateY(40px) rotate(-2deg);
+}
+.panel.active[data-fx="slide-rotate"]{
+  animation:fx-slide-rotate 0.75s var(--ease) forwards;
+}
+@keyframes fx-slide-rotate{
+  to{opacity:1; transform:translateY(0) rotate(0);}
+}
+
+/* ZOOM + ROTATE */
+.panel[data-fx="zoom-rotate"]{
+  transform:scale(0.92) rotate(-3deg);
+}
+.panel.active[data-fx="zoom-rotate"]{
+  animation:fx-zoom-rotate 0.7s var(--ease) forwards;
+}
+@keyframes fx-zoom-rotate{
+  to{opacity:1; transform:scale(1) rotate(0);}
+}
+
+/* SLIDE-LEFT + SKEW */
+.panel[data-fx="slide-skew"]{
+  transform:translateX(48px) skewX(5deg);
+}
+.panel.active[data-fx="slide-skew"]{
+  animation:fx-slide-skew 0.7s var(--ease) forwards;
+}
+@keyframes fx-slide-skew{
+  to{opacity:1; transform:translateX(0) skewX(0);}
+}
+
+/* FLIP */
+.panel[data-fx="flip"]{
+  transform:rotateY(90deg);
+}
+.panel.active[data-fx="flip"]{
+  animation:fx-flip 0.8s var(--ease) forwards;
+}
+@keyframes fx-flip{
+  to{opacity:1; transform:rotateY(0);}
+}
+
+/* PULSE */
+.panel[data-fx="pulse"]{
+  transform:scale(0.8);
+}
+.panel.active[data-fx="pulse"]{
+  animation:fx-pulse 0.6s var(--ease) forwards;
+}
+@keyframes fx-pulse{
+  0%{opacity:0; transform:scale(0.8);}
+  50%{transform:scale(1.05);}
+  100%{opacity:1; transform:scale(1);}
+}
+
+/* Longer animation durations */
+.panel.active[data-fx="fade-scale"] { animation-duration: 1.2s; }
+.panel.active[data-fx="slide-rotate"] { animation-duration: 1.3s; }
+.panel.active[data-fx="zoom-rotate"] { animation-duration: 1.2s; }
+.panel.active[data-fx="slide-skew"] { animation-duration: 1.2s; }
+.panel.active[data-fx="flip"] { animation-duration: 1.4s; }
+.panel.active[data-fx="pulse"] { animation-duration: 1.1s; }
+
+/* ================= COMMON ================= */
+.panel__inner{
+  width:100%;
+  max-width:var(--maxw);
+  padding:0 var(--pad-x);
+  margin:0 auto;
+}
+
+.section-title{
+  font-family:var(--fw-serif);
+  font-size:22px;
+  margin-bottom:12px;
+  text-align:center;
+}
+.rule{
+  height:1px;
+  background:var(--rule);
+  width:min(520px,86%);
+  margin:10px auto 18px;
+  border:none;
+}
+.lead{
+  max-width:72ch;
+  margin:0 auto 1.5em;
+  line-height:1.75;
+  color:var(--muted);
+  text-align:justify;
+}
+
+/* ================= HERO ================= */
+.hero-v2__title{
+  font-family:var(--fw-serif);
+  font-size:clamp(44px,6vw,72px);
+  line-height:1.02;
+  margin:0 0 10px;
+}
+.hero-v2__role{
+  margin:0 0 18px;
+  color:var(--muted);
+  font-size:15px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+}
+.hero-v2__badge{
+  margin:0 auto;
+  font-size:18px;
+  line-height:1.75;
+  padding:14px 22px;
+  border-radius:18px;
+  border:1px solid var(--rule);
+  background:linear-gradient(135deg,var(--paper-2),var(--paper));
+  max-width:fit-content;
+}
+
+/* ================= SKILLS / PROJECTS ================= */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px 26px;
+  margin-top: 18px;
+  text-align: center;
+}
+
+.skills-block {
+  border: 1px solid var(--rule);
+  border-radius: 16px;
+  padding: 14px;
+  background: var(--paper-2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* subtle hover effect for desktop */
+.skills-block:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.skills-block h3 {
+  margin: 0 0 10px;
   font-size: 13px;
-  padding: 6px 2px;
-  opacity: 0.72;
-  transition: opacity 220ms var(--ease), transform 220ms var(--ease);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
 }
 
-nav.nav-links a::after {
+.skills-block ul {
+  list-style: none;
+  padding: 0;
+  line-height: 1.8;
+}
+
+/* ================= PROJECTS / TIMELINE ================= */
+.project-list,
+.timeline {
+  display: grid;
+  gap: 14px;
+  margin-top: 18px;
+  text-align: center;
+}
+
+.project,
+.timeline-item {
+  border: 1px solid var(--rule);
+  border-radius: 16px;
+  padding: 14px 16px;
+  background: var(--paper-2);
+}
+
+.project h3,
+.timeline-item h3 {
+  margin: 0 0 8px;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.project p,
+.timeline-item p {
+  margin: 0 auto;
+  color: var(--muted);
+  max-width: 72ch;
+}
+
+/* ================= RESPONSIVE ADJUSTMENTS ================= */
+@media (max-width: 980px) {
+  .skills-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px 20px;
+  }
+  .skills-block {
+    padding: 16px;
+  }
+  .skills-block h3 {
+    font-size: 14px;
+  }
+  .skills-block ul li {
+    font-size: 13px;
+  }
+}
+
+/* ================= ULTRA-SMALL SCREEN ADJUSTMENTS ================= */
+@media (max-width: 520px) {
+  .skills-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .skills-block {
+    padding: 10px;
+  }
+  .skills-block h3 {
+    font-size: 14px;
+  }
+  .skills-block ul li {
+    font-size: 12px;
+    line-height: 1.6;
+  }
+
+  .project,
+  .timeline-item {
+    padding: 10px;
+  }
+  .project h3,
+  .timeline-item h3 {
+    font-size: 16px;
+  }
+  .project p,
+  .timeline-item p {
+    font-size: 13px;
+    line-height: 1.6;
+  }
+}
+
+/* ================= CONTACT ================= */
+.contact-actions {
+  display: flex;
+  gap: 18px;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.contact-actions a {
+  padding: 12px 24px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #2a2a2a, #1a1a1a);
+  color: var(--ink);
+  text-decoration: none;
+  font-weight: 600;
+  transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease), background 0.25s var(--ease);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
+
+.contact-actions a:hover {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+  background: linear-gradient(135deg, #3a3a3a, #222);
+}
+
+.contact-note {
+  margin-top: 16px;
+  font-size: 14px;
+  color: var(--muted);
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+footer {
+  border-top: 1px solid var(--rule);
+  margin-top: 24px;
+  padding: 16px 0;
+  text-align: center;
+  color: var(--muted);
+  font-size: 13px;
+  letter-spacing: 0.3px;
+  position: relative;
+}
+
+footer::before {
   content: '';
   position: absolute;
-  left: 0;
-  bottom: -2px;
-  width: 100%;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  width: 60px;
   height: 2px;
-  background-color: color-mix(in srgb, var(--ink) 65%, transparent);
-  transform: scaleX(0);
-  transform-origin: right;
-  transition: transform 260ms var(--ease);
+  background: var(--muted);
+  border-radius: 1px;
 }
 
-nav.nav-links a:hover {
-  opacity: 0.92;
-  transform: translateY(-2px) scale(1.02);
+/* ================= RESPONSIVE ================= */
+@media(max-width:980px){
+  .skills-grid{grid-template-columns:repeat(2,1fr)}
 }
-
-nav.nav-links a:hover::after {
-  transform: scaleX(0.85);
-  transform-origin: left;
+@media(max-width:520px){
+  .skills-grid{grid-template-columns:1fr}
 }
-
-nav.nav-links a.is-active {
-  opacity: 1;
-  font-weight: 600;
-}
-
-nav.nav-links a.is-active::after {
-  transform: scaleX(1);
-}
-
-
-
-    .theme-toggle{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      border:1px solid var(--rule);
-      background:var(--paper-2);
-      color:var(--ink);
-      border-radius:999px;
-      padding:8px 12px;
-      cursor:pointer;
-      font-size:13px;
-      line-height:1;
-      user-select:none;
-      transition:transform 200ms var(--ease), opacity 200ms var(--ease), border-color 200ms var(--ease);
-      flex:0 0 auto;
-    }
-    .theme-toggle:hover{ transform:translateY(-1px); opacity:.95; }
-    .theme-toggle:focus{ outline:none; box-shadow:var(--focus); }
-    .theme-dot{
-      width:10px; height:10px;
-      border-radius:50%;
-      border:1px solid var(--rule);
-      background:var(--ink);
-      transition:transform 260ms var(--ease);
-    }
-    .theme-toggle:hover .theme-dot{ transform:scale(1.1); }
-
-    /* Sections should not hide behind fixed header */
-    .panel{
-      scroll-margin-top: calc(var(--header-h) + 14px);
-      min-height: calc(var(--view-h) - var(--header-h));
-      height: auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-      padding: 40px 0;
-    }
-
-    .panel__inner{
-      width: 100%;
-      padding: 22px 0;
-      transform: none;
-      opacity: 1;
-      transition: none;
-    }
-
-    .section-title{
-      font-family:var(--fw-serif);
-      font-size:22px;
-      margin:0 0 12px 0;
-      letter-spacing:0.01em;
-      overflow-wrap:anywhere;
-      word-break:break-word;
-    }
-
-    .rule{
-      height:1px;
-      background:var(--rule);
-      border:none;
-      margin:10px auto 18px auto;
-      width:min(520px, 86%);
-      transform-origin:center;
-      opacity:.9;
-    }
-
- .lead {
-  color: var(--muted);
-  line-height: 1.75;
-  margin: 0 auto 1.5em auto; /* bottom spacing for paragraph feel */
-  font-size: 16px;
-  max-width: 72ch;
-  overflow-wrap: anywhere;
-  word-break: break-word;
-  text-align: justify; /* paragraph alignment */
-  text-justify: inter-word; /* smooth justification */
-}
-
-    .hero-v2::before{
-      content:"";
-      position:absolute;
-      inset:-120px -140px auto -140px;
-      height:420px;
-      background:
-        radial-gradient(closest-side, color-mix(in srgb, var(--ink) 12%, transparent), transparent 70%),
-        radial-gradient(closest-side, color-mix(in srgb, var(--ink) 8%, transparent), transparent 72%);
-      filter:blur(10px);
-      opacity:.55;
-      pointer-events:none;
-      transform:translate3d(0, 0, 0);
-      animation:heroFloat 10s var(--ease) infinite alternate;
-      will-change:transform;
-    }
-
-    .hero-v2::after{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:
-        radial-gradient(1200px 500px at 30% 0%, color-mix(in srgb, var(--paper-2) 20%, transparent), transparent 55%),
-        radial-gradient(900px 520px at 70% 20%, color-mix(in srgb, var(--paper-2) 14%, transparent), transparent 60%);
-      pointer-events:none;
-      opacity:.9;
-    }
-
-    @keyframes heroFloat{
-      0%{ transform:translate3d(-10px, -6px, 0) scale(1); }
-      100%{ transform:translate3d(10px, 8px, 0) scale(1.02); }
-    }
-
-    .hero-v2__title{
-      font-family:var(--fw-serif);
-      font-size:clamp(44px, 6vw, 72px);
-      line-height:1.02;
-      margin:0 0 10px 0;
-      letter-spacing:0.01em;
-      overflow-wrap:anywhere;
-      word-break:break-word;
-    }
-
-    .hero-v2__role{
-      margin:0 0 18px 0;
-      color:var(--muted);
-      font-size:15px;
-      letter-spacing:.22em;
-      text-transform:uppercase;
-    }
-
-    .hero-v2__badge{
-      margin:0 auto;
-      font-size:18px;
-      line-height:1.75;
-      padding:14px 22px;
-      border-radius:18px;
-      border:1px solid color-mix(in srgb, var(--rule) 70%, transparent);
-      background:linear-gradient(
-        135deg,
-        color-mix(in srgb, var(--paper-2) 92%, transparent),
-        color-mix(in srgb, var(--paper) 88%, transparent)
-      );
-      backdrop-filter:blur(10px) saturate(120%);
-      -webkit-backdrop-filter:blur(10px) saturate(120%);
-      box-shadow:0 10px 34px rgba(0,0,0,.26), inset 0 1px 0 rgba(255,255,255,.05);
-      font-weight:500;
-      letter-spacing:0.01em;
-      max-width:fit-content;
-    }
-
-    .hero-v2__actions{
-      display:flex;
-      gap:14px;
-      flex-wrap:wrap;
-      margin-top:18px;
-      justify-content:center;
-    }
-
-    .hero-v2__btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      padding:10px 16px;
-      border-radius:12px;
-      border:1px solid var(--rule);
-      background:transparent;
-      color:var(--ink);
-      font-size:14px;
-      transition:transform 220ms var(--ease), opacity 220ms var(--ease), border-color 220ms var(--ease), background 220ms var(--ease);
-    }
-    .hero-v2__btn:hover{
-      transform:translateY(-2px);
-      opacity:.95;
-      border-color:color-mix(in srgb, var(--rule) 30%, var(--ink));
-    }
-
-    .hero-v2__btn--primary{
-      background:color-mix(in srgb, var(--paper-2) 90%, transparent);
-      box-shadow:0 10px 24px rgba(0,0,0,.18);
-    }
-    .hero-v2__btn--primary:hover{
-      background:color-mix(in srgb, var(--paper-2) 96%, transparent);
-      box-shadow:0 14px 30px rgba(0,0,0,.24);
-    }
-
-    /* SKILLS */
-    .skills-grid{
-      display:grid;
-      grid-template-columns:repeat(4, minmax(0, 1fr));
-      gap:18px 26px;
-      margin-top:18px;
-      text-align:center;
-      width:100%;
-    }
-    @media (max-width: 980px){
-      .skills-grid{ grid-template-columns:repeat(2, minmax(0, 1fr)); gap:16px 16px; }
-    }
-    @media (max-width: 520px){
-      .skills-grid{ grid-template-columns:1fr; gap:14px; }
-    }
-
-    .skills-block{
-      min-width:0;
-      width:100%;
-      border:1px solid var(--rule);
-      border-radius:16px;
-      padding:14px 14px;
-      background:color-mix(in srgb, var(--paper-2) 70%, transparent);
-      transition:transform 260ms var(--ease), opacity 260ms var(--ease), border-color 260ms var(--ease);
-      transform:translateY(0);
-      overflow:hidden;
-    }
-    .skills-block:hover{
-      transform:translateY(-2px);
-      border-color:color-mix(in srgb, var(--rule) 30%, var(--ink));
-      opacity:.98;
-    }
-    .skills-block h3{
-      margin:0 0 10px 0;
-      font-size:13px;
-      text-transform:uppercase;
-      letter-spacing:0.10em;
-      color:var(--muted);
-      font-weight:700;
-      overflow-wrap:anywhere;
-      word-break:break-word;
-    }
-    .skills-block ul{
-      margin:0;
-      padding:0;
-      list-style:none;
-      line-height:1.8;
-      color:color-mix(in srgb, var(--ink) 92%, transparent);
-    }
-    .skills-block li{ overflow-wrap:anywhere; word-break:break-word; }
-
-    /* PROJECTS / TIMELINE */
-    .project-list, .timeline{
-      display:grid;
-      gap:14px;
-      margin-top:18px;
-      text-align:center;
-      width:100%;
-    }
-    @media (max-width: 520px){
-      .project-list, .timeline{ gap:12px; }
-    }
-
-    .project, .timeline-item{
-      min-width:0;
-      width:100%;
-      border:1px solid var(--rule);
-      border-radius:16px;
-      padding:14px 16px;
-      background:color-mix(in srgb, var(--paper-2) 70%, transparent);
-      transition:transform 260ms var(--ease), border-color 260ms var(--ease), opacity 260ms var(--ease);
-      overflow:hidden;
-    }
-    .project:hover, .timeline-item:hover{
-      transform:translateY(-2px);
-      border-color:color-mix(in srgb, var(--rule) 30%, var(--ink));
-      opacity:.98;
-    }
-    .project h3, .timeline-item h3{
-      margin:0 0 8px 0;
-      font-size:18px;
-      font-weight:800;
-      letter-spacing:0.01em;
-      overflow-wrap:anywhere;
-      word-break:break-word;
-    }
-    .project p, .timeline-item p{
-      margin:0 auto;
-      color:var(--muted);
-      line-height:1.7;
-      max-width:72ch;
-      overflow-wrap:anywhere;
-      word-break:break-word;
-    }
-    .project .links{
-      display:flex;
-      justify-content:center;
-      gap:12px;
-      flex-wrap:wrap;
-      margin-top:10px;
-      font-size:14px;
-    }
-    .project .links a{ white-space:normal; overflow-wrap:anywhere; word-break:break-word; }
-
-    /* CONTACT */
-    .contact-actions{
-      display:flex;
-      gap:14px;
-      flex-wrap:wrap;
-      justify-content:center;
-      margin-top:12px;
-    }
-    .contact-note{
-      margin-top:12px;
-      font-size:13px;
-      color:var(--muted);
-      overflow-wrap:anywhere;
-      word-break:break-word;
-    }
-
-    /* FOOTER */
-    footer.site-foot{
-      border-top:1px solid var(--rule);
-      width:100%;
-      margin-top:18px;
-    }
-    .foot-inner{
-      max-width:var(--maxw);
-      margin:0 auto;
-      padding:14px var(--pad-x);
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      gap:12px;
-      flex-wrap:wrap;
-      color:var(--muted);
-      font-size:13px;
-      overflow-wrap:anywhere;
-      word-break:break-word;
-    }
-
-    /* ACCESSIBILITY / MOTION */
-    @media (prefers-reduced-motion: reduce){
-      *{ transition:none !important; animation:none !important; }
-      body{ opacity:1 !important; }
-      header.site-header{ transform:none !important; opacity:1 !important; }
-      .panel__inner{ opacity:1 !important; transform:none !important; }
-      html{ scroll-behavior:auto !important; }
-    }
-
-    @media (max-width: 680px){
-      :root{ --pad-x:14px; --header-h:58px; }
-      .nav-inner{ padding:8px var(--pad-x); }
-      nav.nav-links{ gap:10px; }
-      nav.nav-links a{ font-size:12px; padding:6px 1px; }
-      .theme-toggle{ padding:7px 10px; font-size:12px; }
-      .hero-v2__role{ letter-spacing:.16em; }
-      .hero-v2__badge{ font-size:17px; padding:12px 18px; border-radius:16px; }
-    }
-
-    @media (max-width: 380px){
-      nav.nav-links{ gap:8px; }
-      nav.nav-links a{ font-size:11px; }
-      .theme-toggle{ padding:6px 9px; }
-      #themeLabel{ display:none; }
-    }
-  </style>
+</style>
 </head>
 
 <body>
-  <header class="site-header" role="banner" id="topHeader">
-    <div class="nav-inner" role="navigation" aria-label="Main navigation">
-      <nav class="nav-links" aria-label="Primary" id="topNav">
-        <a href="#home" data-section="home">Intro</a>
-        <a href="#about" data-section="about">About</a>
-        <a href="#skills" data-section="skills">Skills</a>
-        <a href="#projects" data-section="projects">Projects</a>
-        <a href="#experience" data-section="experience">Experience</a>
-        <a href="#contact" data-section="contact">Contact</a>
+<div id="deck">
 
-        <button id="themeToggle" class="theme-toggle" type="button" aria-label="Toggle theme">
-          <span class="theme-dot" aria-hidden="true"></span>
-          <span id="themeLabel">Dark</span>
-        </button>
-      </nav>
-    </div>
-  </header>
+<section class="panel active" id="home" data-fx="fade-scale"
+ style="background:
+ radial-gradient(60% 40% at 50% 20%,rgba(255,255,255,.08),transparent 60%),
+ linear-gradient(180deg,#0b0b0b,#050505);text-align:center">
+  <div class="panel__inner wrap">
+    <h1 class="hero-v2__title">Tonie C.</h1>
+    <p class="hero-v2__role">I build clean, working systems<br>
+      with clarity, performance & real-world focus.</p>
+    <p class="hero-v2__badge">
+      Discord Bot Developer <br> Front-End Engineer & Developer
+    </p>
+  </div>
+</section>
 
-  <div id="deck" aria-live="polite">
-    <section class="panel hero-v2 wrap" id="home" data-watch="home" aria-label="Intro">
-      <div class="panel__inner">
-        <h1 class="hero-v2__title">Tonie C.</h1>
-       <p class="hero-v2__role">Front-End Engineer</p>
-
-<p class="hero-v2__badge">
-  I build clean, working systems<br> with an emphasis on clarity, performance, and real-world use.
+<section class="panel" id="about" data-fx="slide-rotate"
+ style="background:linear-gradient(180deg,#111,#0c0c0c)">
+  <div class="panel__inner wrap">
+    <h2 class="section-title">About Me</h2>
+    <hr class="rule">
+ <p class="lead">
+  I'm <strong>Tonie</strong>, a programmer from the Philippines with a focus on building practical, efficient, and user-friendly systems. I create interfaces that are intuitive and frustration-free, explore embedded systems and microcontrollers, and tackle real-world challenges by designing software and experimenting with hardware. I’m constantly learning, improving my workflow, and applying new technologies to meaningful problems.
 </p>
 
-        <div class="hero-v2__actions">
-          <a class="hero-v2__btn hero-v2__btn--primary" href="#projects" data-jump="projects">View Projects</a>
-          <a class="hero-v2__btn" href="#contact" data-jump="contact">Contact</a>
-        </div>
-      </div>
-    </section>
-
-    <section class="panel wrap" id="about" data-watch="about" aria-labelledby="about-heading">
-      <div class="panel__inner">
-        <h2 class="section-title" id="about-heading">About Me</h2>
-        <hr class="rule" />
-
-       <p class="lead">
-  I'm <strong>Tonie</strong>, a programmer from the Philippines studying ICT (Information and Communication Technology) and diving deep into debugging adventures. I build web interfaces that don’t frustrate users, tinker with microcontrollers until they obey, and ship practical tools that solve real problems.
+<p class="lead">
+  Outside of coding, I am a student balancing my studies with a passion for cycling, often riding early in the morning to stay active and energized. I enjoy structured problem-solving, disciplined routines, and discovering new tools or approaches that I can apply to real-world challenges. These activities help me stay focused, creative, and persistent in both my technical and personal pursuits.
 </p>
-      </div>
-    </section>
+  </div>
+</section>
 
-   <section class="panel wrap" id="skills" data-watch="skills" aria-labelledby="skills-heading">
-  <div class="panel__inner">
-    <h2 class="section-title" id="skills-heading">Skills & Tools</h2>
-    <hr class="rule" />
-
+<section class="panel" id="skills" data-fx="zoom-rotate"
+ style="background:linear-gradient(180deg,#0e0e0e,#141414)">
+  <div class="panel__inner wrap">
+    <h2 class="section-title">Skills & Tools</h2>
+    <hr class="rule">
     <div class="skills-grid">
       <div class="skills-block">
         <h3>Frontend</h3>
-        <ul>
-          <li>JavaScript (ES6+) / TypeScript</li>
-          <li>React</li>
-          <li>Tailwind CSS</li>
-          <li>HTML5 / CSS3</li>
-        </ul>
+        <ul><li>JS/TS</li><li>React</li><li>Tailwind CSS</li><li>HTML5/CSS3</li></ul>
       </div>
-
       <div class="skills-block">
         <h3>Backend</h3>
-        <ul>
-          <li>Node.js</li>
-          <li>Express.js</li>
-          <li>REST API design</li>
-          <li>Discord.js (v14+)</li>
-          <li>Webhook-based automation</li>
-        </ul>
+        <ul><li>Node.js</li><li>Express.js</li><li>REST API</li><li>Discord.js v14+</li></ul>
       </div>
-
       <div class="skills-block">
-        <h3>Embedded Systems</h3>
-        <ul>
-          <li>Arduino / ESP32</li>
-          <li>C / C++</li>
-          <li>GPIO, PWM, ADC</li>
-          <li>I2C, SPI, UART</li>
-          <li>Sensor integration</li>
-          <li>Wi-Fi / Bluetooth (BLE)</li>
-        </ul>
+        <h3>Embedded</h3>
+        <ul><li>Arduino/ESP32</li><li>C/C++</li><li>I2C/SPI/UART</li><li>Sensors/Wi-Fi/BLE</li></ul>
       </div>
-
       <div class="skills-block">
-        <h3>Developer Tools</h3>
-        <ul>
-          <li>Git / GitHub</li>
-          <li>Linux</li>
-          <li>Python (scripting & automation)</li>
-          <li>Web automation & scraping</li>
-        </ul>
+        <h3>Tools</h3>
+        <ul><li>Git/GitHub</li><li>Linux</li><li>Python automation</li><li>Web scraping</li></ul>
       </div>
     </div>
   </div>
 </section>
 
- <section class="panel wrap" id="projects" data-watch="projects" aria-labelledby="projects-heading">
-  <div class="panel__inner">
-    <h2 class="section-title" id="projects-heading">Featured Projects</h2>
-    <hr class="rule" />
-
+<section class="panel" id="projects" data-fx="slide-skew"
+ style="background:linear-gradient(180deg,#141414,#191919)">
+  <div class="panel__inner wrap">
+    <h2 class="section-title">Projects</h2>
+    <hr class="rule">
     <div class="project-list">
-      <article class="project">
+      <a class="project" href="https://survwin.netlify.app" target="_blank">
         <h3>Survwin</h3>
-        <p>
-          Founder-built Discord-based platform where users earn rewards by completing surveys.
-          Designed and implemented the core system with an emphasis on predictable behavior,
-          clean APIs, and real-user usage.
-        </p>
-        <div class="links">
-          <a href="https://survwin.netlify.app" target="_blank" rel="noopener">Live Site</a>
-        </div>
-      </article>
-
-      <article class="project">
+        <p>Discord-based survey reward platform I founded. Core systems, APIs, and community flow designed and implemented end-to-end.</p>
+      </a>
+      <a class="project" href="/samples" target="_blank">
         <h3>UI & Web Samples</h3>
-        <p>
-          Curated collection of frontend interface samples focused on layout structure,
-          interaction patterns, and responsive design.
-        </p>
-        <div class="links">
-          <a href="/samples/">View Samples</a>
-        </div>
-      </article>
+        <p>Curated frontend interfaces for layout, interactions, and responsive design experiments.</p>
+      </a>
     </div>
   </div>
 </section>
 
-  <section class="panel wrap" id="experience" data-watch="experience" aria-labelledby="exp-heading">
-  <div class="panel__inner">
-    <h2 class="section-title" id="exp-heading">Experience & Education</h2>
-    <hr class="rule" />
-
+<section class="panel" id="experience" data-fx="flip"
+ style="background:linear-gradient(180deg,#171717,#1c1c1c)">
+  <div class="panel__inner wrap">
+    <h2 class="section-title">Experience & Education</h2>
+    <hr class="rule">
     <div class="timeline">
       <div class="timeline-item">
-        <h3>
-          Founder — Survwin
-          <span style="color: var(--muted); font-weight: 400;">(2025–Present)</span>
-        </h3>
-        <p>
-          Founded and built <strong>Survwin</strong>, leading full product development and early community growth.
-        </p>
+        <h3>Founder — Survwin (2025–Present)</h3>
+        <p>Launched and managed a survey reward platform on Discord. Oversaw full product development, implemented core systems, maintained server automation, and guided initial community growth while ensuring user engagement and platform stability.</p>
       </div>
-
       <div class="timeline-item">
-        <h3>
-          Robotics Team Lead
-          <span style="color: var(--muted); font-weight: 400;">(2024–2025)</span>
-        </h3>
-        <p>
-          <strong>Camarin High School</strong> — Coordinated build cycles and guided members through hands-on technical projects.
-        </p>
+        <h3>Robotics Team Lead — Camarin High School (2024–2025)</h3>
+        <p>Led hands-on robotics projects, coordinated team efforts, designed and tested control systems, and taught younger students microcontroller programming and sensor integration techniques.</p>
       </div>
-
       <div class="timeline-item">
-        <h3>Education</h3>
-        <p>
-          Grade 11 — ICT (Computer Programming), <strong>Metro Manila College</strong>
-        </p>
+        <h3>Student — Metro Manila College (2025-Present ICT) </h3>
+        <p>Focused on Information and Communications Technology studies, developing skills in programming, embedded systems, and digital problem-solving. Balanced academic responsibilities with extracurricular technology projects and personal learning.</p>
       </div>
     </div>
   </div>
 </section>
 
-
-   <section class="panel wrap" id="contact" data-watch="contact" aria-labelledby="contact-heading">
-  <div class="panel__inner">
-    <h2 class="section-title" id="contact-heading">Let’s Build Something</h2>
-    <hr class="rule" />
-
+<section class="panel" id="contact" data-fx="pulse"
+ style="background:linear-gradient(180deg,#1a1a1a,#161616)">
+  <div class="panel__inner wrap">
+    <h2 class="section-title">Let's Build Something</h2>
+    <hr class="rule">
     <p class="lead">
-      I build practical software and enjoy working on projects that solve real problems.
-      Open to collaborations, small teams, and real-world builds.
+      I build practical software & hardware and enjoy collaborating on real-world projects. Open to joining small teams, contributing to meaningful solutions, and tackling hands-on challenges.
     </p>
-
     <div class="contact-actions">
-      <a class="download-btn" href="mailto:cadizal06@gmail.com" aria-label="Email Tonie">
-        Email Me
-      </a>
-      <a
-        class="download-btn"
-        href="https://github.com/toniec"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Visit Tonie's GitHub"
-      >
-        GitHub
-      </a>
+      <a href="mailto:cadizal06@gmail.com" style="text-decoration:none; padding:10px 20px; border-radius:12px; border:1px solid var(--rule); background:linear-gradient(135deg,var(--paper-2),var(--paper)); transition:0.3s;">Email</a>
+      <a href="https://github.com/toniec" target="_blank" style="text-decoration:none; padding:10px 20px; border-radius:12px; border:1px solid var(--rule); background:linear-gradient(135deg,var(--paper-2),var(--paper)); transition:0.3s;">GitHub</a>
     </div>
-
-    <p class="contact-note">
-      Philippines • Student developer • Frontend & systems-focused • Remote-ready • Open to projects
-    </p>
-
-    <footer class="site-foot" role="contentinfo">
-      <div class="foot-inner">
-        <div>© <span id="year"></span> Tonie C.</div>
-        <div><small>Designed & built by Tonie</small></div>
-      </div>
-    </footer>
+    <p class="contact-note">Philippines • Frontend & systems-focused • Remote-ready • Cyclist & early riser</p>
+    <footer>© <span id="year"></span> Tonie C.</footer>
   </div>
 </section>
 
-  </div>
+</div>
 
-  <script>
-    document.documentElement.classList.add("js");
+<script>
+const panels = [...document.querySelectorAll(".panel")];
+let current = 0;
+let lock = false;
 
-    document.getElementById("year").innerText = new Date().getFullYear();
+function show(i){
+  if(i < 0) i = panels.length - 1;
+  if(i >= panels.length) i = 0;
+  panels.forEach((p, x) => p.classList.toggle("active", x === i));
+  current = i;
+}
 
-    window.addEventListener("load", () => {
-      document.body.classList.add("page-ready");
-    });
+// Smooth panel snapping using wheel (one at a time)
+addEventListener("wheel", e => {
+  if(lock) return;
+  lock = true;
+  const delta = e.deltaY > 0 ? 1 : -1;
+  show(current + delta);
+  setTimeout(() => lock = false, 1200); // longer to match animations
+});
 
-    // Fixes mobile address-bar / keyboard height issues (uses real innerHeight)
-    (function setViewportVars() {
-      const set = () => {
-        const h = window.innerHeight || document.documentElement.clientHeight || 0;
-        document.documentElement.style.setProperty("--view-h", `${h}px`);
-      };
-      set();
-      window.addEventListener("resize", set, { passive: true });
-      window.addEventListener("orientationchange", set, { passive: true });
-    })();
+// Arrow keys
+addEventListener("keydown", e => {
+  if(e.key === "ArrowDown") show(current + 1);
+  if(e.key === "ArrowUp") show(current - 1);
+});
 
-    (function themeToggle() {
-      const html = document.documentElement;
-      const btn = document.getElementById("themeToggle");
-      const label = document.getElementById("themeLabel");
-      const KEY = "paperTheme";
+// Touch swipe for mobile
+let startY = null;
+addEventListener("touchstart", e => { startY = e.touches[0].clientY; });
+addEventListener("touchend", e => {
+  if(startY === null) return;
+  let endY = e.changedTouches[0].clientY;
+  let delta = startY - endY;
+  if(Math.abs(delta) > 50){
+    show(current + (delta > 0 ? 1 : -1));
+  }
+  startY = null;
+});
 
-      function apply(theme) {
-        html.style.transition = "background-color 240ms var(--ease), color 240ms var(--ease)";
-        html.setAttribute("data-theme", theme);
-        const isDark = theme === "paper-dark";
-        label.textContent = isDark ? "Dark" : "Light";
-        btn.setAttribute("aria-label", isDark ? "Switch to light theme" : "Switch to dark theme");
-        setTimeout(() => { html.style.transition = ""; }, 260);
-      }
-
-      const saved = localStorage.getItem(KEY);
-      if (saved === "paper-light" || saved === "paper-dark") apply(saved);
-      else apply("paper-dark");
-
-      btn.addEventListener("click", () => {
-        const current = html.getAttribute("data-theme") || "paper-dark";
-        const next = current === "paper-dark" ? "paper-light" : "paper-dark";
-        localStorage.setItem(KEY, next);
-        apply(next);
-      });
-    })();
-
- // Smooth scroll for internal links (nav + buttons) — more reliable
-  (function smoothAnchors() {
-    function scrollToId(id) {
-      const el = document.getElementById(id);
-      if (!el) return;
-
-      // Uses .panel { scroll-margin-top: ... } so the fixed header won't cover it
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-
-    document.addEventListener("click", (e) => {
-      const a = e.target.closest('a[href^="#"]');
-      if (!a) return;
-
-      const href = a.getAttribute("href") || "";
-      const id = href.slice(1);
-      if (!id) return;
-
-      e.preventDefault();
-
-      // Update URL hash in the simplest/most compatible way
-      if (location.hash !== `#${id}`) location.hash = id;
-
-      scrollToId(id);
-    });
-
-    // If user opens with a hash, align nicely under header
-    window.addEventListener("load", () => {
-      const id = (location.hash || "").slice(1);
-      if (!id) return;
-
-      // Wait a frame so layout/--view-h is settled
-      requestAnimationFrame(() => scrollToId(id));
-    });
-  })();
-
-    // Active section highlighting
-    (function activeNav() {
-      const links = Array.from(document.querySelectorAll('nav.nav-links a[data-section]'));
-      const sections = links
-        .map(a => document.getElementById(a.dataset.section))
-        .filter(Boolean);
-
-      function setActive(id) {
-        links.forEach(a => a.classList.toggle("is-active", a.dataset.section === id));
-      }
-
-      // Fallback if IO isn't supported
-      if (!("IntersectionObserver" in window)) {
-        setActive((location.hash || "#home").slice(1));
-        return;
-      }
-
-      const obs = new IntersectionObserver((entries) => {
-        const visible = entries
-          .filter(en => en.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-
-        if (visible && visible.target && visible.target.id) {
-          setActive(visible.target.id);
-        }
-      }, {
-        root: null,
-        // Activate when section is near the top portion of the screen
-        rootMargin: "-25% 0px -60% 0px",
-        threshold: [0.05, 0.1, 0.2, 0.35, 0.5]
-      });
-
-      sections.forEach(sec => obs.observe(sec));
-
-      // Set initial active state
-      setActive((location.hash || "#home").slice(1));
-      window.addEventListener("hashchange", () => setActive((location.hash || "#home").slice(1)));
-    })();
-  </script>
+document.getElementById("year").textContent = new Date().getFullYear();
+</script>
 </body>
 </html>
