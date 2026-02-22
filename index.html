@@ -313,6 +313,21 @@ body{background:var(--paper);overflow:hidden}
   }
 }
 
+@media (max-width: 768px) {
+  body { overflow-y: auto; }
+  .panel {
+    position: relative;
+    inset: auto;
+    transform: none !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    margin-bottom: 40px;
+  }
+   .panel[data-fx] {
+    animation: none !important;
+  }
+}
+
 /* ================= ULTRA-SMALL SCREEN ADJUSTMENTS ================= */
 @media (max-width: 520px) {
   .skills-grid {
@@ -343,6 +358,12 @@ body{background:var(--paper);overflow:hidden}
     font-size: 13px;
     line-height: 1.6;
   }
+  @media (max-width: 520px) {
+  .project-list,
+  .timeline {
+    grid-template-columns: 1fr;
+  }
+}
 }
 
 /* ================= CONTACT ================= */
@@ -538,6 +559,12 @@ function show(i){
   if(i >= panels.length) i = 0;
   panels.forEach((p, x) => p.classList.toggle("active", x === i));
   current = i;
+}
+
+if(window.innerWidth < 768){
+  // disable panel swipe for mobile
+  document.removeEventListener("touchstart", ...);
+  document.removeEventListener("touchend", ...);
 }
 
 // Smooth panel snapping using wheel (one at a time)
