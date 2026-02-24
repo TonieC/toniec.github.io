@@ -89,6 +89,7 @@ nav {
 }
 
 nav a {
+  position: relative;
   text-decoration: none;
   color: var(--muted);
   font-weight: 600;
@@ -102,6 +103,36 @@ nav a {
 
 nav a:hover {
   color: #fff;             /* optional hover color for interaction */
+}
+
+nav a.active {
+  color: #fff;
+  position: relative;
+}
+
+nav a.active::after {
+  width: var(--merge-width, 60%);
+  height: var(--merge-thickness, 1px);
+  opacity: 0.85;
+}
+
+nav a::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -5px;
+
+  width: 0%;
+  height: 1px;
+  background: var(--ink);
+
+  transform: translateX(-50%);
+  opacity: 0;
+
+  transition:
+    width 420ms cubic-bezier(.22,.8,.25,1),
+    height 420ms cubic-bezier(.22,.8,.25,1),
+    opacity 180ms ease;
 }
 
 /* ================= PANELS ================= */
@@ -135,7 +166,7 @@ nav a:hover {
 }
 
 .typing {
-  animation: typing 2.5s steps(9, end), blink 0.7s step-end infinite;
+  animation: typing 1.5s steps(9, end), blink 1.1s step-end infinite;
 }
 
 @keyframes typing {
@@ -390,6 +421,7 @@ footer{
   letter-spacing:0.03em;
 }
 
+
 </style>
 </head>
 <body>
@@ -405,13 +437,13 @@ footer{
 <section class="panel" id="home">
   <div class="wrap">
     <h1 class="hero-v2__title typing">Tonie C.</h1>
-    
+
     <p class="hero-v2__role">
-      Building clean, reliable systems with clarity, performance, and practical focus.
+      Front-End Developer and Embedded Systems Programmer
     </p>
-    
+
     <p class="hero-v2__badge">
-      Front-End Engineer & Software Developer
+      Focused on building clear, reliable, and maintainable software
     </p>
   </div>
 </section>
@@ -420,14 +452,17 @@ footer{
   <div class="wrap">
     <h2 class="section-title">About Me</h2>
     <hr class="rule">
+
     <p class="lead">
-      I'm <strong>Tonie</strong>, a programmer from the Philippines focused on practical, efficient, and user-friendly systems. I design interfaces that are intuitive and frustration-free, explore embedded and hardware systems, and tackle real-world challenges through software development and hands-on experimentation.
+      I'm <strong>Tonie</strong>, a programmer from the Philippines. I work on front-end applications and embedded systems, focusing on creating clear and reliable solutions. I design interfaces for ease of use and build practical tools for real-world problems.
     </p>
+
     <p class="lead">
-      My work spans building scalable applications, optimizing workflows, and integrating creative solutions that balance functionality with simplicity. I enjoy analyzing problems deeply, crafting solutions that are maintainable, and learning continuously to refine both my technical and design skills.
+      My experience includes building applications that scale, improving workflows, and developing maintainable code. I approach problems methodically, craft solutions that last, and continue learning to strengthen both technical and design skills.
     </p>
+
     <p class="lead">
-      Outside coding, I balance studies with cycling, structured problem-solving, and exploring new tools or approaches for real-world challenges. These activities help me stay focused, creative, and persistent in both technical projects and personal pursuits, fostering a disciplined yet adaptable mindset.
+      Outside of programming, I balance studies with cycling and hands-on projects, which help me maintain focus and persistence. These activities support disciplined, consistent work habits in both technical and personal pursuits.
     </p>
   </div>
 </section>
@@ -436,53 +471,101 @@ footer{
   <div class="wrap">
     <h2 class="section-title">Skills & Tools</h2>
     <hr class="rule">
+
     <div class="skills-grid">
-      <div class="skills-block"><h3>Frontend</h3><ul><li>JS/TS</li><li>React</li><li>Tailwind CSS</li><li>HTML5/CSS3</li></ul></div>
-      <div class="skills-block"><h3>Backend</h3><ul><li>Node.js</li><li>Express.js</li><li>REST API</li><li>Discord.js v14+</li></ul></div>
-      <div class="skills-block"><h3>Embedded</h3><ul><li>Arduino/ESP32</li><li>C/C++</li><li>I2C/SPI/UART</li><li>Sensors/Wi-Fi/BLE</li></ul></div>
-      <div class="skills-block"><h3>Tools</h3><ul><li>Git/GitHub</li><li>Linux</li><li>Python automation</li><li>Web scraping</li></ul></div>
+      <div class="skills-block">
+        <h3>Frontend</h3>
+        <ul>
+          <li>JavaScript / TypeScript</li>
+          <li>React</li>
+          <li>Tailwind CSS</li>
+          <li>HTML5 / CSS3</li>
+        </ul>
+      </div>
+
+      <div class="skills-block">
+        <h3>Backend</h3>
+        <ul>
+          <li>Node.js</li>
+          <li>Express.js</li>
+          <li>REST APIs</li>
+          <li>Discord.js v14+</li>
+        </ul>
+      </div>
+
+      <div class="skills-block">
+        <h3>Embedded Systems</h3>
+        <ul>
+          <li>Arduino / ESP32</li>
+          <li>C / C++</li>
+          <li>I2C / SPI / UART</li>
+          <li>Sensors, Wi-Fi, BLE</li>
+        </ul>
+      </div>
+
+      <div class="skills-block">
+        <h3>Tools & Utilities</h3>
+        <ul>
+          <li>Git / GitHub</li>
+          <li>Linux</li>
+          <li>Python for automation</li>
+          <li>Web scraping</li>
+        </ul>
+      </div>
     </div>
   </div>
 </section>
 
 <section class="panel" id="projects">
   <h2 class="section-title">Projects</h2>
+  <hr class="rule">
 
   <div class="project-list">
+
     <div class="project">
       <h3>Survwin</h3>
       <p>
-  Survwin is a trusted platform for micro-tasking and surveys, designed for genuine participation and fair rewards.
-</p>
+        A micro-tasking and survey platform where I implemented front-end interfaces, data handling, and survey logic for reliable user participation.
+      </p>
       <a class="project-btn" href="https://survwin.netlify.app" target="_blank">
-        Visit Project
+        View Project
       </a>
     </div>
 
     <div class="project">
       <h3>UI & Web Samples</h3>
       <p>
-        Curated frontend interfaces for layout, interactions, and responsive
-        design experiments.
+        Collection of front-end interface experiments, demonstrating layout, responsiveness, and interactive components.
       </p>
       <a class="project-btn" href="/samples" target="_blank">
         View Samples
       </a>
     </div>
+
   </div>
 </section>
 
 
 <section class="panel" id="contact">
   <div class="wrap">
-    <h2 class="section-title">Let's Build Something</h2>
+    <h2 class="section-title">Contact</h2>
     <hr class="rule">
-    <p class="lead">I build practical software & hardware and enjoy collaborating on real-world projects. Open to joining small teams, contributing to meaningful solutions, and tackling hands-on challenges.</p>
+
+    <p class="lead">
+      I work on front-end applications and embedded systems, focusing on reliability,
+      clarity, and maintainable code. I’m open to junior or entry-level roles, internships,
+      and project-based work where I can contribute and continue learning.
+    </p>
+
     <div class="contact-actions">
       <a href="mailto:cadizal06@gmail.com">Email</a>
       <a href="https://github.com/toniec" target="_blank">GitHub</a>
     </div>
-    <p class="contact-note">Philippines • Frontend & systems-focused • Remote-ready • Cyclist & early riser</p>
+
+    <p class="contact-note">
+      Based in the Philippines • Available for remote work • Comfortable with independent or team-based development
+    </p>
+
     <footer>© <span id="year"></span> Tonie C.</footer>
   </div>
 </section>
@@ -511,6 +594,42 @@ panels.forEach(panel => observer.observe(panel));
 
 /* ================= FOOTER YEAR ================= */
 document.getElementById("year").textContent = new Date().getFullYear();
+
+/* ================= NAV MERGE PROGRESS ================= */
+const navLinks = document.querySelectorAll("nav a");
+const sections = document.querySelectorAll("section[id]");
+
+const mergeObserver = new IntersectionObserver(
+  entries => {
+    entries.forEach(entry => {
+      const id = entry.target.id;
+      const ratio = entry.intersectionRatio;
+
+      const link = document.querySelector(`nav a[href="#${id}"]`);
+      if (!link) return;
+
+      if (entry.isIntersecting) {
+        link.classList.add("active");
+
+        // Map ratio → visual merge
+        const width = Math.min(60, Math.max(20, ratio * 60));
+        const thickness = Math.min(3, Math.max(1, ratio * 3));
+
+        link.style.setProperty("--merge-width", `${width}%`);
+        link.style.setProperty("--merge-thickness", `${thickness}px`);
+      } else {
+        link.classList.remove("active");
+        link.style.removeProperty("--merge-width");
+        link.style.removeProperty("--merge-thickness");
+      }
+    });
+  },
+  {
+    threshold: Array.from({ length: 20 }, (_, i) => i / 20)
+  }
+);
+
+sections.forEach(section => mergeObserver.observe(section));
 </script>
 </body>
 </html>
