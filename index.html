@@ -668,6 +668,7 @@ nav a:focus-visible {
               background var(--dur-fast) ease;
   position: relative;
   overflow: hidden;
+  
 }
 .btn:focus-visible {
   outline: 2px solid var(--accent);
@@ -958,7 +959,7 @@ footer a:hover { color: var(--accent); }
       <!-- Stats row — concrete credibility anchors -->
       <div class="about-stats" role="list" aria-label="Highlights">
         <div class="stat" role="listitem">
-          <span class="stat__num" data-count="8">0</span>
+          <span class="stat__num" data-count="4">0</span>
           <span class="stat__label">Years coding</span>
         </div>
         <div class="stat" role="listitem">
@@ -966,12 +967,12 @@ footer a:hover { color: var(--accent); }
           <span class="stat__label">Projects shipped</span>
         </div>
         <div class="stat" role="listitem">
-          <span class="stat__num" data-count="10">0</span>
+          <span class="stat__num" data-count="4">0</span>
           <span class="stat__label">Tech stacks</span>
         </div>
         <div class="stat" role="listitem">
           <span class="stat__num">PH</span>
-          <span class="stat__label">Location</span>
+          <span class="stat__label">Based in</span>
         </div>
       </div>
     </div>
@@ -1162,16 +1163,10 @@ footer a:hover { color: var(--accent); }
 <!-- Footer -->
 <footer role="contentinfo">
   <div class="wrap">
-    <p>&copy; <span id="year"></span> Tonie C. &mdash; All rights reserved &middot; Built with care in the Philippines</p>
-  </div>
+<p>&copy; <span id="year"></span> Tonie C. &middot; All rights reserved &middot; Human-built with care (AI used only for code refinement)</p>  </div>
 </footer>
 
 <script>
-/* ============================================================
-   MODULAR JS — each concern in its own function
-   WHY: Clean structure signals professional habits to technical reviewers
-   ============================================================ */
-
 /* --- Scroll progress bar --- */
 function initProgressBar() {
   const bar = document.getElementById('progress-bar');
