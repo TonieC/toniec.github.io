@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Tonie C. — Full Stack Developer · Philippines</title>
+<title>Tonie C.</title>
 <meta name="description" content="Tonie C. is a full stack developer from the Philippines building fast, reliable, and scalable web applications with a focus on performance and usability." />
 <meta name="author" content="Tonie C." />
 <meta name="robots" content="index, follow" />
@@ -26,20 +26,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<!-- 
-  FONT CHOICE RATIONALE FOR HIRING MANAGERS:
-  - "Cormorant Garamond" for headings: editorial refinement, signals taste, not generic
-  - "DM Mono" for accents/code snippets: communicates "I actually write code"
-  - "Plus Jakarta Sans" for body: modern, legible, professional — not overused
--->
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 
 <style>
 /* ============================================================
    DESIGN TOKENS
-   Why: Centralised tokens = consistency + easy theming.
-   All color, spacing, and type decisions live here.
    ============================================================ */
 :root {
   /* Layout */
@@ -76,14 +68,10 @@ html[data-theme="paper-dark"] {
   color-scheme: dark;
 }
 
-/* ============================================================
-   RESET & BASE
-   ============================================================ */
 *, *::before, *::after { box-sizing: border-box; margin: 0; }
 
 html {
   scroll-behavior: smooth;
-  /* Fluid type scale — no jumping between breakpoints */
   font-size: clamp(15px, 1.1vw, 17px);
 }
 
@@ -98,10 +86,6 @@ body {
 }
 body::-webkit-scrollbar { display: none; }
 
-/* ============================================================
-   SCROLL PROGRESS BAR
-   WHY: Recruiters scan fast — progress bar signals clean UX thinking
-   ============================================================ */
 #progress-bar {
   position: fixed;
   top: 0; left: 0;
@@ -143,7 +127,6 @@ body::-webkit-scrollbar { display: none; }
 
 
 
-/* Noise grain overlay — adds paper texture, feels premium */
 .bg-canvas__noise {
   position: absolute;
   inset: 0;
@@ -192,8 +175,6 @@ body::-webkit-scrollbar { display: none; }
 
 /* ============================================================
    NAVIGATION
-   WHY: Floating pill nav is a modern, widely-recognised pattern.
-   Active state uses accent color so it pops vs grey links.
    ============================================================ */
 nav {
   position: fixed;
@@ -452,7 +433,6 @@ nav a:focus-visible {
 
 /* ============================================================
    ABOUT — stat counters
-   WHY: Numbers create credibility anchors. Recruiters respond to specifics.
    ============================================================ */
 .about-stats {
   display: flex;
@@ -817,7 +797,6 @@ footer a:hover { color: var(--accent); }
 
 /* ============================================================
    AVAILABILITY BADGE — floats bottom-right
-   WHY: Persistent, low-noise signal to recruiters that you're actively looking
    ============================================================ */
 .availability-badge {
   position: fixed;
@@ -854,9 +833,6 @@ footer a:hover { color: var(--accent); }
 }
 @media (max-width: 480px) { .availability-badge { display: none; } }
 
-/* ============================================================
-   REDUCED MOTION
-   ============================================================ */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
@@ -868,10 +844,8 @@ footer a:hover { color: var(--accent); }
 </head>
 <body>
 
-<!-- Scroll progress indicator -->
 <div id="progress-bar" role="progressbar" aria-label="Page scroll progress" aria-valuemin="0" aria-valuemax="100"></div>
 
-<!-- Atmospheric background layers -->
 <div class="bg-canvas" aria-hidden="true">
   <div class="bg-canvas__gradient"></div>
   <div class="bg-canvas__glow"></div>
@@ -879,10 +853,7 @@ footer a:hover { color: var(--accent); }
   <div class="bg-canvas__grid"></div>
 </div>
 
-<!-- Skip link — accessibility -->
-<a class="skip-link" href="#main-content">Skip to main content</a>
 
-<!-- Navigation -->
 <nav role="navigation" aria-label="Primary navigation">
   <a href="#home"     class="active" aria-current="page"><i class="fa-solid fa-house" aria-hidden="true"></i>Home</a>
   <a href="#about"    ><i class="fa-solid fa-user" aria-hidden="true"></i>About</a>
@@ -956,7 +927,6 @@ footer a:hover { color: var(--accent); }
         These keep me disciplined, consistent, and focused — which directly reflects in how I approach development work.
       </p>
 
-      <!-- Stats row — concrete credibility anchors -->
       <div class="about-stats" role="list" aria-label="Highlights">
         <div class="stat" role="listitem">
           <span class="stat__num" data-count="4">0</span>
