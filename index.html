@@ -77,14 +77,28 @@ nav {
   align-items: center;
   justify-content: space-between;
   padding: 18px var(--pad);
-  border-bottom: 1px solid transparent;
+    border-bottom: none;
   transition: border-color 0.4s, background 0.4s;
 }
 nav.scrolled {
   background: rgba(13,12,11,0.88);
-  backdrop-filter: blur(20px);
+  backdrop-filter: blur(3px);
   border-color: var(--c-border);
 }
+
+nav::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 1px;
+  background: transparent;
+  transition: background 0.4s;
+}
+
+nav.scrolled::after {
+  background: var(--c-border);
+}
+
 .nav-logo {
   font-family: var(--font-display);
   font-size: 22px;
@@ -173,7 +187,8 @@ nav.scrolled {
 
 /* HERO */
 #hero {
-  min-height: 100vh;
+  padding-top: 40px;
+  min-height: calc(100vh - 80px);
   display: grid;
   grid-template-columns: 1fr 1fr;
   border-bottom: 1px solid var(--c-border);
@@ -357,9 +372,13 @@ nav.scrolled {
   text-decoration: none;
   padding: 13px 24px;
   border-radius: 2px;
-  border: 1px solid;
+    border: 1px solid transparent;
   cursor: pointer;
-  transition: all 0.22s var(--ease);
+   transition:
+    color 0.2s var(--ease),
+    background-color 0.2s var(--ease),
+    border-color 0.2s var(--ease),
+    transform 0.2s var(--ease);
   position: relative;
   overflow: hidden;
 }
@@ -375,7 +394,8 @@ nav.scrolled {
 .btn-primary {
   background: var(--c-ink);
   color: var(--c-bg);
-  border-color: var(--c-ink);
+   border-color: var(--c-ink);
+
 }
 .btn-primary::before { background: var(--c-gold); }
 .btn-primary:hover { border-color: var(--c-gold); color: var(--c-bg); }
@@ -384,7 +404,8 @@ nav.scrolled {
 .btn-outline {
   background: transparent;
   color: var(--c-ink);
-  border-color: var(--c-border-h);
+    border-color: var(--c-border-h);
+
 }
 .btn-outline::before { background: var(--c-surface); }
 .btn-outline:hover { border-color: var(--c-ink-2); }
@@ -1074,40 +1095,11 @@ footer {
   100% { transform: translateX(-50%); }
 }
 
-/* CUSTOM CURSOR */
-.cursor {
-  position: fixed;
-  width: 10px; height: 10px;
-  background: var(--c-gold);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 9999;
-  transform: translate(-50%, -50%);
-  transition: transform 0.1s, width 0.3s var(--ease-out), height 0.3s var(--ease-out), opacity 0.3s;
-  mix-blend-mode: difference;
-  will-change: left, top;
-}
-.cursor-ring {
-  position: fixed;
-  width: 36px; height: 36px;
-  border: 1px solid rgba(212,168,67,0.4);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 9998;
-  transform: translate(-50%, -50%);
-  transition: left 0.12s var(--ease), top 0.12s var(--ease), width 0.4s var(--ease-out), height 0.4s var(--ease-out), opacity 0.3s;
-  will-change: left, top;
-}
-@media (hover: none) { .cursor, .cursor-ring { display: none; } }
-
 /* SVG ICONS INLINE */
 .icon { display: inline-flex; }
 </style>
 </head>
 <body>
-
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursor-ring"></div>
 
 <!-- NAV -->
 <nav id="nav">
@@ -1257,7 +1249,9 @@ footer {
       <div class="s-label reveal" data-num="03">What I use</div>
       <h2 class="skills-heading reveal reveal-delay-1">Skills<br>&amp; Tools</h2>
     </div>
-    <p class="skills-sub reveal reveal-delay-2">A practical stack built through real projects — every tool chosen for what it solves, not what it trends.</p>
+    <p class="skills-sub reveal reveal-delay-2">
+      A focused stack built through real-world projects — chosen for reliability and performance.
+    </p>
   </div>
 
   <div class="skills-grid">
@@ -1270,10 +1264,10 @@ footer {
       </div>
       <div class="skill-bg-num">01</div>
       <ul class="skill-list">
-        <li>JavaScript (ES6+) / TypeScript</li>
-        <li>React — component architecture</li>
-        <li>Tailwind CSS / Responsive Design</li>
-        <li>HTML5 / Modern CSS</li>
+        <li>JavaScript / TypeScript</li>
+        <li>React — scalable components</li>
+        <li>Tailwind CSS — responsive UI</li>
+        <li>Modern HTML &amp; CSS</li>
       </ul>
     </div>
 
@@ -1286,10 +1280,10 @@ footer {
       </div>
       <div class="skill-bg-num">02</div>
       <ul class="skill-list">
-        <li>Node.js / Express.js</li>
-        <li>REST API design &amp; integration</li>
-        <li>Discord.js — bots &amp; automation</li>
-        <li>Data handling &amp; validation</li>
+        <li>Node.js / Express</li>
+        <li>REST API design</li>
+        <li>Discord bots &amp; automation</li>
+        <li>Data validation &amp; handling</li>
       </ul>
     </div>
 
@@ -1302,10 +1296,10 @@ footer {
       </div>
       <div class="skill-bg-num">03</div>
       <ul class="skill-list">
-        <li>Arduino / ESP32 development</li>
-        <li>C / C++ for microcontrollers</li>
-        <li>I2C, SPI, UART protocols</li>
-        <li>Sensor integration, Wi-Fi, BLE</li>
+        <li>Arduino / ESP32</li>
+        <li>C / C++ (microcontrollers)</li>
+        <li>I2C, SPI, UART</li>
+        <li>Sensors, Wi-Fi, BLE</li>
       </ul>
     </div>
 
@@ -1318,10 +1312,10 @@ footer {
       </div>
       <div class="skill-bg-num">04</div>
       <ul class="skill-list">
-        <li>Git / GitHub — version control</li>
+        <li>Git / GitHub</li>
         <li>Linux environment</li>
-        <li>Python — automation &amp; scripting</li>
-        <li>Web scraping &amp; data extraction</li>
+        <li>Python scripting</li>
+        <li>Automation &amp; scraping</li>
       </ul>
     </div>
   </div>
