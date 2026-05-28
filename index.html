@@ -1144,8 +1144,6 @@ footer {
     <p class="hero-tagline">Building fast, reliable, and scalable web systems designed to perform and last.</p>
     <div class="hero-cta">
       <a href="#projects" class="btn btn-primary"><span>View Projects</span></a>
-      <a href="https://github.com/toniec" class="btn btn-outline" target="_blank" rel="noopener noreferrer"><span>GitHub</span></a>
-      <a href="https://www.linkedin.com/in/jesstonie-cadizal-8a80a9392" class="btn btn-outline" target="_blank" rel="noopener noreferrer"><span>LinkedIn</span></a>
     </div>
   </div>
 
@@ -1529,6 +1527,7 @@ footer {
         </button>
         <a href="https://github.com/toniec" class="btn btn-outline" target="_blank" rel="noopener noreferrer"><span>View GitHub</span></a>
         <a href="https://www.linkedin.com/in/jesstonie-cadizal-8a80a9392" class="btn btn-outline" target="_blank" rel="noopener noreferrer"><span>View LinkedIn</span></a>          
+        <a href="https://pypi.org/user/tonie06/" class="btn btn-outline" target="_blank" rel="noopener noreferrer"><span>View PyPi</span></a>          
       </div>
 
       
@@ -1546,9 +1545,10 @@ footer {
   <p class="footer-copy">&copy; <span id="yr"></span> Tonie C. <span>·</span> All rights reserved</p>
   <ul class="footer-links">
     <li><a href="mailto:cadizal06@gmail.com">Email</a></li>
+    <li><a href="https://pypi.org/user/tonie06/" target="_blank" rel="noopener noreferrer">PyPi</a></li>
+    <li><a href="https://www.linkedin.com/in/jesstonie-cadizal-8a80a9392" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
     <li><a href="https://github.com/toniec" target="_blank" rel="noopener noreferrer">GitHub</a></li>
     <li><a href="images/Cadizal Resume.pdf.pdf" download>Resume</a></li>
-    <li><a href="#hero">Top</a></li>
   </ul>
 </footer>
 
@@ -1636,6 +1636,8 @@ footer {
 document.getElementById('yr').textContent = new Date().getFullYear();
 
 (function () {
+  if (window.matchMedia('(max-width: 1024px)').matches) return;
+
   const blob = document.getElementById('hero-blob');
   if (!blob) return;
 
