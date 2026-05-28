@@ -1510,31 +1510,6 @@ footer {
 </footer>
 
 <script>
-/* CURSOR */
-(function() {
-  const dot = document.getElementById('cursor');
-  const ring = document.getElementById('cursor-ring');
-  if (!dot || !ring) return;
-  let rx = 0, ry = 0;
-  document.addEventListener('mousemove', e => {
-    dot.style.left = e.clientX + 'px';
-    dot.style.top = e.clientY + 'px';
-    rx += (e.clientX - rx) * 0.15;
-    ry += (e.clientY - ry) * 0.15;
-    ring.style.left = e.clientX + 'px';
-    ring.style.top = e.clientY + 'px';
-  });
-  document.querySelectorAll('a, button, .trait, .stat-cell').forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      dot.style.width = '6px'; dot.style.height = '6px';
-      ring.style.width = '52px'; ring.style.height = '52px';
-    });
-    el.addEventListener('mouseleave', () => {
-      dot.style.width = '10px'; dot.style.height = '10px';
-      ring.style.width = '36px'; ring.style.height = '36px';
-    });
-  });
-})();
 
 /* NAV SCROLL */
 (function() {
