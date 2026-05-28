@@ -1097,9 +1097,21 @@ footer {
 
 /* SVG ICONS INLINE */
 .icon { display: inline-flex; }
+
+.hero-blob {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  background: rgba(212, 168, 67, 0.18);
+  mix-blend-mode: screen;
+  -webkit-mask: radial-gradient(circle 90px at -999px -999px, black 100%, transparent 100%);
+  mask: radial-gradient(circle 90px at -999px -999px, black 100%, transparent 100%);
+}
 </style>
 </head>
 <body>
+  <div class="hero-blob" id="hero-blob" aria-hidden="true"></div>
 
 <!-- NAV -->
 <nav id="nav">
@@ -1439,7 +1451,6 @@ footer {
 
     <div class="contact-body reveal reveal-delay-2">
       <p>I'm looking for junior and entry-level opportunities — full-time, internship, or project-based — where I can contribute to real products and grow as a developer. I work remotely and am comfortable across the stack.</p>
-
       <div class="contact-details">
         <a href="mailto:cadizal06@gmail.com" class="c-detail">
           <span class="c-detail-icon">
@@ -1464,6 +1475,7 @@ footer {
   </div>
 
   <div class="contact-right">
+    <div class="s-label reveal" data-num="06">Quick Links</div>
     <div class="contact-large-text" aria-hidden="true">OPEN<br>TO<br>WORK</div>
 
     <div class="reveal reveal-delay-2">
@@ -1604,6 +1616,54 @@ footer {
 
 /* FOOTER YEAR */
 document.getElementById('yr').textContent = new Date().getFullYear();
+
+(function () {
+  const blob = document.getElementById('hero-blob');
+  if (!blob) return;
+
+  let mx = -999, my = -999;
+  let x = -999, y = -999;
+  let active = false;
+  let t = 0;
+
+  document.addEventListener('mousemove', (e) => {
+    mx = e.clientX;
+    my = e.clientY;
+    active = true;
+  });
+
+  document.addEventListener('mouseleave', () => {
+    active = false;
+    mx = -999;
+    my = -999;
+  });
+
+  function animate() {
+    t += 0.045;
+
+    x += ((active ? mx : -999) - x) * 0.12;
+    y += ((active ? my : -999) - y) * 0.12;
+
+    const r = 88;
+    const o1 = Math.sin(t) * 13;
+    const o2 = Math.cos(t * 1.35) * 15;
+    const o3 = Math.sin(t * 0.72) * 11;
+    const o4 = Math.cos(t * 0.9) * 9;
+
+    const mask = [
+      `radial-gradient(ellipse ${r + o1}px ${r + o4}px at ${x + o2}px ${y + o3}px, black 62%, transparent 100%)`,
+      `radial-gradient(ellipse ${r + o2}px ${r + o3}px at ${x - o1}px ${y - o2}px, black 55%, transparent 100%)`,
+      `radial-gradient(ellipse ${r + o3}px ${r + o1}px at ${x + o4}px ${y - o1}px, black 50%, transparent 100%)`,
+    ].join(', ');
+
+    blob.style.webkitMask = mask;
+    blob.style.mask = mask;
+
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+})();
 </script>
 </body>
 </html>
