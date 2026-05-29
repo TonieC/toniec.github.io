@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tflows v0.0.5 Documentation</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-main: #0f172a;
+            --bg-sidebar: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #6366f1;
+            --border: #334155;
+            --code-bg: #0f172a;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.6;
+            display: flex;
+        }
+
+        aside {
+            width: 300px;
+            background-color: var(--bg-sidebar);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            border-right: 1px solid var(--border);
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            padding: 2rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .sidebar-nav {
+            padding: 1.5rem 1rem;
+        }
+
+        .sidebar-nav a {
+            display: block;
+            padding: 0.6rem 1rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            border-radius: 6px;
+        }
+
+        .sidebar-nav a:hover {
+            background: rgba(99,102,241,0.15);
+            color: var(--text-main);
+        }
+
+        main {
+            margin-left: 300px;
+            padding: 3rem 4rem;
+            max-width: 1100px;
+        }
+
+        section {
+            margin-bottom: 4rem;
+        }
+
+        h2 {
+            font-size: 2rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        h3 {
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        p, li {
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        pre {
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+
+        code {
+            font-family: "Fira Code", monospace;
+        }
+
+        ul {
+            margin-left: 1.2rem;
+        }
+
+        .box {
+            border-left: 3px solid var(--accent);
+            padding-left: 1rem;
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+
+<body>
+
+<aside>
+    <div class="sidebar-header">
+        <h2>Tflows v0.0.5</h2>
+    </div>
+
+    <nav class="sidebar-nav">
+        <a href="#overview">Overview</a>
+        <a href="#flowbot">FlowBot</a>
+        <a href="#commands">Commands</a>
+        <a href="#embed">Embed DSL</a>
+        <a href="#variables">Variables</a>
+        <a href="#examples">Examples</a>
+    </nav>
+</aside>
+
+<main>
+
+<section id="overview">
+    <h2>Overview</h2>
+    <p>
+        Tflows is a FlowBot-based scripting system for Discord bots.
+        It allows bot behavior to be defined using a DSL passed into <code>bot.command()</code>.
+    </p>
+
+    <div class="box">
+        Scripts are interpreted line-by-line and executed at runtime inside a command context.
+    </div>
+</section>
+
+<section id="flowbot">
+    <h2>FlowBot</h2>
+
+    <p>FlowBot registers commands using a name + script body.</p>
+
+    <pre><code>
+bot.command(
+  name="test",
+  code=""" ... """
+)
+    </code></pre>
+
+    <h3>Parameters</h3>
+    <ul>
+        <li><code>name</code> - command trigger name (string)</li>
+        <li><code>code</code> - DSL script block (string)</li>
+    </ul>
+
+    <h3>Execution</h3>
+    <ul>
+        <li>Command triggered via prefix</li>
+        <li>FlowBot finds matching command name</li>
+        <li>Code string is parsed line-by-line</li>
+        <li>Embed or text output is generated</li>
+    </ul>
+</section>
+
+<section id="commands">
+    <h2>DSL Commands</h2>
+
+    <h3>embed</h3>
+    <p>Starts embed-building mode.</p>
+
+    <div class="box">
+        No arguments. Acts as a mode switch.
+    </div>
+
+    <h3>$title[TEXT]</h3>
+    <ul>
+        <li><code>TEXT</code> - embed title string</li>
+        <li>Supports no nested parsing except variables like <code>$ping</code></li>
+    </ul>
+
+    <h3>$desc[TEXT]</h3>
+    <ul>
+        <li><code>TEXT</code> - embed description</li>
+        <li>Supports multiline text</li>
+        <li>Supports variables: <code>$ping</code>, <code>$time()</code></li>
+    </ul>
+
+    <h3>$ping</h3>
+    <ul>
+        <li>Returns bot latency (ms)</li>
+        <li>No arguments</li>
+    </ul>
+
+    <h3>$time([mode])</h3>
+    <ul>
+        <li>No args → full date + time default format</li>
+        <li><code>12h</code> → 12-hour format</li>
+        <li><code>24h</code> → 24-hour format</li>
+        <li><code>nodate</code> → time only</li>
+        <li><code>notime</code> → date only</li>
+        <li><code>multiple flags</code> → e.g. <code>$time(nodate;24h)</code></li>
+    </ul>
+</section>
+
+<section id="embed">
+    <h2>Embed DSL</h2>
+
+    <p>
+        Embeds are created inside <code>embed</code> mode using directive commands.
+    </p>
+
+    <pre><code>
+embed
+$title[Hello]
+$desc[Ping: $ping]
+    </code></pre>
+
+    <h3>Supported Fields</h3>
+
+    <ul>
+        <li><code>$title[TEXT]</code> → embed title</li>
+        <li><code>$desc[TEXT]</code> → embed description</li>
+    </ul>
+
+    <div class="box">
+        Embed is finalized automatically at end of script block execution.
+    </div>
+</section>
+
+<section id="variables">
+    <h2>Variables</h2>
+
+    <h3>Static Variables</h3>
+    <ul>
+        <li><code>$ping</code> → latency in ms</li>
+    </ul>
+
+    <h3>Function Variables</h3>
+    <ul>
+        <li><code>$time()</code> → dynamic time output</li>
+    </ul>
+
+    <h3>Examples</h3>
+    <pre><code>
+$time()
+$time(12h)
+$time(nodate)
+$time(nodate;24h)
+    </code></pre>
+</section>
+
+<section id="examples">
+    <h2>Examples</h2>
+
+    <h3>Full Command</h3>
+    <pre><code>
+bot.command(
+  name="test",
+  code="""
+embed
+$title[Tflow Time System Demo]
+$desc[
+Ping: $ping
+
+Default: $time(nodate;24h)
+No Date: $time(nodate)
+No Time: $time(notime)
+24h: $time(24h)
+12h: $time(12h)
+]
+"""
+)
+    </code></pre>
+
+    <h3>Simple Output</h3>
+    <pre><code>
+Ping: $ping
+Time: $time()
+    </code></pre>
+</section>
+
+</main>
+
+</body>
+</html>
