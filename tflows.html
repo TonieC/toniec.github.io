@@ -384,9 +384,42 @@ bot<span class="pn">.</span><span class="fn">run</span><span class="pn">(</span>
     <h3>Static Variables</h3>
     <ul>
         <li><code>$ping</code> → latency in ms</li>
+        <li><code>$id</code> → returns Discord user ID based on context</li>
     </ul>
 
     <h3>Function Variables</h3>
+
+    <h2>$image</h2>
+    <ul>
+        <li><code>$image</code> → returns avatar image URL based on context</li>
+    </ul>
+
+    <h3>Modes</h3>
+    <ul>
+        <li><code>$image</code> or <code>$image(user)</code> → sender avatar</li>
+        <li><code>$image(mention)</code> → first mentioned user avatar</li>
+        <li><code>$image(act)</code> → mention if present, otherwise sender avatar</li>
+    </ul>
+
+    <h3>Behavior</h3>
+    <ul>
+        <li>Defaults to the command author avatar if no argument is provided</li>
+        <li>If <code>mention</code> is used but no mention exists, falls back to author avatar</li>
+        <li>Always returns a direct Discord CDN image URL string</li>
+    </ul>
+
+    <h3>Examples</h3>
+    <div class="install-block">
+        <div class="install-label">tflows DSL</div>
+        <pre><code>
+<span class="var">$image</span>
+<span class="var">$image</span><span class="pn">(</span>user<span class="pn">)</span>
+<span class="var">$image</span><span class="pn">(</span>mention<span class="pn">)</span>
+<span class="var">$image</span><span class="pn">(</span>act<span class="pn">)</span>
+        </code></pre>
+    </div>
+
+    <h2>$time</h2>
     <ul>
         <li><code>$time()</code> → dynamic time output</li>
     </ul>
@@ -394,10 +427,42 @@ bot<span class="pn">.</span><span class="fn">run</span><span class="pn">(</span>
     <h3>Examples</h3>
     <div class="install-block">
         <div class="install-label">tflows DSL</div>
-        <pre><code><span class="var">$time</span><span class="pn">()</span>
+        <pre><code>
+<span class="var">$time</span><span class="pn">()</span>
 <span class="var">$time</span><span class="pn">(</span>12h<span class="pn">)</span>
 <span class="var">$time</span><span class="pn">(</span>nodate<span class="pn">)</span>
-<span class="var">$time</span><span class="pn">(</span>nodate<span class="pn">;</span>24h<span class="pn">)</span></code></pre>
+<span class="var">$time</span><span class="pn">(</span>nodate<span class="pn">;</span>24h<span class="pn">)</span>
+        </code></pre>
+    </div>
+
+    <h2>$id</h2>
+    <ul>
+        <li><code>$id</code> → returns Discord user ID based on context</li>
+    </ul>
+
+    <h3>Modes</h3>
+    <ul>
+        <li><code>$id</code> or <code>$id(user)</code> → sender ID</li>
+        <li><code>$id(mention)</code> → first mentioned user ID</li>
+        <li><code>$id(act)</code> → mention if present, otherwise sender ID</li>
+    </ul>
+
+    <h3>Behavior</h3>
+    <ul>
+        <li>Defaults to the command author ID if no argument is provided</li>
+        <li>If <code>mention</code> is used but no mention exists, falls back to author ID</li>
+        <li>Always returns a Discord user ID as a string</li>
+    </ul>
+
+    <h3>Examples</h3>
+    <div class="install-block">
+        <div class="install-label">tflows DSL</div>
+        <pre><code>
+<span class="var">$id</span>
+<span class="var">$id</span><span class="pn">(</span>user<span class="pn">)</span>
+<span class="var">$id</span><span class="pn">(</span>mention<span class="pn">)</span>
+<span class="var">$id</span><span class="pn">(</span>act<span class="pn">)</span>
+        </code></pre>
     </div>
 </section>
 
