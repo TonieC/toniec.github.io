@@ -1752,6 +1752,84 @@ Members: <span class="var">$membercount</span>
       </div>
     </div>
 
+    <!-- $uptime -->
+<div class="var-card">
+  <div class="var-card-head">
+    <h2 id="var-uptime">$uptime</h2>
+    <span class="var-badge badge-dynamic">dynamic</span>
+  </div>
+
+  <p>
+    Returns how long the bot has been running since startup. Supports multiple formatting modes including full, short, clock, seconds, and custom token-based output.
+  </p>
+
+  <table class="param-table">
+    <thead>
+      <tr>
+        <th>Usage</th>
+        <th>Returns</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td class="pn-name">$uptime</td>
+        <td class="pn-desc">Default format, e.g. <code>1h 23m 10s</code></td>
+      </tr>
+
+      <tr>
+        <td class="pn-name">$uptime(full)</td>
+        <td class="pn-desc">Full format including days, e.g. <code>0d 1h 23m 10s</code></td>
+      </tr>
+
+      <tr>
+        <td class="pn-name">$uptime(short)</td>
+        <td class="pn-desc">Compact format, e.g. <code>1h 23m</code></td>
+      </tr>
+
+      <tr>
+        <td class="pn-name">$uptime(clock)</td>
+        <td class="pn-desc">Clock-style format, e.g. <code>01:23:10</code></td>
+      </tr>
+
+      <tr>
+        <td class="pn-name">$uptime(seconds)</td>
+        <td class="pn-desc">Raw uptime in seconds, e.g. <code>4990</code></td>
+      </tr>
+
+      <tr>
+        <td class="pn-name">$uptime(d, h, m, s)</td>
+        <td class="pn-desc">Custom formatted output using tokens</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="code-block">
+    <div class="code-header">
+      <span class="code-lang"><span class="code-dot"></span>tflows DSL</span>
+      <button class="copy-btn">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+        </svg>
+        Copy
+      </button>
+    </div>
+
+    <pre><code>embed
+$title[Uptime Variants]
+
+$desc[
+Default: $uptime
+Full: $uptime(full)
+Short: $uptime(short)
+Clock: $uptime(clock)
+Seconds: $uptime(seconds)
+Custom: $uptime(d, h, m, s)
+]</code></pre>
+  </div>
+</div>
+
     <!-- $image -->
     <div class="var-card">
       <div class="var-card-head">
