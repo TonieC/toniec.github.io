@@ -1830,6 +1830,95 @@ Custom: $uptime(d, h, m, s)
   </div>
 </div>
 
+<!-- $log -->
+<div class="var-card">
+  <div class="var-card-head">
+    <h2 id="var-log">$log</h2>
+    <span class="var-badge badge-fn">function</span>
+  </div>
+
+  <p>
+    Sends a message to a specific Discord channel for tracking command usage, user actions, and bot events.
+    Unlike console logging, this outputs directly inside a server channel.
+  </p>
+
+  <table class="param-table">
+    <thead>
+      <tr>
+        <th>Parameter</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td class="pn-name">CHANNEL_ID</td>
+        <td class="pn-desc">Target Discord channel ID where the log message will be sent</td>
+      </tr>
+      <tr>
+        <td class="pn-name">MESSAGE</td>
+        <td class="pn-desc">Content of the log message</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="code-block">
+    <div class="code-header">
+      <span class="code-lang"><span class="code-dot"></span>tflows DSL</span>
+      <button class="copy-btn">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+        </svg>
+        Copy
+      </button>
+    </div>
+
+    <pre><code>$log(CHANNEL_ID){User executed a command}</code></pre>
+  </div>
+
+  <h3>Behavior</h3>
+  <ul>
+    <li>Sends a message directly to the specified Discord channel</li>
+    <li>Executes when the command runs successfully (unless wrapped in error handling logic)</li>
+    <li>Supports variables like <code>$id</code>, <code>$time</code>, and other engine variables</li>
+    <li>Does not print to console, only sends to Discord channels</li>
+  </ul>
+
+  <h3>Examples</h3>
+
+  <div class="code-block">
+    <div class="code-header">
+      <span class="code-lang"><span class="code-dot"></span>tflows DSL</span>
+    </div>
+
+    <pre><code>$log(123456789012345678){User executed !ping command}</code></pre>
+  </div>
+
+  <div class="code-block">
+    <div class="code-header">
+      <span class="code-lang"><span class="code-dot"></span>tflows DSL</span>
+    </div>
+
+    <pre><code>$log(123456789012345678){$user used a command at $time}</code></pre>
+  </div>
+
+  <div class="code-block">
+    <div class="code-header">
+      <span class="code-lang"><span class="code-dot"></span>tflows DSL</span>
+    </div>
+
+    <pre><code>$log(987654321098765432){$user was muted by <@$id> for spam}</code></pre>
+  </div>
+
+  <h3>Notes</h3>
+  <ul>
+    <li>Bot must have permission to send messages in the target channel</li>
+    <li>If the channel ID is invalid, logging may silently fail or throw an error depending on configuration</li>
+    <li>You can use <code><@$id></code> to mention the command user since <code>$id</code> returns raw ID</li>
+  </ul>
+</div>
+
     <!-- $image -->
     <div class="var-card">
       <div class="var-card-head">
