@@ -419,6 +419,67 @@ bot<span class="pn">.</span><span class="fn">run</span><span class="pn">(</span>
         </code></pre>
     </div>
 
+    <h2>$server</h2>
+    <ul>
+        <li><code>$server</code> → returns server name</li>
+    </ul>
+
+    <h3>Modes</h3>
+    <ul>
+        <li><code>$server</code> or <code>$server(name)</code> → guild name</li>
+        <li><code>$server(boost)</code> → number of boosts</li>
+        <li><code>$server(boostlvl)</code> → boost level</li>
+    </ul>
+
+    <h3>Behavior</h3>
+    <ul>
+        <li>Defaults to returning the server name</li>
+        <li>Uses Discord guild properties internally</li>
+        <li>Returns values as strings</li>
+    </ul>
+
+    <h3>Examples</h3>
+    <div class="install-block">
+        <div class="install-label">tflows DSL</div>
+        <pre><code>
+<span class="var">$server</span>
+<span class="var">$server</span><span class="pn">(</span>name<span class="pn">)</span>
+<span class="var">$server</span><span class="pn">(</span>boost<span class="pn">)</span>
+<span class="var">$server</span><span class="pn">(</span>boostlvl<span class="pn">)</span>
+        </code></pre>
+    </div>
+
+    <h2>$membercount</h2>
+    <ul>
+        <li><code>$membercount</code> → returns total members</li>
+    </ul>
+
+    <h3>Modes</h3>
+    <ul>
+        <li><code>$membercount</code> or <code>$membercount(all)</code> → total members</li>
+        <li><code>$membercount(user)</code> → human users only</li>
+        <li><code>$membercount(bots)</code> → bots only</li>
+    </ul>
+
+    <h3>Behavior</h3>
+    <ul>
+        <li>Defaults to total member count</li>
+        <li><code>user</code> filters non-bot members</li>
+        <li><code>bots</code> filters bot accounts</li>
+        <li>Returns values as strings</li>
+    </ul>
+
+    <h3>Examples</h3>
+    <div class="install-block">
+        <div class="install-label">tflows DSL</div>
+        <pre><code>
+<span class="var">$membercount</span>
+<span class="var">$membercount</span><span class="pn">(</span>all<span class="pn">)</span>
+<span class="var">$membercount</span><span class="pn">(</span>user<span class="pn">)</span>
+<span class="var">$membercount</span><span class="pn">(</span>bots<span class="pn">)</span>
+        </code></pre>
+    </div>
+
     <h2>$time</h2>
     <ul>
         <li><code>$time()</code> → dynamic time output</li>
