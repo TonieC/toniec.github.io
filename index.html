@@ -13,6 +13,7 @@
 <link rel="canonical" href="https://toniec.github.io"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lora:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
 <style>
 /* TOKENS */
@@ -1429,8 +1430,11 @@ footer {
   <div class="skills-header">
     <div>
       <div class="s-label reveal" data-num="03">What I use</div>
-      <h2 class="skills-heading reveal reveal-delay-1">Skills<br>&amp; Tools</h2>
+      <h2 class="skills-heading reveal reveal-delay-1">
+        Skills<br>&amp; Tools
+      </h2>
     </div>
+
     <p class="skills-sub reveal reveal-delay-2">
       A focused stack built through real-world systems — automation, web apps, and developer tools.
     </p>
@@ -1438,16 +1442,10 @@ footer {
 
   <div class="skills-grid">
 
+    <!-- Frontend -->
     <div class="skill-block reveal">
       <div class="skill-cat">
-        <span class="skill-cat-icon">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="3" y="3" width="7" height="7"/>
-            <rect x="14" y="3" width="7" height="7"/>
-            <rect x="14" y="14" width="7" height="7"/>
-            <rect x="3" y="14" width="7" height="7"/>
-          </svg>
-        </span>
+        <i class="fa-solid fa-code"></i>
         Frontend
       </div>
       <div class="skill-bg-num">01</div>
@@ -1459,14 +1457,10 @@ footer {
       </ul>
     </div>
 
+    <!-- Backend -->
     <div class="skill-block reveal reveal-delay-1">
       <div class="skill-cat">
-        <span class="skill-cat-icon">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="2" y="3" width="20" height="14" rx="2"/>
-            <path d="M8 21h8M12 17v4"/>
-          </svg>
-        </span>
+        <i class="fa-solid fa-server"></i>
         Backend & Automation
       </div>
       <div class="skill-bg-num">02</div>
@@ -1478,13 +1472,10 @@ footer {
       </ul>
     </div>
 
+    <!-- Embedded -->
     <div class="skill-block reveal reveal-delay-2">
       <div class="skill-cat">
-        <span class="skill-cat-icon">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"/>
-          </svg>
-        </span>
+        <i class="fa-solid fa-microchip"></i>
         Embedded Systems
       </div>
       <div class="skill-bg-num">03</div>
@@ -1496,13 +1487,10 @@ footer {
       </ul>
     </div>
 
+    <!-- Tools -->
     <div class="skill-block reveal reveal-delay-3">
       <div class="skill-cat">
-        <span class="skill-cat-icon">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
-          </svg>
-        </span>
+        <i class="fa-solid fa-screwdriver-wrench"></i>
         Tools & Ecosystem
       </div>
       <div class="skill-bg-num">04</div>
@@ -1526,206 +1514,235 @@ footer {
         Selected<em>Projects</em>
       </h2>
     </div>
-    <p class="projects-meta reveal reveal-delay-2">made projects<br>shipped &amp; live</p>
+    <p class="projects-meta reveal reveal-delay-2">
+      made projects<br>shipped &amp; live
+    </p>
   </div>
 
   <div class="accordion reveal reveal-delay-2">
 
     <!-- NPM PACKAGES -->
     <div class="acc-panel" id="acc-npm">
-  <button class="acc-header" aria-expanded="false" aria-controls="acc-npm-body" data-target="acc-npm">
-    <div class="acc-header-left">
-      <span class="acc-eco-badge">NPM</span>
-      <span class="acc-title">NPM Packages</span>
-    </div>
-    <span class="acc-count">2 packages</span>
-    <svg class="acc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-      <polyline points="6 9 12 15 18 9"/>
-    </svg>
-  </button>
+      <button class="acc-header" aria-expanded="false" aria-controls="acc-npm-body" data-target="acc-npm">
+        <div class="acc-header-left">
+          <span class="acc-eco-badge">
+            <i class="fa-brands fa-npm"></i>
+            NPM
+          </span>
+          <span class="acc-title">NPM Packages</span>
+        </div>
+        <span class="acc-count">2 packages</span>
+        <i class="fa-solid fa-chevron-down acc-chevron"></i>
+      </button>
 
-  <div class="acc-body" id="acc-npm-body" role="region">
-    <div class="acc-body-inner">
+      <div class="acc-body" id="acc-npm-body" role="region">
+        <div class="acc-body-inner">
 
-      <div class="proj-entries">
+          <div class="proj-entries">
 
-        <!-- discord-form-webhook -->
-        <article class="proj-entry">
-          <div class="proj-num">01</div>
-          <div class="proj-body">
-            <p class="proj-type">JavaScript Library · Web Automation Tool</p>
-            <h3 class="proj-title">discord-form-webhook</h3>
-            <p class="proj-desc">A lightweight JavaScript utility for sending HTML form data directly to Discord webhooks. Supports embeds and plain text with zero backend setup.</p>
-            <div class="proj-tags">
-              <span class="proj-tag">JavaScript</span>
-              <span class="proj-tag">Discord Webhooks</span>
-              <span class="proj-tag">Frontend</span>
-              <span class="proj-tag">NPM Package</span>
-            </div>
+            <article class="proj-entry">
+              <div class="proj-num">01</div>
+              <div class="proj-body">
+                <p class="proj-type">JavaScript Library · Web Automation Tool</p>
+                <h3 class="proj-title">discord-form-webhook</h3>
+                <p class="proj-desc">
+                  A lightweight JavaScript utility for sending HTML form data directly to Discord webhooks.
+                </p>
+
+                <div class="proj-tags">
+                  <span class="proj-tag"><i class="fa-brands fa-js"></i> JavaScript</span>
+                  <span class="proj-tag"><i class="fa-brands fa-discord"></i> Discord Webhooks</span>
+                  <span class="proj-tag"><i class="fa-solid fa-code"></i> Frontend</span>
+                  <span class="proj-tag"><i class="fa-brands fa-npm"></i> NPM</span>
+                </div>
+              </div>
+
+              <div class="proj-links">
+                <a href="https://github.com/TonieC/discord-form-webhook" class="proj-link" target="_blank" rel="noopener noreferrer">
+                  <i class="fa-brands fa-github"></i> GitHub
+                </a>
+                <a href="https://www.npmjs.com/package/discord-form-webhook" class="proj-link" target="_blank" rel="noopener noreferrer">
+                  <i class="fa-brands fa-npm"></i> NPM
+                </a>
+              </div>
+            </article>
+
+            <article class="proj-entry">
+              <div class="proj-num">02</div>
+              <div class="proj-body">
+                <p class="proj-type">Debug Utility · Developer Tool</p>
+                <h3 class="proj-title">why-is-this-called</h3>
+                <p class="proj-desc">
+                  Tracks function callers and prints clean stack traces for debugging JavaScript execution flows.
+                </p>
+
+                <div class="proj-tags">
+                  <span class="proj-tag"><i class="fa-brands fa-js"></i> JavaScript</span>
+                  <span class="proj-tag"><i class="fa-solid fa-bug"></i> Debugging</span>
+                  <span class="proj-tag"><i class="fa-solid fa-diagram-project"></i> Stack Trace</span>
+                  <span class="proj-tag"><i class="fa-brands fa-npm"></i> NPM</span>
+                </div>
+              </div>
+
+              <div class="proj-links">
+                <a href="https://github.com/TonieC/why-is-this-called" class="proj-link" target="_blank" rel="noopener noreferrer">
+                  <i class="fa-brands fa-github"></i> GitHub
+                </a>
+                <a href="https://www.npmjs.com/package/why-is-this-called" class="proj-link" target="_blank" rel="noopener noreferrer">
+                  <i class="fa-brands fa-npm"></i> NPM
+                </a>
+              </div>
+            </article>
+
           </div>
-          <div class="proj-links">
-            <a href="https://github.com/TonieC/discord-form-webhook" class="proj-link" target="_blank" rel="noopener noreferrer">
-              GitHub
-            </a>
-            <a href="https://www.npmjs.com/package/discord-form-webhook" class="proj-link" target="_blank" rel="noopener noreferrer">
-              📦 NPM
-            </a>
-          </div>
-        </article>
 
-        <!-- why-is-this-called -->
-        <article class="proj-entry">
-          <div class="proj-num">02</div>
-          <div class="proj-body">
-            <p class="proj-type">Debug Utility · Developer Tool</p>
-            <h3 class="proj-title">why-is-this-called</h3>
-            <p class="proj-desc">Tracks function callers and prints clean stack traces for debugging complex JavaScript execution flows.</p>
-            <div class="proj-tags">
-              <span class="proj-tag">JavaScript</span>
-              <span class="proj-tag">Debugging</span>
-              <span class="proj-tag">Stack Trace</span>
-              <span class="proj-tag">NPM Package</span>
-            </div>
-          </div>
-          <div class="proj-links">
-            <a href="https://github.com/TonieC/why-is-this-called" class="proj-link" target="_blank" rel="noopener noreferrer">
-              GitHub
-            </a>
-            <a href="https://www.npmjs.com/package/why-is-this-called" class="proj-link" target="_blank" rel="noopener noreferrer">
-              📦 NPM
-            </a>
-          </div>
-        </article>
-
+        </div>
       </div>
-
     </div>
-  </div>
-</div>
 
     <!-- PYPI PACKAGES -->
     <div class="acc-panel" id="acc-pypi">
       <button class="acc-header" aria-expanded="false" aria-controls="acc-pypi-body" data-target="acc-pypi">
         <div class="acc-header-left">
-          <span class="acc-eco-badge">PyPI</span>
+          <span class="acc-eco-badge">
+            <i class="fa-brands fa-python"></i>
+            PyPI
+          </span>
           <span class="acc-title">PyPI Packages</span>
         </div>
         <span class="acc-count">1 package</span>
-        <svg class="acc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <polyline points="6 9 12 15 18 9"/>
-        </svg>
+        <i class="fa-solid fa-chevron-down acc-chevron"></i>
       </button>
+
       <div class="acc-body" id="acc-pypi-body" role="region">
         <div class="acc-body-inner">
+
           <div class="proj-entries">
+
             <article class="proj-entry">
               <div class="proj-num">01</div>
               <div class="proj-body">
                 <p class="proj-type">Open Source Tool · Automation Framework</p>
                 <h3 class="proj-title">tflows.py</h3>
-                <p class="proj-desc">A lightweight automation and Discord bot framework with a simple scripting engine. Build bots using readable command syntax like <code>send</code> and <code>log</code>, powered by an extensible function system and async execution engine.</p>
+                <p class="proj-desc">
+                  Lightweight automation and Discord bot framework with a scripting engine.
+                </p>
+
                 <div class="proj-tags">
-                  <span class="proj-tag">Python</span>
-                  <span class="proj-tag">Discord API</span>
-                  <span class="proj-tag">AsyncIO</span>
-                  <span class="proj-tag">Open Source</span>
+                  <span class="proj-tag"><i class="fa-brands fa-python"></i> Python</span>
+                  <span class="proj-tag"><i class="fa-brands fa-discord"></i> Discord API</span>
+                  <span class="proj-tag"><i class="fa-solid fa-gears"></i> AsyncIO</span>
+                  <span class="proj-tag"><i class="fa-solid fa-box"></i> Open Source</span>
                 </div>
               </div>
+
               <div class="proj-links">
                 <a href="https://github.com/TonieC/tflows" class="proj-link" target="_blank" rel="noopener noreferrer">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
-                  GitHub
+                  <i class="fa-brands fa-github"></i> GitHub
                 </a>
                 <a href="https://pypi.org/project/tflows/" class="proj-link" target="_blank" rel="noopener noreferrer">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-                  PyPI
-                </a>
-                <a href="/tflows" class="proj-link" target="_blank" rel="noopener noreferrer">
-                  📄 Documentation
+                  <i class="fa-brands fa-python"></i> PyPI
                 </a>
               </div>
             </article>
+
           </div>
+
         </div>
       </div>
     </div>
 
-    <!-- GITHUB / OPEN SOURCE TOOLS -->
+    <!-- OPEN SOURCE TOOLS -->
     <div class="acc-panel" id="acc-oss">
       <button class="acc-header" aria-expanded="false" aria-controls="acc-oss-body" data-target="acc-oss">
         <div class="acc-header-left">
-          <span class="acc-eco-badge">GitHub</span>
+          <span class="acc-eco-badge">
+            <i class="fa-brands fa-github"></i>
+            GitHub
+          </span>
           <span class="acc-title">Open Source Tools</span>
         </div>
         <span class="acc-count">1 tool</span>
-        <svg class="acc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <polyline points="6 9 12 15 18 9"/>
-        </svg>
+        <i class="fa-solid fa-chevron-down acc-chevron"></i>
       </button>
+
       <div class="acc-body" id="acc-oss-body" role="region">
         <div class="acc-body-inner">
+
           <div class="proj-entries">
+
             <article class="proj-entry">
               <div class="proj-num">01</div>
               <div class="proj-body">
                 <p class="proj-type">Open Source Tool · Self-Hosted</p>
                 <h3 class="proj-title">Webhook Studio</h3>
-                <p class="proj-desc">A self-hosted Discord webhook sender with a full embed builder. Supports plain text and rich embeds with live preview, image support, timestamps, and strict webhook validation.</p>
+                <p class="proj-desc">
+                  Self-hosted Discord webhook sender with embed builder and live preview.
+                </p>
+
                 <div class="proj-tags">
-                  <span class="proj-tag">Node.js</span>
-                  <span class="proj-tag">Express</span>
-                  <span class="proj-tag">JavaScript</span>
-                  <span class="proj-tag">Discord API</span>
+                  <span class="proj-tag"><i class="fa-brands fa-node-js"></i> Node.js</span>
+                  <span class="proj-tag"><i class="fa-solid fa-server"></i> Express</span>
+                  <span class="proj-tag"><i class="fa-brands fa-js"></i> JavaScript</span>
+                  <span class="proj-tag"><i class="fa-brands fa-discord"></i> Discord API</span>
                 </div>
               </div>
+
               <div class="proj-links">
                 <a href="https://github.com/TonieC/Self-Hosted-Discord-Webhook-Sender" class="proj-link" target="_blank" rel="noopener noreferrer">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
-                  GitHub
+                  <i class="fa-brands fa-github"></i> GitHub
                 </a>
                 <a href="https://github.com/TonieC/Self-Hosted-Discord-Webhook-Sender#readme" class="proj-link" target="_blank" rel="noopener noreferrer">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-                  Docs
+                  <i class="fa-solid fa-book"></i> Docs
                 </a>
               </div>
             </article>
+
           </div>
+
         </div>
       </div>
     </div>
 
-    <!-- WEB PROJECTS / OTHER -->
+    <!-- WEB PROJECTS -->
     <div class="acc-panel" id="acc-web">
       <button class="acc-header" aria-expanded="false" aria-controls="acc-web-body" data-target="acc-web">
         <div class="acc-header-left">
-          <span class="acc-eco-badge">Web</span>
+          <span class="acc-eco-badge">
+            <i class="fa-solid fa-globe"></i>
+            Web
+          </span>
           <span class="acc-title">Web Projects &amp; Other</span>
         </div>
         <span class="acc-count">2 projects</span>
-        <svg class="acc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <polyline points="6 9 12 15 18 9"/>
-        </svg>
+        <i class="fa-solid fa-chevron-down acc-chevron"></i>
       </button>
+
       <div class="acc-body" id="acc-web-body" role="region">
         <div class="acc-body-inner">
+
           <div class="proj-entries">
+
             <article class="proj-entry">
               <div class="proj-num">01</div>
               <div class="proj-body">
                 <p class="proj-type">Micro-tasking Platform · Temporarily Closed</p>
                 <h3 class="proj-title">Survwin</h3>
-                <p class="proj-desc">A micro-task platform for surveys and small online jobs. Built the interface and connected it to a backend that handles users, tasks, and submissions.</p>
+                <p class="proj-desc">
+                  Micro-task platform for surveys and online jobs with user and task system.
+                </p>
+
                 <div class="proj-tags">
-                  <span class="proj-tag">React</span>
-                  <span class="proj-tag">Node.js</span>
-                  <span class="proj-tag">REST API</span>
-                  <span class="proj-tag">Netlify</span>
+                  <span class="proj-tag"><i class="fa-brands fa-react"></i> React</span>
+                  <span class="proj-tag"><i class="fa-brands fa-node-js"></i> Node.js</span>
+                  <span class="proj-tag"><i class="fa-solid fa-plug"></i> REST API</span>
+                  <span class="proj-tag"><i class="fa-solid fa-cloud"></i> Netlify</span>
                 </div>
               </div>
+
               <div class="proj-links">
                 <a href="https://survwin.netlify.app" class="proj-link" target="_blank" rel="noopener noreferrer">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-                  Live Demo
+                  <i class="fa-solid fa-up-right-from-square"></i> Live Demo
                 </a>
               </div>
             </article>
@@ -1735,27 +1752,32 @@ footer {
               <div class="proj-body">
                 <p class="proj-type">Frontend Showcase</p>
                 <h3 class="proj-title">UI &amp; Web Samples</h3>
-                <p class="proj-desc">Small frontend builds focused on layout, components, and basic interaction using only HTML, CSS, and JavaScript.</p>
+                <p class="proj-desc">
+                  HTML, CSS, and JavaScript layout experiments and components.
+                </p>
+
                 <div class="proj-tags">
-                  <span class="proj-tag">HTML5</span>
-                  <span class="proj-tag">CSS3</span>
-                  <span class="proj-tag">JavaScript</span>
-                  <span class="proj-tag">Responsive</span>
+                  <span class="proj-tag"><i class="fa-brands fa-html5"></i> HTML</span>
+                  <span class="proj-tag"><i class="fa-brands fa-css3-alt"></i> CSS</span>
+                  <span class="proj-tag"><i class="fa-brands fa-js"></i> JavaScript</span>
+                  <span class="proj-tag"><i class="fa-solid fa-mobile-screen"></i> Responsive</span>
                 </div>
               </div>
+
               <div class="proj-links">
                 <a href="/samples" class="proj-link" target="_blank" rel="noopener noreferrer">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-                  View Samples
+                  <i class="fa-solid fa-grid-2"></i> View Samples
                 </a>
               </div>
             </article>
+
           </div>
+
         </div>
       </div>
     </div>
 
-  </div><!-- /accordion -->
+  </div>
 </section>
 
 <!-- CONTACT LEAD MARQUEE -->
@@ -1788,7 +1810,6 @@ footer {
 
     <div>
       <div class="s-label reveal" data-num="05">Contact</div>
-
       <h2 class="contact-heading reveal reveal-delay-1">
         Get in <em>Touch</em>
       </h2>
@@ -1832,31 +1853,37 @@ footer {
 
       <div class="contact-actions">
 
-        <a href="images/Cadizal Resume.pdf.pdf" class="btn btn-primary" download>
-          <span>Download Resume</span>
-        </a>
+  <a href="images/Cadizal Resume.pdf.pdf" class="btn btn-primary" download>
+    <i class="fa-solid fa-file-arrow-down"></i>
+    <span>Download Resume</span>
+  </a>
 
-        <button id="copy-btn" type="button" class="btn btn-outline">
-          <span id="copy-label">Copy Email</span>
-        </button>
+  <button id="copy-btn" type="button" class="btn btn-outline">
+    <i class="fa-regular fa-copy"></i>
+    <span id="copy-label">Copy Email</span>
+  </button>
 
-        <a href="https://github.com/toniec" class="btn btn-outline" target="_blank" rel="noopener noreferrer">
-          <span>GitHub</span>
-        </a>
+  <a href="https://github.com/toniec" class="btn btn-outline" target="_blank" rel="noopener noreferrer">
+    <i class="fa-brands fa-github"></i>
+    <span>GitHub</span>
+  </a>
 
-        <a href="https://www.linkedin.com/in/jesstonie-cadizal-8a80a9392" class="btn btn-outline" target="_blank" rel="noopener noreferrer">
-          <span>LinkedIn</span>
-        </a>
+  <a href="https://www.linkedin.com/in/jesstonie-cadizal-8a80a9392" class="btn btn-outline" target="_blank" rel="noopener noreferrer">
+    <i class="fa-brands fa-linkedin"></i>
+    <span>LinkedIn</span>
+  </a>
 
-        <a href="https://pypi.org/user/tonie06/" class="btn btn-outline" target="_blank" rel="noopener noreferrer">
-          <span>PyPI</span>
-        </a>
+  <a href="https://pypi.org/user/tonie06/" class="btn btn-outline" target="_blank" rel="noopener noreferrer">
+    <i class="fa-brands fa-python"></i>
+    <span>PyPI</span>
+  </a>
 
-        <a href="https://www.npmjs.com/~tonie06" class="btn btn-outline" target="_blank" rel="noopener noreferrer">
-          <span>NPM</span>
-        </a>
+  <a href="https://www.npmjs.com/~tonie06" class="btn btn-outline" target="_blank" rel="noopener noreferrer">
+    <i class="fa-brands fa-npm"></i>
+    <span>NPM</span>
+  </a>
 
-      </div>
+</div>
 
       <div class="contact-note">
         <span class="note-dot"></span>
