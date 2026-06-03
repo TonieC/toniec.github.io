@@ -52,6 +52,7 @@ body {
   overflow-x: hidden;
   scrollbar-width: none;
   cursor: default;
+  padding-top: 80px;
 }
 body::-webkit-scrollbar { display: none; }
 
@@ -72,7 +73,7 @@ body::before {
 nav {
   position: fixed;
   top: 0; left: 0; right: 0;
-  z-index: 900;
+  z-index: 1000;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -84,6 +85,7 @@ nav.scrolled {
   background: rgba(13,12,11,0.88);
   backdrop-filter: blur(3px);
   border-color: var(--c-border);
+  
 }
 
 nav::after {
@@ -157,6 +159,7 @@ nav.scrolled::after {
   padding: 4px;
   background: none;
   border: none;
+  z-index: 1200;
 }
 .nav-burger span {
   display: block;
@@ -174,12 +177,12 @@ nav.scrolled::after {
     display: flex;
     flex-direction: column;
     position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
+    top: 70px; left: 0; right: 0; bottom: 0;
     background: var(--c-bg);
     align-items: center;
     justify-content: center;
     gap: 40px;
-    z-index: 800;
+    z-index: 999;
   }
   .nav-links.open a { font-size: 14px; }
   .nav-burger { display: flex; z-index: 910; }
@@ -187,7 +190,6 @@ nav.scrolled::after {
 
 /* HERO */
 #hero {
-  padding-top: 40px;
   min-height: calc(100vh - 80px);
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -412,7 +414,10 @@ nav.scrolled::after {
 .btn-outline span { position: relative; }
 
 /* SECTION BASE */
-section { position: relative; }
+section { 
+ position: relative;
+ scroll-margin-top: 90px;
+}
 
 .reveal {
   opacity: 0;
@@ -732,7 +737,8 @@ section { position: relative; }
   text-align: right;
 }
 
-.project-list {
+/* ACCORDION */
+.accordion {
   display: flex;
   flex-direction: column;
   gap: 1px;
@@ -740,109 +746,219 @@ section { position: relative; }
   border: 1px solid var(--c-border);
 }
 
-.project-item {
+.acc-panel {
+  background: var(--c-bg);
+  overflow: hidden;
+}
+
+.acc-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 28px 32px;
+  cursor: pointer;
+  user-select: none;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  transition: background 0.25s;
+  position: relative;
+}
+.acc-header:hover { background: var(--c-surface); }
+.acc-panel.open .acc-header { background: var(--c-surface); }
+
+.acc-header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+  min-width: 0;
+}
+
+.acc-eco-badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border-radius: 2px;
+  border: 1px solid;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.acc-panel:nth-child(1) .acc-eco-badge { color: var(--c-rust); border-color: rgba(196,97,58,0.35); background: var(--c-rust-dim); }
+.acc-panel:nth-child(2) .acc-eco-badge { color: var(--c-teal); border-color: rgba(61,184,168,0.35); background: var(--c-teal-dim); }
+.acc-panel:nth-child(3) .acc-eco-badge { color: var(--c-violet); border-color: rgba(139,111,212,0.35); background: var(--c-violet-dim); }
+.acc-panel:nth-child(4) .acc-eco-badge { color: var(--c-gold); border-color: rgba(212,168,67,0.35); background: var(--c-gold-dim); }
+
+.acc-title {
+  font-family: var(--font-display);
+  font-size: clamp(20px, 2.5vw, 28px);
+  letter-spacing: 0.04em;
+  color: var(--c-ink);
+  line-height: 1;
+}
+
+.acc-count {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  color: var(--c-ink-3);
+  white-space: nowrap;
+}
+
+.acc-chevron {
+  width: 18px; height: 18px;
+  flex-shrink: 0;
+  color: var(--c-ink-3);
+  transition: transform 0.4s var(--ease-out), color 0.2s;
+}
+.acc-panel.open .acc-chevron {
+  transform: rotate(180deg);
+  color: var(--c-ink-2);
+}
+
+/* top accent bar on open */
+.acc-panel::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s var(--ease-out);
+  pointer-events: none;
+}
+.acc-panel { position: relative; }
+.acc-panel:nth-child(1)::before { background: var(--c-rust); }
+.acc-panel:nth-child(2)::before { background: var(--c-teal); }
+.acc-panel:nth-child(3)::before { background: var(--c-violet); }
+.acc-panel:nth-child(4)::before { background: var(--c-gold); }
+.acc-panel.open::before { transform: scaleX(1); }
+
+.acc-body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.45s var(--ease-out);
+}
+.acc-panel.open .acc-body {
+  grid-template-rows: 1fr;
+}
+
+.acc-body-inner {
+  overflow: hidden;
+}
+
+/* PROJECT ENTRIES INSIDE ACCORDION */
+.proj-entries {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: var(--c-border);
+  border-top: 1px solid var(--c-border);
+}
+
+.proj-entry {
   background: var(--c-bg);
   display: grid;
-  grid-template-columns: 60px 1fr auto;
+  grid-template-columns: 52px 1fr auto;
   align-items: start;
-  gap: 0;
-  transition: background 0.3s;
+  transition: background 0.25s;
   position: relative;
   overflow: hidden;
 }
-.project-item:hover { background: var(--c-surface); }
+.proj-entry:hover { background: var(--c-surface); }
 
-.project-item::after {
+.proj-entry::after {
   content: '';
   position: absolute;
   left: 0; top: 0; bottom: 0;
-  width: 3px;
+  width: 2px;
   transform: scaleY(0);
   transform-origin: bottom;
-  transition: transform 0.4s var(--ease-out);
+  transition: transform 0.35s var(--ease-out);
 }
-.project-item:nth-child(1)::after { background: var(--c-violet); }
-.project-item:nth-child(2)::after { background: var(--c-teal); }
-.project-item:nth-child(3)::after { background: var(--c-gold); }
-.project-item:nth-child(4)::after { background: var(--c-rust); }
-.project-item:nth-child(5)::after { background: var(--c-teal-dim); }
-.project-item:hover::after { transform: scaleY(1); }
+.acc-panel:nth-child(1) .proj-entry::after { background: var(--c-rust); }
+.acc-panel:nth-child(2) .proj-entry::after { background: var(--c-teal); }
+.acc-panel:nth-child(3) .proj-entry::after { background: var(--c-violet); }
+.acc-panel:nth-child(4) .proj-entry::after { background: var(--c-gold); }
+.proj-entry:hover::after { transform: scaleY(1); }
 
-.proj-num {
-  padding: 40px 0 40px 32px;
+.proj-entry .proj-num {
+  padding: 32px 0 32px 28px;
   font-family: var(--font-display);
   font-size: 13px;
   color: var(--c-ink-3);
   letter-spacing: 0.05em;
 }
 
-.proj-body {
-  padding: 40px 40px 40px 0;
+.proj-entry .proj-body {
+  padding: 32px 32px 32px 0;
 }
 
-.proj-type {
+.proj-entry .proj-type {
   font-family: var(--font-mono);
   font-size: 10px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
-.project-item:nth-child(1) .proj-type { color: var(--c-violet); }
-.project-item:nth-child(2) .proj-type { color: var(--c-teal); }
-.project-item:nth-child(3) .proj-type { color: var(--c-gold); }
-.project-item:nth-child(4) .proj-type { color: var(--c-rust); }
-.project-item:nth-child(5) .proj-type { color: var(--c-teal-dim); }
-.proj-title {
+.acc-panel:nth-child(1) .proj-entry .proj-type { color: var(--c-rust); }
+.acc-panel:nth-child(2) .proj-entry .proj-type { color: var(--c-teal); }
+.acc-panel:nth-child(3) .proj-entry .proj-type { color: var(--c-violet); }
+.acc-panel:nth-child(4) .proj-entry .proj-type { color: var(--c-gold); }
+
+.proj-entry .proj-title {
   font-family: var(--font-display);
-  font-size: clamp(28px, 3.5vw, 46px);
+  font-size: clamp(22px, 2.8vw, 36px);
   line-height: 0.95;
   letter-spacing: 0.02em;
   color: var(--c-ink);
-  margin-bottom: 16px;
+  margin-bottom: 12px;
   transition: color 0.2s;
 }
-.project-item:nth-child(1):hover .proj-title { color: var(--c-violet); }
-.project-item:nth-child(2):hover .proj-title { color: var(--c-teal); }
-.project-item:nth-child(3):hover .proj-title { color: var(--c-gold); }
-.project-item:nth-child(4):hover .proj-title { color: var(--c-rust); }
-.project-item:nth-child(5):hover .proj-title { color: var(--c-teal-dim); }
+.acc-panel:nth-child(1) .proj-entry:hover .proj-title { color: var(--c-rust); }
+.acc-panel:nth-child(2) .proj-entry:hover .proj-title { color: var(--c-teal); }
+.acc-panel:nth-child(3) .proj-entry:hover .proj-title { color: var(--c-violet); }
+.acc-panel:nth-child(4) .proj-entry:hover .proj-title { color: var(--c-gold); }
 
-.proj-desc {
-  font-size: 14.5px;
+.proj-entry .proj-desc {
+  font-size: 13.5px;
   line-height: 1.85;
   color: var(--c-ink-2);
-  margin-bottom: 20px;
+  margin-bottom: 16px;
   max-width: 60ch;
   font-style: italic;
 }
 
-.proj-tags {
+.proj-entry .proj-tags {
   display: flex;
-  gap: 6px;
+  gap: 5px;
   flex-wrap: wrap;
 }
-.proj-tag {
+.proj-entry .proj-tag {
   font-family: var(--font-mono);
   font-size: 10px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  padding: 4px 10px;
+  padding: 3px 9px;
   border: 1px solid var(--c-border);
   color: var(--c-ink-3);
   border-radius: 2px;
   transition: border-color 0.2s, color 0.2s;
 }
-.project-item:nth-child(1):hover .proj-tag { border-color: rgba(139,111,212,0.3); color: var(--c-violet); }
-.project-item:nth-child(2):hover .proj-tag { border-color: rgba(61,184,168,0.3); color: var(--c-teal); }
-.project-item:nth-child(3):hover .proj-tag { border-color: rgba(212,168,67,0.3); color: var(--c-gold); }
-.project-item:nth-child(4):hover .proj-tag { border-color: rgb(192, 113, 9); color: var(--c-rust); }
-.project-item:nth-child(5):hover .proj-tag { border-color: var(--c-teal-dim); color: var(--c-teal-dim); }
+.acc-panel:nth-child(1) .proj-entry:hover .proj-tag { border-color: rgba(196,97,58,0.3); color: var(--c-rust); }
+.acc-panel:nth-child(2) .proj-entry:hover .proj-tag { border-color: rgba(61,184,168,0.3); color: var(--c-teal); }
+.acc-panel:nth-child(3) .proj-entry:hover .proj-tag { border-color: rgba(139,111,212,0.3); color: var(--c-violet); }
+.acc-panel:nth-child(4) .proj-entry:hover .proj-tag { border-color: rgba(212,168,67,0.3); color: var(--c-gold); }
 
-.proj-links {
-  padding: 40px 32px 40px 0;
+.proj-entry .proj-links {
+  padding: 32px 28px 32px 0;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
   align-items: flex-end;
   justify-content: flex-start;
 }
@@ -858,7 +974,7 @@ section { position: relative; }
   text-decoration: none;
   color: var(--c-ink-3);
   border: 1px solid var(--c-border);
-  padding: 9px 16px;
+  padding: 8px 14px;
   border-radius: 2px;
   white-space: nowrap;
   transition: all 0.22s;
@@ -867,10 +983,11 @@ section { position: relative; }
 .proj-link:hover { color: var(--c-ink); border-color: var(--c-border-h); }
 
 @media (max-width: 760px) {
-  .project-item { grid-template-columns: 1fr; }
-  .proj-num { padding: 32px 24px 0; }
-  .proj-body { padding: 16px 24px 24px; }
-  .proj-links { padding: 0 24px 32px; flex-direction: row; align-items: center; }
+  .proj-entry { grid-template-columns: 1fr; }
+  .proj-entry .proj-num { padding: 28px 20px 0; }
+  .proj-entry .proj-body { padding: 12px 20px 20px; }
+  .proj-entry .proj-links { padding: 0 20px 28px; flex-direction: row; flex-wrap: wrap; align-items: center; }
+  .acc-header { padding: 22px 20px; }
 }
 
 /* CONTACT */
@@ -1143,8 +1260,8 @@ footer {
       <span class="status-dot"></span>
       Available for remote work
     </div>
-      <p class="hero-tagline">“The most dangerous phrase in the language is, ‘We’ve always done it this way.'” – Grace Hopper</p>
-<p class="hero-tagline">“Simplicity is the soul of efficiency.” – Austin Freeman</p>
+      <p class="hero-tagline">"The most dangerous phrase in the language is, 'We've always done it this way.'" – Grace Hopper</p>
+<p class="hero-tagline">"Simplicity is the soul of efficiency." – Austin Freeman</p>
       <div class="hero-counter" aria-hidden="true">Tonie C.</div>
 
 <div class="hero-stats reveal">
@@ -1337,181 +1454,259 @@ footer {
     <p class="projects-meta reveal reveal-delay-2">made projects<br>shipped &amp; live</p>
   </div>
 
-  <div class="project-list">
+  <div class="accordion reveal reveal-delay-2">
 
-    <article class="project-item reveal">
-      <div class="proj-num">01</div>
-      <div class="proj-body">
-        <p class="proj-type">Micro-tasking Platform · Temporarily Closed</p>
-        <h3 class="proj-title">Survwin</h3>
-        <p class="proj-desc">A micro-task platform for surveys and small online jobs. Built the interface and connected it to a backend that handles users, tasks, and submissions.</p>
-        <div class="proj-tags">
-          <span class="proj-tag">React</span>
-          <span class="proj-tag">Node.js</span>
-          <span class="proj-tag">REST API</span>
-          <span class="proj-tag">Netlify</span>
-        </div>
+    <!-- NPM PACKAGES -->
+    <div class="acc-panel" id="acc-npm">
+  <button class="acc-header" aria-expanded="false" aria-controls="acc-npm-body" data-target="acc-npm">
+    <div class="acc-header-left">
+      <span class="acc-eco-badge">NPM</span>
+      <span class="acc-title">NPM Packages</span>
+    </div>
+    <span class="acc-count">2 packages</span>
+    <svg class="acc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+      <polyline points="6 9 12 15 18 9"/>
+    </svg>
+  </button>
+
+  <div class="acc-body" id="acc-npm-body" role="region">
+    <div class="acc-body-inner">
+
+      <div class="proj-entries">
+
+        <!-- discord-form-webhook -->
+        <article class="proj-entry">
+          <div class="proj-num">01</div>
+          <div class="proj-body">
+            <p class="proj-type">JavaScript Library · Web Automation Tool</p>
+            <h3 class="proj-title">discord-form-webhook</h3>
+            <p class="proj-desc">A lightweight JavaScript utility for sending HTML form data directly to Discord webhooks. Supports embeds and plain text with zero backend setup.</p>
+            <div class="proj-tags">
+              <span class="proj-tag">JavaScript</span>
+              <span class="proj-tag">Discord Webhooks</span>
+              <span class="proj-tag">Frontend</span>
+              <span class="proj-tag">NPM Package</span>
+            </div>
+          </div>
+          <div class="proj-links">
+            <a href="https://github.com/TonieC/discord-form-webhook" class="proj-link" target="_blank" rel="noopener noreferrer">
+              GitHub
+            </a>
+            <a href="https://www.npmjs.com/package/discord-form-webhook" class="proj-link" target="_blank" rel="noopener noreferrer">
+              📦 NPM
+            </a>
+          </div>
+        </article>
+
+        <!-- why-is-this-called -->
+        <article class="proj-entry">
+          <div class="proj-num">02</div>
+          <div class="proj-body">
+            <p class="proj-type">Debug Utility · Developer Tool</p>
+            <h3 class="proj-title">why-is-this-called</h3>
+            <p class="proj-desc">Tracks function callers and prints clean stack traces for debugging complex JavaScript execution flows.</p>
+            <div class="proj-tags">
+              <span class="proj-tag">JavaScript</span>
+              <span class="proj-tag">Debugging</span>
+              <span class="proj-tag">Stack Trace</span>
+              <span class="proj-tag">NPM Package</span>
+            </div>
+          </div>
+          <div class="proj-links">
+            <a href="https://github.com/TonieC/why-is-this-called" class="proj-link" target="_blank" rel="noopener noreferrer">
+              GitHub
+            </a>
+            <a href="https://www.npmjs.com/package/why-is-this-called" class="proj-link" target="_blank" rel="noopener noreferrer">
+              📦 NPM
+            </a>
+          </div>
+        </article>
+
       </div>
-      <div class="proj-links">
-        <a href="https://survwin.netlify.app" class="proj-link" target="_blank" rel="noopener noreferrer">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-          Live Demo
-        </a>
-      </div>
-    </article>
 
-    <article class="project-item reveal reveal-delay-1">
-      <div class="proj-num">02</div>
-      <div class="proj-body">
-        <p class="proj-type">Open Source Tool · Self-Hosted</p>
-        <h3 class="proj-title">Webhook Studio</h3>
-        <p class="proj-desc">A self-hosted Discord webhook sender with a full embed builder. Supports plain text and rich embeds with live preview, image support, timestamps, and strict webhook validation.</p>
-        <div class="proj-tags">
-          <span class="proj-tag">Node.js</span>
-          <span class="proj-tag">Express</span>
-          <span class="proj-tag">JavaScript</span>
-          <span class="proj-tag">Discord API</span>
-        </div>
-      </div>
-      <div class="proj-links">
-        <a href="https://github.com/TonieC/Self-Hosted-Discord-Webhook-Sender" class="proj-link" target="_blank" rel="noopener noreferrer">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
-          GitHub
-        </a>
-        <a href="https://github.com/TonieC/Self-Hosted-Discord-Webhook-Sender#readme" class="proj-link" target="_blank" rel="noopener noreferrer">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-          Docs
-        </a>
-      </div>
-    </article>
-
-   <article class="project-item reveal reveal-delay-1">
-  <div class="proj-num">03</div>
-
-  <div class="proj-body">
-    <p class="proj-type">Open Source Tool · Automation Framework</p>
-
-    <h3 class="proj-title">tflows.py</h3>
-    <p class="proj-desc">
-      A lightweight automation and Discord bot framework with a simple scripting engine. 
-      Build bots using readable command syntax like <code>send</code> and <code>log</code>, powered by an extensible function system and async execution engine.
-    </p>
-    <div class="proj-tags">
-      <span class="proj-tag">Python</span>
-      <span class="proj-tag">Discord API</span>
-      <span class="proj-tag">AsyncIO</span>
-      <span class="proj-tag">Open Source</span>
     </div>
   </div>
-  <div class="proj-links">
-  <a href="https://github.com/TonieC/tflows" class="proj-link" target="_blank" rel="noopener noreferrer">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
-    </svg>
-    GitHub
-  </a>
-
-  <a href="https://pypi.org/project/tflows/" class="proj-link" target="_blank" rel="noopener noreferrer">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-      <polyline points="14 2 14 8 20 8"/>
-      <line x1="16" y1="13" x2="8" y2="13"/>
-      <line x1="16" y1="17" x2="8" y2="17"/>
-      <polyline points="10 9 9 9 8 9"/>
-    </svg>
-    PyPI
-  </a>
-
-  <a href="/tflows" class="proj-link" target="_blank" rel="noopener noreferrer">
-    📄 Documentation
-  </a>
 </div>
-</article>
 
-<article class="project-item reveal reveal-delay-1">
-  <div class="proj-num">04</div>
-
-  <div class="proj-body">
-    <p class="proj-type">JavaScript Library · Web Automation Tool</p>
-
-    <h3 class="proj-title">discord form webhook sender</h3>
-
-    <p class="proj-desc">
-      A lightweight JavaScript utility for sending HTML form data directly to Discord webhooks.
-      Supports both plain text and embed messages with simple configuration and zero backend required.
-      Designed for fast integration into any frontend project.
-    </p>
-
-    <div class="proj-tags">
-      <span class="proj-tag">JavaScript</span>
-      <span class="proj-tag">Discord Webhooks</span>
-      <span class="proj-tag">Frontend</span>
-      <span class="proj-tag">NPM Package</span>
-    </div>
-  </div>
-
-  <div class="proj-links">
-    <a href="https://github.com/TonieC/discord-form-webhook" class="proj-link" target="_blank" rel="noopener noreferrer">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
-      </svg>
-      GitHub
-    </a>
-
-    <a href="https://www.npmjs.com/package/discord-form-webhook" class="proj-link" target="_blank" rel="noopener noreferrer">
-      📦 NPM
-    </a>
-  </div>
-</article>
-
-    <article class="project-item reveal reveal-delay-2">
-      <div class="proj-num">05</div>
-      <div class="proj-body">
-        <p class="proj-type">Frontend Showcase</p>
-        <h3 class="proj-title">UI &amp; Web Samples</h3>
-        <p class="proj-desc">Small frontend builds focused on layout, components, and basic interaction using only HTML, CSS, and JavaScript.</p>
-        <div class="proj-tags">
-          <span class="proj-tag">HTML5</span>
-          <span class="proj-tag">CSS3</span>
-          <span class="proj-tag">JavaScript</span>
-          <span class="proj-tag">Responsive</span>
+    <!-- PYPI PACKAGES -->
+    <div class="acc-panel" id="acc-pypi">
+      <button class="acc-header" aria-expanded="false" aria-controls="acc-pypi-body" data-target="acc-pypi">
+        <div class="acc-header-left">
+          <span class="acc-eco-badge">PyPI</span>
+          <span class="acc-title">PyPI Packages</span>
+        </div>
+        <span class="acc-count">1 package</span>
+        <svg class="acc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <polyline points="6 9 12 15 18 9"/>
+        </svg>
+      </button>
+      <div class="acc-body" id="acc-pypi-body" role="region">
+        <div class="acc-body-inner">
+          <div class="proj-entries">
+            <article class="proj-entry">
+              <div class="proj-num">01</div>
+              <div class="proj-body">
+                <p class="proj-type">Open Source Tool · Automation Framework</p>
+                <h3 class="proj-title">tflows.py</h3>
+                <p class="proj-desc">A lightweight automation and Discord bot framework with a simple scripting engine. Build bots using readable command syntax like <code>send</code> and <code>log</code>, powered by an extensible function system and async execution engine.</p>
+                <div class="proj-tags">
+                  <span class="proj-tag">Python</span>
+                  <span class="proj-tag">Discord API</span>
+                  <span class="proj-tag">AsyncIO</span>
+                  <span class="proj-tag">Open Source</span>
+                </div>
+              </div>
+              <div class="proj-links">
+                <a href="https://github.com/TonieC/tflows" class="proj-link" target="_blank" rel="noopener noreferrer">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+                  GitHub
+                </a>
+                <a href="https://pypi.org/project/tflows/" class="proj-link" target="_blank" rel="noopener noreferrer">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                  PyPI
+                </a>
+                <a href="/tflows" class="proj-link" target="_blank" rel="noopener noreferrer">
+                  📄 Documentation
+                </a>
+              </div>
+            </article>
+          </div>
         </div>
       </div>
-      <div class="proj-links">
-        <a href="/samples" class="proj-link" target="_blank" rel="noopener noreferrer">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-          View Samples
-        </a>
-      </div>
-    </article>
+    </div>
 
-  </div>
+    <!-- GITHUB / OPEN SOURCE TOOLS -->
+    <div class="acc-panel" id="acc-oss">
+      <button class="acc-header" aria-expanded="false" aria-controls="acc-oss-body" data-target="acc-oss">
+        <div class="acc-header-left">
+          <span class="acc-eco-badge">GitHub</span>
+          <span class="acc-title">Open Source Tools</span>
+        </div>
+        <span class="acc-count">1 tool</span>
+        <svg class="acc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <polyline points="6 9 12 15 18 9"/>
+        </svg>
+      </button>
+      <div class="acc-body" id="acc-oss-body" role="region">
+        <div class="acc-body-inner">
+          <div class="proj-entries">
+            <article class="proj-entry">
+              <div class="proj-num">01</div>
+              <div class="proj-body">
+                <p class="proj-type">Open Source Tool · Self-Hosted</p>
+                <h3 class="proj-title">Webhook Studio</h3>
+                <p class="proj-desc">A self-hosted Discord webhook sender with a full embed builder. Supports plain text and rich embeds with live preview, image support, timestamps, and strict webhook validation.</p>
+                <div class="proj-tags">
+                  <span class="proj-tag">Node.js</span>
+                  <span class="proj-tag">Express</span>
+                  <span class="proj-tag">JavaScript</span>
+                  <span class="proj-tag">Discord API</span>
+                </div>
+              </div>
+              <div class="proj-links">
+                <a href="https://github.com/TonieC/Self-Hosted-Discord-Webhook-Sender" class="proj-link" target="_blank" rel="noopener noreferrer">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+                  GitHub
+                </a>
+                <a href="https://github.com/TonieC/Self-Hosted-Discord-Webhook-Sender#readme" class="proj-link" target="_blank" rel="noopener noreferrer">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                  Docs
+                </a>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WEB PROJECTS / OTHER -->
+    <div class="acc-panel" id="acc-web">
+      <button class="acc-header" aria-expanded="false" aria-controls="acc-web-body" data-target="acc-web">
+        <div class="acc-header-left">
+          <span class="acc-eco-badge">Web</span>
+          <span class="acc-title">Web Projects &amp; Other</span>
+        </div>
+        <span class="acc-count">2 projects</span>
+        <svg class="acc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <polyline points="6 9 12 15 18 9"/>
+        </svg>
+      </button>
+      <div class="acc-body" id="acc-web-body" role="region">
+        <div class="acc-body-inner">
+          <div class="proj-entries">
+            <article class="proj-entry">
+              <div class="proj-num">01</div>
+              <div class="proj-body">
+                <p class="proj-type">Micro-tasking Platform · Temporarily Closed</p>
+                <h3 class="proj-title">Survwin</h3>
+                <p class="proj-desc">A micro-task platform for surveys and small online jobs. Built the interface and connected it to a backend that handles users, tasks, and submissions.</p>
+                <div class="proj-tags">
+                  <span class="proj-tag">React</span>
+                  <span class="proj-tag">Node.js</span>
+                  <span class="proj-tag">REST API</span>
+                  <span class="proj-tag">Netlify</span>
+                </div>
+              </div>
+              <div class="proj-links">
+                <a href="https://survwin.netlify.app" class="proj-link" target="_blank" rel="noopener noreferrer">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                  Live Demo
+                </a>
+              </div>
+            </article>
+
+            <article class="proj-entry">
+              <div class="proj-num">02</div>
+              <div class="proj-body">
+                <p class="proj-type">Frontend Showcase</p>
+                <h3 class="proj-title">UI &amp; Web Samples</h3>
+                <p class="proj-desc">Small frontend builds focused on layout, components, and basic interaction using only HTML, CSS, and JavaScript.</p>
+                <div class="proj-tags">
+                  <span class="proj-tag">HTML5</span>
+                  <span class="proj-tag">CSS3</span>
+                  <span class="proj-tag">JavaScript</span>
+                  <span class="proj-tag">Responsive</span>
+                </div>
+              </div>
+              <div class="proj-links">
+                <a href="/samples" class="proj-link" target="_blank" rel="noopener noreferrer">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                  View Samples
+                </a>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /accordion -->
 </section>
+
 <!-- CONTACT LEAD MARQUEE -->
 <section class="skills-marquee" aria-hidden="true">
   <div class="marquee-wrap">
     <div class="marquee-inner">
       <span>Available for freelance <em>·</em></span>
       <span>Open to collaborations <em>·</em></span>
-      <span>Let’s build something <em>·</em></span>
-      <span>Got an idea? Let’s talk <em>·</em></span>
+      <span>Let's build something <em>·</em></span>
+      <span>Got an idea? Let's talk <em>·</em></span>
       <span>Open to remote work <em>·</em></span>
       <span>Fast responses <em>·</em></span>
-      <span>Let’s work together <em>·</em></span>
+      <span>Let's work together <em>·</em></span>
       <span>Turning ideas into reality <em>·</em></span>
-
-      <!-- duplicate for seamless loop -->
       <span>Available for freelance <em>·</em></span>
       <span>Open to collaborations <em>·</em></span>
-      <span>Let’s build something <em>·</em></span>
-      <span>Got an idea? Let’s talk <em>·</em></span>
+      <span>Let's build something <em>·</em></span>
+      <span>Got an idea? Let's talk <em>·</em></span>
       <span>Open to remote work <em>·</em></span>
       <span>Fast responses <em>·</em></span>
-      <span>Let’s work together <em>·</em></span>
+      <span>Let's work together <em>·</em></span>
       <span>Turning ideas into reality <em>·</em></span>
     </div>
   </div>
 </section>
+
 <!-- CONTACT -->
 <section id="contact">
   <div class="contact-left">
@@ -1644,6 +1839,30 @@ footer {
   els.forEach(el => obs.observe(el));
 })();
 
+/* ACCORDION */
+(function() {
+  const headers = document.querySelectorAll('.acc-header');
+  headers.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const panelId = btn.getAttribute('data-target');
+      const panel = document.getElementById(panelId);
+      const isOpen = panel.classList.contains('open');
+
+      // close all
+      document.querySelectorAll('.acc-panel').forEach(p => {
+        p.classList.remove('open');
+        p.querySelector('.acc-header').setAttribute('aria-expanded', 'false');
+      });
+
+      // open clicked if it was closed
+      if (!isOpen) {
+        panel.classList.add('open');
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+})();
+
 /* COPY EMAIL */
 (function() {
   const btn = document.getElementById('copy-btn');
@@ -1666,6 +1885,8 @@ footer {
 
 /* FOOTER YEAR */
 document.getElementById('yr').textContent = new Date().getFullYear();
+
+document.body.style.overflow = isOpen ? "hidden" : "";
 </script>
 </body>
 </html>
