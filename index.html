@@ -72,7 +72,6 @@ body {
   overflow-x: hidden;
   scrollbar-width: none;
   cursor: default;
-  padding-top: 80px;
 }
 body::-webkit-scrollbar { display: none; }
 
@@ -83,7 +82,7 @@ body::before {
   content: '';
   position: fixed;
   inset: 0;
-  z-index: 1000;
+  z-index: 0;
   pointer-events: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
   opacity: 0.45;
@@ -100,6 +99,7 @@ nav {
   padding: 18px var(--pad);
     border-bottom: none;
   transition: border-color 0.4s, background 0.4s;
+  height: 80px;
 }
 nav.scrolled {
   background: rgba(13,12,11,0.88);
@@ -179,7 +179,7 @@ nav.scrolled::after {
   padding: 4px;
   background: none;
   border: none;
-  z-index: 1200;
+  z-index: 1300;
 }
 .nav-burger span {
   display: block;
@@ -194,23 +194,27 @@ nav.scrolled::after {
 @media (max-width: 680px) {
   .nav-links, .nav-hire { display: none; }
   .nav-links.open {
-    display: flex;
-    flex-direction: column;
-    position: fixed;
-    top: 70px; left: 0; right: 0; bottom: 0;
-    background: var(--c-bg);
-    align-items: center;
-    justify-content: center;
-    gap: 40px;
-    z-index: 999;
-  }
+  position: fixed;
+  inset: 0;
+  top: 70px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(13,12,11,0.98); /* slightly solid */
+  backdrop-filter: blur(6px); /* optional but cleaner */
+
+  opacity: 1;
+}
   .nav-links.open a { font-size: 14px; }
-  .nav-burger { display: flex; z-index: 910; }
+  .nav-burger { display: flex; z-index: 1300; }
 }
 
 /* HERO */
 #hero {
-  min-height: calc(100vh - 80px);
+  min-height: 100vh;
   display: grid;
   grid-template-columns: 1fr 1fr;
   border-bottom: 1px solid var(--c-border);
@@ -1275,6 +1279,8 @@ footer {
   }
 }
 
+
+
 /* SVG ICONS INLINE */
 .icon { display: inline-flex; }
 </style>
@@ -1878,8 +1884,8 @@ footer {
 
     <div class="contact-body reveal reveal-delay-2">
       <p>
-        I’m open to junior and entry-level roles, internships, and project-based work where I can contribute to real products and continue growing as a developer. I’m comfortable working remotely and across the full stack.
-      </p>
+  I’m looking for junior or entry-level roles, internships, and project-based opportunities where I can contribute to real-world products while continuing to grow as a developer. I’m comfortable working remotely and across the full stack.
+</p>
 
       <div class="contact-details">
 
@@ -2096,6 +2102,17 @@ footer {
 document.getElementById('yr').textContent = new Date().getFullYear();
 
 document.body.style.overflow = isOpen ? "hidden" : "";
+
+
+const burger = document.getElementById("burger");
+const navLinks = document.getElementById("nav-links");
+const nav = document.getElementById("nav");
+
+burger.addEventListener("click", () => {
+  burger.classList.toggle("open");
+  navLinks.classList.toggle("open");
+  nav.classList.toggle("open");
+});
 </script>
 </body>
 </html>
