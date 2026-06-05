@@ -1283,6 +1283,16 @@ footer {
 
 /* SVG ICONS INLINE */
 .icon { display: inline-flex; }
+
+.contact-btn-wrapper {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.contact-btn-wrapper .btn {
+  width: auto;
+}
 </style>
 </head>
 <body>
@@ -1951,6 +1961,7 @@ footer {
 
       <div class="contact-actions">
 
+ <div class="contact-btn-wrapper">
   <a href="images/Cadizal Resume.pdf.pdf" class="btn btn-primary" download>
     <i class="fa-solid fa-file-arrow-down"></i>
     <span>Download Resume</span>
@@ -1980,7 +1991,6 @@ footer {
     <i class="fa-brands fa-npm"></i>
     <span>NPM</span>
   </a>
-
 </div>
 
       <div class="contact-note">
