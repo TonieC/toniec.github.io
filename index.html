@@ -1145,6 +1145,145 @@ border-color: color-mix(in srgb, var(--accent) 35%, var(--c-border));
   .contact-large-text { display: none; }
 }
 
+/* TESTIMONIAL */
+#testimonial {
+  padding: clamp(80px, 12vw, 140px) var(--pad);
+  border-bottom: 1px solid var(--c-border);
+  display: flex;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* subtle background glow */
+#testimonial::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 20% 20%,
+    rgba(255, 255, 255, 0.04),
+    transparent 40%
+  );
+  pointer-events: none;
+}
+
+.testimonial-wrap {
+  width: 100%;
+  max-width: 1100px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+#testimonial .s-label {
+  justify-content: flex-start;
+  opacity: 0.9;
+  letter-spacing: 0.12em;
+}
+
+/* 3 SIDE-BY-SIDE */
+.testimonial-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  align-items: stretch;
+}
+
+/* card */
+.contact-testimonial {
+  padding: 26px 24px;
+  border: 1px solid var(--c-border);
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+}
+
+/* top accent line */
+.contact-testimonial::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background: var(--c-ink);
+  transition: width 0.35s ease;
+}
+
+/* hover interaction */
+.contact-testimonial:hover {
+  transform: translateY(-6px);
+  border-color: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.contact-testimonial:hover::before {
+  width: 100%;
+}
+
+/* quote */
+.testimonial-quote {
+  font-family: var(--font-display);
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--c-ink);
+  margin-bottom: 18px;
+  letter-spacing: 0.01em;
+  position: relative;
+}
+
+/* quote mark accent */
+.testimonial-quote::before {
+  content: "“";
+  position: absolute;
+  left: -10px;
+  top: -10px;
+  font-size: 28px;
+  opacity: 0.25;
+}
+
+/* author */
+.testimonial-author {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding-top: 12px;
+  border-top: 1px solid var(--c-border);
+}
+
+.author-name {
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--c-ink);
+}
+
+.author-role {
+  font-size: 12px;
+  color: var(--c-ink-3);
+  font-style: italic;
+}
+
+/* MOBILE */
+@media (max-width: 900px) {
+  .testimonial-row {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-testimonial {
+    padding: 22px;
+  }
+
+  .testimonial-quote {
+    font-size: 16px;
+  }
+}
+
 /* FOOTER */
 footer {
   padding: 32px var(--pad);
@@ -1305,6 +1444,7 @@ footer {
     <li><a href="#about">About</a></li>
     <li><a href="#skills">Skills</a></li>
     <li><a href="#projects">Projects</a></li>
+    <li><a href="#testimonial">Testimonials</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
   <a href="/#contact" class="nav-hire">Hire Me</a>
@@ -1887,6 +2027,47 @@ footer {
   </div>
 </section>
 
+
+<section id="testimonial">
+  <div class="testimonial-wrap">
+    <div class="s-label reveal" data-num="05">Feedback</div>
+
+    <div class="testimonial-row">
+
+      <div class="contact-testimonial reveal reveal-delay-1">
+        <p class="testimonial-quote">
+          “i wasnt expecting much at first but this came out really clean. solid execution overall”
+        </p>
+        <div class="testimonial-author">
+          <span class="author-name">Anonymous</span>
+          <span class="author-role">Project Client</span>
+        </div>
+      </div>
+
+      <div class="contact-testimonial reveal reveal-delay-2">
+        <p class="testimonial-quote">
+          “turned out better than i expected, everything feels smooth and well structured. holds up on a second look”
+        </p>
+        <div class="testimonial-author">
+          <span class="author-name">M. Reyes</span>
+          <span class="author-role">Project Client</span>
+        </div>
+      </div>
+
+    <div class="contact-testimonial reveal reveal-delay-3">
+  <p class="testimonial-quote">
+    “price was honestly way lower than expected so i didnt think much of it at first, but the effort and output really surprised me. not perfect, but it gets the job done really well”
+  </p>
+  <div class="testimonial-author">
+    <span class="author-name">Anonymous</span>
+    <span class="author-role">Project Client</span>
+  </div>
+</div>
+
+    </div>
+  </div>
+</section>
+
 <!-- CONTACT LEAD MARQUEE -->
 <section class="skills-marquee" aria-hidden="true">
   <div class="marquee-wrap">
@@ -1916,7 +2097,7 @@ footer {
   <div class="contact-left">
 
     <div>
-      <div class="s-label reveal" data-num="05">Contact</div>
+      <div class="s-label reveal" data-num="06">Contact</div>
       <h2 class="contact-heading reveal reveal-delay-1">
         Get in<em>Touch</em>
       </h2>
@@ -1950,7 +2131,7 @@ footer {
 
   <div class="contact-right">
 
-    <div class="s-label reveal" data-num="06">Links</div>
+    <div class="s-label reveal" data-num="07">Links</div>
 
     <div class="contact-large-text" aria-hidden="true">
       OPEN<br>TO<br>WORK
