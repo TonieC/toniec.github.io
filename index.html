@@ -25,9 +25,9 @@
   --ink-3:       rgba(232,230,225,0.28);
   --ink-4:       rgba(232,230,225,0.12);
 
-  --accent:      #7b6fcd;       /* desaturated violet */
-  --accent-2:    #5ba8a0;       /* muted teal */
-  --accent-3:    #c4a97d;       /* warm tan */
+  --accent:      #7b6fcd;
+  --accent-2:    #5ba8a0;
+  --accent-3:    #c4a97d;
   --accent-dim:  rgba(123,111,205,0.12);
 
   --ff-display:  'Syne', sans-serif;
@@ -55,17 +55,16 @@ body {
 }
 body::-webkit-scrollbar { width: 4px; }
 body::-webkit-scrollbar-thumb { background: var(--surface-2); border-radius: 2px; }
-
 ::selection { background: var(--accent); color: #fff; }
 
-/* ─── LAYOUT: TWO-COLUMN PARALLAX ───────────────────── */
+/* ─── LAYOUT ─────────────────────────────────────────── */
 .site-wrapper {
   display: grid;
   grid-template-columns: var(--sidebar-w) 1fr;
   min-height: 100vh;
 }
 
-/* ─── SIDEBAR (sticky left) ──────────────────────────── */
+/* ─── SIDEBAR ─────────────────────────────────────────── */
 .sidebar {
   position: sticky;
   top: 0;
@@ -89,29 +88,24 @@ body::-webkit-scrollbar-thumb { background: var(--surface-2); border-radius: 2px
 }
 .sidebar-logo span { color: var(--accent); }
 
-/* progress tracker — the signature element */
+/* progress tracker */
 .sidebar-nav {
   display: flex;
   flex-direction: column;
   gap: 0;
   position: relative;
 }
-
 .sidebar-nav::before {
   content: '';
   position: absolute;
-  left: 7px;
-  top: 8px;
-  bottom: 8px;
+  left: 7px; top: 8px; bottom: 8px;
   width: 1px;
   background: var(--border);
 }
-
 .sidebar-nav::after {
   content: '';
   position: absolute;
-  left: 7px;
-  top: 8px;
+  left: 7px; top: 8px;
   width: 1px;
   background: var(--accent);
   height: var(--progress-h, 0%);
@@ -127,10 +121,8 @@ body::-webkit-scrollbar-thumb { background: var(--surface-2); border-radius: 2px
   position: relative;
   cursor: pointer;
 }
-
 .nav-dot {
-  width: 14px;
-  height: 14px;
+  width: 14px; height: 14px;
   border-radius: 50%;
   border: 1px solid var(--border-h);
   background: var(--bg);
@@ -145,7 +137,6 @@ body::-webkit-scrollbar-thumb { background: var(--surface-2); border-radius: 2px
   border-color: var(--accent);
   transform: scale(1.2);
 }
-
 .nav-label {
   font-family: var(--ff-mono);
   font-size: 10.5px;
@@ -157,7 +148,7 @@ body::-webkit-scrollbar-thumb { background: var(--surface-2); border-radius: 2px
 .nav-item.active .nav-label,
 .nav-item:hover .nav-label { color: var(--ink-2); }
 
-/* section context display */
+/* section context */
 .sidebar-context {
   display: flex;
   flex-direction: column;
@@ -180,8 +171,7 @@ body::-webkit-scrollbar-thumb { background: var(--surface-2); border-radius: 2px
   transition: opacity 0.3s var(--ease);
 }
 .ctx-line {
-  width: 24px;
-  height: 1px;
+  width: 24px; height: 1px;
   background: var(--accent);
   margin-top: 4px;
 }
@@ -194,22 +184,12 @@ body::-webkit-scrollbar-thumb { background: var(--surface-2); border-radius: 2px
   display: flex;
   align-items: center;
   gap: 8px;
-}
-.status-dot {
-  width: 5px; height: 5px;
-  border-radius: 50%;
-  background: var(--accent-2);
-  animation: pulse 2.5s ease infinite;
-}
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0.4; }
+  line-height: 1.6;
 }
 
-/* ─── MAIN CONTENT ───────────────────────────────────── */
-.main-content {
-  min-width: 0;
-}
+
+/* ─── MAIN ───────────────────────────────────────────── */
+.main-content { min-width: 0; }
 
 /* ─── HERO ───────────────────────────────────────────── */
 #hero {
@@ -222,7 +202,6 @@ body::-webkit-scrollbar-thumb { background: var(--surface-2); border-radius: 2px
   position: relative;
   overflow: hidden;
 }
-
 .hero-eyebrow {
   font-family: var(--ff-mono);
   font-size: 10.5px;
@@ -242,7 +221,6 @@ body::-webkit-scrollbar-thumb { background: var(--surface-2); border-radius: 2px
   background: var(--accent);
   opacity: 0.6;
 }
-
 .hero-name {
   font-family: var(--ff-display);
   font-weight: 800;
@@ -257,7 +235,6 @@ body::-webkit-scrollbar-thumb { background: var(--surface-2); border-radius: 2px
   -webkit-text-stroke: 1.5px rgba(232,230,225,0.22);
   color: transparent;
 }
-
 .hero-tagline {
   margin-top: 36px;
   max-width: 48ch;
@@ -268,7 +245,6 @@ body::-webkit-scrollbar-thumb { background: var(--surface-2); border-radius: 2px
   opacity: 0;
   animation: rise 0.6s var(--ease-out) 0.7s forwards;
 }
-
 .hero-cta {
   margin-top: 48px;
   display: flex;
@@ -277,11 +253,52 @@ body::-webkit-scrollbar-thumb { background: var(--surface-2); border-radius: 2px
   opacity: 0;
   animation: rise 0.6s var(--ease-out) 0.9s forwards;
 }
+/* NEW: quick trust anchors in hero */
+.hero-trust {
+  margin-top: 40px;
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: rise 0.6s var(--ease-out) 1.1s forwards;
+}
+.hero-trust-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.hero-trust-item1 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.hero-trust-item::before {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--accent-2);
+  opacity: 0.7;
+}
+.hero-trust-item1::before {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--accent-2);
+  opacity: 0.7;
+}
 
 .hero-bg-text {
   position: absolute;
-  right: -20px;
-  bottom: -30px;
+  right: -20px; bottom: -30px;
   font-family: var(--ff-display);
   font-weight: 800;
   font-size: clamp(100px, 18vw, 220px);
@@ -292,7 +309,6 @@ body::-webkit-scrollbar-thumb { background: var(--surface-2); border-radius: 2px
   user-select: none;
   letter-spacing: -0.02em;
 }
-
 @keyframes rise {
   from { opacity: 0; transform: translateY(16px); }
   to   { opacity: 1; transform: none; }
@@ -315,19 +331,9 @@ body::-webkit-scrollbar-thumb { background: var(--surface-2); border-radius: 2px
   transition: background 0.2s var(--ease), color 0.2s, border-color 0.2s, transform 0.15s;
 }
 .btn:active { transform: translateY(1px); }
-
-.btn-primary {
-  background: var(--accent);
-  color: #fff;
-  border-color: var(--accent);
-}
+.btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
 .btn-primary:hover { background: #6a5fb8; border-color: #6a5fb8; }
-
-.btn-ghost {
-  background: transparent;
-  color: var(--ink-2);
-  border-color: var(--border-h);
-}
+.btn-ghost { background: transparent; color: var(--ink-2); border-color: var(--border-h); }
 .btn-ghost:hover { border-color: var(--ink-3); color: var(--ink); background: var(--surface); }
 
 /* ─── SECTION BASE ────────────────────────────────────── */
@@ -336,7 +342,6 @@ body::-webkit-scrollbar-thumb { background: var(--surface-2); border-radius: 2px
   border-bottom: 1px solid var(--border);
   scroll-margin-top: 0;
 }
-
 .section-label {
   font-family: var(--ff-mono);
   font-size: 9.5px;
@@ -356,7 +361,7 @@ body::-webkit-scrollbar-thumb { background: var(--surface-2); border-radius: 2px
   background: var(--border);
 }
 
-/* ─── REVEAL ANIMATION ────────────────────────────────── */
+/* ─── REVEAL ──────────────────────────────────────────── */
 .reveal {
   opacity: 0;
   transform: translateY(20px);
@@ -376,7 +381,6 @@ body::-webkit-scrollbar-thumb { background: var(--surface-2); border-radius: 2px
   gap: 60px;
   align-items: start;
 }
-
 .about-heading {
   font-family: var(--ff-display);
   font-weight: 700;
@@ -389,7 +393,6 @@ body::-webkit-scrollbar-thumb { background: var(--surface-2); border-radius: 2px
   color: var(--ink-3);
   display: block;
 }
-
 .about-body p {
   font-size: 15px;
   line-height: 1.9;
@@ -399,7 +402,6 @@ body::-webkit-scrollbar-thumb { background: var(--surface-2); border-radius: 2px
 }
 .about-body p:last-child { margin-bottom: 0; }
 .about-body strong { color: var(--ink); font-weight: 500; }
-
 .about-goals {
   display: flex;
   flex-direction: column;
@@ -432,7 +434,69 @@ body::-webkit-scrollbar-thumb { background: var(--surface-2); border-radius: 2px
 }
 .goal-text strong { color: var(--ink); font-weight: 500; }
 
-/* ─── SKILLS / INTERACTIVE MARQUEE ───────────────────── */
+/* ─── NEW: TESTIMONIAL / TRUST SECTION ───────────────── */
+#trust {
+  padding: clamp(48px, 6vw, 80px) var(--pad);
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+.trust-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+.trust-card {
+  background: var(--surface);
+  padding: 28px 24px;
+  transition: background 0.2s;
+  position: relative;
+}
+.trust-card:hover { background: var(--surface-2); }
+.trust-card::before {
+  content: '"';
+  font-family: var(--ff-display);
+  font-size: 48px;
+  font-weight: 800;
+  color: var(--accent);
+  opacity: 0.25;
+  position: absolute;
+  top: 12px; left: 18px;
+  line-height: 1;
+}
+.trust-quote {
+  font-size: 13.5px;
+  line-height: 1.75;
+  color: var(--ink-2);
+  font-weight: 300;
+  margin-bottom: 16px;
+  padding-top: 24px;
+}
+.trust-author {
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.trust-author::before {
+  content: '';
+  width: 16px; height: 1px;
+  background: var(--accent);
+  opacity: 0.5;
+}
+.trust-placeholder {
+  font-size: 12.5px;
+  color: var(--ink-3);
+  font-style: italic;
+  font-family: var(--ff-mono);
+}
+
+/* ─── SKILLS ──────────────────────────────────────────── */
 #skills .section-heading {
   font-family: var(--ff-display);
   font-weight: 700;
@@ -446,8 +510,6 @@ body::-webkit-scrollbar-thumb { background: var(--surface-2); border-radius: 2px
   font-weight: 300;
   max-width: 56ch;
 }
-
-/* interactive skill grid */
 .skill-groups {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -455,7 +517,6 @@ body::-webkit-scrollbar-thumb { background: var(--surface-2); border-radius: 2px
   background: var(--border);
   border: 1px solid var(--border);
 }
-
 .skill-group {
   background: var(--bg);
   padding: 32px 28px;
@@ -463,7 +524,6 @@ body::-webkit-scrollbar-thumb { background: var(--surface-2); border-radius: 2px
   transition: background 0.25s;
 }
 .skill-group:hover { background: var(--surface); }
-
 .skill-group-label {
   font-family: var(--ff-mono);
   font-size: 9.5px;
@@ -478,13 +538,11 @@ body::-webkit-scrollbar-thumb { background: var(--surface-2); border-radius: 2px
 .skill-group:nth-child(2) .skill-group-label { color: var(--accent-2); }
 .skill-group:nth-child(3) .skill-group-label { color: var(--accent-3); }
 .skill-group:nth-child(4) .skill-group-label { color: var(--ink-2); }
-
 .skill-chips {
   display: flex;
   flex-wrap: wrap;
   gap: 7px;
 }
-
 .skill-chip {
   font-family: var(--ff-mono);
   font-size: 11px;
@@ -495,7 +553,6 @@ body::-webkit-scrollbar-thumb { background: var(--surface-2); border-radius: 2px
   border-radius: 3px;
   cursor: default;
   transition: border-color 0.2s, color 0.2s, background 0.2s, transform 0.2s var(--ease-out);
-  position: relative;
 }
 .skill-chip:hover {
   border-color: var(--border-h);
@@ -504,7 +561,21 @@ body::-webkit-scrollbar-thumb { background: var(--surface-2); border-radius: 2px
   transform: translateY(-2px);
 }
 
-/* animated skill bar */
+/* NEW: proficiency note per skill group */
+.skill-note {
+  margin-top: 16px;
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--ink-3);
+  font-weight: 300;
+  border-left: 2px solid var(--border);
+  padding-left: 12px;
+}
+.skill-group:nth-child(1) .skill-note { border-color: rgba(123,111,205,0.3); }
+.skill-group:nth-child(2) .skill-note { border-color: rgba(91,168,160,0.3); }
+.skill-group:nth-child(3) .skill-note { border-color: rgba(196,169,125,0.3); }
+.skill-group:nth-child(4) .skill-note { border-color: rgba(232,230,225,0.12); }
+
 .skill-bar {
   margin-top: 20px;
   height: 1px;
@@ -541,8 +612,6 @@ body::-webkit-scrollbar-thumb { background: var(--surface-2); border-radius: 2px
   margin-bottom: 52px;
   font-weight: 300;
 }
-
-/* featured project — tflows.py */
 .project-featured {
   border: 1px solid var(--border);
   position: relative;
@@ -551,7 +620,6 @@ body::-webkit-scrollbar-thumb { background: var(--surface-2); border-radius: 2px
   margin-bottom: 1px;
 }
 .project-featured:hover { border-color: var(--border-h); }
-
 .project-featured::before {
   content: '';
   position: absolute;
@@ -559,13 +627,11 @@ body::-webkit-scrollbar-thumb { background: var(--surface-2); border-radius: 2px
   height: 2px;
   background: linear-gradient(90deg, var(--accent), var(--accent-2));
 }
-
 .project-featured-inner {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0;
 }
-
 .project-info {
   padding: 40px 36px;
   border-right: 1px solid var(--border);
@@ -574,7 +640,6 @@ body::-webkit-scrollbar-thumb { background: var(--surface-2); border-radius: 2px
   padding: 40px 36px;
   background: var(--surface);
 }
-
 .project-badge {
   display: inline-flex;
   align-items: center;
@@ -590,7 +655,6 @@ body::-webkit-scrollbar-thumb { background: var(--surface-2); border-radius: 2px
   margin-bottom: 20px;
   background: var(--accent-dim);
 }
-
 .project-title {
   font-family: var(--ff-display);
   font-weight: 700;
@@ -600,7 +664,6 @@ body::-webkit-scrollbar-thumb { background: var(--surface-2); border-radius: 2px
   color: var(--ink);
   margin-bottom: 16px;
 }
-
 .project-desc {
   font-size: 14px;
   line-height: 1.85;
@@ -608,7 +671,6 @@ body::-webkit-scrollbar-thumb { background: var(--surface-2); border-radius: 2px
   font-weight: 300;
   margin-bottom: 24px;
 }
-
 .project-tags {
   display: flex;
   flex-wrap: wrap;
@@ -625,14 +687,11 @@ body::-webkit-scrollbar-thumb { background: var(--surface-2); border-radius: 2px
   color: var(--ink-3);
   border-radius: 2px;
 }
-
 .project-links {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
 }
-
-/* architecture detail */
 .detail-label {
   font-family: var(--ff-mono);
   font-size: 9.5px;
@@ -641,7 +700,6 @@ body::-webkit-scrollbar-thumb { background: var(--surface-2); border-radius: 2px
   color: var(--ink-3);
   margin-bottom: 16px;
 }
-
 .arch-list {
   list-style: none;
   display: flex;
@@ -660,15 +718,13 @@ body::-webkit-scrollbar-thumb { background: var(--surface-2); border-radius: 2px
 }
 .arch-list li::before {
   content: '';
-  width: 4px;
-  height: 4px;
+  width: 4px; height: 4px;
   border-radius: 50%;
   background: var(--accent);
   flex-shrink: 0;
   margin-top: 8px;
   opacity: 0.7;
 }
-
 .use-case-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -692,6 +748,37 @@ body::-webkit-scrollbar-thumb { background: var(--surface-2); border-radius: 2px
   margin-bottom: 2px;
 }
 
+/* ───PROJECT STATS BAR ──────────────────────────── */
+.project-stats {
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-top: none;
+  margin-bottom: 1px;
+}
+.project-stat {
+  flex: 1;
+  padding: 16px 20px;
+  border-right: 1px solid var(--border);
+  text-align: center;
+}
+.project-stat:last-child { border-right: none; }
+.stat-value {
+  font-family: var(--ff-display);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.stat-label {
+  font-family: var(--ff-mono);
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
 /* ─── CONTACT ─────────────────────────────────────────── */
 #contact .section-inner {
   display: grid;
@@ -699,7 +786,6 @@ body::-webkit-scrollbar-thumb { background: var(--surface-2); border-radius: 2px
   gap: 80px;
   align-items: start;
 }
-
 .contact-heading {
   font-family: var(--ff-display);
   font-weight: 700;
@@ -716,7 +802,6 @@ body::-webkit-scrollbar-thumb { background: var(--surface-2); border-radius: 2px
   max-width: 44ch;
   margin-bottom: 40px;
 }
-
 .contact-links {
   display: flex;
   flex-direction: column;
@@ -737,7 +822,6 @@ body::-webkit-scrollbar-thumb { background: var(--surface-2); border-radius: 2px
 }
 .contact-link:last-child { border-bottom: none; }
 .contact-link:hover { color: var(--ink); background: var(--surface); padding-left: 28px; }
-
 .contact-link-icon {
   width: 28px; height: 28px;
   border-radius: 4px;
@@ -747,13 +831,11 @@ body::-webkit-scrollbar-thumb { background: var(--surface-2); border-radius: 2px
   background: var(--accent-dim);
   color: var(--accent);
 }
-
 .contact-right-content {
   display: flex;
   flex-direction: column;
   gap: 24px;
 }
-
 .contact-availability {
   padding: 24px;
   border: 1px solid var(--border);
@@ -788,13 +870,11 @@ body::-webkit-scrollbar-thumb { background: var(--surface-2); border-radius: 2px
   color: var(--ink-3);
   font-weight: 300;
 }
-
 .contact-actions {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
-
 #copy-status {
   font-family: var(--ff-mono);
   font-size: 10.5px;
@@ -836,13 +916,66 @@ footer {
 }
 .footer-links a:hover { color: var(--ink-2); }
 
+/* ─── BREADCRUMB NAV HINT ─────────────────────────────── */
+.section-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--ff-mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 16px;
+}
+.section-breadcrumb a {
+  color: var(--ink-3);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.section-breadcrumb a:hover { color: var(--ink-2); }
+.section-breadcrumb .sep { opacity: 0.4; }
+.section-breadcrumb .current { color: var(--accent); }
+
+/* ─── MARQUEE ─────────────────────────────────────────── */
+.marquee-section {
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  padding: 12px 0;
+}
+.marquee-item {
+  font-family: var(--ff-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  padding: 6px 20px;
+  border-right: 1px solid var(--border);
+  white-space: nowrap;
+  cursor: default;
+  transition: color 0.25s, transform 0.25s var(--ease-out);
+  display: inline-flex;
+  align-items: center;
+}
+.marquee-item.hovered {
+  color: var(--ink);
+  transform: scale(1.4);
+}
+
 /* ─── MOBILE ──────────────────────────────────────────── */
 @media (max-width: 860px) {
-  .site-wrapper {
-    grid-template-columns: 1fr;
-  }
+  :root { --pad: 20px; }
+
+  .site-wrapper { grid-template-columns: 1fr; }
+
   .sidebar {
-    position: relative;
+    position: sticky;
+    top: 0;
     height: auto;
     flex-direction: row;
     align-items: center;
@@ -851,11 +984,11 @@ footer {
     border-right: none;
     border-bottom: 1px solid var(--border);
     z-index: 200;
-    gap: 0;
   }
   .sidebar-nav,
   .sidebar-context,
   .sidebar-footer { display: none; }
+
   .sidebar-nav.mobile-open {
     display: flex;
     position: fixed;
@@ -880,7 +1013,6 @@ footer {
   .sidebar-nav::before,
   .sidebar-nav::after { display: none; }
 
-  /* burger */
   .mobile-burger {
     display: flex;
     flex-direction: column;
@@ -905,12 +1037,31 @@ footer {
     grid-template-columns: 1fr;
     gap: 40px;
   }
-  .project-featured-inner {
-    grid-template-columns: 1fr;
-  }
+  .project-featured-inner { grid-template-columns: 1fr; }
   .project-info { border-right: none; border-bottom: 1px solid var(--border); }
   .skill-groups { grid-template-columns: 1fr; }
   .use-case-grid { grid-template-columns: 1fr; }
+
+  /* fix mobile trust grid */
+  .trust-grid { grid-template-columns: 1fr; }
+
+  /* fix project stats on mobile */
+  .project-stats { flex-wrap: wrap; }
+  .project-stat {
+    flex: 1 1 calc(50% - 1px);
+    border-right: 1px solid var(--border);
+  }
+  .project-stat:nth-child(2n) { border-right: none; }
+
+  /* better hero spacing on mobile */
+  #hero {
+    padding-top: 80px;
+    padding-bottom: 60px;
+  }
+  .hero-trust { gap: 12px; }
+
+  /* make breadcrumb visible but compact */
+  .section-breadcrumb { display: none; }
 }
 
 @media (min-width: 861px) {
@@ -918,56 +1069,42 @@ footer {
   .sidebar-context { display: flex; }
 }
 
-/* ─── INERTIA SCROLL ──────────────────────────────────── */
-/* We use CSS scroll-behavior + JS for weighted feel */
-html { scroll-behavior: auto; } /* JS handles it */
-
-/* ─── INTERACTIVE MARQUEE ─────────────────────────────── */
-.marquee-section {
-  border-bottom: 1px solid var(--border);
-  overflow: hidden;
-  position: relative;
-}
-.marquee-track {
-  display: flex;
-  width: max-content;
-  animation: marquee-slide 20s linear infinite;
-  will-change: transform;
-  padding: 12px 0;
-}
-.marquee-track:hover { animation-play-state: paused; }
-.marquee-item {
+/* skip-to-content for accessibility */
+.skip-link {
+  position: absolute;
+  top: -40px; left: 0;
+  background: var(--accent);
+  color: #fff;
+  padding: 8px 16px;
   font-family: var(--ff-mono);
-  font-size: 10.5px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--ink-3);
-  padding: 6px 20px;
-  border-right: 1px solid var(--border);
-  white-space: nowrap;
-  cursor: default;
-  transition: color 0.2s, background 0.2s;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  z-index: 9999;
+  transition: top 0.2s;
 }
-.marquee-item:hover {
-  color: var(--ink);
-  background: var(--surface);
-}
-.marquee-sep {
-  color: var(--accent);
-  opacity: 0.4;
-  padding: 6px 4px;
-  border-right: none;
-}
-@keyframes marquee-slide {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+.skip-link:focus { top: 0; }
+
+/* focus styles for keyboard nav */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
 }
 
-/* ─── SMOOTH SCROLL WEIGHT (JS-assisted) ─────────────── */
-body.is-scrolling { cursor: ns-resize; }
+/* reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
 </style>
 </head>
 <body>
+
+<a href="#main" class="skip-link">Skip to main content</a>
 
 <div class="site-wrapper">
 
@@ -975,7 +1112,7 @@ body.is-scrolling { cursor: ns-resize; }
   <aside class="sidebar" id="sidebar">
     <a class="sidebar-logo" href="#hero">Tonie <span>C.</span></a>
 
-    <nav class="sidebar-nav" id="sidebar-nav">
+    <nav class="sidebar-nav" id="sidebar-nav" aria-label="Page sections">
       <a class="nav-item active" href="#hero" data-section="hero">
         <span class="nav-dot"></span>
         <span class="nav-label">Home</span>
@@ -1005,11 +1142,10 @@ body.is-scrolling { cursor: ns-resize; }
     </div>
 
     <div class="sidebar-footer">
-      "The only way to learn a new programming language is to write programmes in it." <br>
-      - Dennis Ritchies
+      "The only way to learn a new programming language is to write programmes in it."<br>— Dennis Ritchie
     </div>
 
-    <button class="mobile-burger" id="burger" aria-label="Toggle menu">
+    <button class="mobile-burger" id="burger" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="sidebar-nav">
       <span></span><span></span><span></span>
     </button>
   </aside>
@@ -1018,7 +1154,7 @@ body.is-scrolling { cursor: ns-resize; }
   <main class="main-content" id="main">
 
     <!-- HERO -->
-    <section id="hero">
+    <section id="hero" aria-label="Introduction">
       <p class="hero-eyebrow">Aspiring Full Stack Developer</p>
       <h1 class="hero-name">Tonie<br><span class="outline">C.</span></h1>
       <p class="hero-tagline">
@@ -1030,42 +1166,75 @@ body.is-scrolling { cursor: ns-resize; }
         <a href="#projects" class="btn btn-primary">View Projects</a>
         <a href="#contact" class="btn btn-ghost">Get in Touch</a>
       </div>
+      <div class="hero-trust" aria-label="Quick facts">
+        <div class="hero-trust-item1">Philippines-based</div>
+        <div class="hero-trust-item">Remote-friendly</div>
+        <div class="hero-trust-item">Open to opportunities</div>
+      </div>
       <div class="hero-bg-text" aria-hidden="true">TC</div>
     </section>
 
-    <!-- MARQUEE -->
-    <div class="marquee-section" aria-hidden="true">
-      <div class="marquee-track" id="marquee">
-        <span class="marquee-item">React</span><span class="marquee-sep">·</span>
-        <span class="marquee-item">Node.js</span><span class="marquee-sep">·</span>
-        <span class="marquee-item">TypeScript</span><span class="marquee-sep">·</span>
-        <span class="marquee-item">Python</span><span class="marquee-sep">·</span>
-        <span class="marquee-item">Express</span><span class="marquee-sep">·</span>
-        <span class="marquee-item">REST APIs</span><span class="marquee-sep">·</span>
-        <span class="marquee-item">ESP32</span><span class="marquee-sep">·</span>
-        <span class="marquee-item">Arduino</span><span class="marquee-sep">·</span>
-        <span class="marquee-item">Git</span><span class="marquee-sep">·</span>
-        <span class="marquee-item">Linux</span><span class="marquee-sep">·</span>
-        <span class="marquee-item">Tailwind</span><span class="marquee-sep">·</span>
-        <span class="marquee-item">Discord.js</span><span class="marquee-sep">·</span>
-        <!-- duplicate for infinite loop -->
-        <span class="marquee-item">React</span><span class="marquee-sep">·</span>
-        <span class="marquee-item">Node.js</span><span class="marquee-sep">·</span>
-        <span class="marquee-item">TypeScript</span><span class="marquee-sep">·</span>
-        <span class="marquee-item">Python</span><span class="marquee-sep">·</span>
-        <span class="marquee-item">Express</span><span class="marquee-sep">·</span>
-        <span class="marquee-item">REST APIs</span><span class="marquee-sep">·</span>
-        <span class="marquee-item">ESP32</span><span class="marquee-sep">·</span>
-        <span class="marquee-item">Arduino</span><span class="marquee-sep">·</span>
-        <span class="marquee-item">Git</span><span class="marquee-sep">·</span>
-        <span class="marquee-item">Linux</span><span class="marquee-sep">·</span>
-        <span class="marquee-item">Tailwind</span><span class="marquee-sep">·</span>
-        <span class="marquee-item">Discord.js</span><span class="marquee-sep">·</span>
-      </div>
-    </div>
+<!-- MARQUEE -->
+<div class="marquee-section" aria-hidden="true">
+  <div class="marquee-track" id="marquee">
+    <span class="marquee-item">React</span>
+    <span class="marquee-item">Node.js</span>
+    <span class="marquee-item">TypeScript</span>
+    <span class="marquee-item">Python</span>
+    <span class="marquee-item">Express</span>
+    <span class="marquee-item">REST APIs</span>
+    <span class="marquee-item">ESP32</span>
+    <span class="marquee-item">Arduino</span>
+    <span class="marquee-item">Git</span>
+    <span class="marquee-item">Linux</span>
+    <span class="marquee-item">Tailwind</span>
+    <span class="marquee-item">Discord.js</span>
+    <span class="marquee-item">React</span>
+    <span class="marquee-item">Node.js</span>
+    <span class="marquee-item">TypeScript</span>
+    <span class="marquee-item">Python</span>
+    <span class="marquee-item">Express</span>
+    <span class="marquee-item">REST APIs</span>
+    <span class="marquee-item">ESP32</span>
+    <span class="marquee-item">Arduino</span>
+    <span class="marquee-item">Git</span>
+    <span class="marquee-item">Linux</span>
+    <span class="marquee-item">Tailwind</span>
+    <span class="marquee-item">Discord.js</span>
+    <span class="marquee-item">React</span>
+    <span class="marquee-item">Node.js</span>
+    <span class="marquee-item">TypeScript</span>
+    <span class="marquee-item">Python</span>
+    <span class="marquee-item">Express</span>
+    <span class="marquee-item">REST APIs</span>
+    <span class="marquee-item">ESP32</span>
+    <span class="marquee-item">Arduino</span>
+    <span class="marquee-item">Git</span>
+    <span class="marquee-item">Linux</span>
+    <span class="marquee-item">Tailwind</span>
+    <span class="marquee-item">Discord.js</span>
+    <span class="marquee-item">React</span>
+    <span class="marquee-item">Node.js</span>
+    <span class="marquee-item">TypeScript</span>
+    <span class="marquee-item">Python</span>
+    <span class="marquee-item">Express</span>
+    <span class="marquee-item">REST APIs</span>
+    <span class="marquee-item">ESP32</span>
+    <span class="marquee-item">Arduino</span>
+    <span class="marquee-item">Git</span>
+    <span class="marquee-item">Linux</span>
+    <span class="marquee-item">Tailwind</span>
+    <span class="marquee-item">Discord.js</span>
+  </div>
+</div>
 
     <!-- ABOUT -->
     <section id="about" class="section" data-ctx="About Me">
+      <div class="section-breadcrumb reveal">
+        <a href="#hero">Home</a>
+        <span class="sep">/</span>
+        <span class="current">About</span>
+      </div>
       <div class="section-label reveal">Background</div>
 
       <div class="section-inner">
@@ -1115,8 +1284,40 @@ body.is-scrolling { cursor: ns-resize; }
       </div>
     </section>
 
+  <!-- TRUST / TESTIMONIALS -->
+<section id="trust" aria-label="Testimonials and collaborations">
+  <div class="section-label reveal" style="padding: 0 var(--pad); padding-top: 0; margin-bottom: 28px;">Social Proof</div>
+  <div style="padding: 0 var(--pad);">
+    <div class="trust-grid reveal reveal-d1">
+      <div class="trust-card">
+        <p class="trust-quote">
+          Tonie picked up the codebase fast and didn't need hand-holding. He asked the right questions and shipped clean work. Would collaborate again without hesitation.
+        </p>
+        <div class="trust-author">R*** M*** · Open Source Collaborator</div>
+      </div>
+      <div class="trust-card">
+        <p class="trust-quote">
+          What I noticed is that Tonie doesn't reject AI tools — he uses them smartly. But unlike most, he actually understands the output. He can explain every line, debug it, and improve it. That's what separates him from someone just vibing through code.
+        </p>
+        <div class="trust-author">K*** L*** · Peer Developer</div>
+      </div>
+      <div class="trust-card">
+        <p class="trust-quote">
+          Great communicator and fast learner. He's not afraid to say when he doesn't know something, and he always comes back with an answer. That kind of honesty and follow-through is rare.
+        </p>
+        <div class="trust-author">J*** P*** · Classmate & Collaborator</div>
+      </div>
+    </div>
+  </div>
+</section>
+
     <!-- SKILLS -->
     <section id="skills" class="section" data-ctx="Skills">
+      <div class="section-breadcrumb reveal">
+        <a href="#hero">Home</a>
+        <span class="sep">/</span>
+        <span class="current">Skills</span>
+      </div>
       <div class="section-label reveal">What I work with</div>
       <h2 class="section-heading reveal reveal-d1">Skills &amp; Tools</h2>
       <p class="section-sub reveal reveal-d2">
@@ -1124,7 +1325,6 @@ body.is-scrolling { cursor: ns-resize; }
       </p>
 
       <div class="skill-groups reveal reveal-d2">
-
         <div class="skill-group">
           <div class="skill-group-label">Frontend</div>
           <div class="skill-chips">
@@ -1134,6 +1334,7 @@ body.is-scrolling { cursor: ns-resize; }
             <span class="skill-chip">React</span>
             <span class="skill-chip">Tailwind CSS</span>
           </div>
+          <p class="skill-note">Primary focus — built several production-ready interfaces and this portfolio from scratch.</p>
           <div class="skill-bar"></div>
         </div>
 
@@ -1146,6 +1347,7 @@ body.is-scrolling { cursor: ns-resize; }
             <span class="skill-chip">Python</span>
             <span class="skill-chip">AsyncIO</span>
           </div>
+          <p class="skill-note">Comfortable with async patterns, API design, and connecting services end-to-end.</p>
           <div class="skill-bar"></div>
         </div>
 
@@ -1158,6 +1360,7 @@ body.is-scrolling { cursor: ns-resize; }
             <span class="skill-chip">I2C / SPI</span>
             <span class="skill-chip">BLE / Wi-Fi</span>
           </div>
+          <p class="skill-note">Built IoT prototypes bridging hardware sensors to web dashboards — one of my favourite problem spaces.</p>
           <div class="skill-bar"></div>
         </div>
 
@@ -1170,14 +1373,19 @@ body.is-scrolling { cursor: ns-resize; }
             <span class="skill-chip">PyPI packages</span>
             <span class="skill-chip">Discord API</span>
           </div>
+          <p class="skill-note">Daily-driver tools — published packages to both NPM and PyPI, comfortable in terminal-first workflows.</p>
           <div class="skill-bar"></div>
         </div>
-
       </div>
     </section>
 
     <!-- PROJECTS -->
     <section id="projects" class="section" data-ctx="Projects">
+      <div class="section-breadcrumb reveal">
+        <a href="#hero">Home</a>
+        <span class="sep">/</span>
+        <span class="current">Projects</span>
+      </div>
       <div class="section-label reveal">What I've built</div>
       <h2 class="section-heading reveal reveal-d1">Projects</h2>
       <p class="section-sub reveal reveal-d2">
@@ -1187,10 +1395,9 @@ body.is-scrolling { cursor: ns-resize; }
       <!-- FEATURED: tflows.py -->
       <div class="project-featured reveal reveal-d2">
         <div class="project-featured-inner">
-
           <div class="project-info">
             <div class="project-badge">
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
               Featured Project
             </div>
             <h3 class="project-title">tflows.py</h3>
@@ -1242,7 +1449,26 @@ body.is-scrolling { cursor: ns-resize; }
               </div>
             </div>
           </div>
+        </div>
+      </div>
 
+      <!-- project stats bar -->
+      <div class="project-stats reveal reveal-d3">
+        <div class="project-stat">
+          <div class="stat-value">PyPI</div>
+          <div class="stat-label">Published package</div>
+        </div>
+        <div class="project-stat">
+          <div class="stat-value">OSS</div>
+          <div class="stat-label">Open source on GitHub</div>
+        </div>
+        <div class="project-stat">
+          <div class="stat-value">Async</div>
+          <div class="stat-label">Built on asyncio</div>
+        </div>
+        <div class="project-stat">
+          <div class="stat-value">Docs</div>
+          <div class="stat-label">Fully documented</div>
         </div>
       </div>
 
@@ -1250,6 +1476,11 @@ body.is-scrolling { cursor: ns-resize; }
 
     <!-- CONTACT -->
     <section id="contact" class="section" data-ctx="Contact">
+      <div class="section-breadcrumb reveal">
+        <a href="#hero">Home</a>
+        <span class="sep">/</span>
+        <span class="current">Contact</span>
+      </div>
       <div class="section-label reveal">Reach out</div>
 
       <div class="section-inner">
@@ -1266,13 +1497,13 @@ body.is-scrolling { cursor: ns-resize; }
             </a>
             <a href="https://github.com/toniec" class="contact-link" target="_blank" rel="noopener noreferrer">
               <span class="contact-link-icon">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
               </span>
               github.com/toniec
             </a>
             <a href="https://www.linkedin.com/in/jesstonie-cadizal-8a80a9392" class="contact-link" target="_blank" rel="noopener noreferrer">
               <span class="contact-link-icon" style="background:rgba(91,168,160,0.12);color:var(--accent-2)">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
               </span>
               LinkedIn
             </a>
@@ -1283,11 +1514,10 @@ body.is-scrolling { cursor: ns-resize; }
           </div>
         </div>
 
-        <div class="contact-right-content reveal reveal-d2">
+        <div class="contact-right-content reveal reveal-d2"><br><br><br><br><br><br>
           <div class="contact-availability">
-            <div class="avail-label">Current Status</div>
+            <div class="avail-label">Contact Me</div>
             <div class="avail-status">
-              <span class="avail-dot"></span>
               Open to Opportunities
             </div>
             <p class="avail-note">Junior roles, internships, freelance projects, and collaborations.</p>
@@ -1313,33 +1543,90 @@ body.is-scrolling { cursor: ns-resize; }
         <li><a href="mailto:cadizal06@gmail.com">Email</a></li>
         <li><a href="https://github.com/toniec" target="_blank" rel="noopener">GitHub</a></li>
         <li><a href="https://www.linkedin.com/in/jesstonie-cadizal-8a80a9392" target="_blank" rel="noopener">LinkedIn</a></li>
-        <li><a href="images/Cadizal Resume.pdf.pdf" download>Resume</a></li>
+        <li><a href="images/Cadizal Resume.pdf" download>Resume</a></li>
       </ul>
     </footer>
 
-  </main><!-- /main -->
-</div><!-- /site-wrapper -->
+  </main>
+</div>
 
 <script>
-/* ── INERTIA SCROLL ──────────────────────────────────────
-   Weighted scroll using requestAnimationFrame lerp.
-   Target y tracks wheel events; actual scroll position
-   lerps toward it for a slightly heavy, controlled feel.
-*/
+
+ /* ── MARQUEE ───────────────────────────────────────────── */
 (function () {
-  if (window.matchMedia('(max-width: 860px)').matches) return; // skip mobile
+  const track = document.getElementById('marquee');
+  if (!track) return;
+
+  const SPEED = 0.9;
+  let x = 0;
+
+  function tick() {
+    x -= SPEED;
+    const half = track.scrollWidth / 2;
+    if (Math.abs(x) >= half) x = 0;
+    track.style.transform = `translateX(${x}px)`;
+    requestAnimationFrame(tick);
+  }
+
+  requestAnimationFrame(tick);
+
+  // desktop only
+  if (window.matchMedia('(max-width: 860px)').matches) return;
+
+  let current = null;
+
+  track.addEventListener('mousemove', (e) => {
+    const el = e.target.closest('.marquee-item');
+
+    if (el === current) return;
+
+    // remove from previous
+    if (current) current.classList.remove('hovered');
+
+    current = el;
+
+    // only add to the exact element under cursor, not its duplicates
+    if (current) current.classList.add('hovered');
+  });
+
+  track.addEventListener('mouseleave', () => {
+    if (current) {
+      current.classList.remove('hovered');
+      current = null;
+    }
+  });
+
+  // if cursor is steady, remove after a short idle
+  let idleTimer = null;
+  track.addEventListener('mousemove', () => {
+    clearTimeout(idleTimer);
+    idleTimer = setTimeout(() => {
+      if (current) {
+        current.classList.remove('hovered');
+        current = null;
+      }
+    }, 800); // remove after 800ms of no movement
+  });
+})();
+
+/* ── INERTIA SCROLL ────────────────────────────────────── */
+(function () {
+  if (window.matchMedia('(max-width: 860px)').matches) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
   let currentY = window.scrollY;
   let targetY  = window.scrollY;
   let ticking  = false;
-  const EASE   = 0.085; // lower = heavier/slower
-  const MAX_H  = document.documentElement.scrollHeight - window.innerHeight;
+  const EASE   = 0.085;
 
+  function getMaxH() {
+    return document.documentElement.scrollHeight - window.innerHeight;
+  }
   function lerp(a, b, t) { return a + (b - a) * t; }
 
   window.addEventListener('wheel', (e) => {
     e.preventDefault();
-    targetY = Math.max(0, Math.min(MAX_H, targetY + e.deltaY * 1.1));
+    targetY = Math.max(0, Math.min(getMaxH(), targetY + e.deltaY * 1.1));
     if (!ticking) {
       ticking = true;
       requestAnimationFrame(animate);
@@ -1359,23 +1646,24 @@ body.is-scrolling { cursor: ns-resize; }
   }
 })();
 
-/* ── SIDEBAR PROGRESS & ACTIVE NAV ──────────────────────
-   Tracks which section is in view, updates nav dots,
-   context title, and the progress line height.
-*/
+/* ── SIDEBAR PROGRESS & ACTIVE NAV ────────────────────── */
 (function () {
-  const navItems  = document.querySelectorAll('.nav-item[data-section]');
-  const sections  = document.querySelectorAll('section[id]');
-  const ctxTitle  = document.getElementById('ctx-title');
+  const navItems   = document.querySelectorAll('.nav-item[data-section]');
+  const sections   = document.querySelectorAll('section[id]');
+  const ctxTitle   = document.getElementById('ctx-title');
   const sidebarNav = document.getElementById('sidebar-nav');
 
   const ctxMap = {
     hero:     'Introduction',
     about:    'About Me',
+    trust:    'Social Proof',
     skills:   'Skills',
     projects: 'Projects',
     contact:  'Contact'
   };
+
+  // only nav-linked sections for progress
+  const navSectionIds = ['hero', 'about', 'skills', 'projects', 'contact'];
 
   function getActiveSection() {
     let active = sections[0];
@@ -1387,10 +1675,9 @@ body.is-scrolling { cursor: ns-resize; }
   }
 
   function updateProgress(activeId) {
-    const allIds = Array.from(sections).map(s => s.id);
-    const idx    = allIds.indexOf(activeId);
-    const pct    = idx === -1 ? 0 : (idx / (allIds.length - 1)) * 100;
-    sidebarNav.style.setProperty('--progress-h', pct + '%');
+    const idx = navSectionIds.indexOf(activeId);
+    const pct = idx < 0 ? null : (idx / (navSectionIds.length - 1)) * 100;
+    if (pct !== null) sidebarNav.style.setProperty('--progress-h', pct + '%');
   }
 
   function tick() {
@@ -1399,8 +1686,7 @@ body.is-scrolling { cursor: ns-resize; }
     const id = active.id;
 
     navItems.forEach(item => {
-      const match = item.dataset.section === id;
-      item.classList.toggle('active', match);
+      item.classList.toggle('active', item.dataset.section === id);
     });
 
     if (ctxTitle && ctxMap[id]) ctxTitle.textContent = ctxMap[id];
@@ -1411,9 +1697,7 @@ body.is-scrolling { cursor: ns-resize; }
   tick();
 })();
 
-/* ── SMOOTH SECTION SCROLL (sidebar nav clicks) ─────────
-   Overrides default anchor behavior for a smooth scroll.
-*/
+/* ── SMOOTH SECTION SCROLL ─────────────────────────────── */
 (function () {
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', e => {
@@ -1426,7 +1710,7 @@ body.is-scrolling { cursor: ns-resize; }
   });
 })();
 
-/* ── SCROLL REVEAL ───────────────────────────────────── */
+/* ── SCROLL REVEAL ─────────────────────────────────────── */
 (function () {
   const els = document.querySelectorAll('.reveal');
   const obs = new IntersectionObserver(entries => {
@@ -1440,26 +1724,41 @@ body.is-scrolling { cursor: ns-resize; }
   els.forEach(el => obs.observe(el));
 })();
 
-/* ── MOBILE BURGER ───────────────────────────────────── */
+/* ── MOBILE BURGER ─────────────────────────────────────── */
 (function () {
   const burger = document.getElementById('burger');
   const nav    = document.getElementById('sidebar-nav');
   if (!burger || !nav) return;
+
   burger.addEventListener('click', () => {
     const open = burger.classList.toggle('open');
     nav.classList.toggle('mobile-open', open);
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
     document.body.style.overflow = open ? 'hidden' : '';
   });
+
   nav.querySelectorAll('a').forEach(a => {
     a.addEventListener('click', () => {
       burger.classList.remove('open');
       nav.classList.remove('mobile-open');
+      burger.setAttribute('aria-expanded', 'false');
       document.body.style.overflow = '';
     });
   });
+
+  // close on Escape
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && burger.classList.contains('open')) {
+      burger.classList.remove('open');
+      nav.classList.remove('mobile-open');
+      burger.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+      burger.focus();
+    }
+  });
 })();
 
-/* ── COPY EMAIL ──────────────────────────────────────── */
+/* ── COPY EMAIL ────────────────────────────────────────── */
 (function () {
   const btn    = document.getElementById('copy-btn');
   const label  = document.getElementById('copy-label');
@@ -1479,7 +1778,7 @@ body.is-scrolling { cursor: ns-resize; }
   });
 })();
 
-/* ── FOOTER YEAR ─────────────────────────────────────── */
+/* ── FOOTER YEAR ───────────────────────────────────────── */
 document.getElementById('yr').textContent = new Date().getFullYear();
 </script>
 </body>
