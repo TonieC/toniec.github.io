@@ -54,7 +54,7 @@
   /* Ink — white down to near-invisible, hierarchy by opacity/weight only */
   --ink:         #ffffff;
   --ink-2:       #a3a3a3;
-  --ink-3:       #6b6b6b;
+  --ink-3:       #757575; /* was #6b6b6b — bumped to clear WCAG AA (4.56:1 on #000) for the small text that relies on this token: .eyebrow, .hero-role, .skill-note, .project-tag, .stat-label, etc. */
   --ink-4:       #2e2e2e;
 
   /* Type */
@@ -83,7 +83,7 @@
   /* Fix contrast */
   --ink:         #000000;   /* main text stays pure black */
   --ink-2:       #404040;   /* was too light → now readable secondary */
-  --ink-3:       #6e6e6e;   /* mid gray for labels */
+  --ink-3:       #6e6e6e;   /* mid gray for labels — already clears AA (5.10:1) */
   --ink-4:       #bdbdbd;   /* subtle only, not for important text */
 }
 
@@ -408,6 +408,11 @@ header {
   padding: clamp(56px, 9vw, 96px) 0;
   border-bottom: var(--rule);
 }
+/* Contact is the last section before the footer — no divider needed,
+   matches the page's original visual rhythm (was an inline style). */
+#contact.section {
+  border-bottom: none;
+}
 
 .section-title {
   font-family: var(--ff-mono);
@@ -692,6 +697,11 @@ header {
   background: var(--surface);
   color: var(--ink);
 }
+/* Non-interactive contact entry (e.g. Location) — same visual shell,
+   but no hover affordance since there's nothing to activate. */
+.contact-item.is-static {
+  cursor: default;
+}
 .contact-item-label {
   font-family: var(--ff-mono);
   font-size: 10px;
@@ -832,7 +842,7 @@ footer {
     </nav>
     <div class="nav-controls">
       <button class="theme-toggle" id="theme-toggle" type="button" aria-pressed="false">
-        <span id="theme-toggle-label">DARK</span>
+        <span id="theme-toggle-label" aria-live="polite">DARK</span>
       </button>
       <button class="burger" id="burger" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="nav-links">
         <span></span><span></span><span></span>
@@ -861,10 +871,10 @@ footer {
         <a href="#contact" class="btn btn-ghost">Get in Touch</a>
       </div>
 
-      <div class="hero-meta">
-        <span class="hero-meta-item">Open to opportunities</span>
-        <span class="hero-meta-item">Remote-friendly</span>
-        <span class="hero-meta-item">Philippines-based</span>
+      <div class="hero-meta" role="list">
+        <span class="hero-meta-item" role="listitem">Junior / entry-level</span>
+        <span class="hero-meta-item" role="listitem">Remote-friendly</span>
+        <span class="hero-meta-item" role="listitem">Philippines-based</span>
       </div>
     </div>
   </section>
@@ -1119,7 +1129,7 @@ footer {
   </section>
 
   <!-- ═══ CONTACT ═══ -->
-  <section id="contact" class="section" aria-label="Contact" style="border-bottom: none;">
+  <section id="contact" class="section" aria-label="Contact">
     <div class="wrap">
       <p class="eyebrow"><span class="num">05</span> Contact</p>
       <h2 class="section-title reveal">Get in touch</h2>
@@ -1141,14 +1151,14 @@ footer {
           <span class="contact-item-label">LinkedIn</span>
           <span class="contact-item-value">jesstonie-cadizal</span>
         </a>
-        <span class="contact-item" style="cursor: default;">
+        <div class="contact-item is-static" role="text" aria-label="Location: Philippines, Remote">
           <span class="contact-item-label">Location</span>
           <span class="contact-item-value">Philippines · Remote</span>
-        </span>
+        </div>
       </div>
 
       <div class="contact-actions">
-        <a href="images/Cadizal Resume.pdf" class="btn btn-primary" download>Download Resume</a>
+        <a href="images/cadizal-resume.pdf" class="btn btn-primary" download>Download Resume</a>
         <button id="copy-btn" type="button" class="btn btn-ghost">
           <span id="copy-label">Copy Email</span>
         </button>
@@ -1168,7 +1178,7 @@ footer {
       <li><a href="mailto:cadizal06@gmail.com">Email</a></li>
       <li><a href="https://github.com/toniec" target="_blank" rel="noopener">GitHub</a></li>
       <li><a href="https://www.linkedin.com/in/jesstonie-cadizal-8a80a9392" target="_blank" rel="noopener">LinkedIn</a></li>
-      <li><a href="images/Cadizal Resume.pdf" download>Resume</a></li>
+      <li><a href="images/cadizal-resume.pdf" download>Resume</a></li>
     </ul>
   </div>
 </footer>
