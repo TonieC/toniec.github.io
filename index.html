@@ -9,6 +9,9 @@
 <meta name="color-scheme" content="dark light"/>
 <meta name="theme-color" content="#000000" id="meta-theme-color"/>
 <script>
+  /* Applied before first paint so a returning visitor's saved theme
+     doesn't flash dark-then-light. Dark is the default when nothing
+     is saved yet — matches the page's base (no-override) styling. */
   (function () {
     try {
       var saved = localStorage.getItem('theme');
@@ -19,574 +22,6 @@
   })();
 </script>
 
-<<<<<<< HEAD
-  <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
-  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico" />
-
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="Tonie C. — Front-End Developer" />
-  <meta property="og:description" content="A portfolio showcasing Tonie’s web interfaces, coding experiments, and hardware projects." />
-  <meta property="og:url" content="https://toniec.github.io/" />
-  <meta property="og:image" content="https://toniec.github.io/images/workshop.png" />
-
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Tonie C. — Front-End Developer" />
-  <meta name="twitter:description" content="Explore Tonie’s interactive and hardware projects in a cinematic portfolio." />
-  <meta name="twitter:image" content="https://toniec.github.io/images/workshop.png" />
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Tonie C.",
-    "url": "https://toniec.github.io/",
-    "image": "https://toniec.github.io/images/workshop.png",
-    "jobTitle": "Front-End Developer & Hardware Tinkerer",
-    "description": "Portfolio showcasing Tonie's web, UI, and embedded hardware projects.",
-    "sameAs": [
-      "https://github.com/toniec",
-      "https://www.facebook.com/0tonie"
-    ],
-    "knowsAbout": ["Web Development", "UI Design", "Arduino", "ESP32", "Front-End Engineering"]
-  }
-  </script>
-
-  <style>
-    :root{
-      --maxw: 980px;
-      --header-h: 64px;
-      --radius: 12px;
-      --focus: 0 0 0 3px rgba(120, 120, 120, 0.25);
-
-      --fw-serif: "Playfair Display", ui-serif, Georgia, "Times New Roman", serif;
-      --fw-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-
-      --pad-x: 22px;
-
-      --ease: cubic-bezier(.2, .8, .2, 1);
-      --dur: 700ms;
-
-      /* JS will update this to real innerHeight for mobile */
-      --view-h: 100vh;
-    }
-
-    html[data-theme="paper-dark"]{
-      --paper:#0f0f0f;
-      --paper-2:#141414;
-      --ink:#f4f1ea;
-      --muted:rgba(244, 241, 234, 0.72);
-      --rule:rgba(244, 241, 234, 0.16);
-      --link:#f4f1ea;
-      color-scheme:dark;
-    }
-
-    html[data-theme="paper-light"]{
-      --paper:#fbfaf7;
-      --paper-2:#ffffff;
-      --ink:#141414;
-      --muted:rgba(20, 20, 20, 0.66);
-      --rule:rgba(20, 20, 20, 0.12);
-      --link:#141414;
-      color-scheme:light;
-    }
-
-    *{ box-sizing:border-box; }
-    html, body{ height:100%; margin:0; }
-
-    /* enable scrolling (but hide the scrollbar) */
-    html, body{
-    scroll-behavior: smooth;
-      overflow-y:auto;
-      overflow-x:hidden;
-      scrollbar-width:none;
-      -ms-overflow-style:none;
-    }
-    html::-webkit-scrollbar,
-    body::-webkit-scrollbar{
-      width:0;
-      height:0;
-      display:none;
-    }
-
-    body{
-      background:var(--paper);
-      color:var(--ink);
-      font-family:var(--fw-sans);
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      opacity:0;
-    }
-    body.page-ready{
-      opacity:1;
-      transition:opacity 500ms var(--ease);
-    }
-
-    a{
-      color:var(--link);
-      text-decoration:none;
-      transition:opacity 180ms var(--ease), transform 180ms var(--ease);
-    }
-    a:hover{ opacity:.92; transform:translateY(-1px); }
-
-    img{ max-width:100%; height:auto; display:block; }
-
-    .wrap{
-      max-width:var(--maxw);
-      margin:0 auto;
-      padding:0 var(--pad-x);
-      width:100%;
-    }
-
-    /* HEADER */
-    header.site-header{
-      position:fixed;
-      top:0; left:0; right:0;
-      z-index:50;
-      height:var(--header-h);
-      background:color-mix(in srgb, var(--paper) 92%, transparent);
-      backdrop-filter:blur(8px);
-      -webkit-backdrop-filter:blur(8px);
-      border-bottom:1px solid var(--rule);
-
-      transform:translateY(-6px);
-      opacity:0;
-      transition:transform var(--dur) var(--ease), opacity var(--dur) var(--ease);
-    }
-    body.page-ready header.site-header{
-      transform:translateY(0);
-      opacity:1;
-    }
-
-    .nav-inner{
-      max-width:var(--maxw);
-      margin:0 auto;
-      padding:10px var(--pad-x);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap:12px;
-      height:var(--header-h);
-    }
-
-    nav.nav-links{
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap:12px;
-      flex-wrap:nowrap;
-      white-space:nowrap;
-      max-width:100%;
-      overflow:hidden;
-    }
-
-    nav.nav-links a{
-      color:var(--ink);
-      font-size:13px;
-      padding:6px 2px;
-      position:relative;
-      opacity:.78;
-      transition:opacity 200ms var(--ease), transform 200ms var(--ease);
-      flex:0 0 auto;
-    }
-    nav.nav-links a::after{
-      content:"";
-      position:absolute;
-      left:0; right:0; bottom:0;
-      height:1px;
-      background:var(--ink);
-      transform:scaleX(0);
-      transform-origin:center;
-      transition:transform 260ms var(--ease);
-      opacity:.9;
-    }
-    nav.nav-links a:hover{ opacity:.92; transform:translateY(-1px); }
-    nav.nav-links a:hover::after{ transform:scaleX(.85); }
-    nav.nav-links a.is-active{ opacity:1; }
-    nav.nav-links a.is-active::after{ transform:scaleX(1); }
-
-    .theme-toggle{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      border:1px solid var(--rule);
-      background:var(--paper-2);
-      color:var(--ink);
-      border-radius:999px;
-      padding:8px 12px;
-      cursor:pointer;
-      font-size:13px;
-      line-height:1;
-      user-select:none;
-      transition:transform 200ms var(--ease), opacity 200ms var(--ease), border-color 200ms var(--ease);
-      flex:0 0 auto;
-    }
-    .theme-toggle:hover{ transform:translateY(-1px); opacity:.95; }
-    .theme-toggle:focus{ outline:none; box-shadow:var(--focus); }
-    .theme-dot{
-      width:10px; height:10px;
-      border-radius:50%;
-      border:1px solid var(--rule);
-      background:var(--ink);
-      transition:transform 260ms var(--ease);
-    }
-    .theme-toggle:hover .theme-dot{ transform:scale(1.1); }
-
-    /* Sections should not hide behind fixed header */
-    .panel{
-      scroll-margin-top: calc(var(--header-h) + 14px);
-      min-height: calc(var(--view-h) - var(--header-h));
-      height: auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-      padding: 40px 0;
-    }
-
-    .panel__inner{
-      width: 100%;
-      padding: 22px 0;
-      transform: none;
-      opacity: 1;
-      transition: none;
-    }
-
-    .section-title{
-      font-family:var(--fw-serif);
-      font-size:22px;
-      margin:0 0 12px 0;
-      letter-spacing:0.01em;
-      overflow-wrap:anywhere;
-      word-break:break-word;
-    }
-
-    .rule{
-      height:1px;
-      background:var(--rule);
-      border:none;
-      margin:10px auto 18px auto;
-      width:min(520px, 86%);
-      transform-origin:center;
-      opacity:.9;
-    }
-
-    .lead{
-      color:var(--muted);
-      line-height:1.75;
-      margin:0 auto;
-      font-size:16px;
-      max-width:72ch;
-      overflow-wrap:anywhere;
-      word-break:break-word;
-    }
-
-    .download-btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      margin-top:14px;
-      border:1px solid var(--rule);
-      border-radius:var(--radius);
-      padding:10px 14px;
-      color:var(--ink);
-      background:var(--paper-2);
-      transition:transform 220ms var(--ease), opacity 220ms var(--ease), border-color 220ms var(--ease);
-    }
-    .download-btn:hover{
-      transform:translateY(-2px);
-      opacity:.95;
-      border-color:color-mix(in srgb, var(--rule) 30%, var(--ink));
-    }
-
-    .last-updated{
-      font-size:12px;
-      color:var(--muted);
-      margin-top:10px;
-    }
-
-    /* HERO */
-    .hero-v2::before{
-      content:"";
-      position:absolute;
-      inset:-120px -140px auto -140px;
-      height:420px;
-      background:
-        radial-gradient(closest-side, color-mix(in srgb, var(--ink) 12%, transparent), transparent 70%),
-        radial-gradient(closest-side, color-mix(in srgb, var(--ink) 8%, transparent), transparent 72%);
-      filter:blur(10px);
-      opacity:.55;
-      pointer-events:none;
-      transform:translate3d(0, 0, 0);
-      animation:heroFloat 10s var(--ease) infinite alternate;
-      will-change:transform;
-    }
-
-    .hero-v2::after{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:
-        radial-gradient(1200px 500px at 30% 0%, color-mix(in srgb, var(--paper-2) 20%, transparent), transparent 55%),
-        radial-gradient(900px 520px at 70% 20%, color-mix(in srgb, var(--paper-2) 14%, transparent), transparent 60%);
-      pointer-events:none;
-      opacity:.9;
-    }
-
-    @keyframes heroFloat{
-      0%{ transform:translate3d(-10px, -6px, 0) scale(1); }
-      100%{ transform:translate3d(10px, 8px, 0) scale(1.02); }
-    }
-
-    .hero-v2__title{
-      font-family:var(--fw-serif);
-      font-size:clamp(44px, 6vw, 72px);
-      line-height:1.02;
-      margin:0 0 10px 0;
-      letter-spacing:0.01em;
-      overflow-wrap:anywhere;
-      word-break:break-word;
-    }
-
-    .hero-v2__role{
-      margin:0 0 18px 0;
-      color:var(--muted);
-      font-size:15px;
-      letter-spacing:.22em;
-      text-transform:uppercase;
-    }
-
-    .hero-v2__badge{
-      margin:0 auto;
-      font-size:18px;
-      line-height:1.75;
-      padding:14px 22px;
-      border-radius:18px;
-      border:1px solid color-mix(in srgb, var(--rule) 70%, transparent);
-      background:linear-gradient(
-        135deg,
-        color-mix(in srgb, var(--paper-2) 92%, transparent),
-        color-mix(in srgb, var(--paper) 88%, transparent)
-      );
-      backdrop-filter:blur(10px) saturate(120%);
-      -webkit-backdrop-filter:blur(10px) saturate(120%);
-      box-shadow:0 10px 34px rgba(0,0,0,.26), inset 0 1px 0 rgba(255,255,255,.05);
-      font-weight:500;
-      letter-spacing:0.01em;
-      max-width:fit-content;
-    }
-
-    .hero-v2__actions{
-      display:flex;
-      gap:14px;
-      flex-wrap:wrap;
-      margin-top:18px;
-      justify-content:center;
-    }
-
-    .hero-v2__btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      padding:10px 16px;
-      border-radius:12px;
-      border:1px solid var(--rule);
-      background:transparent;
-      color:var(--ink);
-      font-size:14px;
-      transition:transform 220ms var(--ease), opacity 220ms var(--ease), border-color 220ms var(--ease), background 220ms var(--ease);
-    }
-    .hero-v2__btn:hover{
-      transform:translateY(-2px);
-      opacity:.95;
-      border-color:color-mix(in srgb, var(--rule) 30%, var(--ink));
-    }
-
-    .hero-v2__btn--primary{
-      background:color-mix(in srgb, var(--paper-2) 90%, transparent);
-      box-shadow:0 10px 24px rgba(0,0,0,.18);
-    }
-    .hero-v2__btn--primary:hover{
-      background:color-mix(in srgb, var(--paper-2) 96%, transparent);
-      box-shadow:0 14px 30px rgba(0,0,0,.24);
-    }
-
-    /* SKILLS */
-    .skills-grid{
-      display:grid;
-      grid-template-columns:repeat(4, minmax(0, 1fr));
-      gap:18px 26px;
-      margin-top:18px;
-      text-align:center;
-      width:100%;
-    }
-    @media (max-width: 980px){
-      .skills-grid{ grid-template-columns:repeat(2, minmax(0, 1fr)); gap:16px 16px; }
-    }
-    @media (max-width: 520px){
-      .skills-grid{ grid-template-columns:1fr; gap:14px; }
-    }
-
-    .skills-block{
-      min-width:0;
-      width:100%;
-      border:1px solid var(--rule);
-      border-radius:16px;
-      padding:14px 14px;
-      background:color-mix(in srgb, var(--paper-2) 70%, transparent);
-      transition:transform 260ms var(--ease), opacity 260ms var(--ease), border-color 260ms var(--ease);
-      transform:translateY(0);
-      overflow:hidden;
-    }
-    .skills-block:hover{
-      transform:translateY(-2px);
-      border-color:color-mix(in srgb, var(--rule) 30%, var(--ink));
-      opacity:.98;
-    }
-    .skills-block h3{
-      margin:0 0 10px 0;
-      font-size:13px;
-      text-transform:uppercase;
-      letter-spacing:0.10em;
-      color:var(--muted);
-      font-weight:700;
-      overflow-wrap:anywhere;
-      word-break:break-word;
-    }
-    .skills-block ul{
-      margin:0;
-      padding:0;
-      list-style:none;
-      line-height:1.8;
-      color:color-mix(in srgb, var(--ink) 92%, transparent);
-    }
-    .skills-block li{ overflow-wrap:anywhere; word-break:break-word; }
-
-    /* PROJECTS / TIMELINE */
-    .project-list, .timeline{
-      display:grid;
-      gap:14px;
-      margin-top:18px;
-      text-align:center;
-      width:100%;
-    }
-    @media (max-width: 520px){
-      .project-list, .timeline{ gap:12px; }
-    }
-
-    .project, .timeline-item{
-      min-width:0;
-      width:100%;
-      border:1px solid var(--rule);
-      border-radius:16px;
-      padding:14px 16px;
-      background:color-mix(in srgb, var(--paper-2) 70%, transparent);
-      transition:transform 260ms var(--ease), border-color 260ms var(--ease), opacity 260ms var(--ease);
-      overflow:hidden;
-    }
-    .project:hover, .timeline-item:hover{
-      transform:translateY(-2px);
-      border-color:color-mix(in srgb, var(--rule) 30%, var(--ink));
-      opacity:.98;
-    }
-    .project h3, .timeline-item h3{
-      margin:0 0 8px 0;
-      font-size:18px;
-      font-weight:800;
-      letter-spacing:0.01em;
-      overflow-wrap:anywhere;
-      word-break:break-word;
-    }
-    .project p, .timeline-item p{
-      margin:0 auto;
-      color:var(--muted);
-      line-height:1.7;
-      max-width:72ch;
-      overflow-wrap:anywhere;
-      word-break:break-word;
-    }
-    .project .links{
-      display:flex;
-      justify-content:center;
-      gap:12px;
-      flex-wrap:wrap;
-      margin-top:10px;
-      font-size:14px;
-    }
-    .project .links a{ white-space:normal; overflow-wrap:anywhere; word-break:break-word; }
-
-    /* CONTACT */
-    .contact-actions{
-      display:flex;
-      gap:14px;
-      flex-wrap:wrap;
-      justify-content:center;
-      margin-top:12px;
-    }
-    .contact-note{
-      margin-top:12px;
-      font-size:13px;
-      color:var(--muted);
-      overflow-wrap:anywhere;
-      word-break:break-word;
-    }
-
-    /* FOOTER */
-    footer.site-foot{
-      border-top:1px solid var(--rule);
-      width:100%;
-      margin-top:18px;
-    }
-    .foot-inner{
-      max-width:var(--maxw);
-      margin:0 auto;
-      padding:14px var(--pad-x);
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      gap:12px;
-      flex-wrap:wrap;
-      color:var(--muted);
-      font-size:13px;
-      overflow-wrap:anywhere;
-      word-break:break-word;
-    }
-
-    /* ACCESSIBILITY / MOTION */
-    @media (prefers-reduced-motion: reduce){
-      *{ transition:none !important; animation:none !important; }
-      body{ opacity:1 !important; }
-      header.site-header{ transform:none !important; opacity:1 !important; }
-      .panel__inner{ opacity:1 !important; transform:none !important; }
-      html{ scroll-behavior:auto !important; }
-    }
-
-    @media (max-width: 680px){
-      :root{ --pad-x:14px; --header-h:58px; }
-      .nav-inner{ padding:8px var(--pad-x); }
-      nav.nav-links{ gap:10px; }
-      nav.nav-links a{ font-size:12px; padding:6px 1px; }
-      .theme-toggle{ padding:7px 10px; font-size:12px; }
-      .hero-v2__role{ letter-spacing:.16em; }
-      .hero-v2__badge{ font-size:17px; padding:12px 18px; border-radius:16px; }
-    }
-
-    @media (max-width: 380px){
-      nav.nav-links{ gap:8px; }
-      nav.nav-links a{ font-size:11px; }
-      .theme-toggle{ padding:6px 9px; }
-      #themeLabel{ display:none; }
-    }
-  </style>
-=======
 <!-- Open Graph -->
 <meta property="og:title" content="Tonie C. — Aspiring Full Stack Developer"/>
 <meta property="og:description" content="Building web applications, backend systems, and embedded projects. Learning in public, one project at a time."/>
@@ -633,6 +68,28 @@
   --max-w:  760px;
   --pad:    clamp(20px, 6vw, 64px);
   --rule:   1px solid var(--border);
+
+  /* ── Tech accent hues ────────────────────────────────
+     Scoped to .skill-chip / .project-tag only (see rules below).
+     Dark-mode values sit here at moderate saturation; light mode
+     redefines the same names at lower saturation/deeper value so
+     the mapping (--tech-js = "JavaScript") never changes, only
+     how loud it's allowed to be per theme. */
+  --tech-html:    #e05d3c; /* HTML / CSS — the classic orange-red */
+  --tech-js:      #d8b23c; /* JavaScript — dimmed off pure yellow so it doesn't flare on black */
+  --tech-ts:      #4d8fc9; /* TypeScript blue */
+  --tech-react:   #56b6c9; /* React cyan */
+  --tech-node:    #5a9e5f; /* Node.js green */
+  --tech-python:  #4f8fbf; /* Python blue */
+  --tech-discord: #7c8fe0; /* Discord blurple */
+  --tech-docker:  #4a9fd8; /* Docker blue, separated from TS/Python by chip label context */
+
+  /* Adaptive alpha — how strongly the hue tints background/border.
+     Dark mode can afford more visibility; overridden lower in light mode. */
+  --tech-bg-a:     0.10;
+  --tech-border-a: 0.42;
+  --tech-bg-a-hov: 0.16;
+  --tech-border-a-hov: 0.62;
 }
 
 /* Light theme — same structure, inverted grayscale. Dark stays the default. */
@@ -650,6 +107,25 @@
   --ink-2:       #404040;   /* was too light → now readable secondary */
   --ink-3:       #6e6e6e;   /* mid gray for labels — already clears AA (5.10:1) */
   --ink-4:       #bdbdbd;   /* subtle only, not for important text */
+
+  /* Tech accent hues — same variable names, deepened/desaturated so a
+     faint tint on white doesn't turn chalky or reduce text contrast.
+     Text itself never uses these; only background/border alpha do,
+     so this swap alone is enough to keep chips legible on white. */
+  --tech-html:    #c14a2e;
+  --tech-js:      #9c7a1f;
+  --tech-ts:      #2f6ba8;
+  --tech-react:   #2d8299;
+  --tech-node:    #3f7d43;
+  --tech-python:  #33689a;
+  --tech-discord: #5566c2;
+  --tech-docker:  #2f76a8;
+
+  /* Light mode needs a lighter touch to hold contrast on white. */
+  --tech-bg-a:     0.07;
+  --tech-border-a: 0.38;
+  --tech-bg-a-hov: 0.12;
+  --tech-border-a-hov: 0.55;
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -1079,12 +555,37 @@ header {
   padding: 5px 10px;
   border: 1px solid var(--border);
   color: var(--ink-2);
-  transition: border-color 0.15s, color 0.15s;
+  transition: border-color 0.15s, background-color 0.15s, color 0.15s;
 }
 .skill-chip:hover {
   border-color: var(--ink);
   color: var(--ink);
 }
+
+/* ── Tech color mapping ──────────────────────────────────
+   Only fires when a chip carries data-tech; chips without one
+   (generic entries like "REST APIs") keep the plain grayscale
+   rule above untouched. Text color intentionally stays on the
+   --ink system — only border/background borrow the hue, and only
+   at low alpha, so tint reads as accent rather than a colored label. */
+.skill-chip[data-tech] {
+  border-color: color-mix(in srgb, var(--tech-color) calc(var(--tech-border-a) * 100%), var(--border));
+  background: color-mix(in srgb, var(--tech-color) calc(var(--tech-bg-a) * 100%), transparent);
+}
+.skill-chip[data-tech]:hover {
+  border-color: color-mix(in srgb, var(--tech-color) calc(var(--tech-border-a-hov) * 100%), var(--border));
+  background: color-mix(in srgb, var(--tech-color) calc(var(--tech-bg-a-hov) * 100%), transparent);
+  color: var(--ink);
+}
+
+.skill-chip[data-tech="html"]    { --tech-color: var(--tech-html); }
+.skill-chip[data-tech="js"]      { --tech-color: var(--tech-js); }
+.skill-chip[data-tech="ts"]      { --tech-color: var(--tech-ts); }
+.skill-chip[data-tech="react"]   { --tech-color: var(--tech-react); }
+.skill-chip[data-tech="node"]    { --tech-color: var(--tech-node); }
+.skill-chip[data-tech="python"]  { --tech-color: var(--tech-python); }
+.skill-chip[data-tech="discord"] { --tech-color: var(--tech-discord); }
+.skill-chip[data-tech="docker"]  { --tech-color: var(--tech-docker); }
 .skill-note {
   font-size: 12.5px;
   line-height: 1.7;
@@ -1143,7 +644,25 @@ header {
   padding: 4px 9px;
   border: 1px solid var(--border);
   color: var(--ink-3);
+  transition: border-color 0.15s, background-color 0.15s;
 }
+
+/* ── Tech color mapping (mirrors .skill-chip) ──────────────
+   Tags without data-tech (OPEN SOURCE, PYPI as a channel label,
+   etc.) fall through to the plain grayscale rule above. */
+.project-tag[data-tech] {
+  border-color: color-mix(in srgb, var(--tech-color) calc(var(--tech-border-a) * 100%), var(--border));
+  background: color-mix(in srgb, var(--tech-color) calc(var(--tech-bg-a) * 100%), transparent);
+}
+
+.project-tag[data-tech="html"]    { --tech-color: var(--tech-html); }
+.project-tag[data-tech="js"]      { --tech-color: var(--tech-js); }
+.project-tag[data-tech="ts"]      { --tech-color: var(--tech-ts); }
+.project-tag[data-tech="react"]   { --tech-color: var(--tech-react); }
+.project-tag[data-tech="node"]    { --tech-color: var(--tech-node); }
+.project-tag[data-tech="python"]  { --tech-color: var(--tech-python); }
+.project-tag[data-tech="discord"] { --tech-color: var(--tech-discord); }
+.project-tag[data-tech="docker"]  { --tech-color: var(--tech-docker); }
 .project-links { display: flex; gap: 10px; flex-wrap: wrap; }
 
 .project-bottom {
@@ -1387,326 +906,8 @@ footer {
   .project-stat:nth-child(4) { border-top: var(--rule); }
 }
 </style>
->>>>>>> af428599cdb0ebad3d6960441746f53098640834
 </head>
-
 <body>
-<<<<<<< HEAD
-  <header class="site-header" role="banner" id="topHeader">
-    <div class="nav-inner" role="navigation" aria-label="Main navigation">
-      <nav class="nav-links" aria-label="Primary" id="topNav">
-        <a href="#home" data-section="home">Intro</a>
-        <a href="#about" data-section="about">About</a>
-        <a href="#skills" data-section="skills">Skills</a>
-        <a href="#projects" data-section="projects">Projects</a>
-        <a href="#experience" data-section="experience">Experience</a>
-        <a href="#contact" data-section="contact">Contact</a>
-
-        <button id="themeToggle" class="theme-toggle" type="button" aria-label="Toggle theme">
-          <span class="theme-dot" aria-hidden="true"></span>
-          <span id="themeLabel">Dark</span>
-        </button>
-      </nav>
-    </div>
-  </header>
-
-  <div id="deck" aria-live="polite">
-    <section class="panel hero-v2 wrap" id="home" data-watch="home" aria-label="Intro">
-      <div class="panel__inner">
-        <h1 class="hero-v2__title">Tonie C.</h1>
-        <p class="hero-v2__role">Front-End Developer</p>
-
-        <p class="hero-v2__badge">
-          I turn ideas into clean, working systems.
-        </p>
-
-        <div class="hero-v2__actions">
-          <a class="hero-v2__btn hero-v2__btn--primary" href="#projects" data-jump="projects">View Projects</a>
-          <a class="hero-v2__btn" href="#contact" data-jump="contact">Contact</a>
-        </div>
-      </div>
-    </section>
-
-    <section class="panel wrap" id="about" data-watch="about" aria-labelledby="about-heading">
-      <div class="panel__inner">
-        <h2 class="section-title" id="about-heading">About Me</h2>
-        <hr class="rule" />
-
-        <p class="lead">
-          I'm <strong>Tonie</strong>, a 19-year-old programmer from the Philippines surviving ICT—Information Communication and Technology—but mostly debugging adventures. I build web interfaces that don’t frustrate users, tinker with microcontrollers until they obey, and ship practical tools that solve real problems.
-        </p>
-
-        <a href="images/resume.pdf" download class="download-btn">Download Resume</a>
-        <p class="last-updated">Last updated: Nov 1, 2025</p>
-      </div>
-    </section>
-
-    <section class="panel wrap" id="skills" data-watch="skills" aria-labelledby="skills-heading">
-      <div class="panel__inner">
-        <h2 class="section-title" id="skills-heading">Skills & Tools</h2>
-        <hr class="rule" />
-
-        <p class="lead" style="margin-top: 14px;">
-          Tools and skills I actively use in real projects.
-        </p>
-
-        <div class="skills-grid">
-          <div class="skills-block">
-            <h3>Frontend</h3>
-            <ul>
-              <li>JavaScript (ES6+)</li>
-              <li>TypeScript</li>
-              <li>React</li>
-              <li>TailwindCSS</li>
-              <li>HTML5 / CSS3</li>
-            </ul>
-          </div>
-
-          <div class="skills-block">
-            <h3>Backend</h3>
-            <ul>
-              <li>Node.js</li>
-              <li>Express.js</li>
-              <li>REST APIs</li>
-            </ul>
-          </div>
-
-          <div class="skills-block">
-            <h3>Embedded</h3>
-            <ul>
-              <li>Arduino / ESP32</li>
-              <li>C / C++</li>
-              <li>GPIO / PWM / ADC</li>
-              <li>I2C / SPI / UART</li>
-              <li>Sensor integration</li>
-              <li>WiFi / Bluetooth (BLE)</li>
-            </ul>
-          </div>
-
-          <div class="skills-block">
-            <h3>Tools</h3>
-            <ul>
-              <li>Git</li>
-              <li>Linux</li>
-              <li>Python</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="panel wrap" id="projects" data-watch="projects" aria-labelledby="projects-heading">
-      <div class="panel__inner">
-        <h2 class="section-title" id="projects-heading">Featured Projects</h2>
-        <hr class="rule" />
-
-        <div class="project-list">
-          <article class="project">
-            <h3>Survwin</h3>
-            <p>A Discord-based platform where users earn rewards by completing surveys.</p>
-            <div class="links">
-              <a href="https://survwin.netlify.app" target="_blank" rel="noopener">Open</a>
-            </div>
-          </article>
-
-          <article class="project">
-            <h3>Samples</h3>
-            <p>A collection of UI and web interface samples showcasing layout, interaction, and visual design.</p>
-            <div class="links">
-              <a href="/samples/">Open</a>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="panel wrap" id="experience" data-watch="experience" aria-labelledby="exp-heading">
-      <div class="panel__inner">
-        <h2 class="section-title" id="exp-heading">Experience & Education</h2>
-        <hr class="rule" />
-
-        <div class="timeline">
-          <div class="timeline-item">
-            <h3>Founder — Survwin <span style="color: var(--muted); font-weight: 400;">(2025–Present)</span></h3>
-            <p>Created and manage <strong>Survwin</strong>, overseeing development, automation, and community growth.</p>
-          </div>
-
-          <div class="timeline-item">
-            <h3>Robotics Team President <span style="color: var(--muted); font-weight: 400;">(2024–2025)</span></h3>
-            <p><strong>Camarin High School</strong> — Led builds, coordinated code, and managed projects.</p>
-          </div>
-
-          <div class="timeline-item">
-            <h3>ICT Club President <span style="color: var(--muted); font-weight: 400;">(2024–2025)</span></h3>
-            <p><strong>Camarin High School</strong> — Ran workshops and sessions for student developers.</p>
-          </div>
-
-          <div class="timeline-item">
-            <h3>Layout Designer — The Icon (DSPC) <span style="color: var(--muted); font-weight: 400;">(2024–2025)</span></h3>
-            <p><strong>Camarin High School</strong> — Crafted digital layouts and publication spreads.</p>
-          </div>
-
-          <div class="timeline-item">
-            <h3>Education</h3>
-            <p><strong>2025 – Present</strong> — Grade 11 ICT (Computer Programming) at Metro Manila College.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="panel wrap" id="contact" data-watch="contact" aria-labelledby="contact-heading">
-      <div class="panel__inner">
-        <h2 class="section-title" id="contact-heading">Let’s Build Something</h2>
-        <hr class="rule" />
-
-        <p class="lead">
-          I’m open to building useful tools, learning from real projects, and working with people who care about clean code and real-world impact.
-        </p>
-
-        <div class="contact-actions">
-          <a class="download-btn" href="mailto:cadizal06@gmail.com">Email Me</a>
-          <a class="download-btn" href="https://github.com/toniec" target="_blank" rel="noopener">GitHub</a>
-        </div>
-
-        <p class="contact-note">
-          Based in the Philippines • Student developer • Front-end focused • Remote-ready • Open to projects
-        </p>
-
-        <footer class="site-foot" role="contentinfo">
-          <div class="foot-inner">
-            <div>© <span id="year"></span> Tonie C.</div>
-            <div><small>hire me pls</small></div>
-          </div>
-        </footer>
-      </div>
-    </section>
-  </div>
-
-  <script>
-    // Always show page once JS is loaded (avoids "blank forever" if something fails later)
-    document.documentElement.classList.add("js");
-
-    document.getElementById("year").innerText = new Date().getFullYear();
-
-    window.addEventListener("load", () => {
-      document.body.classList.add("page-ready");
-    });
-
-    // Fixes mobile address-bar / keyboard height issues (uses real innerHeight)
-    (function setViewportVars() {
-      const set = () => {
-        const h = window.innerHeight || document.documentElement.clientHeight || 0;
-        document.documentElement.style.setProperty("--view-h", `${h}px`);
-      };
-      set();
-      window.addEventListener("resize", set, { passive: true });
-      window.addEventListener("orientationchange", set, { passive: true });
-    })();
-
-    (function themeToggle() {
-      const html = document.documentElement;
-      const btn = document.getElementById("themeToggle");
-      const label = document.getElementById("themeLabel");
-      const KEY = "paperTheme";
-
-      function apply(theme) {
-        html.style.transition = "background-color 240ms var(--ease), color 240ms var(--ease)";
-        html.setAttribute("data-theme", theme);
-        const isDark = theme === "paper-dark";
-        label.textContent = isDark ? "Dark" : "Light";
-        btn.setAttribute("aria-label", isDark ? "Switch to light theme" : "Switch to dark theme");
-        setTimeout(() => { html.style.transition = ""; }, 260);
-      }
-
-      const saved = localStorage.getItem(KEY);
-      if (saved === "paper-light" || saved === "paper-dark") apply(saved);
-      else apply("paper-dark");
-
-      btn.addEventListener("click", () => {
-        const current = html.getAttribute("data-theme") || "paper-dark";
-        const next = current === "paper-dark" ? "paper-light" : "paper-dark";
-        localStorage.setItem(KEY, next);
-        apply(next);
-      });
-    })();
-
- // Smooth scroll for internal links (nav + buttons) — more reliable
-  (function smoothAnchors() {
-    function scrollToId(id) {
-      const el = document.getElementById(id);
-      if (!el) return;
-
-      // Uses .panel { scroll-margin-top: ... } so the fixed header won't cover it
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-
-    document.addEventListener("click", (e) => {
-      const a = e.target.closest('a[href^="#"]');
-      if (!a) return;
-
-      const href = a.getAttribute("href") || "";
-      const id = href.slice(1);
-      if (!id) return;
-
-      e.preventDefault();
-
-      // Update URL hash in the simplest/most compatible way
-      if (location.hash !== `#${id}`) location.hash = id;
-
-      scrollToId(id);
-    });
-
-    // If user opens with a hash, align nicely under header
-    window.addEventListener("load", () => {
-      const id = (location.hash || "").slice(1);
-      if (!id) return;
-
-      // Wait a frame so layout/--view-h is settled
-      requestAnimationFrame(() => scrollToId(id));
-    });
-  })();
-
-    // Active section highlighting
-    (function activeNav() {
-      const links = Array.from(document.querySelectorAll('nav.nav-links a[data-section]'));
-      const sections = links
-        .map(a => document.getElementById(a.dataset.section))
-        .filter(Boolean);
-
-      function setActive(id) {
-        links.forEach(a => a.classList.toggle("is-active", a.dataset.section === id));
-      }
-
-      // Fallback if IO isn't supported
-      if (!("IntersectionObserver" in window)) {
-        setActive((location.hash || "#home").slice(1));
-        return;
-      }
-
-      const obs = new IntersectionObserver((entries) => {
-        const visible = entries
-          .filter(en => en.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-
-        if (visible && visible.target && visible.target.id) {
-          setActive(visible.target.id);
-        }
-      }, {
-        root: null,
-        // Activate when section is near the top portion of the screen
-        rootMargin: "-25% 0px -60% 0px",
-        threshold: [0.05, 0.1, 0.2, 0.35, 0.5]
-      });
-
-      sections.forEach(sec => obs.observe(sec));
-
-      // Set initial active state
-      setActive((location.hash || "#home").slice(1));
-      window.addEventListener("hashchange", () => setActive((location.hash || "#home").slice(1)));
-    })();
-  </script>
-  
-=======
 
 <a href="#main" class="skip-link">Skip to main content</a>
 
@@ -1825,10 +1026,10 @@ footer {
           <div class="skill-cat">Frontend<span class="count">7 tools</span></div>
           <div>
             <div class="skill-chips">
-              <span class="skill-chip">HTML &amp; CSS</span>
-              <span class="skill-chip">JavaScript</span>
-              <span class="skill-chip">TypeScript</span>
-              <span class="skill-chip">React</span>
+              <span class="skill-chip" data-tech="html">HTML &amp; CSS</span>
+              <span class="skill-chip" data-tech="js">JavaScript</span>
+              <span class="skill-chip" data-tech="ts">TypeScript</span>
+              <span class="skill-chip" data-tech="react">React</span>
               <span class="skill-chip">Tailwind CSS</span>
               <span class="skill-chip">Next.js</span>
               <span class="skill-chip">Framer Motion</span>
@@ -1841,10 +1042,10 @@ footer {
           <div class="skill-cat">Backend<span class="count">11 tools</span></div>
           <div>
             <div class="skill-chips">
-              <span class="skill-chip">Node.js</span>
+              <span class="skill-chip" data-tech="node">Node.js</span>
               <span class="skill-chip">Express</span>
               <span class="skill-chip">REST APIs</span>
-              <span class="skill-chip">Python</span>
+              <span class="skill-chip" data-tech="python">Python</span>
               <span class="skill-chip">AsyncIO</span>
               <span class="skill-chip">MongoDB</span>
               <span class="skill-chip">PostgreSQL</span>
@@ -1881,8 +1082,8 @@ footer {
               <span class="skill-chip">Linux</span>
               <span class="skill-chip">NPM packages</span>
               <span class="skill-chip">PyPI packages</span>
-              <span class="skill-chip">Discord API</span>
-              <span class="skill-chip">Docker</span>
+              <span class="skill-chip" data-tech="discord">Discord API</span>
+              <span class="skill-chip" data-tech="docker">Docker</span>
               <span class="skill-chip">CI/CD</span>
             </div>
             <p class="skill-note">Daily-driver tools — published packages to both NPM and PyPI, comfortable in terminal-first workflows.</p>
@@ -1910,9 +1111,9 @@ footer {
             system.
           </p>
           <div class="project-tags">
-            <span class="project-tag">PYTHON</span>
+            <span class="project-tag" data-tech="python">PYTHON</span>
             <span class="project-tag">ASYNCIO</span>
-            <span class="project-tag">DISCORD API</span>
+            <span class="project-tag" data-tech="discord">DISCORD API</span>
             <span class="project-tag">OPEN SOURCE</span>
             <span class="project-tag">PYPI</span>
           </div>
@@ -1975,6 +1176,8 @@ footer {
     </div>
   </section>
 
+
+  <!-- ═══ CONTACT ═══ -->
   <section id="contact" class="section" aria-label="Contact">
     <div class="wrap">
       <p class="eyebrow"><span class="num">04</span> Contact</p>
@@ -2154,6 +1357,5 @@ footer {
 /* ── FOOTER YEAR ──────────────────────────────────────── */
 document.getElementById('yr').textContent = new Date().getFullYear();
 </script>
->>>>>>> af428599cdb0ebad3d6960441746f53098640834
 </body>
 </html>
