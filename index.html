@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<<<<<<< HEAD
 
 <head>
   <meta charset="utf-8" />
@@ -1556,4 +1557,1364 @@
   </script>
 </body>
 
+=======
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Tonie C. — Aspiring Full Stack Developer</title>
+<meta name="description" content="Tonie C. is an aspiring full stack developer from the Philippines, building web applications, backend systems, and embedded projects while learning in public."/>
+<meta name="author" content="Tonie C."/>
+<meta name="color-scheme" content="dark light"/>
+<meta name="theme-color" content="#000000" id="meta-theme-color"/>
+<script>
+  /* Applied before first paint so a returning visitor's saved theme
+     doesn't flash dark-then-light. Dark is the default when nothing
+     is saved yet — matches the page's base (no-override) styling. */
+  (function () {
+    try {
+      var saved = localStorage.getItem('theme');
+      if (saved === 'light') {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    } catch (e) { /* localStorage unavailable — falls back to dark default */ }
+  })();
+</script>
+
+<!-- Open Graph -->
+<meta property="og:title" content="Tonie C. — Aspiring Full Stack Developer"/>
+<meta property="og:description" content="Building web applications, backend systems, and embedded projects. Learning in public, one project at a time."/>
+<meta property="og:type" content="website"/>
+
+<link rel="icon" href="images/favicon.ico" type="image/x-icon"/>
+
+<!--
+  Type system: JetBrains Mono for headings/labels/UI (monospace, pixel-adjacent,
+  reads as "developer") + Inter for body copy (clean, highly legible at small sizes).
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+
+<style>
+/* ═══════════════════════════════════════════════════════
+   TOKENS — strict black & white, no accent color
+═══════════════════════════════════════════════════════ */
+:root {
+  /* Surfaces — pure black default, no warmth */
+  --bg:          #000000;
+  --surface:     #0a0a0a;
+  --surface-2:   #121212;
+
+  /* Borders — hairline, low contrast on purpose */
+  --border:      #262626;
+  --border-h:    #404040;
+
+  /* Ink — white down to near-invisible, hierarchy by opacity/weight only */
+  --ink:         #ffffff;
+  --ink-2:       #a3a3a3;
+  --ink-3:       #757575; /* was #6b6b6b — bumped to clear WCAG AA (4.56:1 on #000) for the small text that relies on this token: .eyebrow, .hero-role, .skill-note, .project-tag, .stat-label, etc. */
+  --ink-4:       #2e2e2e;
+
+  /* Type */
+  --ff-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Consolas, monospace;
+  --ff-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Motion */
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Layout */
+  --max-w:  760px;
+  --pad:    clamp(20px, 6vw, 64px);
+  --rule:   1px solid var(--border);
+
+  /* ── Tech accent hues ────────────────────────────────
+     Scoped to .skill-chip / .project-tag only (see rules below).
+     Dark-mode values sit here at moderate saturation; light mode
+     redefines the same names at lower saturation/deeper value so
+     the mapping (--tech-js = "JavaScript") never changes, only
+     how loud it's allowed to be per theme. */
+  --tech-html:    #e05d3c; /* HTML / CSS — the classic orange-red */
+  --tech-js:      #d8b23c; /* JavaScript — dimmed off pure yellow so it doesn't flare on black */
+  --tech-ts:      #4d8fc9; /* TypeScript blue */
+  --tech-react:   #56b6c9; /* React cyan */
+  --tech-node:    #5a9e5f; /* Node.js green */
+  --tech-python:  #4f8fbf; /* Python blue */
+  --tech-discord: #7c8fe0; /* Discord blurple */
+  --tech-docker:  #4a9fd8; /* Docker blue, separated from TS/Python by chip label context */
+
+  /* Adaptive alpha — how strongly the hue tints background/border.
+     Dark mode can afford more visibility; overridden lower in light mode. */
+  --tech-bg-a:     0.10;
+  --tech-border-a: 0.42;
+  --tech-bg-a-hov: 0.16;
+  --tech-border-a-hov: 0.62;
+}
+
+/* Light theme — same structure, inverted grayscale. Dark stays the default. */
+:root[data-theme="light"] {
+  --bg:          #ffffff;
+  --surface:     #f5f5f5;
+  --surface-2:   #ebebeb;
+
+  /* Stronger borders for structure */
+  --border:      #d0d0d0;
+  --border-h:    #a8a8a8;
+
+  /* Fix contrast */
+  --ink:         #000000;   /* main text stays pure black */
+  --ink-2:       #404040;   /* was too light → now readable secondary */
+  --ink-3:       #6e6e6e;   /* mid gray for labels — already clears AA (5.10:1) */
+  --ink-4:       #bdbdbd;   /* subtle only, not for important text */
+
+  /* Tech accent hues — same variable names, deepened/desaturated so a
+     faint tint on white doesn't turn chalky or reduce text contrast.
+     Text itself never uses these; only background/border alpha do,
+     so this swap alone is enough to keep chips legible on white. */
+  --tech-html:    #c14a2e;
+  --tech-js:      #9c7a1f;
+  --tech-ts:      #2f6ba8;
+  --tech-react:   #2d8299;
+  --tech-node:    #3f7d43;
+  --tech-python:  #33689a;
+  --tech-discord: #5566c2;
+  --tech-docker:  #2f76a8;
+
+  /* Light mode needs a lighter touch to hold contrast on white. */
+  --tech-bg-a:     0.07;
+  --tech-border-a: 0.38;
+  --tech-bg-a-hov: 0.12;
+  --tech-border-a-hov: 0.55;
+}
+
+/* ═══════════════════════════════════════════════════════
+   RESET
+═══════════════════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; }
+
+body {
+  font-family: var(--ff-body);
+  background: var(--bg);
+  color: var(--ink);
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+}
+::selection { background: var(--ink); color: var(--bg); }
+
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+
+/* ═══════════════════════════════════════════════════════
+   ACCESSIBILITY
+═══════════════════════════════════════════════════════ */
+.skip-link {
+  position: absolute;
+  top: -48px; left: 16px;
+  background: var(--ink);
+  color: var(--bg);
+  padding: 10px 18px;
+  font-family: var(--ff-mono);
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  z-index: 9999;
+  transition: top 0.15s var(--ease);
+}
+.skip-link:focus { top: 12px; }
+
+:focus-visible {
+  outline: 1px solid var(--ink);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   SHARED
+═══════════════════════════════════════════════════════ */
+.wrap { max-width: var(--max-w); margin: 0 auto; padding-left: var(--pad); padding-right: var(--pad); }
+
+.eyebrow {
+  font-family: var(--ff-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--ink-3);
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 40px;
+}
+.eyebrow .num { color: var(--ink-2); }
+.eyebrow::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.heading {
+  font-family: var(--ff-mono);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  color: var(--ink);
+}
+
+/* ═══════════════════════════════════════════════════════
+   REVEAL — one subtle fade, nothing else
+═══════════════════════════════════════════════════════ */
+.reveal {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
+}
+.reveal.in { opacity: 1; transform: none; }
+.reveal-d1 { transition-delay: 0.06s; }
+.reveal-d2 { transition-delay: 0.12s; }
+
+/* ═══════════════════════════════════════════════════════
+   HEADER / NAV
+═══════════════════════════════════════════════════════ */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(0,0,0,0.88);
+  backdrop-filter: blur(8px);
+  border-bottom: var(--rule);
+}
+.nav-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--pad);
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.logo {
+  font-family: var(--ff-mono);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+.nav-links {
+  display: flex;
+  gap: 28px;
+  list-style: none;
+}
+.nav-links a {
+  font-family: var(--ff-mono);
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  color: var(--ink-2);
+  transition: color 0.15s;
+  position: relative;
+  padding: 4px 0;
+}
+.nav-links a:hover,
+.nav-links a:focus-visible { color: var(--ink); }
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  left: 0; bottom: 0;
+  width: 100%; height: 1px;
+  background: var(--ink);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.2s var(--ease);
+}
+.nav-links a:hover::after,
+.nav-links a:focus-visible::after { transform: scaleX(1); }
+
+.nav-controls {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.theme-toggle {
+  font-family: var(--ff-mono);
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--ink-2);
+  background: transparent;
+  border: 1px solid var(--border-h);
+  padding: 6px 11px;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+.theme-toggle:hover,
+.theme-toggle:focus-visible {
+  border-color: var(--ink);
+  color: var(--ink);
+  background: var(--surface-2);
+}
+
+.burger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+}
+.burger span {
+  width: 20px; height: 1px;
+  background: var(--ink);
+  transition: transform 0.2s, opacity 0.2s;
+}
+.burger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+.burger.open span:nth-child(2) { opacity: 0; }
+.burger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+/* ═══════════════════════════════════════════════════════
+   HERO — signature element: terminal-style intro
+═══════════════════════════════════════════════════════ */
+#hero {
+  padding: clamp(64px, 14vh, 140px) 0 clamp(56px, 10vh, 96px);
+  border-bottom: var(--rule);
+}
+.hero-prompt {
+  font-family: var(--ff-mono);
+  font-size: 13px;
+  color: var(--ink-3);
+  margin-bottom: 24px;
+  opacity: 0;
+  animation: rise 0.5s var(--ease) 0.1s forwards;
+}
+.hero-prompt .sym { color: var(--ink-2); }
+
+.hero-name {
+  font-family: var(--ff-mono);
+  font-weight: 700;
+  font-size: clamp(40px, 8vw, 76px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  opacity: 0;
+  animation: rise 0.55s var(--ease) 0.2s forwards;
+}
+.hero-role {
+  font-family: var(--ff-mono);
+  font-size: clamp(13px, 1.6vw, 16px);
+  color: var(--ink-3);
+  margin-top: 10px;
+  opacity: 0;
+  animation: rise 0.55s var(--ease) 0.3s forwards;
+}
+
+.hero-tagline {
+  margin-top: 32px;
+  max-width: 52ch;
+  font-size: 15px;
+  line-height: 1.85;
+  color: var(--ink-2);
+  font-weight: 300;
+  opacity: 0;
+  animation: rise 0.55s var(--ease) 0.4s forwards;
+}
+
+.hero-cta {
+  margin-top: 36px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: rise 0.55s var(--ease) 0.5s forwards;
+}
+
+.hero-meta {
+  margin-top: 44px;
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: rise 0.55s var(--ease) 0.6s forwards;
+}
+.hero-meta-item {
+  font-family: var(--ff-mono);
+  font-size: 11px;
+  letter-spacing: 0.03em;
+  color: var(--ink-3);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ═══════════════════════════════════════════════════════
+   BUTTONS — pure B&W, invert on hover
+═══════════════════════════════════════════════════════ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--ff-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  padding: 11px 20px;
+  border: 1px solid var(--ink);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  background: transparent;
+  color: var(--ink);
+}
+.btn-primary {
+  background: var(--ink);
+  color: var(--bg);
+}
+.btn-primary:hover,
+.btn-primary:focus-visible {
+  background: transparent;
+  color: var(--ink);
+}
+.btn-ghost {
+  border-color: var(--border-h);
+  color: var(--ink-2);
+}
+.btn-ghost:hover,
+.btn-ghost:focus-visible {
+  border-color: var(--ink);
+  color: var(--ink);
+  background: var(--surface-2);
+}
+
+/* ═══════════════════════════════════════════════════════
+   SECTION BASE
+═══════════════════════════════════════════════════════ */
+.section {
+  padding: clamp(56px, 9vw, 96px) 0;
+  border-bottom: var(--rule);
+}
+/* Contact is the last section before the footer — no divider needed,
+   matches the page's original visual rhythm (was an inline style). */
+#contact.section {
+  border-bottom: none;
+}
+
+.section-title {
+  font-family: var(--ff-mono);
+  font-weight: 700;
+  font-size: clamp(24px, 3vw, 34px);
+  letter-spacing: -0.01em;
+  margin-bottom: 12px;
+}
+.section-sub {
+  font-size: 14.5px;
+  line-height: 1.8;
+  color: var(--ink-2);
+  font-weight: 300;
+  max-width: 56ch;
+  margin-bottom: 48px;
+}
+
+/* ═══════════════════════════════════════════════════════
+   ABOUT
+═══════════════════════════════════════════════════════ */
+.about-body p {
+  font-size: 14.5px;
+  line-height: 1.9;
+  color: var(--ink-2);
+  font-weight: 300;
+  margin-bottom: 18px;
+}
+.about-body p:last-child { margin-bottom: 0; }
+.about-body strong { color: var(--ink); font-weight: 500; }
+
+.about-goals {
+  margin-top: 40px;
+  border-top: var(--rule);
+}
+.goal-row {
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: 20px;
+  padding: 18px 0;
+  border-bottom: var(--rule);
+}
+.goal-tag {
+  font-family: var(--ff-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.04em;
+  color: var(--ink-3);
+  padding-top: 2px;
+}
+.goal-text {
+  font-size: 13.5px;
+  line-height: 1.75;
+  color: var(--ink-2);
+  font-weight: 300;
+}
+.goal-text strong { color: var(--ink); font-weight: 500; }
+
+/* ═══════════════════════════════════════════════════════
+   SKILLS — data-table feel, no color coding
+═══════════════════════════════════════════════════════ */
+.skills-list {
+  display: flex;
+  flex-direction: column;
+}
+.skill-row {
+  border-top: var(--rule);
+  padding: 22px 0;
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 24px;
+  align-items: start;
+}
+.skills-list .skill-row:last-child { border-bottom: var(--rule); }
+
+.skill-cat {
+  font-family: var(--ff-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+  padding-top: 4px;
+}
+.skill-cat .count {
+  display: block;
+  margin-top: 4px;
+  font-weight: 400;
+  color: var(--ink-3);
+  font-size: 10.5px;
+}
+
+.skill-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-bottom: 10px;
+}
+.skill-chip {
+  font-family: var(--ff-mono);
+  font-size: 11.5px;
+  padding: 5px 10px;
+  border: 1px solid var(--border);
+  color: var(--ink-2);
+  transition: border-color 0.15s, background-color 0.15s, color 0.15s;
+}
+.skill-chip:hover {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
+/* ── Tech color mapping ──────────────────────────────────
+   Only fires when a chip carries data-tech; chips without one
+   (generic entries like "REST APIs") keep the plain grayscale
+   rule above untouched. Text color intentionally stays on the
+   --ink system — only border/background borrow the hue, and only
+   at low alpha, so tint reads as accent rather than a colored label. */
+.skill-chip[data-tech] {
+  border-color: color-mix(in srgb, var(--tech-color) calc(var(--tech-border-a) * 100%), var(--border));
+  background: color-mix(in srgb, var(--tech-color) calc(var(--tech-bg-a) * 100%), transparent);
+}
+.skill-chip[data-tech]:hover {
+  border-color: color-mix(in srgb, var(--tech-color) calc(var(--tech-border-a-hov) * 100%), var(--border));
+  background: color-mix(in srgb, var(--tech-color) calc(var(--tech-bg-a-hov) * 100%), transparent);
+  color: var(--ink);
+}
+
+.skill-chip[data-tech="html"]    { --tech-color: var(--tech-html); }
+.skill-chip[data-tech="js"]      { --tech-color: var(--tech-js); }
+.skill-chip[data-tech="ts"]      { --tech-color: var(--tech-ts); }
+.skill-chip[data-tech="react"]   { --tech-color: var(--tech-react); }
+.skill-chip[data-tech="node"]    { --tech-color: var(--tech-node); }
+.skill-chip[data-tech="python"]  { --tech-color: var(--tech-python); }
+.skill-chip[data-tech="discord"] { --tech-color: var(--tech-discord); }
+.skill-chip[data-tech="docker"]  { --tech-color: var(--tech-docker); }
+.skill-note {
+  font-size: 12.5px;
+  line-height: 1.7;
+  color: var(--ink-3);
+  font-weight: 300;
+  max-width: 60ch;
+}
+
+/* ═══════════════════════════════════════════════════════
+   PROJECTS
+═══════════════════════════════════════════════════════ */
+.project {
+  border: var(--rule);
+}
+.project-top {
+  padding: 32px;
+  border-bottom: var(--rule);
+}
+.project-badge {
+  display: inline-block;
+  font-family: var(--ff-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  border: 1px solid var(--border-h);
+  padding: 4px 9px;
+  margin-bottom: 20px;
+}
+.project-title {
+  font-family: var(--ff-mono);
+  font-weight: 700;
+  font-size: clamp(22px, 2.8vw, 30px);
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin-bottom: 16px;
+}
+.project-desc {
+  font-size: 14px;
+  line-height: 1.85;
+  color: var(--ink-2);
+  font-weight: 300;
+  max-width: 62ch;
+  margin-bottom: 24px;
+}
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 26px;
+}
+.project-tag {
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  letter-spacing: 0.03em;
+  padding: 4px 9px;
+  border: 1px solid var(--border);
+  color: var(--ink-3);
+  transition: border-color 0.15s, background-color 0.15s;
+}
+
+/* ── Tech color mapping (mirrors .skill-chip) ──────────────
+   Tags without data-tech (OPEN SOURCE, PYPI as a channel label,
+   etc.) fall through to the plain grayscale rule above. */
+.project-tag[data-tech] {
+  border-color: color-mix(in srgb, var(--tech-color) calc(var(--tech-border-a) * 100%), var(--border));
+  background: color-mix(in srgb, var(--tech-color) calc(var(--tech-bg-a) * 100%), transparent);
+}
+
+.project-tag[data-tech="html"]    { --tech-color: var(--tech-html); }
+.project-tag[data-tech="js"]      { --tech-color: var(--tech-js); }
+.project-tag[data-tech="ts"]      { --tech-color: var(--tech-ts); }
+.project-tag[data-tech="react"]   { --tech-color: var(--tech-react); }
+.project-tag[data-tech="node"]    { --tech-color: var(--tech-node); }
+.project-tag[data-tech="python"]  { --tech-color: var(--tech-python); }
+.project-tag[data-tech="discord"] { --tech-color: var(--tech-discord); }
+.project-tag[data-tech="docker"]  { --tech-color: var(--tech-docker); }
+.project-links { display: flex; gap: 10px; flex-wrap: wrap; }
+
+.project-bottom {
+  padding: 32px;
+  background: var(--surface);
+}
+.detail-label {
+  font-family: var(--ff-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 16px;
+}
+.arch-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+.arch-list li {
+  display: flex;
+  gap: 12px;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--ink-2);
+  font-weight: 300;
+}
+.arch-list li::before {
+  content: '—';
+  color: var(--ink-3);
+  flex-shrink: 0;
+}
+.arch-list code {
+  font-family: var(--ff-mono);
+  font-size: 12px;
+  color: var(--ink);
+  background: var(--surface-2);
+  padding: 1px 5px;
+}
+
+.use-case-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+  border: var(--rule);
+}
+.use-case {
+  padding: 14px 16px;
+  background: var(--surface);
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--ink-2);
+  font-weight: 300;
+}
+.use-case strong {
+  display: block;
+  font-family: var(--ff-mono);
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  margin-bottom: 4px;
+}
+
+.project-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border: var(--rule);
+  border-top: none;
+}
+.project-stat {
+  padding: 16px;
+  border-right: var(--rule);
+  text-align: center;
+}
+.project-stat:last-child { border-right: none; }
+.stat-value {
+  font-family: var(--ff-mono);
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.stat-label {
+  font-family: var(--ff-mono);
+  font-size: 9px;
+  letter-spacing: 0.04em;
+  color: var(--ink-3);
+}
+
+/* ═══════════════════════════════════════════════════════
+   CONTACT
+═══════════════════════════════════════════════════════ */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+  border: var(--rule);
+}
+.contact-item {
+  background: var(--bg);
+  padding: 22px 24px;
+  text-decoration: none;
+  color: var(--ink-2);
+  transition: background 0.15s, color 0.15s;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.contact-item:hover,
+.contact-item:focus-visible {
+  background: var(--surface);
+  color: var(--ink);
+}
+/* Non-interactive contact entry (e.g. Location) — same visual shell,
+   but no hover affordance since there's nothing to activate. */
+.contact-item.is-static {
+  cursor: default;
+}
+.contact-item-label {
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.contact-item-value {
+  font-family: var(--ff-mono);
+  font-size: 13.5px;
+}
+
+.contact-actions {
+  margin-top: 32px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+#copy-status {
+  font-family: var(--ff-mono);
+  font-size: 11px;
+  color: var(--ink-3);
+}
+
+
+
+/* ═══════════════════════════════════════════════════════
+   REFERENCES (formerly "trust/testimonials") — plain, no quote marks
+═══════════════════════════════════════════════════════ */
+.ref-list {
+  display: flex;
+  flex-direction: column;
+}
+.ref-item {
+  border-top: var(--rule);
+  padding: 24px 0;
+}
+.ref-list .ref-item:last-child { border-bottom: var(--rule); }
+.ref-quote {
+  font-size: 13.5px;
+  line-height: 1.8;
+  color: var(--ink-2);
+  font-weight: 300;
+  max-width: 62ch;
+  margin-bottom: 12px;
+}
+.ref-author {
+  font-family: var(--ff-mono);
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  color: var(--ink-3);
+}
+
+/* ═══════════════════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════════════════ */
+footer {
+  padding: 28px 0;
+}
+.footer-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--pad);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.footer-copy {
+  font-family: var(--ff-mono);
+  font-size: 10.5px;
+  color: var(--ink-3);
+}
+.footer-links {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+}
+.footer-links a {
+  font-family: var(--ff-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.02em;
+  color: var(--ink-3);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.footer-links a:hover { color: var(--ink); }
+
+/* ═══════════════════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════════════════ */
+@media (max-width: 640px) {
+  .nav-links { display: none; }
+  .burger { display: flex; }
+
+  .nav-links.mobile-open {
+    display: flex;
+    position: fixed;
+    inset: 60px 0 0 0;
+    background: var(--bg);
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    padding: 24px var(--pad);
+    z-index: 90;
+  }
+  .nav-links.mobile-open a { font-size: 15px; padding: 12px 0; width: 100%; }
+
+  .skill-row { grid-template-columns: 1fr; gap: 10px; }
+  .goal-row { grid-template-columns: 1fr; gap: 6px; }
+  .use-case-grid { grid-template-columns: 1fr; }
+  .contact-grid { grid-template-columns: 1fr; }
+  .project-stats { grid-template-columns: repeat(2, 1fr); }
+  .project-stat:nth-child(2) { border-right: none; }
+  .project-stat:nth-child(3),
+  .project-stat:nth-child(4) { border-top: var(--rule); }
+}
+</style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Skip to main content</a>
+
+<header>
+  <div class="nav-inner">
+    <a class="logo" href="#hero" aria-label="Tonie C. — Home">
+      tonie
+    </a>
+    <nav>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#about">about</a></li>
+        <li><a href="#skills">skills</a></li>
+        <li><a href="#projects">projects</a></li>
+        <li><a href="#contact">contact</a></li>
+      </ul>
+    </nav>
+    <div class="nav-controls">
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-pressed="false">
+        <span id="theme-toggle-label" aria-live="polite">DARK</span>
+      </button>
+      <button class="burger" id="burger" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="nav-links">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ═══ HERO ═══ -->
+  <section id="hero" aria-label="Introduction">
+    <div class="wrap">
+      <p class="hero-prompt"><span class="sym">$</span> whoami</p>
+      <h1 class="hero-name">Tonie C.</h1>
+      <p class="hero-role">Aspiring Full Stack Developer — Philippines</p>
+
+      <p class="hero-tagline">
+        I build web applications, backend services, and the occasional embedded
+        project. Still early in my career — learning by shipping real things,
+        not just following tutorials.
+      </p>
+
+      <div class="hero-cta">
+        <a href="#projects" class="btn btn-primary">View Projects</a>
+        <a href="#contact" class="btn btn-ghost">Get in Touch</a>
+      </div>
+
+      <div class="hero-meta" role="list">
+        <span class="hero-meta-item" role="listitem">Junior / entry-level</span>
+        <span class="hero-meta-item" role="listitem">Remote-friendly</span>
+        <span class="hero-meta-item" role="listitem">Philippines-based</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ ABOUT ═══ -->
+  <section id="about" class="section" aria-label="About">
+    <div class="wrap">
+      <p class="eyebrow"><span class="num">01</span> About</p>
+      <h2 class="section-title reveal">Who I am</h2>
+      <p class="section-sub reveal reveal-d1">Where I've been, and what I'm working toward.</p>
+
+      <div class="about-body reveal reveal-d2">
+        <p>
+          I'm <strong>Tonie</strong>, a developer from the Philippines working
+          toward a full-stack career. I build across the stack — web
+          interfaces, backend services, and occasional embedded systems work.
+        </p>
+        <p>
+          I don't have years of professional experience yet, but I approach
+          learning the way I approach code: methodically, with real projects
+          over tutorials whenever possible. I'd rather understand a system
+          deeply than collect tools I don't fully use.
+        </p>
+        <p>
+          Currently looking for <strong>junior roles, internships, or project
+          collaborations</strong> where I can contribute meaningfully and keep
+          growing.
+        </p>
+      </div>
+
+      <div class="about-goals reveal reveal-d2">
+        <div class="goal-row">
+          <span class="goal-tag">BUILD</span>
+          <p class="goal-text"><strong>Maintainable systems</strong> — code that reads clearly and holds up over time matters more than clever solutions.</p>
+        </div>
+        <div class="goal-row">
+          <span class="goal-tag">WORK</span>
+          <p class="goal-text"><strong>Across layers</strong> — comfortable moving between UI, server, and hardware without a full context switch.</p>
+        </div>
+        <div class="goal-row">
+          <span class="goal-tag">LEARN</span>
+          <p class="goal-text"><strong>By shipping</strong> — real feedback from real software is the fastest way I know to improve.</p>
+        </div>
+        <div class="goal-row">
+          <span class="goal-tag">LOCATE</span>
+          <p class="goal-text"><strong>Philippines, remote-friendly</strong> — comfortable working asynchronously across time zones.</p>
+        </div>
+        <div class="goal-row">
+          <span class="goal-tag">FOCUS</span>
+          <p class="goal-text"><strong>Real-world impact</strong> — solving actual problems, not just showcasing technical ability.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ SKILLS ═══ -->
+  <section id="skills" class="section" aria-label="Skills">
+    <div class="wrap">
+      <p class="eyebrow"><span class="num">02</span> Skills</p>
+      <h2 class="section-title reveal">What I work with</h2>
+      <p class="section-sub reveal reveal-d1">Tools I use regularly, grouped by where they sit in the stack.</p>
+
+      <div class="skills-list reveal reveal-d2">
+        <div class="skill-row">
+          <div class="skill-cat">Frontend<span class="count">7 tools</span></div>
+          <div>
+            <div class="skill-chips">
+              <span class="skill-chip" data-tech="html">HTML &amp; CSS</span>
+              <span class="skill-chip" data-tech="js">JavaScript</span>
+              <span class="skill-chip" data-tech="ts">TypeScript</span>
+              <span class="skill-chip" data-tech="react">React</span>
+              <span class="skill-chip">Tailwind CSS</span>
+              <span class="skill-chip">Next.js</span>
+              <span class="skill-chip">Framer Motion</span>
+            </div>
+            <p class="skill-note">Primary focus — built several production interfaces and this portfolio from scratch.</p>
+          </div>
+        </div>
+
+        <div class="skill-row">
+          <div class="skill-cat">Backend<span class="count">11 tools</span></div>
+          <div>
+            <div class="skill-chips">
+              <span class="skill-chip" data-tech="node">Node.js</span>
+              <span class="skill-chip">Express</span>
+              <span class="skill-chip">REST APIs</span>
+              <span class="skill-chip" data-tech="python">Python</span>
+              <span class="skill-chip">AsyncIO</span>
+              <span class="skill-chip">MongoDB</span>
+              <span class="skill-chip">PostgreSQL</span>
+              <span class="skill-chip">SQLite</span>
+              <span class="skill-chip">Redis</span>
+              <span class="skill-chip">Prisma</span>
+              <span class="skill-chip">WebSockets</span>
+            </div>
+            <p class="skill-note">Comfortable with async patterns, API design, database integration, and connecting services end-to-end.</p>
+          </div>
+        </div>
+
+        <div class="skill-row">
+          <div class="skill-cat">Embedded<span class="count">7 tools</span></div>
+          <div>
+            <div class="skill-chips">
+              <span class="skill-chip">ESP32</span>
+              <span class="skill-chip">Arduino</span>
+              <span class="skill-chip">C / C++</span>
+              <span class="skill-chip">I2C / SPI</span>
+              <span class="skill-chip">BLE / Wi-Fi</span>
+              <span class="skill-chip">MQTT</span>
+              <span class="skill-chip">Sensor Integration</span>
+            </div>
+            <p class="skill-note">Built IoT prototypes bridging hardware sensors to web dashboards — one of my favorite problem spaces.</p>
+          </div>
+        </div>
+
+        <div class="skill-row">
+          <div class="skill-cat">Tooling<span class="count">7 tools</span></div>
+          <div>
+            <div class="skill-chips">
+              <span class="skill-chip">Git &amp; GitHub</span>
+              <span class="skill-chip">Linux</span>
+              <span class="skill-chip">NPM packages</span>
+              <span class="skill-chip">PyPI packages</span>
+              <span class="skill-chip" data-tech="discord">Discord API</span>
+              <span class="skill-chip" data-tech="docker">Docker</span>
+              <span class="skill-chip">CI/CD</span>
+            </div>
+            <p class="skill-note">Daily-driver tools — published packages to both NPM and PyPI, comfortable in terminal-first workflows.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ PROJECTS ═══ -->
+  <section id="projects" class="section" aria-label="Projects">
+    <div class="wrap">
+      <p class="eyebrow"><span class="num">03</span> Projects</p>
+      <h2 class="section-title reveal">What I've built</h2>
+      <p class="section-sub reveal reveal-d1">Work that demonstrates real design decisions, not just output.</p>
+
+      <div class="project reveal reveal-d2">
+        <div class="project-top">
+          <span class="project-badge">Featured Project</span>
+          <h3 class="project-title">tflows.py</h3>
+          <p class="project-desc">
+            A lightweight Python framework for building Discord bots and task
+            automation pipelines. Built around a scripting engine that keeps
+            bot logic modular, testable, and separate from Discord's event
+            system.
+          </p>
+          <div class="project-tags">
+            <span class="project-tag" data-tech="python">PYTHON</span>
+            <span class="project-tag">ASYNCIO</span>
+            <span class="project-tag" data-tech="discord">DISCORD API</span>
+            <span class="project-tag">OPEN SOURCE</span>
+            <span class="project-tag">PYPI</span>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/TonieC/tflows.py" class="btn btn-primary" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <a href="https://pypi.org/project/tflows/" class="btn btn-ghost" target="_blank" rel="noopener noreferrer">PyPI</a>
+            <a href="https://toniec.github.io/tflows" class="btn btn-ghost" target="_blank" rel="noopener noreferrer">Documentation</a>
+          </div>
+        </div>
+
+        <div class="project-bottom">
+          <div class="detail-label">Architecture Overview</div>
+          <ul class="arch-list">
+            <li>Async-first design built on Python's <code>asyncio</code> — event handlers and tasks run concurrently without blocking.</li>
+            <li>Scripting engine separates bot commands from Discord plumbing, making individual flows testable in isolation.</li>
+            <li>Modular loader system lets you add, remove, or reload bot modules at runtime without restarting.</li>
+            <li>Thin abstraction layer over discord.py — doesn't hide the library, just reduces repetitive wiring.</li>
+          </ul>
+
+          <div class="detail-label">Real Use Cases</div>
+          <div class="use-case-grid">
+            <div class="use-case">
+              <strong>Server Moderation</strong>
+              Event-driven auto-moderation rules without custom bot architecture.
+            </div>
+            <div class="use-case">
+              <strong>Task Automation</strong>
+              Scheduled jobs and webhook triggers wired to Discord channels.
+            </div>
+            <div class="use-case">
+              <strong>Rapid Prototyping</strong>
+              Stand up a functional bot in minutes with minimal boilerplate.
+            </div>
+            <div class="use-case">
+              <strong>Scripting Engine</strong>
+              Define flows as plain functions; the framework handles wiring.
+            </div>
+          </div>
+        </div>
+
+        <div class="project-stats">
+          <div class="project-stat">
+            <div class="stat-value">PyPI</div>
+            <div class="stat-label">PUBLISHED</div>
+          </div>
+          <div class="project-stat">
+            <div class="stat-value">OSS</div>
+            <div class="stat-label">OPEN SOURCE</div>
+          </div>
+          <div class="project-stat">
+            <div class="stat-value">Async</div>
+            <div class="stat-label">ASYNCIO-BASED</div>
+          </div>
+          <div class="project-stat">
+            <div class="stat-value">Docs</div>
+            <div class="stat-label">DOCUMENTED</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══ CONTACT ═══ -->
+  <section id="contact" class="section" aria-label="Contact">
+    <div class="wrap">
+      <p class="eyebrow"><span class="num">04</span> Contact</p>
+      <h2 class="section-title reveal">Get in touch</h2>
+      <p class="section-sub reveal reveal-d1">
+        Open for freelance work, collaborations, and new opportunities. If
+        you have a project in mind or just want to connect, reach out.
+      </p>
+
+      <div class="contact-grid reveal reveal-d2">
+        <a href="mailto:cadizal06@gmail.com" class="contact-item">
+          <span class="contact-item-label">Email</span>
+          <span class="contact-item-value">cadizal06@gmail.com</span>
+        </a>
+        <a href="https://github.com/toniec" class="contact-item" target="_blank" rel="noopener noreferrer">
+          <span class="contact-item-label">GitHub</span>
+          <span class="contact-item-value">github.com/toniec</span>
+        </a>
+        <a href="https://www.linkedin.com/in/jesstonie-cadizal-8a80a9392" class="contact-item" target="_blank" rel="noopener noreferrer">
+          <span class="contact-item-label">LinkedIn</span>
+          <span class="contact-item-value">jesstonie-cadizal</span>
+        </a>
+        <div class="contact-item is-static" role="text" aria-label="Location: Philippines, Remote">
+          <span class="contact-item-label">Location</span>
+          <span class="contact-item-value">Philippines · Remote</span>
+        </div>
+      </div>
+
+      <div class="contact-actions">
+        <a href="images/cadizal-resume.pdf" class="btn btn-primary" download>Download Resume</a>
+        <button id="copy-btn" type="button" class="btn btn-ghost">
+          <span id="copy-label">Copy Email</span>
+        </button>
+        <a href="https://pypi.org/user/tonie06/" class="btn btn-ghost" target="_blank" rel="noopener noreferrer">PyPI</a>
+        <a href="https://www.npmjs.com/~tonie06" class="btn btn-ghost" target="_blank" rel="noopener noreferrer">NPM</a>
+      </div>
+      <div id="copy-status" aria-live="polite" aria-atomic="true"></div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <p class="footer-copy">© <span id="yr"></span> Tonie C. — Built with intent.</p>
+    <ul class="footer-links">
+      <li><a href="mailto:cadizal06@gmail.com">Email</a></li>
+      <li><a href="https://github.com/toniec" target="_blank" rel="noopener">GitHub</a></li>
+      <li><a href="https://www.linkedin.com/in/jesstonie-cadizal-8a80a9392" target="_blank" rel="noopener">LinkedIn</a></li>
+      <li><a href="images/cadizal-resume.pdf" download>Resume</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+'use strict';
+
+/* ── SCROLL REVEAL ───────────────────────────────────── */
+(function () {
+  const els = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window)) {
+    els.forEach((el) => el.classList.add('in'));
+    return;
+  }
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  els.forEach((el) => obs.observe(el));
+})();
+
+/* ── SMOOTH ANCHOR SCROLL ────────────────────────────── */
+(function () {
+  document.querySelectorAll('a[href^="#"]').forEach((a) => {
+    a.addEventListener('click', (e) => {
+      const id = a.getAttribute('href').slice(1);
+      const target = document.getElementById(id);
+      if (!target) return;
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth' });
+      history.replaceState(null, '', '#' + id);
+    });
+  });
+})();
+
+/* ── THEME TOGGLE ─────────────────────────────────────── */
+(function () {
+  var btn = document.getElementById('theme-toggle');
+  var label = document.getElementById('theme-toggle-label');
+  var metaThemeColor = document.getElementById('meta-theme-color');
+  if (!btn || !label) return;
+
+  function isLight() {
+    return document.documentElement.getAttribute('data-theme') === 'light';
+  }
+
+  function syncUI() {
+    var light = isLight();
+    label.textContent = light ? 'LIGHT' : 'DARK';
+    btn.setAttribute('aria-pressed', light ? 'true' : 'false');
+    if (metaThemeColor) metaThemeColor.setAttribute('content', light ? '#ffffff' : '#000000');
+  }
+
+  // Reflect whatever the early head script already applied.
+  syncUI();
+
+  btn.addEventListener('click', function () {
+    var next = isLight() ? 'dark' : 'light';
+    if (next === 'light') {
+      document.documentElement.setAttribute('data-theme', 'light');
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+    }
+    try { localStorage.setItem('theme', next); } catch (e) { /* non-fatal: choice just won't persist */ }
+    syncUI();
+  });
+})();
+
+/* ── MOBILE NAV ───────────────────────────────────────── */
+(function () {
+  const burger = document.getElementById('burger');
+  const nav = document.getElementById('nav-links');
+  if (!burger || !nav) return;
+
+  function close() {
+    burger.classList.remove('open');
+    nav.classList.remove('mobile-open');
+    burger.setAttribute('aria-expanded', 'false');
+    burger.setAttribute('aria-label', 'Open navigation menu');
+    document.body.style.overflow = '';
+  }
+
+  burger.addEventListener('click', () => {
+    const open = burger.classList.toggle('open');
+    nav.classList.toggle('mobile-open', open);
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    burger.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
+    document.body.style.overflow = open ? 'hidden' : '';
+  });
+
+  nav.querySelectorAll('a').forEach((a) => a.addEventListener('click', close));
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && burger.classList.contains('open')) {
+      close();
+      burger.focus();
+    }
+  });
+})();
+
+/* ── COPY EMAIL ───────────────────────────────────────── */
+(function () {
+  const btn = document.getElementById('copy-btn');
+  const label = document.getElementById('copy-label');
+  const status = document.getElementById('copy-status');
+  if (!btn) return;
+
+  btn.addEventListener('click', () => {
+    const email = 'cadizal06@gmail.com';
+    navigator.clipboard.writeText(email).then(() => {
+      label.textContent = 'Copied ✓';
+      status.textContent = email + ' copied to clipboard';
+      setTimeout(() => {
+        label.textContent = 'Copy Email';
+        status.textContent = '';
+      }, 2200);
+    }).catch(() => {
+      status.textContent = email;
+    });
+  });
+})();
+
+/* ── FOOTER YEAR ──────────────────────────────────────── */
+document.getElementById('yr').textContent = new Date().getFullYear();
+</script>
+</body>
+>>>>>>> a4b99a03cd2a2c34c75b781de706e693514c0820
 </html>
