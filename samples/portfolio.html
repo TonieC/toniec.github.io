@@ -1,0 +1,656 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Portfolio — Lorem Ipsum</title>
+  <meta name="description" content="Product Designer & Front-end Developer" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #fafaf8;
+      --surface: #ffffff;
+      --text: #151512;
+      --muted: #7a7a6e;
+      --subtle: #f2f2ee;
+      --border: #e6e6e0;
+      --accent: #1a1a14;
+      --gold: #b8974a;
+      --serif: 'DM Serif Display', Georgia, serif;
+      --sans: 'DM Sans', system-ui, sans-serif;
+      --r: 20px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ─── NAV ──────────────────────────────────────────────── */
+    .nav {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(250,250,248,.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: 1100px; margin: 0 auto;
+      padding: 0 40px;
+      height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-brand {
+      display: flex; flex-direction: column; gap: 1px;
+    }
+    .nav-brand strong {
+      font-family: var(--serif);
+      font-size: 16px;
+      letter-spacing: -.2px;
+    }
+    .nav-brand em {
+      font-style: normal;
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: .4px;
+      text-transform: uppercase;
+    }
+    .nav-links {
+      display: flex; align-items: center; gap: 4px;
+    }
+    .nav-links a {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--muted);
+      padding: 7px 14px;
+      border-radius: 999px;
+      transition: color .15s, background .15s;
+    }
+    .nav-links a:hover { color: var(--text); background: var(--subtle); }
+    .nav-links .cta-nav {
+      background: var(--text);
+      color: #fff !important;
+      font-weight: 500;
+      margin-left: 6px;
+    }
+    .nav-links .cta-nav:hover { background: #333; }
+
+    /* ─── LAYOUT WRAPPER ───────────────────────────────────── */
+    .page { max-width: 1100px; margin: 0 auto; padding: 0 40px 80px; }
+
+    /* ─── HERO ─────────────────────────────────────────────── */
+    .hero {
+      padding: 80px 0 64px;
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 60px;
+      align-items: start;
+    }
+    .hero-eyebrow {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 11px; letter-spacing: .8px; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 20px;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      width: 28px; height: 1px;
+      background: var(--gold);
+      display: block;
+    }
+    .hero h1 {
+      font-family: var(--serif);
+      font-size: 58px;
+      line-height: 1.04;
+      letter-spacing: -1.5px;
+      color: var(--text);
+      max-width: 14ch;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--gold);
+    }
+    .hero-body {
+      margin-top: 24px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.75;
+      max-width: 52ch;
+      font-weight: 300;
+    }
+    .hero-cta {
+      display: flex; gap: 12px; margin-top: 36px;
+    }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 500;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      cursor: pointer;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .btn:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(0,0,0,.08); }
+    .btn.primary {
+      background: var(--text); color: #fff;
+      border-color: var(--text);
+      box-shadow: 0 4px 16px rgba(0,0,0,.18);
+    }
+    .btn.primary:hover { box-shadow: 0 12px 28px rgba(0,0,0,.25); }
+
+    /* ─── SNAPSHOT CARD ────────────────────────────────────── */
+    .snapshot {
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      background: var(--surface);
+      padding: 28px;
+      box-shadow: 0 2px 0 var(--border), 0 16px 40px rgba(0,0,0,.04);
+    }
+    .snapshot-label {
+      font-size: 10px; letter-spacing: .8px; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 20px;
+      font-family: var(--sans); font-weight: 500;
+    }
+    .snapshot-row {
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+      display: grid; grid-template-columns: 100px 1fr; gap: 12px;
+      align-items: baseline;
+    }
+    .snapshot-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .snapshot-row:first-of-type { padding-top: 0; }
+    .sk { font-size: 11px; color: var(--muted); letter-spacing: .2px; }
+    .sv { font-size: 13px; font-weight: 400; display: flex; flex-wrap: wrap; gap: 4px; }
+    .pill {
+      display: inline-block;
+      font-size: 11px;
+      padding: 3px 9px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--subtle);
+      color: var(--text);
+      font-weight: 400;
+    }
+    .avail-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: #4ade80; display: inline-block;
+      margin-right: 6px; position: relative; top: -1px;
+      box-shadow: 0 0 0 3px rgba(74,222,128,.2);
+    }
+
+    /* ─── SECTION HEADER ───────────────────────────────────── */
+    .sec-head {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      padding-top: 64px; padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .sec-head h2 {
+      font-family: var(--serif);
+      font-size: 34px;
+      letter-spacing: -.5px;
+    }
+    .sec-head-meta {
+      font-size: 12px; color: var(--muted);
+      letter-spacing: .3px;
+    }
+
+    /* ─── PROJECTS ─────────────────────────────────────────── */
+    .projects {
+      margin-top: 28px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .project {
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      background: var(--surface);
+      overflow: hidden;
+      display: flex; flex-direction: column;
+      transition: transform .2s ease, box-shadow .2s ease;
+      box-shadow: 0 1px 0 var(--border);
+    }
+    .project:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 44px rgba(0,0,0,.09);
+    }
+    .project-cover {
+      height: 180px;
+      position: relative;
+      overflow: hidden;
+    }
+    .project-cover-inner {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .cover-a {
+      background: linear-gradient(135deg, #1a1a14 0%, #2e2e26 100%);
+    }
+    .cover-a .cover-glyph {
+      font-family: var(--serif); font-size: 80px; color: rgba(255,255,255,.08);
+      font-style: italic; user-select: none; letter-spacing: -4px;
+    }
+    .cover-b {
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    }
+    .cover-b .cover-glyph { color: rgba(255,255,255,.1); }
+    .cover-c {
+      background: linear-gradient(135deg, #b8974a 0%, #8b6914 100%);
+    }
+    .cover-c .cover-glyph { color: rgba(255,255,255,.15); }
+    .project-badge {
+      position: absolute; top: 14px; left: 14px;
+      font-size: 10px; letter-spacing: .6px; text-transform: uppercase;
+      padding: 5px 11px; border-radius: 999px;
+      background: rgba(255,255,255,.15); color: rgba(255,255,255,.85);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255,255,255,.15);
+    }
+    .project-body {
+      padding: 24px;
+      display: flex; flex-direction: column; gap: 12px;
+      flex: 1;
+    }
+    .project-title {
+      font-family: var(--serif);
+      font-size: 20px;
+      letter-spacing: -.3px;
+      line-height: 1.2;
+    }
+    .project-desc {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+      flex: 1;
+      font-weight: 300;
+    }
+    .project-tags {
+      display: flex; flex-wrap: wrap; gap: 6px;
+    }
+    .tag {
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--subtle);
+      color: var(--muted);
+    }
+    .project-actions {
+      display: flex; gap: 8px; flex-wrap: wrap;
+      padding-top: 4px;
+      border-top: 1px solid var(--border);
+      margin-top: 4px;
+    }
+    .project-link {
+      font-size: 12px; font-weight: 500;
+      padding: 8px 16px; border-radius: 10px;
+      border: 1px solid var(--border);
+      transition: background .15s, color .15s;
+      color: var(--text);
+    }
+    .project-link:hover { background: var(--subtle); }
+    .project-link.primary {
+      background: var(--text); color: #fff; border-color: var(--text);
+    }
+    .project-link.primary:hover { background: #333; }
+
+    /* ─── ABOUT ────────────────────────────────────────────── */
+    .about {
+      margin-top: 28px;
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 20px;
+    }
+    .panel {
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      background: var(--surface);
+      padding: 32px;
+      box-shadow: 0 1px 0 var(--border);
+    }
+    .panel h3 {
+      font-family: var(--serif);
+      font-size: 22px;
+      letter-spacing: -.3px;
+      margin-bottom: 12px;
+    }
+    .panel > p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.75;
+      font-weight: 300;
+    }
+    .about-list {
+      margin-top: 20px;
+      display: grid;
+      gap: 2px;
+    }
+    .about-item {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 13px 16px;
+      border-radius: 12px;
+      background: var(--subtle);
+      border: 1px solid transparent;
+      transition: border-color .15s;
+    }
+    .about-item:hover { border-color: var(--border); }
+    .about-item b { font-size: 13px; font-weight: 500; }
+    .about-item span { font-size: 12px; color: var(--muted); }
+
+    /* ─── CONTACT ──────────────────────────────────────────── */
+    .contact-grid {
+      margin-top: 28px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .field {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--surface);
+      padding: 16px 18px;
+      display: flex; flex-direction: column; gap: 6px;
+      transition: border-color .15s, box-shadow .15s;
+    }
+    .field:focus-within {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(184,151,74,.12);
+    }
+    .field label {
+      font-size: 10px; letter-spacing: .7px; text-transform: uppercase;
+      color: var(--muted); font-weight: 500;
+    }
+    .field input, .field textarea {
+      border: none; outline: none;
+      font: inherit;
+      font-size: 14px;
+      background: transparent;
+      color: var(--text);
+      resize: vertical;
+    }
+    .field input::placeholder, .field textarea::placeholder { color: #b0b0a4; }
+    .span2 { grid-column: span 2; }
+    .field textarea { min-height: 130px; }
+    .contact-actions {
+      grid-column: span 2;
+      display: flex; gap: 10px; flex-wrap: wrap;
+    }
+
+    /* ─── FOOTER ───────────────────────────────────────────── */
+    .foot {
+      margin-top: 60px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      display: flex; justify-content: space-between; flex-wrap: wrap;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    /* ─── FADE-IN ───────────────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero > *, .projects .project, .panel, .field {
+      animation: fadeUp .5s ease both;
+    }
+    .hero > *:nth-child(2) { animation-delay: .1s; }
+    .projects .project:nth-child(2) { animation-delay: .08s; }
+    .projects .project:nth-child(3) { animation-delay: .16s; }
+
+    /* ─── RESPONSIVE ───────────────────────────────────────── */
+    @media (max-width: 1000px) {
+      .hero { grid-template-columns: 1fr; gap: 40px; padding: 60px 0 48px; }
+      .hero h1 { font-size: 46px; }
+      .snapshot { max-width: 420px; }
+      .projects { grid-template-columns: 1fr 1fr; }
+      .about { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .page { padding: 0 20px 60px; }
+      .nav-inner { padding: 0 20px; }
+      .hero h1 { font-size: 36px; }
+      .projects { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .span2 { grid-column: span 1; }
+      .contact-actions { grid-column: span 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <header class="nav">
+    <div class="nav-inner">
+      <div class="nav-brand">
+        <strong>Lorem Ipsum</strong>
+        <em>Designer &amp; Developer</em>
+      </div>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#work">Work</a>
+        <a href="#about">About</a>
+        <a href="#contact" class="cta-nav">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+
+    <!-- HERO -->
+    <section class="hero" aria-label="Introduction">
+      <div>
+        <div class="hero-eyebrow">Available for projects</div>
+        <h1>Designing digital products that <em>ship.</em></h1>
+        <p class="hero-body">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vitae
+          justo sed arcu accumsan dignissim — building clean, considered interfaces
+          that balance craft with velocity.
+        </p>
+        <div class="hero-cta">
+          <a class="btn primary" href="#work">View selected work</a>
+          <a class="btn" href="#contact">Get in touch</a>
+        </div>
+      </div>
+
+      <aside class="snapshot" aria-label="Quick info">
+        <div class="snapshot-label">Snapshot</div>
+        <div class="snapshot-row">
+          <div class="sk">Role</div>
+          <div class="sv">UI/UX · Front-end</div>
+        </div>
+        <div class="snapshot-row">
+          <div class="sk">Location</div>
+          <div class="sv">Metro Manila &nbsp;·&nbsp; UTC+8</div>
+        </div>
+        <div class="snapshot-row">
+          <div class="sk">Tools</div>
+          <div class="sv">
+            <span class="pill">Figma</span>
+            <span class="pill">HTML</span>
+            <span class="pill">CSS</span>
+            <span class="pill">JS</span>
+          </div>
+        </div>
+        <div class="snapshot-row">
+          <div class="sk">Status</div>
+          <div class="sv">
+            <span class="avail-dot"></span>Open to work
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <!-- WORK -->
+    <section id="work" aria-label="Selected work">
+      <div class="sec-head">
+        <h2>Selected work</h2>
+        <span class="sec-head-meta">2024 – 2026</span>
+      </div>
+
+      <div class="projects">
+        <article class="project">
+          <div class="project-cover cover-a">
+            <div class="project-cover-inner">
+              <span class="cover-glyph">Aa</span>
+            </div>
+            <span class="project-badge">Case study</span>
+          </div>
+          <div class="project-body">
+            <h3 class="project-title">Project Alpha</h3>
+            <p class="project-desc">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              Integer nec odio. Praesent libero. A full design-system build
+              from the ground up.
+            </p>
+            <div class="project-tags">
+              <span class="tag">UI Design</span>
+              <span class="tag">Design system</span>
+              <span class="tag">Responsive</span>
+            </div>
+            <div class="project-actions">
+              <a class="project-link primary" href="#">Case study →</a>
+              <a class="project-link" href="#">Live preview</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="project">
+          <div class="project-cover cover-b">
+            <div class="project-cover-inner">
+              <span class="cover-glyph">{ }</span>
+            </div>
+            <span class="project-badge">Build</span>
+          </div>
+          <div class="project-body">
+            <h3 class="project-title">Project Beta</h3>
+            <p class="project-desc">
+              Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+              accusantium doloremque. Performance-first front-end architecture.
+            </p>
+            <div class="project-tags">
+              <span class="tag">Front-end</span>
+              <span class="tag">Performance</span>
+              <span class="tag">Accessibility</span>
+            </div>
+            <div class="project-actions">
+              <a class="project-link primary" href="#">View details →</a>
+              <a class="project-link" href="#">Repository</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="project">
+          <div class="project-cover cover-c">
+            <div class="project-cover-inner">
+              <span class="cover-glyph">✦</span>
+            </div>
+            <span class="project-badge">Experiment</span>
+          </div>
+          <div class="project-body">
+            <h3 class="project-title">Project Gamma</h3>
+            <p class="project-desc">
+              Ut enim ad minima veniam, quis nostrum exercitationem ullam
+              corporis. Motion design and interactive component exploration.
+            </p>
+            <div class="project-tags">
+              <span class="tag">Prototyping</span>
+              <span class="tag">Motion</span>
+              <span class="tag">Components</span>
+            </div>
+            <div class="project-actions">
+              <a class="project-link primary" href="#">Read write-up →</a>
+              <a class="project-link" href="#">Demo</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" aria-label="About">
+      <div class="sec-head">
+        <h2>About</h2>
+      </div>
+
+      <div class="about">
+        <div class="panel">
+          <h3>Profile</h3>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi.
+          </p>
+          <div class="about-list">
+            <div class="about-item"><b>Specialties</b><span>UI, design systems, web apps</span></div>
+            <div class="about-item"><b>Working style</b><span>Iterate fast, ship clean</span></div>
+            <div class="about-item"><b>Current focus</b><span>Interfaces &amp; performance</span></div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h3>Services</h3>
+          <p>
+            Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+            accusantium doloremque laudantium, totam rem aperiam.
+          </p>
+          <div class="about-list">
+            <div class="about-item"><b>Landing pages</b><span>Conversion-focused design</span></div>
+            <div class="about-item"><b>E-commerce UI</b><span>End-to-end storefronts</span></div>
+            <div class="about-item"><b>Dashboards</b><span>Data-heavy interfaces</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" aria-label="Contact">
+      <div class="sec-head">
+        <h2>Get in touch</h2>
+      </div>
+
+      <form class="contact-grid" onsubmit="event.preventDefault(); alert('Message sent.');" aria-label="Contact form">
+        <div class="field">
+          <label>Name</label>
+          <input required placeholder="Your name" />
+        </div>
+        <div class="field">
+          <label>Email</label>
+          <input required type="email" placeholder="your@email.com" />
+        </div>
+        <div class="field span2">
+          <label>Message</label>
+          <textarea required placeholder="Tell me about your project…"></textarea>
+        </div>
+        <div class="contact-actions">
+          <button class="btn primary" type="submit">Send message</button>
+          <a class="btn" href="index.html">Back to samples</a>
+        </div>
+      </form>
+    </section>
+
+    <footer class="foot">
+      <div>© <span id="yr"></span> Lorem Ipsum · All rights reserved</div>
+      <div>Metro Manila, PH</div>
+    </footer>
+  </main>
+
+  <script>
+    document.getElementById("yr").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

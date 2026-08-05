@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <!-- Preconnect + Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link 
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" 
+    rel="stylesheet">
+
+  <!-- Meta Tags -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Tonie">
+  <meta name="description" content="A showcase of my projects, skills, and programming journey.">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#121212">
+
+  <!-- Open Graph / Twitter Card -->
+  <meta property="og:title" content="Playground">
+  <meta property="og:description" content="Hi! I'm Tonie, a hobbyist programmer passionate about building creative and useful things.">
+  <meta property="og:image" content="/images/workshop.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Playground">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Playground">
+  <meta name="twitter:description" content="A portfolio showcasing Tonie's programming skills and projects.">
+  <meta name="twitter:image" content="/images/workshop.png">
+
+  <!-- Schema.org Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Tonie's Workshop",
+    "description": "Explore Tonie's projects, skills, and programming journey.",
+    "image": "/images/workshop.png",
+    "url": "https://tonie.fun"
+  }
+  </script>
+
+  <!-- Favicon + Icons -->
+  <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+
+  <!-- Shared Styles -->
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/mac.css">
+
+  <!-- Shared Scripts -->
+  <script src="/scripts.js" defer></script>
+
+  <title>Playground</title>
+
+
+<!-- Fonts -->
+<link
+  href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
+  rel="stylesheet"
+/>
+
+<style>
+:root {
+  --bg: #1e1e1e;
+  --panel-bg: #252526;
+  --accent: #0db9d7;
+  --text: #ffffff;
+  --error-color: #ff5555;
+  --log-color: #0f0;
+  --keyword: #569cd6;
+  --string: #d69d85;
+  --comment: #6a9955;
+  --function: #dcdcaa;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  background: var(--panel-bg);
+  padding: 12px 24px;
+  font-size: 1.3rem;
+  font-weight: 600;
+  border-bottom: 2px solid #333;
+  user-select: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+.tabs {
+  display: flex;
+  background: var(--bg);
+  border-bottom: 2px solid #333;
+  user-select: none;
+}
+
+.tab {
+  padding: 10px 20px;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.tab:hover {
+  color: var(--accent);
+  background: rgba(13, 185, 215, 0.1);
+}
+
+.tab.active {
+  background: var(--panel-bg);
+  border-bottom-color: var(--accent);
+  color: var(--accent);
+}
+
+.split {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  height: 0;
+}
+
+.editor-container {
+  flex: 1 1 50%;
+  background: var(--panel-bg);
+  display: flex;
+  flex-direction: column;
+  min-width: 250px;
+  border-right: 2px solid #333;
+}
+
+.editor-panel {
+  flex: 1;
+  display: none;
+}
+
+.editor-panel.active {
+  display: block;
+}
+
+textarea {
+  width: 100%;
+  height: 100%;
+  resize: none;
+  border: none;
+  outline: none;
+  background: var(--panel-bg);
+  color: var(--text);
+  font-family: monospace;
+  font-size: 14px;
+  padding: 12px;
+  line-height: 1.5;
+  border-radius: 0;
+  transition: background-color 0.2s ease;
+}
+
+textarea:focus {
+  background: #2d2d2d;
+}
+
+.preview-wrapper {
+  flex: 1 1 50%;
+  display: flex;
+  flex-direction: column;
+  background: #111;
+  min-width: 300px;
+  overflow: hidden;
+  border-left: 2px solid #333;
+}
+
+.device-buttons {
+  display: flex;
+  gap: 8px;
+  padding: 8px 12px;
+  background: #1b1b1b;
+  border-bottom: 2px solid #333;
+}
+
+.device-buttons button {
+  flex: 1;
+  padding: 8px;
+  background: var(--panel-bg);
+  color: var(--text);
+  border: 1px solid #333;
+  cursor: pointer;
+  font-weight: 600;
+  border-radius: 6px;
+  user-select: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.device-buttons button:hover {
+  background: var(--accent);
+  color: #000;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.6);
+}
+
+iframe#preview {
+  flex: 1;
+  border: none;
+  background: #fff;
+  width: 100%;
+}
+
+.console {
+  background: #111;
+  color: var(--log-color);
+  font-family: monospace;
+  font-size: 13px;
+  padding: 10px 14px;
+  height: 160px;
+  overflow-y: auto;
+  border-top: 2px solid #333;
+  white-space: pre-wrap;
+  user-select: text;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.6);
+}
+
+.console .error {
+  color: var(--error-color);
+  font-weight: bold;
+}
+
+</style>
+</head>
+<body>
+<header>💻 Tonie's HTML / CSS / JS Playground</header>
+
+<div class="tabs" role="tablist" aria-label="Editor Tabs">
+  <div class="tab active" role="tab" tabindex="0" aria-selected="true" data-target="html">HTML</div>
+  <div class="tab" role="tab" tabindex="-1" aria-selected="false" data-target="css">CSS</div>
+  <div class="tab" role="tab" tabindex="-1" aria-selected="false" data-target="js">JS</div>
+</div>
+
+<div class="split">
+  <div class="editor-container">
+    <div class="editor-panel active" id="html-panel" role="tabpanel" aria-hidden="false">
+      <textarea id="html" spellcheck="false" autocorrect="off" autocapitalize="off" autocomplete="off"></textarea>
+    </div>
+    <div class="editor-panel" id="css-panel" role="tabpanel" aria-hidden="true" hidden>
+      <textarea id="css" spellcheck="false" autocorrect="off" autocapitalize="off" autocomplete="off"></textarea>
+    </div>
+    <div class="editor-panel" id="js-panel" role="tabpanel" aria-hidden="true" hidden>
+      <textarea id="js" spellcheck="false" autocorrect="off" autocapitalize="off" autocomplete="off"></textarea>
+    </div>
+  </div>
+
+  <div class="preview-wrapper" aria-live="polite" aria-atomic="true">
+    <div class="device-buttons" role="group" aria-label="Device Width Switcher">
+      <button type="button" data-width="375" aria-label="Mobile View (375px)">📱</button>
+      <button type="button" data-width="768" aria-label="Tablet View (768px)">📊</button>
+      <button type="button" data-width="100%" aria-label="Desktop View (Full Width)">🖥️</button>
+    </div>
+    <iframe id="preview" title="Live Preview"></iframe>
+    <div class="console" id="console-output" aria-live="polite" aria-atomic="true" role="log"></div>
+  </div>
+</div>
+
+<script>
+  // Tab switching logic
+  const tabs = document.querySelectorAll(".tab");
+  const panels = {
+    html: document.getElementById("html-panel"),
+    css: document.getElementById("css-panel"),
+    js: document.getElementById("js-panel"),
+  };
+
+  tabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      tabs.forEach((t) => {
+        t.classList.remove("active");
+        t.setAttribute("aria-selected", "false");
+        t.tabIndex = -1;
+        panels[t.dataset.target].hidden = true;
+        panels[t.dataset.target].setAttribute("aria-hidden", "true");
+        panels[t.dataset.target].classList.remove("active");
+      });
+      tab.classList.add("active");
+      tab.setAttribute("aria-selected", "true");
+      tab.tabIndex = 0;
+      panels[tab.dataset.target].hidden = false;
+      panels[tab.dataset.target].setAttribute("aria-hidden", "false");
+      panels[tab.dataset.target].classList.add("active");
+      tab.focus();
+    });
+  });
+
+  // Elements
+  const htmlInput = document.getElementById("html");
+  const cssInput = document.getElementById("css");
+  const jsInput = document.getElementById("js");
+  const preview = document.getElementById("preview");
+  const consoleOutput = document.getElementById("console-output");
+
+  // Initial code
+  htmlInput.value = `<h1>Hello World</h1>
+<p>Test the console:</p>
+<button onclick="console.log('Button clicked!')">Click me</button>`;
+  cssInput.value = `body {
+  font-family: sans-serif;
+  padding: 20px;
+  background: #fff;
+}
+h1 {
+  color: dodgerblue;
+}`;
+  jsInput.value = `console.log('Playground ready');`;
+
+  // Update preview & reset console
+  function updatePreview() {
+    const htmlCode = htmlInput.value;
+    const cssCode = `<style>${cssInput.value}</style>`;
+    const jsCode = `
+<script>
+  (function(){
+    const send = (type, args) => parent.postMessage({type, args}, '*');
+    ['log','error','warn','info'].forEach(method => {
+      const orig = console[method];
+      console[method] = function(...args){
+        send(method, args);
+        orig.apply(console, args);
+      };
+    });
+  })();
+<\/script>
+<script>
+try {
+  ${jsInput.value}
+} catch(e) {
+  console.error(e);
+}
+<\/script>`;
+
+    preview.srcdoc = htmlCode + cssCode + jsCode;
+    consoleOutput.textContent = "";
+  }
+
+  htmlInput.addEventListener("input", updatePreview);
+  cssInput.addEventListener("input", updatePreview);
+  jsInput.addEventListener("input", updatePreview);
+
+  // Device width buttons
+  document.querySelectorAll(".device-buttons button").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      preview.style.width = btn.dataset.width === "100%" ? "100%" : btn.dataset.width + "px";
+    });
+  });
+
+  // Listen for console messages from iframe
+  window.addEventListener("message", (e) => {
+    const { type, args } = e.data || {};
+    if (!type || !args) return;
+    const div = document.createElement("div");
+    div.textContent = `[${type}] ${args.join(" ")}`;
+    if (type === "error") div.classList.add("error");
+    consoleOutput.appendChild(div);
+    consoleOutput.scrollTop = consoleOutput.scrollHeight;
+  });
+
+  // Initial call
+  updatePreview();
+</script>
+<footer style="margin-top:24px; text-align:center; font-size:0.85rem; color:rgba(181,181,181,0.7); border-top:1px solid rgba(181,181,181,0.1); padding-top:12px;">
+  <p style="font-style:italic;">
+    This Playground serves only as an example for experimentation. Any unexpected behavior or bugs are non-critical and part of the demonstration.
+  </p>
+</footer>
+</body>
+</html>
