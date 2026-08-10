@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Java Rangers Grocery — Program Flow</title>
+<style>
+  :root {
+    --paper: #f6f3ec;
+    --panel: #fffdf7;
+    --ink: #23241f;
+    --ink-soft: #5a5c52;
+    --line: #cfc9b8;
+
+    --green: #3f6b4a;
+    --green-bg: #e4ede2;
+    --green-bd: #9dbba3;
+
+    --amber: #a9762c;
+    --amber-bg: #f5e8d3;
+    --amber-bd: #dcb772;
+
+    --blue: #345a80;
+    --blue-bg: #dfe8f0;
+    --blue-bd: #9db6cc;
+
+    --red: #9c3b34;
+    --red-bg: #f3e0dd;
+    --red-bd: #d6a19b;
+
+    --mono: 'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace;
+    --sans: 'IBM Plex Sans', 'Segoe UI', sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    background-image: radial-gradient(circle at 1px 1px, rgba(35,36,31,0.05) 1px, transparent 0);
+    background-size: 22px 22px;
+  }
+
+  .page-header {
+    padding: 40px 24px 6px;
+    text-align: center;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 10px;
+  }
+
+  h1 {
+    font-size: clamp(26px, 4vw, 40px);
+    margin: 0 0 8px;
+    letter-spacing: -0.01em;
+    font-weight: 700;
+  }
+
+  .subhead {
+    color: var(--ink-soft);
+    font-size: 14px;
+    line-height: 1.5;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 14px 22px;
+    margin: 20px auto 0;
+    max-width: 800px;
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--ink-soft);
+  }
+
+  .legend span { display: inline-flex; align-items: center; gap: 7px; }
+  .swatch { width: 11px; height: 11px; border-radius: 3px; display: inline-block; }
+  .sw-menu { background: var(--amber); }
+  .sw-decision { background: var(--blue); }
+  .sw-action { background: var(--green); }
+  .sw-warn { background: var(--red); }
+
+  .hint {
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--ink-soft);
+    margin: 16px 0 0;
+    opacity: 0.8;
+  }
+
+  /* ===== SECTION = ONE SCREENSHOTTABLE PANEL ===== */
+  section.panel {
+    max-width: 1000px;
+    margin: 46px auto;
+    padding: 30px 34px 36px;
+    background: var(--panel);
+    border: 1.5px solid var(--ink);
+    border-radius: 8px;
+    box-shadow: 7px 7px 0 rgba(35,36,31,0.08);
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  section.panel.entry {
+    max-width: 480px;
+    text-align: center;
+    padding: 26px 30px;
+  }
+
+  .panel-head {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 26px;
+    padding-bottom: 18px;
+    border-bottom: 1.5px dashed var(--line);
+  }
+
+  .panel-head .letter {
+    font-family: var(--mono);
+    font-weight: 700;
+    font-size: 20px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--ink);
+    color: var(--panel);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .panel-head .titles strong {
+    display: block;
+    font-size: 20px;
+  }
+
+  .panel-head .titles span {
+    display: block;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    margin-top: 3px;
+    font-family: var(--mono);
+  }
+
+  .entry .tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 6px;
+  }
+
+  .entry h2 { margin: 0 0 6px; font-size: 20px; }
+  .entry p { margin: 0; font-size: 13px; color: var(--ink-soft); font-family: var(--mono); }
+
+  /* Flow column */
+  .flow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+
+  .node {
+    width: 100%;
+    max-width: 620px;
+    border-radius: 6px;
+    border: 1.5px solid;
+    padding: 14px 20px;
+    text-align: center;
+    font-size: 14.5px;
+    line-height: 1.45;
+    position: relative;
+  }
+
+  .node .kind {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 4px;
+    opacity: 0.75;
+  }
+
+  .node code {
+    font-family: var(--mono);
+    background: rgba(35,36,31,0.07);
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-size: 13px;
+  }
+
+  .node.menu   { background: var(--amber-bg); border-color: var(--amber-bd); }
+  .node.action { background: var(--green-bg); border-color: var(--green-bd); }
+  .node.decision {
+    background: var(--blue-bg);
+    border-color: var(--blue-bd);
+    border-radius: 10px;
+  }
+  .node.warn { background: var(--red-bg); border-color: var(--red-bd); }
+  .node.start-end {
+    background: var(--ink);
+    color: var(--panel);
+    border-color: var(--ink);
+    border-radius: 999px;
+    max-width: 260px;
+    font-family: var(--mono);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+
+  .arrow-down {
+    width: 2px;
+    height: 26px;
+    background: var(--ink-soft);
+    position: relative;
+  }
+  .arrow-down::after {
+    content: "";
+    position: absolute;
+    bottom: -1px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0; height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 7px solid var(--ink-soft);
+  }
+
+  /* Branch split (Yes/No, A/B/C etc.) */
+  .split {
+    display: flex;
+    justify-content: center;
+    gap: 34px;
+    width: 100%;
+    margin-top: 4px;
+    flex-wrap: wrap;
+  }
+
+  .branch-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    min-width: 220px;
+    max-width: 320px;
+  }
+
+  .branch-label {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    font-weight: 700;
+    color: var(--ink-soft);
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 3px 12px;
+    margin-bottom: 10px;
+  }
+
+  .branch-col .node {
+    max-width: 100%;
+    font-size: 13.5px;
+  }
+
+  .loop-tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--blue);
+    background: var(--blue-bg);
+    border: 1px dashed var(--blue-bd);
+    border-radius: 999px;
+    padding: 4px 12px;
+    margin-top: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .loop-tag::before { content: "↺"; }
+
+  .return-tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-soft);
+    background: var(--paper);
+    border: 1px dashed var(--line);
+    border-radius: 999px;
+    padding: 4px 12px;
+    margin-top: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .return-tag::before { content: "⤴"; }
+
+  .connector-strip {
+    text-align: center;
+    font-family: var(--mono);
+    color: var(--ink-soft);
+    font-size: 12px;
+    letter-spacing: 0.3em;
+    opacity: 0.4;
+    margin: -8px 0 -8px;
+  }
+
+  footer {
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-soft);
+    padding: 10px 20px 60px;
+  }
+
+  @media print {
+    body { background: white; }
+    section.panel { box-shadow: none; break-inside: avoid; }
+    .hint { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="eyebrow">Program Flow · GrocceryManagementSystem.java</div>
+  <h1>Java Rangers Grocery</h1>
+  <p class="subhead">
+    Can't really design sa draw.io so I made this instead.<br><span style="font-weight: bold;">- Tonie </span>
+  </p>
+  <div class="legend">
+    <span><i class="swatch sw-menu"></i>Menu / Entry point</span>
+    <span><i class="swatch sw-decision"></i>Decision / Loop</span>
+    <span><i class="swatch sw-action"></i>Action / State change</span>
+    <span><i class="swatch sw-warn"></i>Error / Exit path</span>
+  </div>
+</div>
+
+<section class="panel entry" id="panel-start">
+  <div class="tag">Entry Point</div>
+  <h2>Main Menu Loop</h2>
+  <p>while (Running) { … } — six choices: A · B · C · D · E · X</p>
+</section>
+
+<!-- ================= A. BUY ITEM ================= -->
+<section class="panel" id="panel-A">
+  <div class="panel-head">
+    <div class="letter">A</div>
+    <div class="titles">
+      <strong>Buy Item</strong>
+      <span>Add items to the cart, checking stock as you go</span>
+    </div>
+  </div>
+  <div class="flow">
+    <div class="node decision"><span class="kind">Loop entry</span>Enter <code>Buy Loop</code> — repeats <code>while (buying)</code></div>
+    <div class="arrow-down"></div>
+    <div class="node action"><span class="kind">Display</span>Show items A–J, each with its <code>Stock:</code> level</div>
+    <div class="arrow-down"></div>
+    <div class="node decision"><span class="kind">Check</span>Choice = <code>X</code>?</div>
+    <div class="arrow-down"></div>
+    <div class="split">
+      <div class="branch-col">
+        <div class="branch-label">YES</div>
+        <div class="node action">Exit buying loop</div>
+        <div class="return-tag">back to Main Menu</div>
+      </div>
+      <div class="branch-col">
+        <div class="branch-label">NO</div>
+        <div class="node action">Prompt for <code>quantity</code></div>
+      </div>
+    </div>
+    <div class="arrow-down"></div>
+    <div class="node decision"><span class="kind">Validate</span><code>qty &gt; 0</code> AND <code>qty &lt;= stock</code>?</div>
+    <div class="arrow-down"></div>
+    <div class="split">
+      <div class="branch-col">
+        <div class="branch-label">YES</div>
+        <div class="node action"><code>stock -= qty</code><br><code>cart qty += qty</code><br>print confirmation</div>
+        <div class="loop-tag">back to item list</div>
+      </div>
+      <div class="branch-col">
+        <div class="branch-label">NO</div>
+        <div class="node warn">Print "invalid quantity" or "only N available"</div>
+        <div class="loop-tag">back to item list</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= B. VIEW CART ================= -->
+<section class="panel" id="panel-B">
+  <div class="panel-head">
+    <div class="letter">B</div>
+    <div class="titles">
+      <strong>View Cart</strong>
+      <span>Review current cart, then clear or remove items</span>
+    </div>
+  </div>
+  <div class="flow">
+    <div class="node action"><span class="kind">Display</span>Print every item with <code>qty &gt; 0</code> and its line total</div>
+    <div class="arrow-down"></div>
+    <div class="node decision"><span class="kind">Check</span>Is the cart empty?</div>
+    <div class="arrow-down"></div>
+    <div class="node warn" style="max-width:420px;">If yes → print "Cart is Empty. Buy something first." (continues below regardless)</div>
+    <div class="arrow-down"></div>
+    <div class="node menu"><span class="kind">Sub-menu</span><code>A</code> Clear Cart&nbsp;&nbsp;·&nbsp;&nbsp;<code>B</code> Remove Item&nbsp;&nbsp;·&nbsp;&nbsp;<code>X</code> Back</div>
+    <div class="arrow-down"></div>
+    <div class="split">
+      <div class="branch-col">
+        <div class="branch-label">A · CLEAR</div>
+        <div class="node decision">Confirm <code>Y</code> / <code>X</code></div>
+        <div class="node action" style="margin-top:10px;">Y → reset all 10 qty to 0<br>(stock not restored)</div>
+        <div class="return-tag">back to Main Menu</div>
+      </div>
+      <div class="branch-col">
+        <div class="branch-label">B · REMOVE</div>
+        <div class="node action">Pick item, enter qty to remove<br><code>0</code> = remove all</div>
+        <div class="node action" style="margin-top:10px;">Subtract from cart qty</div>
+        <div class="return-tag">back to Main Menu</div>
+      </div>
+      <div class="branch-col">
+        <div class="branch-label">X · BACK</div>
+        <div class="node action">No changes</div>
+        <div class="return-tag">back to Main Menu</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= C. COMPUTE TOTAL ================= -->
+<section class="panel" id="panel-C">
+  <div class="panel-head">
+    <div class="letter">C</div>
+    <div class="titles">
+      <strong>Compute Total</strong>
+      <span>Calculate subtotal, VAT, discount, and take payment</span>
+    </div>
+  </div>
+  <div class="flow">
+    <div class="node decision"><span class="kind">Guard</span>Is the cart empty?</div>
+    <div class="arrow-down"></div>
+    <div class="split">
+      <div class="branch-col">
+        <div class="branch-label">YES</div>
+        <div class="node warn">Print "Buy an item first."</div>
+        <div class="return-tag">back to Main Menu</div>
+      </div>
+      <div class="branch-col">
+        <div class="branch-label">NO</div>
+        <div class="node action">Continue to calculation</div>
+      </div>
+    </div>
+    <div class="arrow-down"></div>
+    <div class="node action"><span class="kind">Calculate</span><code>Subtotal = Σ(price × qty)</code><br><code>VAT = Subtotal × 12%</code><br><code>GrandTotal = Subtotal + VAT</code></div>
+    <div class="arrow-down"></div>
+    <div class="node menu"><span class="kind">Choose discount</span><code>A</code> Senior/PWD 20%&nbsp;&nbsp;·&nbsp;&nbsp;<code>B</code> Promo 15%&nbsp;&nbsp;·&nbsp;&nbsp;<code>C</code> None</div>
+    <div class="arrow-down"></div>
+    <div class="split">
+      <div class="branch-col">
+        <div class="branch-label">A · SENIOR/PWD</div>
+        <div class="node action">VAT exempted entirely<br><code>GrandTotal = Subtotal</code><br>then apply −20%</div>
+      </div>
+      <div class="branch-col">
+        <div class="branch-label">B · PROMO</div>
+        <div class="node action">Apply −15% to the<br>VAT-inclusive total</div>
+      </div>
+      <div class="branch-col">
+        <div class="branch-label">C · NONE</div>
+        <div class="node action">No discount applied<br>to the VAT-inclusive total</div>
+      </div>
+    </div>
+    <div class="arrow-down"></div>
+    <div class="node decision"><span class="kind">Payment loop</span>Prompt for payment<br>repeat <code>while (payment &lt; GrandTotal)</code></div>
+    <div class="arrow-down"></div>
+    <div class="node action"><span class="kind">Finalize</span><code>Change = Payment − GrandTotal</code><br><code>computed = true</code><br>print Order Summary</div>
+    <div class="arrow-down"></div>
+    <div class="return-tag">back to Main Menu</div>
+  </div>
+</section>
+
+<!-- ================= D. RECEIPT ================= -->
+<section class="panel" id="panel-D">
+  <div class="panel-head">
+    <div class="letter">D</div>
+    <div class="titles">
+      <strong>Receipt</strong>
+      <span>Reprint the last computed transaction</span>
+    </div>
+  </div>
+  <div class="flow">
+    <div class="node decision"><span class="kind">Guard</span>Has <code>computed</code> been set to true?</div>
+    <div class="arrow-down"></div>
+    <div class="split">
+      <div class="branch-col">
+        <div class="branch-label">NO</div>
+        <div class="node warn">Print "Compute first to view the receipt."</div>
+      </div>
+      <div class="branch-col">
+        <div class="branch-label">YES</div>
+        <div class="node action">Reprint itemized list +<br>subtotal, VAT, discount,<br>total, payment, change</div>
+      </div>
+    </div>
+    <div class="arrow-down"></div>
+    <div class="return-tag">back to Main Menu</div>
+  </div>
+</section>
+
+<!-- ================= E. STAFF MENU ================= -->
+<section class="panel" id="panel-E">
+  <div class="panel-head">
+    <div class="letter">E</div>
+    <div class="titles">
+      <strong>Staff Menu</strong>
+      <span>PIN-protected stock management</span>
+    </div>
+  </div>
+  <div class="flow">
+    <div class="node decision"><span class="kind">Login</span>Enter Staff PIN — up to <code>3</code> attempts</div>
+    <div class="arrow-down"></div>
+    <div class="split">
+      <div class="branch-col">
+        <div class="branch-label">FAIL ×3</div>
+        <div class="node warn">Print "Too many failed attempts."</div>
+        <div class="return-tag">back to Main Menu</div>
+      </div>
+      <div class="branch-col">
+        <div class="branch-label">CORRECT</div>
+        <div class="node action">Access granted</div>
+      </div>
+    </div>
+    <div class="arrow-down"></div>
+    <div class="node menu"><span class="kind">Staff loop</span><code>A</code> View Stock&nbsp;&nbsp;·&nbsp;&nbsp;<code>B</code> Restock Item&nbsp;&nbsp;·&nbsp;&nbsp;<code>X</code> Back</div>
+    <div class="arrow-down"></div>
+    <div class="split">
+      <div class="branch-col">
+        <div class="branch-label">A · VIEW STOCK</div>
+        <div class="node action">Print current stock levels<br>for all 10 items</div>
+        <div class="loop-tag">back to staff loop</div>
+      </div>
+      <div class="branch-col">
+        <div class="branch-label">B · RESTOCK</div>
+        <div class="node action">Select item (1–10), enter qty<br><code>stock += qty</code></div>
+        <div class="loop-tag">back to staff loop</div>
+      </div>
+      <div class="branch-col">
+        <div class="branch-label">X · BACK</div>
+        <div class="node action">Exit staff menu loop</div>
+        <div class="return-tag">back to Main Menu</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= X. EXIT ================= -->
+<section class="panel" id="panel-X">
+  <div class="panel-head">
+    <div class="letter">X</div>
+    <div class="titles">
+      <strong>Exit</strong>
+      <span>Shut the program down gracefully</span>
+    </div>
+  </div>
+  <div class="flow">
+    <div class="node action"><span class="kind">Countdown</span>Print "Closing in 5…4…3…2…1"<br>1 second apart (<code>Thread.sleep</code>)</div>
+    <div class="arrow-down"></div>
+    <div class="node start-end">Running = false — End</div>
+  </div>
+</section>
+
+<footer>
+  Java Rangers Grocery — program flow reference
+</footer>
+
+</body>
+</html>
