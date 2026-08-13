@@ -45,7 +45,7 @@
   }
 
   .page-header {
-    padding: 40px 24px 6px;
+    padding: 28px 20px 4px;
     text-align: center;
     max-width: 900px;
     margin: 0 auto;
@@ -53,25 +53,25 @@
 
   .eyebrow {
     font-family: var(--mono);
-    font-size: 12px;
-    letter-spacing: 0.18em;
+    font-size: 10.5px;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
     color: var(--ink-soft);
-    margin-bottom: 10px;
+    margin-bottom: 6px;
   }
 
   h1 {
-    font-size: clamp(26px, 4vw, 40px);
-    margin: 0 0 8px;
+    font-size: clamp(20px, 3vw, 28px);
+    margin: 0 0 5px;
     letter-spacing: -0.01em;
     font-weight: 700;
   }
 
   .subhead {
     color: var(--ink-soft);
-    font-size: 14px;
-    line-height: 1.5;
-    max-width: 640px;
+    font-size: 12px;
+    line-height: 1.45;
+    max-width: 560px;
     margin: 0 auto;
   }
 
@@ -79,64 +79,153 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 14px 22px;
-    margin: 20px auto 0;
+    gap: 10px 16px;
+    margin: 12px auto 0;
     max-width: 800px;
     font-family: var(--mono);
-    font-size: 11.5px;
+    font-size: 10px;
     color: var(--ink-soft);
   }
 
-  .legend span { display: inline-flex; align-items: center; gap: 7px; }
-  .swatch { width: 11px; height: 11px; border-radius: 3px; display: inline-block; }
+  .legend span { display: inline-flex; align-items: center; gap: 5px; }
+  .swatch { width: 9px; height: 9px; border-radius: 2px; display: inline-block; }
   .sw-menu { background: var(--amber); }
   .sw-decision { background: var(--blue); }
   .sw-action { background: var(--green); }
   .sw-warn { background: var(--red); }
 
-  .hint {
-    text-align: center;
+  /* ===== MAIN MENU CHAIN STRIP (A -> B -> C -> D -> E -> X) ===== */
+  .chain-strip {
+    max-width: 1180px;
+    margin: 20px auto 0;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 4px;
     font-family: var(--mono);
-    font-size: 11.5px;
+  }
+  .chain-strip .chain-label {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
     color: var(--ink-soft);
-    margin: 16px 0 0;
-    opacity: 0.8;
+    margin-right: 10px;
+  }
+  .chain-node {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--ink);
+    color: var(--panel);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .chain-node.exit { background: var(--red); }
+  .chain-arrow {
+    width: 20px;
+    height: 2px;
+    background: var(--ink-soft);
+    position: relative;
+    flex-shrink: 0;
+  }
+  .chain-arrow::after {
+    content: "";
+    position: absolute;
+    right: -1px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0; height: 0;
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+    border-left: 6px solid var(--ink-soft);
+  }
+  .chain-note {
+    width: 100%;
+    text-align: center;
+    font-size: 10px;
+    color: var(--ink-soft);
+    margin-top: 6px;
+    opacity: 0.85;
   }
 
-  /* ===== SECTION = ONE SCREENSHOTTABLE PANEL ===== */
+  /* small "belongs to main menu" tag inside each lettered panel */
+  .menu-membership {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--ink-soft);
+    background: var(--paper);
+    border: 1px dashed var(--line);
+    border-radius: 999px;
+    padding: 2px 8px;
+    margin-left: auto;
+    white-space: nowrap;
+  }
+  .menu-membership .dot { color: var(--ink); font-weight: 700; }
+
+  /* "If user selects X ==>" entry callout */
+  .selects-callout {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--blue);
+    background: var(--blue-bg);
+    border: 1px solid var(--blue-bd);
+    border-radius: 6px;
+    padding: 6px 10px;
+    margin-bottom: 12px;
+    display: inline-block;
+  }
+  .selects-callout code {
+    font-family: var(--mono);
+    background: rgba(255,255,255,0.5);
+    padding: 0 5px;
+    border-radius: 3px;
+  }
+
+  /* ===== SECTION = ONE PANEL, COMPACT ===== */
   section.panel {
-    max-width: 1000px;
-    margin: 46px auto;
-    padding: 30px 34px 36px;
+    max-width: 1180px;
+    margin: 22px auto;
+    padding: 16px 18px 18px;
     background: var(--panel);
     border: 1.5px solid var(--ink);
-    border-radius: 8px;
-    box-shadow: 7px 7px 0 rgba(35,36,31,0.08);
+    border-radius: 7px;
+    box-shadow: 5px 5px 0 rgba(35,36,31,0.08);
     page-break-inside: avoid;
     break-inside: avoid;
+    overflow-x: auto;
   }
 
   section.panel.entry {
-    max-width: 480px;
+    max-width: 420px;
     text-align: center;
-    padding: 26px 30px;
+    padding: 16px 20px;
   }
 
   .panel-head {
     display: flex;
     align-items: center;
-    gap: 16px;
-    margin-bottom: 26px;
-    padding-bottom: 18px;
+    gap: 10px;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
     border-bottom: 1.5px dashed var(--line);
   }
 
   .panel-head .letter {
     font-family: var(--mono);
     font-weight: 700;
-    font-size: 20px;
-    width: 44px;
-    height: 44px;
+    font-size: 14px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     background: var(--ink);
     color: var(--panel);
@@ -148,65 +237,71 @@
 
   .panel-head .titles strong {
     display: block;
-    font-size: 20px;
+    font-size: 14.5px;
   }
 
   .panel-head .titles span {
     display: block;
-    font-size: 12.5px;
+    font-size: 10.5px;
     color: var(--ink-soft);
-    margin-top: 3px;
+    margin-top: 1px;
     font-family: var(--mono);
   }
 
   .entry .tag {
     font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.14em;
+    font-size: 9.5px;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--blue);
-    margin-bottom: 6px;
+    margin-bottom: 4px;
   }
 
-  .entry h2 { margin: 0 0 6px; font-size: 20px; }
-  .entry p { margin: 0; font-size: 13px; color: var(--ink-soft); font-family: var(--mono); }
+  .entry h2 { margin: 0 0 4px; font-size: 15px; }
+  .entry p { margin: 0; font-size: 11px; color: var(--ink-soft); font-family: var(--mono); }
+  .entry p + p { margin-top: 6px; }
 
-  /* Flow column */
-  .flow {
+  /* ===== HORIZONTAL FLOW ===== */
+  .flow-row {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
+    flex-wrap: wrap;
     gap: 0;
+    row-gap: 12px;
   }
 
   .node {
-    width: 100%;
-    max-width: 620px;
+    width: 190px;
+    flex-shrink: 0;
     border-radius: 6px;
     border: 1.5px solid;
-    padding: 14px 20px;
-    text-align: center;
-    font-size: 14.5px;
-    line-height: 1.45;
+    padding: 9px 11px;
+    text-align: left;
+    font-size: 11.5px;
+    line-height: 1.35;
     position: relative;
   }
 
+  .node.wide { width: 240px; }
+  .node.narrow { width: 150px; text-align: center; }
+
   .node .kind {
     font-family: var(--mono);
-    font-size: 10.5px;
-    letter-spacing: 0.1em;
+    font-size: 8.5px;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     display: block;
-    margin-bottom: 4px;
+    margin-bottom: 2px;
     opacity: 0.75;
   }
 
   .node code {
     font-family: var(--mono);
     background: rgba(35,36,31,0.07);
-    padding: 1px 6px;
+    padding: 0 4px;
     border-radius: 3px;
-    font-size: 13px;
+    font-size: 10.5px;
   }
 
   .node.menu   { background: var(--amber-bg); border-color: var(--amber-bd); }
@@ -214,7 +309,7 @@
   .node.decision {
     background: var(--blue-bg);
     border-color: var(--blue-bd);
-    border-radius: 10px;
+    border-radius: 9px;
   }
   .node.warn { background: var(--red-bg); border-color: var(--red-bd); }
   .node.start-end {
@@ -222,134 +317,126 @@
     color: var(--panel);
     border-color: var(--ink);
     border-radius: 999px;
-    max-width: 260px;
+    width: 170px;
+    text-align: center;
     font-family: var(--mono);
     font-weight: 600;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.02em;
+    font-size: 11px;
   }
 
   .node .note {
     display: block;
-    margin-top: 8px;
+    margin-top: 5px;
     font-family: var(--mono);
-    font-size: 11px;
+    font-size: 9px;
     color: var(--ink-soft);
-    opacity: 0.85;
+    opacity: 0.9;
     font-weight: 400;
-    line-height: 1.5;
+    line-height: 1.4;
   }
 
   .node .bug-note {
     display: block;
-    margin-top: 8px;
+    margin-top: 6px;
     font-family: var(--mono);
-    font-size: 11px;
+    font-size: 9px;
     color: var(--red);
     font-weight: 600;
-    line-height: 1.5;
+    line-height: 1.4;
+    background: var(--red-bg);
+    border: 1px solid var(--red-bd);
+    border-radius: 5px;
+    padding: 5px 7px;
   }
 
-  .arrow-down {
-    width: 2px;
-    height: 26px;
+  /* horizontal connecting arrow */
+  .arrow-right {
+    width: 22px;
+    height: 2px;
     background: var(--ink-soft);
     position: relative;
+    flex-shrink: 0;
+    align-self: center;
   }
-  .arrow-down::after {
+  .arrow-right::after {
     content: "";
     position: absolute;
-    bottom: -1px;
-    left: 50%;
-    transform: translateX(-50%);
+    right: -1px;
+    top: 50%;
+    transform: translateY(-50%);
     width: 0; height: 0;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-top: 7px solid var(--ink-soft);
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-left: 7px solid var(--ink-soft);
   }
 
-  /* Branch split (Yes/No, A/B/C etc.) */
-  .split {
-    display: flex;
-    justify-content: center;
-    gap: 34px;
-    width: 100%;
-    margin-top: 4px;
-    flex-wrap: wrap;
-  }
-
-  .branch-col {
+  /* a vertical stack of branches, sitting inline within the horizontal flow */
+  .branch-stack {
     display: flex;
     flex-direction: column;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  .branch-item {
+    display: flex;
+    flex-direction: row;
     align-items: center;
-    flex: 1;
-    min-width: 220px;
-    max-width: 320px;
+    gap: 6px;
   }
 
   .branch-label {
     font-family: var(--mono);
-    font-size: 11.5px;
+    font-size: 9px;
     font-weight: 700;
     color: var(--ink-soft);
     background: var(--paper);
     border: 1px solid var(--line);
     border-radius: 999px;
-    padding: 3px 12px;
-    margin-bottom: 10px;
+    padding: 2px 8px;
+    white-space: nowrap;
+    width: 74px;
+    text-align: center;
+    flex-shrink: 0;
   }
 
-  .branch-col .node {
-    max-width: 100%;
-    font-size: 13.5px;
-  }
+  .branch-item .node { width: 170px; }
 
-  .loop-tag {
+  .tail-tag {
     font-family: var(--mono);
-    font-size: 11px;
-    color: var(--blue);
-    background: var(--blue-bg);
-    border: 1px dashed var(--blue-bd);
-    border-radius: 999px;
-    padding: 4px 12px;
-    margin-top: 10px;
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-  }
-  .loop-tag::before { content: "↺"; }
-
-  .return-tag {
-    font-family: var(--mono);
-    font-size: 11px;
+    font-size: 8.5px;
     color: var(--ink-soft);
     background: var(--paper);
     border: 1px dashed var(--line);
     border-radius: 999px;
-    padding: 4px 12px;
-    margin-top: 10px;
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
+    padding: 2px 7px;
+    white-space: nowrap;
+    flex-shrink: 0;
   }
-  .return-tag::before { content: "⤴"; }
+  .tail-tag.loop { color: var(--blue); background: var(--blue-bg); border-color: var(--blue-bd); }
+  .tail-tag.loop::before { content: "↺ "; }
+  .tail-tag.ret::before { content: "⤴ "; }
 
-  .connector-strip {
-    text-align: center;
-    font-family: var(--mono);
-    color: var(--ink-soft);
-    font-size: 12px;
-    letter-spacing: 0.3em;
-    opacity: 0.4;
-    margin: -8px 0 -8px;
+  /* small down-then-right connector shown only when a row wraps on narrow screens */
+  @media (max-width: 900px) {
+    .flow-row { flex-direction: column; align-items: flex-start; }
+    .arrow-right { width: 2px; height: 16px; margin-left: 8px; }
+    .arrow-right::after {
+      right: 50%; top: auto; bottom: -1px; transform: translateX(50%);
+      border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 7px solid var(--ink-soft); border-bottom: none;
+    }
+    .branch-stack { width: 100%; }
+    .node, .node.wide, .node.narrow { width: 100%; max-width: 340px; }
+    .panel-head { flex-wrap: wrap; }
+    .menu-membership { margin-left: 0; }
   }
 
   /* Reference table for item catalog */
   .item-table {
     width: 100%;
-    max-width: 620px;
-    margin: 0 auto;
     border-collapse: collapse;
-    font-size: 13px;
+    font-size: 11.5px;
     background: var(--panel);
     border: 1.5px solid var(--amber-bd);
     border-radius: 6px;
@@ -358,15 +445,15 @@
   .item-table th {
     background: var(--amber-bg);
     font-family: var(--mono);
-    font-size: 10.5px;
-    letter-spacing: 0.08em;
+    font-size: 9px;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
     text-align: left;
-    padding: 8px 12px;
+    padding: 6px 9px;
     border-bottom: 1.5px solid var(--amber-bd);
   }
   .item-table td {
-    padding: 7px 12px;
+    padding: 5px 9px;
     border-bottom: 1px solid var(--line);
   }
   .item-table tr:last-child td { border-bottom: none; }
@@ -375,29 +462,24 @@
   .item-table th.num { text-align: right; }
 
   .callout {
-    width: 100%;
-    max-width: 620px;
-    margin: 0 auto;
     font-family: var(--mono);
-    font-size: 11.5px;
+    font-size: 10px;
     color: var(--ink-soft);
-    text-align: center;
-    line-height: 1.6;
-    padding: 8px 4px 0;
+    line-height: 1.5;
+    padding: 8px 2px 0;
   }
 
   footer {
     text-align: center;
     font-family: var(--mono);
-    font-size: 11px;
+    font-size: 10px;
     color: var(--ink-soft);
-    padding: 10px 20px 60px;
+    padding: 6px 16px 40px;
   }
 
   @media print {
     body { background: white; }
     section.panel { box-shadow: none; break-inside: avoid; }
-    .hint { display: none; }
   }
 </style>
 </head>
@@ -417,11 +499,28 @@
   </div>
 </div>
 
+<!-- ===== chain strip: shows A..E, X are all part of the Main Menu switch ===== -->
+<div class="chain-strip">
+  <span class="chain-label">Main Menu switch(choose):</span>
+  <div class="chain-node">A</div>
+  <div class="chain-arrow"></div>
+  <div class="chain-node">B</div>
+  <div class="chain-arrow"></div>
+  <div class="chain-node">C</div>
+  <div class="chain-arrow"></div>
+  <div class="chain-node">D</div>
+  <div class="chain-arrow"></div>
+  <div class="chain-node">E</div>
+  <div class="chain-arrow"></div>
+  <div class="chain-node exit">X</div>
+  <div class="chain-note">Buy Item → View Cart → Compute Total → Receipt → Staff Menu → Exit — all six are cases of the SAME switch inside the Main Menu's <code style="background:rgba(35,36,31,.07); padding:0 4px; border-radius:3px;">while (Running)</code> loop. Every one of them returns here when done (except X, which ends the loop).</div>
+</div>
+
 <section class="panel entry" id="panel-start">
   <div class="tag">Entry Point</div>
   <h2>Main Menu Loop</h2>
   <p>while (Running) { … } — six choices: A · B · C · D · E · X</p>
-  <p style="margin-top:10px;">Input read via <code>Scanner.next().charAt(0)</code> — only the first character typed is used as the choice.</p>
+  <p>Input read via <code>Scanner.next().charAt(0)</code> — only the first character typed is used.</p>
 </section>
 
 <!-- ================= ITEM CATALOG REFERENCE ================= -->
@@ -444,19 +543,19 @@
       </tr>
     </thead>
     <tbody>
-      <tr><td class="mono">A</td><td>Bear Brand Milk</td><td class="num">₱200.00</td><td class="num">10</td><td class="mono">1</td></tr>
-      <tr><td class="mono">B</td><td>Nescafe 3 in 1 Coffee</td><td class="num">₱20.00</td><td class="num">20</td><td class="mono">2</td></tr>
-      <tr><td class="mono">C</td><td>Oishi Prawn Crackers</td><td class="num">₱30.00</td><td class="num">15</td><td class="mono">3</td></tr>
-      <tr><td class="mono">D</td><td>Coke Softdrink</td><td class="num">₱65.00</td><td class="num">25</td><td class="mono">4</td></tr>
-      <tr><td class="mono">E</td><td>Ligo Sardines</td><td class="num">₱30.00</td><td class="num">30</td><td class="mono">5</td></tr>
-      <tr><td class="mono">F</td><td>Red Cross Alcohol</td><td class="num">₱80.00</td><td class="num">12</td><td class="mono">6</td></tr>
-      <tr><td class="mono">G</td><td>Cream Silk Conditioner</td><td class="num">₱150.00</td><td class="num">18</td><td class="mono">7</td></tr>
-      <tr><td class="mono">H</td><td>Tide Bar</td><td class="num">₱75.00</td><td class="num">22</td><td class="mono">8</td></tr>
-      <tr><td class="mono">I</td><td>Safeguard Soap</td><td class="num">₱25.00</td><td class="num">28</td><td class="mono">9</td></tr>
-      <tr><td class="mono">J</td><td>Colgate Toothpaste</td><td class="num">₱15.00</td><td class="num">35</td><td class="mono">0</td></tr>
+      <tr><td class="mono">A</td><td>Bear Brand Milk</td><td class="num">₱200.00</td><td class="num">10</td><td class="mono">A</td></tr>
+      <tr><td class="mono">B</td><td>Nescafe 3 in 1 Coffee</td><td class="num">₱20.00</td><td class="num">20</td><td class="mono">B</td></tr>
+      <tr><td class="mono">C</td><td>Oishi Prawn Crackers</td><td class="num">₱30.00</td><td class="num">15</td><td class="mono">C</td></tr>
+      <tr><td class="mono">D</td><td>Coke Softdrink</td><td class="num">₱65.00</td><td class="num">25</td><td class="mono">D</td></tr>
+      <tr><td class="mono">E</td><td>Ligo Sardines</td><td class="num">₱30.00</td><td class="num">30</td><td class="mono">E</td></tr>
+      <tr><td class="mono">F</td><td>Red Cross Alcohol</td><td class="num">₱80.00</td><td class="num">12</td><td class="mono">F</td></tr>
+      <tr><td class="mono">G</td><td>Cream Silk Conditioner</td><td class="num">₱150.00</td><td class="num">18</td><td class="mono">G</td></tr>
+      <tr><td class="mono">H</td><td>Tide Bar</td><td class="num">₱75.00</td><td class="num">22</td><td class="mono">H</td></tr>
+      <tr><td class="mono">I</td><td>Safeguard Soap</td><td class="num">₱25.00</td><td class="num">28</td><td class="mono">I</td></tr>
+      <tr><td class="mono">J</td><td>Colgate Toothpaste</td><td class="num">₱15.00</td><td class="num">35</td><td class="mono">J</td></tr>
     </tbody>
   </table>
-  <p class="callout">Note the key mismatch between screens: Buy Item uses letters A–J for items 1–10, while Restock Item (Staff Menu) uses digits 1–9 then <code>0</code> for item 10. Same 10 items, two different key schemes.</p>
+  <p class="callout">Buy Item and Restock Item now use the SAME letter scheme (A–J) for all 10 items — this was fixed from the earlier version, which used digits 1–9,0 for restock.</p>
 </section>
 
 <!-- ================= A. BUY ITEM ================= -->
@@ -467,52 +566,48 @@
       <strong>Buy Item</strong>
       <span>Add items to the cart, checking stock as you go</span>
     </div>
+    <span class="menu-membership"><span class="dot">●</span> Main Menu case 'A' / 'a'</span>
   </div>
-  <div class="flow">
-    <div class="node decision"><span class="kind">Loop entry</span>Enter <code>Buy Loop</code> — repeats <code>while (buying)</code>
-      <span class="note">Local flag <code>buying</code> declared fresh each time this case runs.</span>
+  <div class="selects-callout">If user selects <code>A</code> / <code>a</code> ==&gt;</div>
+  <div class="flow-row">
+    <div class="node decision narrow"><span class="kind">Loop entry</span><code>while (buying)</code></div>
+    <div class="arrow-right"></div>
+    <div class="node action wide"><span class="kind">Display</span>Show items A–J with live <code>Stock:</code> level
+      <span class="note">Reflects prior purchases / restocks this session.</span>
     </div>
-    <div class="arrow-down"></div>
-    <div class="node action"><span class="kind">Display</span>Show items A–J, each with its <code>Stock:</code> level
-      <span class="note">Stock is read live from stock1–stock10, so numbers shown reflect any prior purchases or staff restocks this session.</span>
-    </div>
-    <div class="arrow-down"></div>
-    <div class="node decision"><span class="kind">Check</span>Choice = <code>X</code>?</div>
-    <div class="arrow-down"></div>
-    <div class="split">
-      <div class="branch-col">
-        <div class="branch-label">YES</div>
-        <div class="node action">Exit buying loop
-          <span class="note"><code>buying = false; break;</code></span>
-        </div>
-        <div class="return-tag">back to Main Menu</div>
+    <div class="arrow-right"></div>
+    <div class="node decision narrow"><span class="kind">Check</span>Choice = <code>X</code>?</div>
+    <div class="arrow-right"></div>
+    <div class="branch-stack">
+      <div class="branch-item">
+        <span class="branch-label">YES</span>
+        <div class="node action">Exit loop <span class="note"><code>buying=false; break;</code></span></div>
+        <span class="tail-tag ret">Main Menu</span>
       </div>
-      <div class="branch-col">
-        <div class="branch-label">NO</div>
-        <div class="node action">Prompt for <code>quantity</code>
-          <span class="note">Read with <code>scan.nextInt()</code> — any non-numeric input here throws an uncaught exception.</span>
+      <div class="branch-item">
+        <span class="branch-label">NO</span>
+        <div class="node action">Prompt <code>quantity</code>
+          <span class="note"><code>scan.nextInt()</code> throws on non-numeric input.</span>
         </div>
       </div>
     </div>
-    <div class="arrow-down"></div>
-    <div class="node decision"><span class="kind">Validate</span><code>qty &gt; 0</code> AND <code>qty &lt;= stock</code>?
-      <span class="note">Checked in two separate steps: first <code>quanchoice &lt;= 0</code>, then per-item <code>quanchoice &gt; stockN</code> inside a 10-way switch on the letter choice.</span>
+    <div class="arrow-right"></div>
+    <div class="node decision wide"><span class="kind">Validate</span><code>qty&gt;0</code> AND <code>qty&lt;=stock</code>
+      <span class="note">Checked in two steps: qty≤0 first, then per-item switch on the letter.</span>
     </div>
-    <div class="arrow-down"></div>
-    <div class="split">
-      <div class="branch-col">
-        <div class="branch-label">YES</div>
-        <div class="node action"><code>stock -= qty</code><br><code>cart qty += qty</code><br>print confirmation
-          <span class="note">Prints "Stocks left: N" using the updated stock value.</span>
-        </div>
-        <div class="loop-tag">back to item list</div>
+    <div class="arrow-right"></div>
+    <div class="branch-stack">
+      <div class="branch-item">
+        <span class="branch-label">VALID</span>
+        <div class="node action"><code>stock-=qty</code>, <code>cart+=qty</code>, confirm</div>
+        <span class="tail-tag loop">item list</span>
       </div>
-      <div class="branch-col">
-        <div class="branch-label">NO</div>
-        <div class="node warn">Print "invalid quantity" or "only N available"
-          <span class="note">An unrecognized item letter (not A–J, not X) falls to the switch's <code>default</code> and prints "Invalid item."</span>
+      <div class="branch-item">
+        <span class="branch-label">INVALID</span>
+        <div class="node warn">"invalid qty" / "only N available"
+          <span class="note">Unknown letter → "Invalid item."</span>
         </div>
-        <div class="loop-tag">back to item list</div>
+        <span class="tail-tag loop">item list</span>
       </div>
     </div>
   </div>
@@ -526,45 +621,39 @@
       <strong>View Cart</strong>
       <span>Review current cart, then clear or remove items</span>
     </div>
+    <span class="menu-membership"><span class="dot">●</span> Main Menu case 'B' / 'b'</span>
   </div>
-  <div class="flow">
-    <div class="node action"><span class="kind">Display</span>Print every item with <code>qty &gt; 0</code> and its line total
-      <span class="note">Local flag <code>empty</code> starts true and flips to false the moment any item prints.</span>
+  <div class="selects-callout">If user selects <code>B</code> / <code>b</code> ==&gt;</div>
+  <div class="flow-row">
+    <div class="node action wide"><span class="kind">Display</span>Print items with <code>qty&gt;0</code> + line totals
+      <span class="note">Local <code>empty</code> flag flips false on first printed item.</span>
     </div>
-    <div class="arrow-down"></div>
-    <div class="node decision"><span class="kind">Check</span>Is the cart empty?</div>
-    <div class="arrow-down"></div>
-    <div class="node warn" style="max-width:420px;">If yes → print "Cart is Empty. Buy something first." (continues below regardless)
-      <span class="note">Unlike Compute Total, an empty cart here does NOT skip the sub-menu — it still shows Clear/Remove/Back afterward.</span>
+    <div class="arrow-right"></div>
+    <div class="node warn wide">If cart empty → "Cart is Empty. Buy something first."
+      <span class="note">Sub-menu still shows regardless — unlike Compute Total.</span>
     </div>
-    <div class="arrow-down"></div>
-    <div class="node menu"><span class="kind">Sub-menu</span><code>A</code> Clear Cart&nbsp;&nbsp;·&nbsp;&nbsp;<code>B</code> Remove Item&nbsp;&nbsp;·&nbsp;&nbsp;<code>X</code> Back</div>
-    <div class="arrow-down"></div>
-    <div class="split">
-      <div class="branch-col">
-        <div class="branch-label">A · CLEAR</div>
-        <div class="node decision">Confirm <code>Y</code> / <code>X</code>
-          <span class="note">Auto-skips confirmation and prints "Cart is already empty." if the sum of all 10 quantities is 0.</span>
+    <div class="arrow-right"></div>
+    <div class="node menu wide"><span class="kind">Sub-menu</span><code>A</code> Clear&nbsp;·&nbsp;<code>B</code> Remove&nbsp;·&nbsp;<code>X</code> Back</div>
+    <div class="arrow-right"></div>
+    <div class="branch-stack">
+      <div class="branch-item">
+        <span class="branch-label">A · CLEAR</span>
+        <div class="node action">Confirm Y/X → reset all qty to 0 (stock not restored)
+          <span class="note">Auto-skips w/ "already empty" if cart sum = 0. Other input → "Invalid input."</span>
         </div>
-        <div class="node action" style="margin-top:10px;">Y → reset all 10 qty to 0<br>(stock not restored)
-          <span class="note">Any input other than Y or X prints "Invalid input."</span>
-        </div>
-        <div class="return-tag">back to Main Menu</div>
+        <span class="tail-tag ret">Main Menu</span>
       </div>
-      <div class="branch-col">
-        <div class="branch-label">B · REMOVE</div>
-        <div class="node action">Pick item, enter qty to remove<br><code>0</code> = remove all
-          <span class="note">Also auto-exits with "Cart is empty." if nothing is in the cart. Shows a full A–J list with current per-item quantities first.</span>
+      <div class="branch-item">
+        <span class="branch-label">B · REMOVE</span>
+        <div class="node action">Pick item, qty to remove (0 = all)
+          <span class="note">Auto-exits "Cart is empty." if nothing in cart. Removed stock not returned.</span>
         </div>
-        <div class="node action" style="margin-top:10px;">Subtract from cart qty
-          <span class="note">If removeQty is 0 OR ≥ current qty, that item's qty is zeroed; otherwise it's subtracted. Removed stock is NOT returned to inventory.</span>
-        </div>
-        <div class="return-tag">back to Main Menu</div>
+        <span class="tail-tag ret">Main Menu</span>
       </div>
-      <div class="branch-col">
-        <div class="branch-label">X · BACK</div>
+      <div class="branch-item">
+        <span class="branch-label">X · BACK</span>
         <div class="node action">No changes</div>
-        <div class="return-tag">back to Main Menu</div>
+        <span class="tail-tag ret">Main Menu</span>
       </div>
     </div>
   </div>
@@ -578,66 +667,56 @@
       <strong>Compute Total</strong>
       <span>Calculate subtotal, VAT, discount, and take payment</span>
     </div>
+    <span class="menu-membership"><span class="dot">●</span> Main Menu case 'C' / 'c'</span>
   </div>
-  <div class="flow">
-    <div class="node decision"><span class="kind">Guard</span>Is the cart empty?</div>
-    <div class="arrow-down"></div>
-    <div class="split">
-      <div class="branch-col">
-        <div class="branch-label">YES</div>
-        <div class="node warn">Print "Buy an item first."
-          <span class="note">Immediately <code>break</code>s out of this case — the rest of Compute Total does not run.</span>
-        </div>
-        <div class="return-tag">back to Main Menu</div>
+  <div class="selects-callout">If user selects <code>C</code> / <code>c</code> ==&gt;</div>
+  <div class="flow-row">
+    <div class="node decision narrow"><span class="kind">Guard</span>Cart empty?</div>
+    <div class="arrow-right"></div>
+    <div class="branch-stack">
+      <div class="branch-item">
+        <span class="branch-label">YES</span>
+        <div class="node warn">"Buy an item first." — hard <code>break</code></div>
+        <span class="tail-tag ret">Main Menu</span>
       </div>
-      <div class="branch-col">
-        <div class="branch-label">NO</div>
+      <div class="branch-item">
+        <span class="branch-label">NO</span>
         <div class="node action">Continue to calculation</div>
       </div>
     </div>
-    <div class="arrow-down"></div>
-    <div class="node action"><span class="kind">Calculate</span><code>Subtotal = Σ(price × qty)</code><br><code>VAT = Subtotal × 12%</code><br><code>GrandTotal = Subtotal + VAT</code>
-      <span class="note">Computed once here as a baseline before any discount branch runs.</span>
+    <div class="arrow-right"></div>
+    <div class="node action wide"><span class="kind">Calculate</span><code>Subtotal=Σ(price×qty)</code><br><code>VAT=Subtotal×12%</code><br><code>GrandTotal=Subtotal+VAT</code></div>
+    <div class="arrow-right"></div>
+    <div class="node menu wide"><span class="kind">Discount</span><code>A</code> Senior/PWD 20%&nbsp;·&nbsp;<code>B</code> Promo 15%&nbsp;·&nbsp;<code>C</code> None
+      <span class="note">Other key → default: 0%, "Invalid choice."</span>
     </div>
-    <div class="arrow-down"></div>
-    <div class="node menu"><span class="kind">Choose discount</span><code>A</code> Senior/PWD 20%&nbsp;&nbsp;·&nbsp;&nbsp;<code>B</code> Promo 15%&nbsp;&nbsp;·&nbsp;&nbsp;<code>C</code> None
-      <span class="note">Any other key falls to <code>default</code>: 0% discount, "Invalid choice. No Discount Applied."</span>
-    </div>
-    <div class="arrow-down"></div>
-    <div class="split">
-      <div class="branch-col">
-        <div class="branch-label">A · SENIOR/PWD</div>
-        <div class="node action">VAT exempted entirely<br><code>GrandTotal = Subtotal</code><br>then apply −20%
-          <span class="note">discountRate = 0.20, vatAmount reset to 0.</span>
-        </div>
+    <div class="arrow-right"></div>
+    <div class="branch-stack">
+      <div class="branch-item">
+        <span class="branch-label">A · SENIOR</span>
+        <div class="node action">VAT exempted, <code>GrandTotal=Subtotal</code>, then −20%</div>
       </div>
-      <div class="branch-col">
-        <div class="branch-label">B · PROMO</div>
-        <div class="node action">Apply −15% to the<br>VAT-inclusive total
-          <span class="note">discountRate = 0.15, GrandTotal keeps its VAT-inclusive value.</span>
-        </div>
+      <div class="branch-item">
+        <span class="branch-label">B · PROMO</span>
+        <div class="node action">−15% on VAT-inclusive total</div>
       </div>
-      <div class="branch-col">
-        <div class="branch-label">C · NONE</div>
-        <div class="node action">No discount applied<br>to the VAT-inclusive total
-          <span class="note">discountRate = 0.</span>
-        </div>
+      <div class="branch-item">
+        <span class="branch-label">C · NONE</span>
+        <div class="node action">No discount, VAT-inclusive total stands</div>
       </div>
     </div>
-    <div class="arrow-down"></div>
-    <div class="node action" style="max-width:620px;"><span class="kind">Apply discount</span><code>discountAmount = GrandTotal × discountRate</code><br><code>GrandTotal -= discountAmount</code>
-      <span class="note">This single line runs after all three branches above, using whatever discountRate and GrandTotal each branch left behind.</span>
+    <div class="arrow-right"></div>
+    <div class="node action wide"><span class="kind">Apply</span><code>discountAmount=GrandTotal×rate</code><br><code>GrandTotal-=discountAmount</code>
+      <span class="note">Runs after all 3 branches, using whatever each left behind.</span>
     </div>
-    <div class="arrow-down"></div>
-    <div class="node decision"><span class="kind">Payment loop</span>Prompt for payment<br>repeat <code>while (payment &lt; GrandTotal)</code>
-      <span class="note">Uses a do-while — always prompts at least once. Prints "Insufficient payment. Please enter [amount] or above" on each failed attempt. <code>scan.nextDouble()</code> throws on non-numeric input.</span>
+    <div class="arrow-right"></div>
+    <div class="node decision wide"><span class="kind">Payment loop</span>do-while <code>payment&lt;GrandTotal</code>
+      <span class="note">Always prompts once; "Insufficient payment" on each fail.</span>
     </div>
-    <div class="arrow-down"></div>
-    <div class="node action"><span class="kind">Finalize</span><code>Change = Payment − GrandTotal</code><br><code>computed = true</code><br>print Order Summary
-      <span class="note">Order Summary shows Subtotal, VAT (or "EXEMPTED" for Senior/PWD), Discount, Total, Payment, Change.</span>
-    </div>
-    <div class="arrow-down"></div>
-    <div class="return-tag">back to Main Menu</div>
+    <div class="arrow-right"></div>
+    <div class="node action wide"><span class="kind">Finalize</span><code>Change=Payment−GrandTotal</code><br><code>computed=true</code>, print summary</div>
+    <div class="arrow-right"></div>
+    <span class="tail-tag ret">Main Menu</span>
   </div>
 </section>
 
@@ -649,24 +728,26 @@
       <strong>Receipt</strong>
       <span>Reprint the last computed transaction</span>
     </div>
+    <span class="menu-membership"><span class="dot">●</span> Main Menu case 'D' / 'd'</span>
   </div>
-  <div class="flow">
-    <div class="node decision"><span class="kind">Guard</span>Has <code>computed</code> been set to true?</div>
-    <div class="arrow-down"></div>
-    <div class="split">
-      <div class="branch-col">
-        <div class="branch-label">NO</div>
-        <div class="node warn">Print "Compute first to view the receipt."</div>
+  <div class="selects-callout">If user selects <code>D</code> / <code>d</code> ==&gt;</div>
+  <div class="flow-row">
+    <div class="node decision narrow"><span class="kind">Guard</span><code>computed</code> = true?</div>
+    <div class="arrow-right"></div>
+    <div class="branch-stack">
+      <div class="branch-item">
+        <span class="branch-label">NO</span>
+        <div class="node warn">"Compute first to view the receipt."</div>
       </div>
-      <div class="branch-col">
-        <div class="branch-label">YES</div>
-        <div class="node action">Reprint itemized list +<br>subtotal, VAT, discount,<br>total, payment, change
-          <span class="note">Item lines are re-derived from live qty1–qty10, so if the cart changed after Compute Total ran (e.g. via View Cart → Remove), the item list here can drift from the totals below, which are still the stored Subtotal/VAT/GrandTotal/payment/change values.</span>
+      <div class="branch-item">
+        <span class="branch-label">YES</span>
+        <div class="node action">Reprint items + subtotal, VAT, discount, total, payment, change
+          <span class="note">Item lines re-derive from live qty; totals stay frozen from last Compute — can drift if cart changed since.</span>
         </div>
       </div>
     </div>
-    <div class="arrow-down"></div>
-    <div class="return-tag">back to Main Menu</div>
+    <div class="arrow-right"></div>
+    <span class="tail-tag ret">Main Menu</span>
   </div>
 </section>
 
@@ -678,50 +759,46 @@
       <strong>Staff Menu</strong>
       <span>PIN-protected stock management</span>
     </div>
+    <span class="menu-membership"><span class="dot">●</span> Main Menu case 'E' / 'e'</span>
   </div>
-  <div class="flow">
-    <div class="node decision"><span class="kind">Login</span>Enter Staff PIN — up to <code>3</code> attempts
-      <span class="note">PIN is the fixed int 4321, read via <code>scan.nextInt()</code>. <code>attempts</code> increments only on a wrong PIN; a correct PIN breaks out immediately regardless of attempt count.</span>
+  <div class="selects-callout">If user selects <code>E</code> / <code>e</code> ==&gt;</div>
+  <div class="flow-row">
+    <div class="node decision wide"><span class="kind">Login</span>Staff PIN (4321), up to 3 attempts
+      <span class="note">Correct PIN breaks out immediately, regardless of attempt count.</span>
     </div>
-    <div class="arrow-down"></div>
-    <div class="split">
-      <div class="branch-col">
-        <div class="branch-label">FAIL ×3</div>
-        <div class="node warn">Print "Too many failed attempts."</div>
-        <div class="return-tag">back to Main Menu</div>
+    <div class="arrow-right"></div>
+    <div class="branch-stack">
+      <div class="branch-item">
+        <span class="branch-label">FAIL ×3</span>
+        <div class="node warn">"Too many failed attempts."</div>
+        <span class="tail-tag ret">Main Menu</span>
       </div>
-      <div class="branch-col">
-        <div class="branch-label">CORRECT</div>
+      <div class="branch-item">
+        <span class="branch-label">CORRECT</span>
         <div class="node action">Access granted</div>
       </div>
     </div>
-    <div class="arrow-down"></div>
-    <div class="node menu"><span class="kind">Staff loop</span><code>A</code> View Stock&nbsp;&nbsp;·&nbsp;&nbsp;<code>B</code> Restock Item&nbsp;&nbsp;·&nbsp;&nbsp;<code>X</code> Back
-      <span class="note">Local flag <code>staffMenu</code>, separate from the outer <code>buying</code>/<code>Running</code> flags.</span>
-    </div>
-    <div class="arrow-down"></div>
-    <div class="split">
-      <div class="branch-col">
-        <div class="branch-label">A · VIEW STOCK</div>
-        <div class="node action">Print current stock levels<br>for all 10 items</div>
-        <div class="loop-tag">back to staff loop</div>
+    <div class="arrow-right"></div>
+    <div class="node menu wide"><span class="kind">Staff loop</span><code>A</code> View Stock&nbsp;·&nbsp;<code>B</code> Restock&nbsp;·&nbsp;<code>X</code> Back</div>
+    <div class="arrow-right"></div>
+    <div class="branch-stack">
+      <div class="branch-item">
+        <span class="branch-label">A · VIEW</span>
+        <div class="node action">Print stock for all 10 items</div>
+        <span class="tail-tag loop">staff loop</span>
       </div>
-      <div class="branch-col">
-        <div class="branch-label">B · RESTOCK</div>
-        <div class="node action">Select item (1–10, using <code>0</code> for item 10), enter qty<br><code>stock += qty</code>
-          <span class="note">Rejects qty ≤ 0 with "Invalid quantity." An unrecognized item key prints "Invalid item. Please select a valid item (1-10)."</span>
+      <div class="branch-item">
+        <span class="branch-label">B · RESTOCK</span>
+        <div class="node action">Show all 10 items w/ current stock, pick item (A–J), enter qty → <code>stock+=qty</code>
+          <span class="note">qty≤0 → "Invalid quantity." Bad letter → "Invalid item. Please select a valid item (A-J)."</span>
+          <span class="bug-note">⚠ Missing <code>break;</code> after the restock switch — falls through into case X, printing "Returning to main menu..." and exiting the staff loop instead of looping back.</span>
         </div>
-        <div class="node bug-note" style="background: var(--red-bg); border: 1.5px solid var(--red-bd); border-radius: 6px; padding: 10px 14px; margin-top: 10px; max-width: 100%;">
-          ⚠ Missing <code>break;</code> after this case in the source — execution falls through into the <code>X</code> case below, so a successful restock immediately triggers "Returning to main menu..." and exits the staff loop instead of looping back to the staff menu.
-        </div>
-        <div class="loop-tag" style="opacity:0.5;">intended: back to staff loop</div>
+        <span class="tail-tag loop" style="opacity:0.5;">intended: staff loop</span>
       </div>
-      <div class="branch-col">
-        <div class="branch-label">X · BACK</div>
-        <div class="node action">Exit staff menu loop
-          <span class="note"><code>staffMenu = false;</code></span>
-        </div>
-        <div class="return-tag">back to Main Menu</div>
+      <div class="branch-item">
+        <span class="branch-label">X · BACK</span>
+        <div class="node action">Exit staff loop</div>
+        <span class="tail-tag ret">Main Menu</span>
       </div>
     </div>
   </div>
@@ -735,18 +812,20 @@
       <strong>Exit</strong>
       <span>Shut the program down gracefully</span>
     </div>
+    <span class="menu-membership"><span class="dot">●</span> Main Menu case 'X' / 'x'</span>
   </div>
-  <div class="flow">
-    <div class="node action"><span class="kind">Countdown</span>Print "Closing in 5…4…3…2…1"<br>1 second apart (<code>Thread.sleep</code>)
-      <span class="note">Blocks the whole program for ~5 seconds; <code>main</code> declares <code>throws InterruptedException</code> to allow this.</span>
+  <div class="selects-callout">If user selects <code>X</code> / <code>x</code> ==&gt;</div>
+  <div class="flow-row">
+    <div class="node action wide"><span class="kind">Countdown</span>"Closing in 5…4…3…2…1", 1s apart
+      <span class="note">Blocks ~5s; <code>main</code> declares <code>throws InterruptedException</code>.</span>
     </div>
-    <div class="arrow-down"></div>
+    <div class="arrow-right"></div>
     <div class="node start-end">Running = false — End</div>
   </div>
 </section>
 
 <footer>
-  Java Rangers Grocery
+  Java Rangers Grocery — program flow reference
 </footer>
 
 </body>
