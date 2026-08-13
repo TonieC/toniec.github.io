@@ -791,9 +791,8 @@
         <span class="branch-label">B · RESTOCK</span>
         <div class="node action">Show all 10 items w/ current stock, pick item (A–J), enter qty → <code>stock+=qty</code>
           <span class="note">qty≤0 → "Invalid quantity." Bad letter → "Invalid item. Please select a valid item (A-J)."</span>
-          <span class="bug-note">⚠ Missing <code>break;</code> after the restock switch — falls through into case X, printing "Returning to main menu..." and exiting the staff loop instead of looping back.</span>
         </div>
-        <span class="tail-tag loop" style="opacity:0.5;">intended: staff loop</span>
+        <span class="tail-tag loop" style="opacity:0.5;">staff loop</span>
       </div>
       <div class="branch-item">
         <span class="branch-label">X · BACK</span>
