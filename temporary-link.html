@@ -228,6 +228,27 @@
     letter-spacing: 0.04em;
   }
 
+  .node .note {
+    display: block;
+    margin-top: 8px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-soft);
+    opacity: 0.85;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  .node .bug-note {
+    display: block;
+    margin-top: 8px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--red);
+    font-weight: 600;
+    line-height: 1.5;
+  }
+
   .arrow-down {
     width: 2px;
     height: 26px;
@@ -322,6 +343,49 @@
     margin: -8px 0 -8px;
   }
 
+  /* Reference table for item catalog */
+  .item-table {
+    width: 100%;
+    max-width: 620px;
+    margin: 0 auto;
+    border-collapse: collapse;
+    font-size: 13px;
+    background: var(--panel);
+    border: 1.5px solid var(--amber-bd);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .item-table th {
+    background: var(--amber-bg);
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-align: left;
+    padding: 8px 12px;
+    border-bottom: 1.5px solid var(--amber-bd);
+  }
+  .item-table td {
+    padding: 7px 12px;
+    border-bottom: 1px solid var(--line);
+  }
+  .item-table tr:last-child td { border-bottom: none; }
+  .item-table td.mono, .item-table th.mono { font-family: var(--mono); }
+  .item-table td.num { text-align: right; font-family: var(--mono); }
+  .item-table th.num { text-align: right; }
+
+  .callout {
+    width: 100%;
+    max-width: 620px;
+    margin: 0 auto;
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--ink-soft);
+    text-align: center;
+    line-height: 1.6;
+    padding: 8px 4px 0;
+  }
+
   footer {
     text-align: center;
     font-family: var(--mono);
@@ -357,6 +421,42 @@
   <div class="tag">Entry Point</div>
   <h2>Main Menu Loop</h2>
   <p>while (Running) { … } — six choices: A · B · C · D · E · X</p>
+  <p style="margin-top:10px;">Input read via <code>Scanner.next().charAt(0)</code> — only the first character typed is used as the choice.</p>
+</section>
+
+<!-- ================= ITEM CATALOG REFERENCE ================= -->
+<section class="panel" id="panel-catalog">
+  <div class="panel-head">
+    <div class="letter">#</div>
+    <div class="titles">
+      <strong>Item Catalog</strong>
+      <span>The 10 fixed items shared across Buy, Cart, Compute, Receipt, and Staff Menu</span>
+    </div>
+  </div>
+  <table class="item-table">
+    <thead>
+      <tr>
+        <th>Buy Key</th>
+        <th>Item</th>
+        <th class="num">Price</th>
+        <th class="num">Starting Stock</th>
+        <th class="mono">Restock Key</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="mono">A</td><td>Bear Brand Milk</td><td class="num">₱200.00</td><td class="num">10</td><td class="mono">1</td></tr>
+      <tr><td class="mono">B</td><td>Nescafe 3 in 1 Coffee</td><td class="num">₱20.00</td><td class="num">20</td><td class="mono">2</td></tr>
+      <tr><td class="mono">C</td><td>Oishi Prawn Crackers</td><td class="num">₱30.00</td><td class="num">15</td><td class="mono">3</td></tr>
+      <tr><td class="mono">D</td><td>Coke Softdrink</td><td class="num">₱65.00</td><td class="num">25</td><td class="mono">4</td></tr>
+      <tr><td class="mono">E</td><td>Ligo Sardines</td><td class="num">₱30.00</td><td class="num">30</td><td class="mono">5</td></tr>
+      <tr><td class="mono">F</td><td>Red Cross Alcohol</td><td class="num">₱80.00</td><td class="num">12</td><td class="mono">6</td></tr>
+      <tr><td class="mono">G</td><td>Cream Silk Conditioner</td><td class="num">₱150.00</td><td class="num">18</td><td class="mono">7</td></tr>
+      <tr><td class="mono">H</td><td>Tide Bar</td><td class="num">₱75.00</td><td class="num">22</td><td class="mono">8</td></tr>
+      <tr><td class="mono">I</td><td>Safeguard Soap</td><td class="num">₱25.00</td><td class="num">28</td><td class="mono">9</td></tr>
+      <tr><td class="mono">J</td><td>Colgate Toothpaste</td><td class="num">₱15.00</td><td class="num">35</td><td class="mono">0</td></tr>
+    </tbody>
+  </table>
+  <p class="callout">Note the key mismatch between screens: Buy Item uses letters A–J for items 1–10, while Restock Item (Staff Menu) uses digits 1–9 then <code>0</code> for item 10. Same 10 items, two different key schemes.</p>
 </section>
 
 <!-- ================= A. BUY ITEM ================= -->
@@ -369,35 +469,49 @@
     </div>
   </div>
   <div class="flow">
-    <div class="node decision"><span class="kind">Loop entry</span>Enter <code>Buy Loop</code> — repeats <code>while (buying)</code></div>
+    <div class="node decision"><span class="kind">Loop entry</span>Enter <code>Buy Loop</code> — repeats <code>while (buying)</code>
+      <span class="note">Local flag <code>buying</code> declared fresh each time this case runs.</span>
+    </div>
     <div class="arrow-down"></div>
-    <div class="node action"><span class="kind">Display</span>Show items A–J, each with its <code>Stock:</code> level</div>
+    <div class="node action"><span class="kind">Display</span>Show items A–J, each with its <code>Stock:</code> level
+      <span class="note">Stock is read live from stock1–stock10, so numbers shown reflect any prior purchases or staff restocks this session.</span>
+    </div>
     <div class="arrow-down"></div>
     <div class="node decision"><span class="kind">Check</span>Choice = <code>X</code>?</div>
     <div class="arrow-down"></div>
     <div class="split">
       <div class="branch-col">
         <div class="branch-label">YES</div>
-        <div class="node action">Exit buying loop</div>
+        <div class="node action">Exit buying loop
+          <span class="note"><code>buying = false; break;</code></span>
+        </div>
         <div class="return-tag">back to Main Menu</div>
       </div>
       <div class="branch-col">
         <div class="branch-label">NO</div>
-        <div class="node action">Prompt for <code>quantity</code></div>
+        <div class="node action">Prompt for <code>quantity</code>
+          <span class="note">Read with <code>scan.nextInt()</code> — any non-numeric input here throws an uncaught exception.</span>
+        </div>
       </div>
     </div>
     <div class="arrow-down"></div>
-    <div class="node decision"><span class="kind">Validate</span><code>qty &gt; 0</code> AND <code>qty &lt;= stock</code>?</div>
+    <div class="node decision"><span class="kind">Validate</span><code>qty &gt; 0</code> AND <code>qty &lt;= stock</code>?
+      <span class="note">Checked in two separate steps: first <code>quanchoice &lt;= 0</code>, then per-item <code>quanchoice &gt; stockN</code> inside a 10-way switch on the letter choice.</span>
+    </div>
     <div class="arrow-down"></div>
     <div class="split">
       <div class="branch-col">
         <div class="branch-label">YES</div>
-        <div class="node action"><code>stock -= qty</code><br><code>cart qty += qty</code><br>print confirmation</div>
+        <div class="node action"><code>stock -= qty</code><br><code>cart qty += qty</code><br>print confirmation
+          <span class="note">Prints "Stocks left: N" using the updated stock value.</span>
+        </div>
         <div class="loop-tag">back to item list</div>
       </div>
       <div class="branch-col">
         <div class="branch-label">NO</div>
-        <div class="node warn">Print "invalid quantity" or "only N available"</div>
+        <div class="node warn">Print "invalid quantity" or "only N available"
+          <span class="note">An unrecognized item letter (not A–J, not X) falls to the switch's <code>default</code> and prints "Invalid item."</span>
+        </div>
         <div class="loop-tag">back to item list</div>
       </div>
     </div>
@@ -414,25 +528,37 @@
     </div>
   </div>
   <div class="flow">
-    <div class="node action"><span class="kind">Display</span>Print every item with <code>qty &gt; 0</code> and its line total</div>
+    <div class="node action"><span class="kind">Display</span>Print every item with <code>qty &gt; 0</code> and its line total
+      <span class="note">Local flag <code>empty</code> starts true and flips to false the moment any item prints.</span>
+    </div>
     <div class="arrow-down"></div>
     <div class="node decision"><span class="kind">Check</span>Is the cart empty?</div>
     <div class="arrow-down"></div>
-    <div class="node warn" style="max-width:420px;">If yes → print "Cart is Empty. Buy something first." (continues below regardless)</div>
+    <div class="node warn" style="max-width:420px;">If yes → print "Cart is Empty. Buy something first." (continues below regardless)
+      <span class="note">Unlike Compute Total, an empty cart here does NOT skip the sub-menu — it still shows Clear/Remove/Back afterward.</span>
+    </div>
     <div class="arrow-down"></div>
     <div class="node menu"><span class="kind">Sub-menu</span><code>A</code> Clear Cart&nbsp;&nbsp;·&nbsp;&nbsp;<code>B</code> Remove Item&nbsp;&nbsp;·&nbsp;&nbsp;<code>X</code> Back</div>
     <div class="arrow-down"></div>
     <div class="split">
       <div class="branch-col">
         <div class="branch-label">A · CLEAR</div>
-        <div class="node decision">Confirm <code>Y</code> / <code>X</code></div>
-        <div class="node action" style="margin-top:10px;">Y → reset all 10 qty to 0<br>(stock not restored)</div>
+        <div class="node decision">Confirm <code>Y</code> / <code>X</code>
+          <span class="note">Auto-skips confirmation and prints "Cart is already empty." if the sum of all 10 quantities is 0.</span>
+        </div>
+        <div class="node action" style="margin-top:10px;">Y → reset all 10 qty to 0<br>(stock not restored)
+          <span class="note">Any input other than Y or X prints "Invalid input."</span>
+        </div>
         <div class="return-tag">back to Main Menu</div>
       </div>
       <div class="branch-col">
         <div class="branch-label">B · REMOVE</div>
-        <div class="node action">Pick item, enter qty to remove<br><code>0</code> = remove all</div>
-        <div class="node action" style="margin-top:10px;">Subtract from cart qty</div>
+        <div class="node action">Pick item, enter qty to remove<br><code>0</code> = remove all
+          <span class="note">Also auto-exits with "Cart is empty." if nothing is in the cart. Shows a full A–J list with current per-item quantities first.</span>
+        </div>
+        <div class="node action" style="margin-top:10px;">Subtract from cart qty
+          <span class="note">If removeQty is 0 OR ≥ current qty, that item's qty is zeroed; otherwise it's subtracted. Removed stock is NOT returned to inventory.</span>
+        </div>
         <div class="return-tag">back to Main Menu</div>
       </div>
       <div class="branch-col">
@@ -459,7 +585,9 @@
     <div class="split">
       <div class="branch-col">
         <div class="branch-label">YES</div>
-        <div class="node warn">Print "Buy an item first."</div>
+        <div class="node warn">Print "Buy an item first."
+          <span class="note">Immediately <code>break</code>s out of this case — the rest of Compute Total does not run.</span>
+        </div>
         <div class="return-tag">back to Main Menu</div>
       </div>
       <div class="branch-col">
@@ -468,28 +596,46 @@
       </div>
     </div>
     <div class="arrow-down"></div>
-    <div class="node action"><span class="kind">Calculate</span><code>Subtotal = Σ(price × qty)</code><br><code>VAT = Subtotal × 12%</code><br><code>GrandTotal = Subtotal + VAT</code></div>
+    <div class="node action"><span class="kind">Calculate</span><code>Subtotal = Σ(price × qty)</code><br><code>VAT = Subtotal × 12%</code><br><code>GrandTotal = Subtotal + VAT</code>
+      <span class="note">Computed once here as a baseline before any discount branch runs.</span>
+    </div>
     <div class="arrow-down"></div>
-    <div class="node menu"><span class="kind">Choose discount</span><code>A</code> Senior/PWD 20%&nbsp;&nbsp;·&nbsp;&nbsp;<code>B</code> Promo 15%&nbsp;&nbsp;·&nbsp;&nbsp;<code>C</code> None</div>
+    <div class="node menu"><span class="kind">Choose discount</span><code>A</code> Senior/PWD 20%&nbsp;&nbsp;·&nbsp;&nbsp;<code>B</code> Promo 15%&nbsp;&nbsp;·&nbsp;&nbsp;<code>C</code> None
+      <span class="note">Any other key falls to <code>default</code>: 0% discount, "Invalid choice. No Discount Applied."</span>
+    </div>
     <div class="arrow-down"></div>
     <div class="split">
       <div class="branch-col">
         <div class="branch-label">A · SENIOR/PWD</div>
-        <div class="node action">VAT exempted entirely<br><code>GrandTotal = Subtotal</code><br>then apply −20%</div>
+        <div class="node action">VAT exempted entirely<br><code>GrandTotal = Subtotal</code><br>then apply −20%
+          <span class="note">discountRate = 0.20, vatAmount reset to 0.</span>
+        </div>
       </div>
       <div class="branch-col">
         <div class="branch-label">B · PROMO</div>
-        <div class="node action">Apply −15% to the<br>VAT-inclusive total</div>
+        <div class="node action">Apply −15% to the<br>VAT-inclusive total
+          <span class="note">discountRate = 0.15, GrandTotal keeps its VAT-inclusive value.</span>
+        </div>
       </div>
       <div class="branch-col">
         <div class="branch-label">C · NONE</div>
-        <div class="node action">No discount applied<br>to the VAT-inclusive total</div>
+        <div class="node action">No discount applied<br>to the VAT-inclusive total
+          <span class="note">discountRate = 0.</span>
+        </div>
       </div>
     </div>
     <div class="arrow-down"></div>
-    <div class="node decision"><span class="kind">Payment loop</span>Prompt for payment<br>repeat <code>while (payment &lt; GrandTotal)</code></div>
+    <div class="node action" style="max-width:620px;"><span class="kind">Apply discount</span><code>discountAmount = GrandTotal × discountRate</code><br><code>GrandTotal -= discountAmount</code>
+      <span class="note">This single line runs after all three branches above, using whatever discountRate and GrandTotal each branch left behind.</span>
+    </div>
     <div class="arrow-down"></div>
-    <div class="node action"><span class="kind">Finalize</span><code>Change = Payment − GrandTotal</code><br><code>computed = true</code><br>print Order Summary</div>
+    <div class="node decision"><span class="kind">Payment loop</span>Prompt for payment<br>repeat <code>while (payment &lt; GrandTotal)</code>
+      <span class="note">Uses a do-while — always prompts at least once. Prints "Insufficient payment. Please enter [amount] or above" on each failed attempt. <code>scan.nextDouble()</code> throws on non-numeric input.</span>
+    </div>
+    <div class="arrow-down"></div>
+    <div class="node action"><span class="kind">Finalize</span><code>Change = Payment − GrandTotal</code><br><code>computed = true</code><br>print Order Summary
+      <span class="note">Order Summary shows Subtotal, VAT (or "EXEMPTED" for Senior/PWD), Discount, Total, Payment, Change.</span>
+    </div>
     <div class="arrow-down"></div>
     <div class="return-tag">back to Main Menu</div>
   </div>
@@ -514,7 +660,9 @@
       </div>
       <div class="branch-col">
         <div class="branch-label">YES</div>
-        <div class="node action">Reprint itemized list +<br>subtotal, VAT, discount,<br>total, payment, change</div>
+        <div class="node action">Reprint itemized list +<br>subtotal, VAT, discount,<br>total, payment, change
+          <span class="note">Item lines are re-derived from live qty1–qty10, so if the cart changed after Compute Total ran (e.g. via View Cart → Remove), the item list here can drift from the totals below, which are still the stored Subtotal/VAT/GrandTotal/payment/change values.</span>
+        </div>
       </div>
     </div>
     <div class="arrow-down"></div>
@@ -532,7 +680,9 @@
     </div>
   </div>
   <div class="flow">
-    <div class="node decision"><span class="kind">Login</span>Enter Staff PIN — up to <code>3</code> attempts</div>
+    <div class="node decision"><span class="kind">Login</span>Enter Staff PIN — up to <code>3</code> attempts
+      <span class="note">PIN is the fixed int 4321, read via <code>scan.nextInt()</code>. <code>attempts</code> increments only on a wrong PIN; a correct PIN breaks out immediately regardless of attempt count.</span>
+    </div>
     <div class="arrow-down"></div>
     <div class="split">
       <div class="branch-col">
@@ -546,7 +696,9 @@
       </div>
     </div>
     <div class="arrow-down"></div>
-    <div class="node menu"><span class="kind">Staff loop</span><code>A</code> View Stock&nbsp;&nbsp;·&nbsp;&nbsp;<code>B</code> Restock Item&nbsp;&nbsp;·&nbsp;&nbsp;<code>X</code> Back</div>
+    <div class="node menu"><span class="kind">Staff loop</span><code>A</code> View Stock&nbsp;&nbsp;·&nbsp;&nbsp;<code>B</code> Restock Item&nbsp;&nbsp;·&nbsp;&nbsp;<code>X</code> Back
+      <span class="note">Local flag <code>staffMenu</code>, separate from the outer <code>buying</code>/<code>Running</code> flags.</span>
+    </div>
     <div class="arrow-down"></div>
     <div class="split">
       <div class="branch-col">
@@ -556,12 +708,19 @@
       </div>
       <div class="branch-col">
         <div class="branch-label">B · RESTOCK</div>
-        <div class="node action">Select item (1–10), enter qty<br><code>stock += qty</code></div>
-        <div class="loop-tag">back to staff loop</div>
+        <div class="node action">Select item (1–10, using <code>0</code> for item 10), enter qty<br><code>stock += qty</code>
+          <span class="note">Rejects qty ≤ 0 with "Invalid quantity." An unrecognized item key prints "Invalid item. Please select a valid item (1-10)."</span>
+        </div>
+        <div class="node bug-note" style="background: var(--red-bg); border: 1.5px solid var(--red-bd); border-radius: 6px; padding: 10px 14px; margin-top: 10px; max-width: 100%;">
+          ⚠ Missing <code>break;</code> after this case in the source — execution falls through into the <code>X</code> case below, so a successful restock immediately triggers "Returning to main menu..." and exits the staff loop instead of looping back to the staff menu.
+        </div>
+        <div class="loop-tag" style="opacity:0.5;">intended: back to staff loop</div>
       </div>
       <div class="branch-col">
         <div class="branch-label">X · BACK</div>
-        <div class="node action">Exit staff menu loop</div>
+        <div class="node action">Exit staff menu loop
+          <span class="note"><code>staffMenu = false;</code></span>
+        </div>
         <div class="return-tag">back to Main Menu</div>
       </div>
     </div>
@@ -578,14 +737,16 @@
     </div>
   </div>
   <div class="flow">
-    <div class="node action"><span class="kind">Countdown</span>Print "Closing in 5…4…3…2…1"<br>1 second apart (<code>Thread.sleep</code>)</div>
+    <div class="node action"><span class="kind">Countdown</span>Print "Closing in 5…4…3…2…1"<br>1 second apart (<code>Thread.sleep</code>)
+      <span class="note">Blocks the whole program for ~5 seconds; <code>main</code> declares <code>throws InterruptedException</code> to allow this.</span>
+    </div>
     <div class="arrow-down"></div>
     <div class="node start-end">Running = false — End</div>
   </div>
 </section>
 
 <footer>
-  Java Rangers Grocery — program flow reference
+  Java Rangers Grocery
 </footer>
 
 </body>
