@@ -655,16 +655,7 @@
       color: var(--text);
     }
 
-    /* ── Neutral chip fill ────────────────────────────────────
-   Chips previously carried a per-technology hue via data-tech.
-   Under the strict 4-color system every chip uses the same
-   grayscale treatment regardless of data-tech: a faint --surface
-   fill plus the existing border/text rules above. The data-tech
-   attribute stays in the markup (harmless) but no longer drives
-   any styling. */
-    .skill-chip[data-tech] {
-      background: var(--surface);
-    }
+
 
     .skill-note {
       font-size: 12.5px;
@@ -676,106 +667,176 @@
 
     /* ═══════════════════════════════════════════════════════
    PROJECTS
+   Desktop/tablet: horizontal scrolling carousel.
+   .projects-carousel-viewport is the scroll container;
+   .projects-grid becomes the flex row of cards inside it.
+   Mobile (<=640px): reverts to a natural stacked column, no
+   scroll-snap/carousel behavior, no arrows (see media query).
 ═══════════════════════════════════════════════════════ */
+
+    .projects-carousel {
+      position: relative;
+    }
+
+    .projects-carousel-viewport {
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-behavior: smooth;
+      scroll-snap-type: x proximity;
+      /* Hide scrollbar while keeping native scroll functionality */
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .projects-carousel-viewport::-webkit-scrollbar {
+      display: none;
+    }
+
+    .projects-grid {
+      display: flex;
+      gap: 20px;
+      min-width: 0;
+    }
+
     .project {
       border: var(--rule);
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      flex: 0 0 clamp(300px, 46vw, 560px);
+      scroll-snap-align: start;
+    }
+
+    .carousel-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 5;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg);
+      border: 1px solid var(--text);
+      color: var(--text);
+      cursor: pointer;
+      font-family: var(--ff-mono);
+      font-size: 16px;
+      transition: background 0.15s, color 0.15s, opacity 0.15s;
+    }
+
+    .carousel-arrow:hover,
+    .carousel-arrow:focus-visible {
+      background: var(--text);
+      color: var(--bg);
+    }
+
+    .carousel-arrow[disabled] {
+      opacity: 0.3;
+      cursor: default;
+      pointer-events: none;
+    }
+
+    .carousel-arrow.prev {
+      left: -14px;
+    }
+
+    .carousel-arrow.next {
+      right: -14px;
     }
 
     .project-top {
-      padding: 32px;
+      padding: 24px;
       border-bottom: var(--rule);
+      flex: 1;
     }
 
     .project-badge {
       display: inline-block;
       font-family: var(--ff-mono);
-      font-size: 10.5px;
+      font-size: 10px;
       letter-spacing: 0.06em;
       text-transform: uppercase;
       color: var(--text-muted);
       border: 1px solid var(--border-h);
-      padding: 4px 9px;
-      margin-bottom: 20px;
+      padding: 4px 8px;
+      margin-bottom: 16px;
     }
 
     .project-title {
       font-family: var(--ff-mono);
       font-weight: 700;
-      font-size: clamp(22px, 2.8vw, 30px);
+      font-size: clamp(20px, 2.2vw, 26px);
       letter-spacing: -0.01em;
       color: var(--text);
-      margin-bottom: 16px;
+      margin-bottom: 12px;
     }
 
     .project-desc {
-      font-size: 14px;
-      line-height: 1.85;
+      font-size: 13px;
+      line-height: 1.7;
       color: var(--text-muted);
       font-weight: 300;
       max-width: 68ch;
-      margin-bottom: 24px;
+      margin-bottom: 18px;
     }
 
     .project-tags {
       display: flex;
       flex-wrap: wrap;
-      gap: 6px;
-      margin-bottom: 26px;
+      gap: 5px;
+      margin-bottom: 20px;
     }
 
     .project-tag {
       font-family: var(--ff-mono);
-      font-size: 10px;
+      font-size: 9px;
       letter-spacing: 0.03em;
-      padding: 4px 9px;
+      padding: 4px 8px;
       border: 1px solid var(--border);
       color: var(--text-muted);
       transition: border-color 0.15s, background-color 0.15s;
     }
 
-    /* ── Neutral tag fill (mirrors .skill-chip) ────────────────
-   Tags previously carried a per-technology hue via data-tech.
-   Under the strict 4-color system every tag — including those
-   without data-tech, like OPEN SOURCE or PYPI — uses the same
-   grayscale border/text; tagged ones additionally get a faint
-   --surface fill so they read as slightly emphasized. */
-    .project-tag[data-tech] {
-      background: var(--surface);
-    }
-
     .project-links {
       display: flex;
-      gap: 10px;
+      gap: 8px;
       flex-wrap: wrap;
     }
 
+    .project-links .btn {
+      padding: 9px 14px;
+      font-size: 10px;
+    }
+
     .project-bottom {
-      padding: 32px;
+      padding: 24px;
       background: var(--surface);
     }
 
     .detail-label {
       font-family: var(--ff-mono);
-      font-size: 10.5px;
+      font-size: 10px;
       letter-spacing: 0.06em;
       text-transform: uppercase;
       color: var(--text-muted);
-      margin-bottom: 16px;
+      margin-bottom: 12px;
     }
 
     .arch-list {
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 12px;
-      margin-bottom: 28px;
+      gap: 8px;
+      margin-bottom: 22px;
     }
 
     .arch-list li {
       display: flex;
-      gap: 12px;
-      font-size: 13px;
-      line-height: 1.7;
+      gap: 10px;
+      font-size: 12px;
+      line-height: 1.6;
       color: var(--text-muted);
       font-weight: 300;
     }
@@ -788,27 +849,29 @@
 
     .arch-list code {
       font-family: var(--ff-mono);
-      font-size: 12px;
+      font-size: 11px;
       color: var(--text);
       background: var(--surface);
       padding: 1px 5px;
+      word-break: break-word;
     }
 
     .use-case-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 1px;
       background: var(--border);
       border: var(--rule);
     }
 
     .use-case {
-      padding: 14px 16px;
+      padding: 12px 14px;
       background: var(--surface);
-      font-size: 12px;
-      line-height: 1.6;
+      font-size: 11px;
+      line-height: 1.5;
       color: var(--text-muted);
       font-weight: 300;
+      min-width: 0;
     }
 
     .use-case strong {
@@ -816,22 +879,23 @@
       font-family: var(--ff-mono);
       color: var(--text);
       font-weight: 600;
-      font-size: 11px;
+      font-size: 10px;
       letter-spacing: 0.02em;
-      margin-bottom: 4px;
+      margin-bottom: 3px;
     }
 
     .project-stats {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       border: var(--rule);
       border-top: none;
     }
 
     .project-stat {
-      padding: 16px;
+      padding: 12px;
       border-right: var(--rule);
       text-align: center;
+      min-width: 0;
     }
 
     .project-stat:last-child {
@@ -841,14 +905,15 @@
     .stat-value {
       font-family: var(--ff-mono);
       font-weight: 700;
-      font-size: 14px;
+      font-size: 12px;
       color: var(--text);
-      margin-bottom: 4px;
+      margin-bottom: 3px;
+      word-break: break-word;
     }
 
     .stat-label {
       font-family: var(--ff-mono);
-      font-size: 9px;
+      font-size: 8px;
       letter-spacing: 0.04em;
       color: var(--text-muted);
     }
@@ -992,13 +1057,6 @@
       color: var(--text);
     }
 
-    /* ═══════════════════════════════════════════════════════
-   RESPONSIVE
-   --wrap-w already handles the fluid width step-down (≈94vw
-   capped at --max-w), so breakpoints below only adjust things
-   that don't follow from container width alone: nav collapse,
-   grid column counts, and stacking order.
-═══════════════════════════════════════════════════════ */
     @media (max-width: 1199px) and (min-width: 993px) {
       :root {
         --wrap-w: clamp(320px, 93vw, 1080px);
@@ -1008,10 +1066,6 @@
     @media (max-width: 992px) {
       :root {
         --wrap-w: clamp(320px, 92vw, 900px);
-      }
-
-      .use-case-grid {
-        grid-template-columns: repeat(2, 1fr);
       }
 
       .contact-grid {
@@ -1060,16 +1114,37 @@
         gap: 6px;
       }
 
-      .use-case-grid {
-        grid-template-columns: 1fr;
-      }
-
       .contact-grid {
         grid-template-columns: 1fr;
       }
 
+      /* Mobile: projects revert to a natural stacked column — no
+         carousel scrolling, no snap, no arrows. */
+      .projects-carousel-viewport {
+        overflow-x: visible;
+        overflow-y: visible;
+      }
+
+      .projects-grid {
+        flex-direction: column;
+      }
+
+      .project {
+        flex: 1 1 auto;
+        width: 100%;
+        scroll-snap-align: none;
+      }
+
+      .carousel-arrow {
+        display: none;
+      }
+
+      .use-case-grid {
+        grid-template-columns: 1fr;
+      }
+
       .project-stats {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(1, 1fr);
       }
 
       .project-stat:nth-child(2) {
@@ -1283,92 +1358,309 @@
     <!-- ═══ PROJECTS ═══ -->
     <section id="projects" class="section" aria-label="Projects">
       <div class="wrap">
+
         <p class="eyebrow"><span class="num">03</span> Projects</p>
+
         <h2 class="section-title reveal">What I've built</h2>
-        <p class="section-sub reveal reveal-d1">Work that demonstrates real design decisions, not just output.</p>
 
-        <div class="project reveal reveal-d2">
-          <div class="project-top">
-            <span class="project-badge">Featured Project</span>
-            <h3 class="project-title">tflows.py</h3>
-            <p class="project-desc">
-              A lightweight Python framework for building Discord bots and task
-              automation pipelines. Built around a scripting engine that keeps
-              bot logic modular, testable, and separate from Discord's event
-              system.
-            </p>
-            <div class="project-tags">
-              <span class="project-tag" data-tech="python">PYTHON</span>
-              <span class="project-tag">ASYNCIO</span>
-              <span class="project-tag" data-tech="discord">DISCORD API</span>
-              <span class="project-tag">OPEN SOURCE</span>
-              <span class="project-tag">PYPI</span>
-            </div>
-            <div class="project-links">
-              <a href="https://github.com/TonieC/tflows.py" class="btn btn-primary" target="_blank"
-                rel="noopener noreferrer">GitHub</a>
-              <a href="https://pypi.org/project/tflows/" class="btn btn-ghost" target="_blank"
-                rel="noopener noreferrer">PyPI</a>
-              <a href="https://toniec.github.io/tflows" class="btn btn-ghost" target="_blank"
-                rel="noopener noreferrer">Documentation</a>
+        <p class="section-sub reveal reveal-d1">
+          Work that demonstrates real design decisions, not just output.
+        </p>
+
+        <div class="projects-carousel reveal reveal-d2">
+
+          <button type="button" class="carousel-arrow prev" id="projects-prev" aria-label="Previous project"
+            disabled>‹</button>
+
+          <div class="projects-carousel-viewport" id="projects-viewport">
+            <div class="projects-grid" id="projects-grid">
+
+              <!-- ═══════════════════════════════════════════════════════
+               PROJECT 1 — tflows.py
+          ═══════════════════════════════════════════════════════ -->
+              <div class="project">
+
+                <div class="project-top">
+
+                  <span class="project-badge">Featured Project</span>
+
+                  <h3 class="project-title">tflows.py</h3>
+
+                  <p class="project-desc">
+                    A lightweight Python framework for building Discord bots and task
+                    automation pipelines. Built around a scripting engine that keeps
+                    bot logic modular, testable, and separate from Discord's event
+                    system.
+                  </p>
+
+                  <div class="project-tags">
+                    <span class="project-tag">PYTHON</span>
+                    <span class="project-tag">ASYNCIO</span>
+                    <span class="project-tag">DISCORD API</span>
+                    <span class="project-tag">OPEN SOURCE</span>
+                    <span class="project-tag">PYPI</span>
+                  </div>
+
+                  <div class="project-links">
+
+                    <a href="https://github.com/TonieC/tflows.py" class="btn btn-primary" target="_blank"
+                      rel="noopener noreferrer">
+                      GitHub
+                    </a>
+
+                    <a href="https://pypi.org/project/tflows/" class="btn btn-ghost" target="_blank"
+                      rel="noopener noreferrer">
+                      PyPI
+                    </a>
+
+                    <a href="https://toniec.github.io/tflows" class="btn btn-ghost" target="_blank"
+                      rel="noopener noreferrer">
+                      Documentation
+                    </a>
+
+                  </div>
+
+                </div>
+
+
+                <div class="project-bottom">
+
+                  <div class="detail-label">
+                    Architecture Overview
+                  </div>
+
+                  <ul class="arch-list">
+
+                    <li>
+                      Async-first design built on Python's
+                      <code>asyncio</code> — event handlers and tasks run
+                      concurrently without blocking.
+                    </li>
+
+                    <li>
+                      Scripting engine separates bot commands from Discord plumbing,
+                      making individual flows testable in isolation.
+                    </li>
+
+                    <li>
+                      Modular loader system lets you add, remove, or reload bot
+                      modules at runtime without restarting.
+                    </li>
+
+                    <li>
+                      Thin abstraction layer over discord.py — doesn't hide the
+                      library, just reduces repetitive wiring.
+                    </li>
+
+                  </ul>
+
+
+                  <div class="detail-label">
+                    Real Use Cases
+                  </div>
+
+                  <div class="use-case-grid">
+
+                    <div class="use-case">
+                      <strong>Server Moderation</strong>
+                      Event-driven auto-moderation rules without custom bot
+                      architecture.
+                    </div>
+
+                    <div class="use-case">
+                      <strong>Task Automation</strong>
+                      Scheduled jobs and webhook triggers wired to Discord channels.
+                    </div>
+
+                    <div class="use-case">
+                      <strong>Rapid Prototyping</strong>
+                      Stand up a functional bot in minutes with minimal boilerplate.
+                    </div>
+
+                    <div class="use-case">
+                      <strong>Scripting Engine</strong>
+                      Define flows as plain functions; the framework handles wiring.
+                    </div>
+
+                  </div>
+
+                </div>
+
+
+                <div class="project-stats">
+
+                  <div class="project-stat">
+                    <div class="stat-value">PyPI</div>
+                    <div class="stat-label">PUBLISHED</div>
+                  </div>
+
+                  <div class="project-stat">
+                    <div class="stat-value">OSS</div>
+                    <div class="stat-label">OPEN SOURCE</div>
+                  </div>
+
+                  <div class="project-stat">
+                    <div class="stat-value">Async</div>
+                    <div class="stat-label">ASYNCIO-BASED</div>
+                  </div>
+
+                  <div class="project-stat">
+                    <div class="stat-value">Docs</div>
+                    <div class="stat-label">DOCUMENTED</div>
+                  </div>
+
+                </div>
+
+              </div>
+
+
+              <!-- ═══════════════════════════════════════════════════════
+               PROJECT 2
+          ═══════════════════════════════════════════════════════ -->
+              <div class="project">
+
+                <div class="project-top">
+
+                  <span class="project-badge">Horror Game</span>
+
+                  <h3 class="project-title">Siklista</h3>
+
+                  <p class="project-desc">
+                    A short 30-minute low-poly horror game about a cyclist descending through
+                    the Cordillera mountains at 3:00 AM, trying to reach La Union before
+                    sunrise at 6:00 AM. Survive the dark mountain roads, manage your energy,
+                    avoid supernatural creatures and ghostly figures inspired by Philippine
+                    mythology, and make decisions that can change the course of your journey
+                    and determine which ending you receive.
+                  </p>
+
+                  <div class="project-tags">
+
+                    <span class="project-tag">GAME</span>
+                    <span class="project-tag">HORROR</span>
+                    <span class="project-tag">LOW-POLY</span>
+                    <span class="project-tag">SURVIVAL</span>
+
+                  </div>
+
+                  <div class="project-links">
+
+                    <a href="https://tonie6.itch.io/siklista" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+                      Itch.io
+                    </a>
+
+                  </div>
+
+                </div>
+
+                <div class="project-bottom">
+
+                  <div class="detail-label">
+                    Game Overview
+                  </div>
+
+                  <ul class="arch-list">
+
+                    <li>
+                      Start your journey at 3:00 AM in the Cordillera mountains and attempt
+                      to reach the roads toward La Union before sunrise at 6:00 AM.
+                    </li>
+
+                    <li>
+                      Manage your energy while cycling. Running out of energy makes you
+                      significantly slower, especially when climbing uphill.
+                    </li>
+
+                    <li>
+                      Use downhill sections to gain speed, but be careful. Riding too fast
+                      around steep mountain bends can cause crashes, serious injuries, or death.
+                    </li>
+
+                    <li>
+                      Injuries remain throughout the journey and can affect your movement,
+                      cycling speed, and ability to survive later encounters.
+                    </li>
+
+                    <li>
+                      Stop at roadside sari-sari stores to purchase snacks and drinks that
+                      replenish your energy.
+                    </li>
+
+                    <li>
+                      Encounter creatures and ghostly figures inspired by Philippine myths
+                      as you travel through the isolated mountain roads.
+                    </li>
+
+                    <li>
+                      Your decisions can have consequences later in the game, affecting
+                      encounters, your condition, available paths, and the final outcome.
+                    </li>
+
+                  </ul>
+
+                  <div class="detail-label">
+                    Core Gameplay
+                  </div>
+
+                  <div class="use-case-grid">
+
+                    <div class="use-case">
+                      <strong>01 — Survive the Night</strong>
+                      Navigate isolated mountain roads while avoiding supernatural creatures
+                      and mysterious figures.
+                    </div>
+
+                    <div class="use-case">
+                      <strong>02 — Manage Energy</strong>
+                      Find sari-sari stores and decide when to stop for food and drinks
+                      to maintain your stamina.
+                    </div>
+
+                    <div class="use-case">
+                      <strong>03 — Control Your Speed</strong>
+                      Descend steep roads carefully. Excessive speed can cause crashes,
+                      injuries, or potentially fatal accidents.
+                    </div>
+
+                    <div class="use-case">
+                      <strong>04 — Change Your Fate</strong>
+                      Make decisions throughout the journey that can create consequences
+                      and lead to multiple possible endings.
+                    </div>
+
+                  </div>
+
+                </div>
+
+                <div class="project-stats">
+
+                  <div class="project-stat">
+                    <div class="stat-value">30 Min - 2 Hours</div>
+                    <div class="stat-label">PLAYTIME</div>
+                  </div>
+
+                  <div class="project-stat">
+                    <div class="stat-value">Horror</div>
+                    <div class="stat-label">GENRE</div>
+                  </div>
+
+
+                  <div class="project-stat">
+                    <div class="stat-value">Under Development</div>
+                    <div class="stat-label">Status</div>
+                  </div>
+                </div>
+
+              </div>
+
             </div>
           </div>
 
-          <div class="project-bottom">
-            <div class="detail-label">Architecture Overview</div>
-            <ul class="arch-list">
-              <li>Async-first design built on Python's <code>asyncio</code> — event handlers and tasks run concurrently
-                without blocking.</li>
-              <li>Scripting engine separates bot commands from Discord plumbing, making individual flows testable in
-                isolation.</li>
-              <li>Modular loader system lets you add, remove, or reload bot modules at runtime without restarting.</li>
-              <li>Thin abstraction layer over discord.py — doesn't hide the library, just reduces repetitive wiring.
-              </li>
-            </ul>
+          <button type="button" class="carousel-arrow next" id="projects-next" aria-label="Next project">›</button>
 
-            <div class="detail-label">Real Use Cases</div>
-            <div class="use-case-grid">
-              <div class="use-case">
-                <strong>Server Moderation</strong>
-                Event-driven auto-moderation rules without custom bot architecture.
-              </div>
-              <div class="use-case">
-                <strong>Task Automation</strong>
-                Scheduled jobs and webhook triggers wired to Discord channels.
-              </div>
-              <div class="use-case">
-                <strong>Rapid Prototyping</strong>
-                Stand up a functional bot in minutes with minimal boilerplate.
-              </div>
-              <div class="use-case">
-                <strong>Scripting Engine</strong>
-                Define flows as plain functions; the framework handles wiring.
-              </div>
-            </div>
-          </div>
-
-          <div class="project-stats">
-            <div class="project-stat">
-              <div class="stat-value">PyPI</div>
-              <div class="stat-label">PUBLISHED</div>
-            </div>
-            <div class="project-stat">
-              <div class="stat-value">OSS</div>
-              <div class="stat-label">OPEN SOURCE</div>
-            </div>
-            <div class="project-stat">
-              <div class="stat-value">Async</div>
-              <div class="stat-label">ASYNCIO-BASED</div>
-            </div>
-            <div class="project-stat">
-              <div class="stat-value">Docs</div>
-              <div class="stat-label">DOCUMENTED</div>
-            </div>
-          </div>
         </div>
       </div>
     </section>
-
 
     <!-- ═══ CONTACT ═══ -->
     <section id="contact" class="section" aria-label="Contact">
@@ -1549,6 +1841,51 @@
           status.textContent = email;
         });
       });
+    })();
+
+    /* ── PROJECTS CAROUSEL ───────────────────────────────── */
+    (function () {
+      const viewport = document.getElementById('projects-viewport');
+      const grid = document.getElementById('projects-grid');
+      const prevBtn = document.getElementById('projects-prev');
+      const nextBtn = document.getElementById('projects-next');
+      if (!viewport || !grid || !prevBtn || !nextBtn) return;
+
+      function isMobile() {
+        return window.matchMedia('(max-width: 640px)').matches;
+      }
+
+      function cardStep() {
+        const card = grid.querySelector('.project');
+        if (!card) return viewport.clientWidth;
+        const style = getComputedStyle(grid);
+        const gap = parseFloat(style.columnGap || style.gap || '0') || 0;
+        return card.getBoundingClientRect().width + gap;
+      }
+
+      function updateArrows() {
+        if (isMobile()) {
+          prevBtn.disabled = true;
+          nextBtn.disabled = true;
+          return;
+        }
+        const max = viewport.scrollWidth - viewport.clientWidth;
+        prevBtn.disabled = viewport.scrollLeft <= 2;
+        nextBtn.disabled = viewport.scrollLeft >= max - 2;
+      }
+
+      prevBtn.addEventListener('click', () => {
+        viewport.scrollBy({ left: -cardStep(), behavior: 'smooth' });
+      });
+
+      nextBtn.addEventListener('click', () => {
+        viewport.scrollBy({ left: cardStep(), behavior: 'smooth' });
+      });
+
+      viewport.addEventListener('scroll', updateArrows, { passive: true });
+      window.addEventListener('resize', updateArrows);
+
+      updateArrows();
     })();
 
     /* ── FOOTER YEAR ──────────────────────────────────────── */
