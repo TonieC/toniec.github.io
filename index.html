@@ -19,6 +19,8 @@
         var saved = localStorage.getItem('theme');
         if (saved === 'light') {
           document.documentElement.setAttribute('data-theme', 'light');
+          var metaThemeColor = document.getElementById('meta-theme-color');
+          if (metaThemeColor) metaThemeColor.setAttribute('content', '#ffffff');
         }
       } catch (e) { /* localStorage unavailable — falls back to dark default */ }
     })();
@@ -59,7 +61,10 @@
       --text-muted: #8a8a8a;
 
       /* Borders/dividers — contrast-only, built from --text at low
-     opacity rather than a separate color token. */
+     opacity rather than a separate color token. Plain rgba fallbacks
+     first so browsers without color-mix() still get visible rules. */
+      --border: rgba(255, 255, 255, 0.14);
+      --border-h: rgba(255, 255, 255, 0.26);
       --border: color-mix(in srgb, var(--text) 14%, transparent);
       --border-h: color-mix(in srgb, var(--text) 26%, transparent);
 
@@ -90,6 +95,10 @@
       --surface: #f2f2f2;
       --text: #000000;
       --text-muted: #6a6a6a;
+      --border: rgba(0, 0, 0, 0.14);
+      --border-h: rgba(0, 0, 0, 0.26);
+      --border: color-mix(in srgb, var(--text) 14%, transparent);
+      --border-h: color-mix(in srgb, var(--text) 26%, transparent);
     }
 
     /* ═══════════════════════════════════════════════════════
@@ -106,6 +115,9 @@
     html {
       font-size: 16px;
       scroll-behavior: smooth;
+      /* Keeps anchored targets clear of the 60px sticky header
+         without touching the layout itself. */
+      scroll-padding-top: 72px;
     }
 
     body {
@@ -248,7 +260,9 @@
       position: sticky;
       top: 0;
       z-index: 100;
+      background: var(--bg);
       background: color-mix(in srgb, var(--bg) 88%, transparent);
+      -webkit-backdrop-filter: blur(8px);
       backdrop-filter: blur(8px);
       border-bottom: var(--rule);
     }
@@ -1372,7 +1386,8 @@
           <button type="button" class="carousel-arrow prev" id="projects-prev" aria-label="Previous project"
             disabled>‹</button>
 
-          <div class="projects-carousel-viewport" id="projects-viewport">
+          <div class="projects-carousel-viewport" id="projects-viewport" role="region"
+            aria-label="Project carousel" tabindex="0">
             <div class="projects-grid" id="projects-grid">
 
               <!-- ═══════════════════════════════════════════════════════
@@ -1644,7 +1659,7 @@
             <span class="contact-item-label">LinkedIn</span>
             <span class="contact-item-value">jesstonie-cadizal</span>
           </a>
-          <div class="contact-item is-static" role="text" aria-label="Location: Philippines, Remote">
+          <div class="contact-item is-static">
             <span class="contact-item-label">Location</span>
             <span class="contact-item-value">Philippines · Remote</span>
           </div>
@@ -1700,19 +1715,12 @@
       els.forEach((el) => obs.observe(el));
     })();
 
-    /* ── SMOOTH ANCHOR SCROLL ────────────────────────────── */
-    (function () {
-      document.querySelectorAll('a[href^="#"]').forEach((a) => {
-        a.addEventListener('click', (e) => {
-          const id = a.getAttribute('href').slice(1);
-          const target = document.getElementById(id);
-          if (!target) return;
-          e.preventDefault();
-          target.scrollIntoView({ behavior: 'smooth' });
-          history.replaceState(null, '', '#' + id);
-        });
-      });
-    })();
+    /* ── SMOOTH ANCHOR SCROLL ──────────────────────────────
+       Anchors are left to the browser's native fragment navigation.
+       html { scroll-behavior: smooth; scroll-padding-top } handles the
+       smooth scroll and the sticky-header offset, and back/forward keep
+       their normal history behavior (the old handler called
+       history.replaceState, which broke back/forward). */
 
     /* ── THEME TOGGLE ─────────────────────────────────────── */
     (function () {
@@ -1753,30 +1761,54 @@
       const nav = document.getElementById('nav-links');
       if (!burger || !nav) return;
 
-      function close() {
+      const desktopMQ = window.matchMedia('(min-width: 641px)');
+
+      function closeMenu(focusBurger) {
+        if (!burger.classList.contains('open')) {
+          document.body.style.overflow = '';
+          return;
+        }
         burger.classList.remove('open');
         nav.classList.remove('mobile-open');
         burger.setAttribute('aria-expanded', 'false');
         burger.setAttribute('aria-label', 'Open navigation menu');
         document.body.style.overflow = '';
+        if (focusBurger) burger.focus();
+      }
+
+      function openMenu() {
+        burger.classList.add('open');
+        nav.classList.add('mobile-open');
+        burger.setAttribute('aria-expanded', 'true');
+        burger.setAttribute('aria-label', 'Close navigation menu');
+        document.body.style.overflow = 'hidden';
       }
 
       burger.addEventListener('click', () => {
-        const open = burger.classList.toggle('open');
-        nav.classList.toggle('mobile-open', open);
-        burger.setAttribute('aria-expanded', open ? 'true' : 'false');
-        burger.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
-        document.body.style.overflow = open ? 'hidden' : '';
+        if (burger.classList.contains('open')) {
+          closeMenu();
+        } else {
+          openMenu();
+        }
       });
 
-      nav.querySelectorAll('a').forEach((a) => a.addEventListener('click', close));
+      nav.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => closeMenu()));
 
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && burger.classList.contains('open')) {
-          close();
-          burger.focus();
+          closeMenu(true);
         }
       });
+
+      // Menu was left open across a mobile→desktop resize: restore page scroll.
+      function onDesktopChange() {
+        if (desktopMQ.matches) closeMenu();
+      }
+      if (desktopMQ.addEventListener) {
+        desktopMQ.addEventListener('change', onDesktopChange);
+      } else if (desktopMQ.addListener) {
+        desktopMQ.addListener(onDesktopChange);
+      }
     })();
 
     /* ── COPY EMAIL ───────────────────────────────────────── */
@@ -1786,17 +1818,52 @@
       const status = document.getElementById('copy-status');
       if (!btn) return;
 
+      const email = 'cadizal06@gmail.com';
+      let resetTimer = null;
+
+      function resetStatus() {
+        if (label) label.textContent = 'Copy Email';
+        if (status) status.textContent = '';
+      }
+
+      // Fallback for browsers / contexts without a working Clipboard API.
+      function legacyCopy() {
+        const ta = document.createElement('textarea');
+        ta.value = email;
+        ta.setAttribute('readonly', '');
+        ta.style.cssText =
+          'position:fixed;top:0;left:0;width:2em;height:2em;padding:0;margin:0;border:0;opacity:0;pointer-events:none;';
+        document.body.appendChild(ta);
+        ta.select();
+        ta.setSelectionRange(0, email.length);
+        let ok = false;
+        try {
+          ok = document.execCommand('copy');
+        } catch (e) {
+          ok = false;
+        }
+        document.body.removeChild(ta);
+        return ok;
+      }
+
+      function copyEmail() {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          return navigator.clipboard.writeText(email).then(() => true, () => legacyCopy());
+        }
+        return Promise.resolve(legacyCopy());
+      }
+
       btn.addEventListener('click', () => {
-        const email = 'cadizal06@gmail.com';
-        navigator.clipboard.writeText(email).then(() => {
-          label.textContent = 'Copied ✓';
-          status.textContent = email + ' copied to clipboard';
-          setTimeout(() => {
+        copyEmail().then((ok) => {
+          if (resetTimer) clearTimeout(resetTimer);
+          if (ok) {
+            label.textContent = 'Copied ✓';
+            status.textContent = email + ' copied to clipboard';
+          } else {
             label.textContent = 'Copy Email';
-            status.textContent = '';
-          }, 2200);
-        }).catch(() => {
-          status.textContent = email;
+            status.textContent = email;
+          }
+          resetTimer = setTimeout(resetStatus, 2200);
         });
       });
     })();
@@ -1809,8 +1876,11 @@
       const nextBtn = document.getElementById('projects-next');
       if (!viewport || !grid || !prevBtn || !nextBtn) return;
 
+      const mobileMQ = window.matchMedia('(max-width: 640px)');
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
       function isMobile() {
-        return window.matchMedia('(max-width: 640px)').matches;
+        return mobileMQ.matches;
       }
 
       function cardStep() {
@@ -1829,25 +1899,34 @@
         }
         const max = viewport.scrollWidth - viewport.clientWidth;
         prevBtn.disabled = viewport.scrollLeft <= 2;
-        nextBtn.disabled = viewport.scrollLeft >= max - 2;
+        // Also disable Next when the row doesn't overflow at all.
+        nextBtn.disabled = max <= 2 || viewport.scrollLeft >= max - 2;
       }
 
-      prevBtn.addEventListener('click', () => {
-        viewport.scrollBy({ left: -cardStep(), behavior: 'smooth' });
-      });
+      function scrollStep(dir) {
+        viewport.scrollBy({
+          left: dir * cardStep(),
+          behavior: reducedMotion.matches ? 'auto' : 'smooth'
+        });
+      }
 
-      nextBtn.addEventListener('click', () => {
-        viewport.scrollBy({ left: cardStep(), behavior: 'smooth' });
-      });
+      prevBtn.addEventListener('click', () => scrollStep(-1));
+
+      nextBtn.addEventListener('click', () => scrollStep(1));
 
       viewport.addEventListener('scroll', updateArrows, { passive: true });
       window.addEventListener('resize', updateArrows);
+      // Card widths can shift once web fonts land — re-check disabled states.
+      window.addEventListener('load', updateArrows);
 
       updateArrows();
     })();
 
     /* ── FOOTER YEAR ──────────────────────────────────────── */
-    document.getElementById('yr').textContent = new Date().getFullYear();
+    (function () {
+      const yr = document.getElementById('yr');
+      if (yr) yr.textContent = new Date().getFullYear();
+    })();
   </script>
 </body>
 
