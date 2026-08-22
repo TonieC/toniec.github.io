@@ -4,9 +4,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Tonie C. — Aspiring Full Stack Developer</title>
+  <title>Tonie C. — Developer</title>
   <meta name="description"
-    content="Tonie C. is an aspiring full stack developer from the Philippines, building web applications, backend systems, and embedded projects while learning in public." />
+    content="Tonie C. is a developer from the Philippines, building web applications, backend systems, and embedded projects while learning by shipping real software." />
   <meta name="author" content="Tonie C." />
   <meta name="color-scheme" content="dark light" />
   <meta name="theme-color" content="#0a0a0a" id="meta-theme-color" />
@@ -27,9 +27,9 @@
   </script>
 
   <!-- Open Graph -->
-  <meta property="og:title" content="Tonie C. — Aspiring Full Stack Developer" />
+  <meta property="og:title" content="Tonie C. — Developer" />
   <meta property="og:description"
-    content="Building web applications, backend systems, and embedded projects. Learning in public, one project at a time." />
+    content="Building web applications, backend systems, and embedded projects. Learning by shipping, one project at a time." />
   <meta property="og:type" content="website" />
 
   <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
@@ -61,8 +61,9 @@
       --text-muted: #8a8a8a;
 
       /* Borders/dividers — contrast-only, built from --text at low
-     opacity rather than a separate color token. Plain rgba fallbacks
-     first so browsers without color-mix() still get visible rules. */
+     opacity rather than a separate color token. color-mix() is used
+     where supported, with a plain rgba fallback declared first so
+     browsers without color-mix() still get visible rules. */
       --border: rgba(255, 255, 255, 0.14);
       --border-h: rgba(255, 255, 255, 0.26);
       --border: color-mix(in srgb, var(--text) 14%, transparent);
@@ -89,7 +90,8 @@
       --rule: 1px solid var(--border);
     }
 
-    /* Light theme — same 4 roles, inverted. Dark stays the default. */
+    /* Light theme — same 4 roles, inverted. Dark stays the default.
+       Same color-mix()-with-rgba-fallback pattern as :root above. */
     :root[data-theme="light"] {
       --bg: #ffffff;
       --surface: #f2f2f2;
@@ -638,14 +640,6 @@
       letter-spacing: 0.02em;
       color: var(--text);
       padding-top: 4px;
-    }
-
-    .skill-cat .count {
-      display: block;
-      margin-top: 4px;
-      font-weight: 400;
-      color: var(--text-muted);
-      font-size: 10.5px;
     }
 
     .skill-chips {
@@ -1209,23 +1203,24 @@
       <div class="wrap">
         <p class="hero-prompt"><span class="sym">$</span> whoami</p>
         <h1 class="hero-name">Tonie C.</h1>
-        <p class="hero-role">Aspiring Full Stack Developer — Philippines</p>
+        <p class="hero-role">Developer — Philippines</p>
 
         <p class="hero-tagline">
-          I build web applications, backend services, and the occasional embedded
-          project. Still early in my career — learning by shipping real things,
-          not just following tutorials.
+          I build web applications, backend systems, and embedded projects. I
+          learn by building, shipping, and improving real software.
         </p>
 
         <div class="hero-cta">
           <a href="#projects" class="btn btn-primary">View Projects</a>
           <a href="#contact" class="btn btn-ghost">Get in Touch</a>
+          <a href="https://www.linkedin.com/in/jesstonie-cadizal-8a80a9392" class="btn btn-ghost" target="_blank"
+            rel="noopener noreferrer">LinkedIn</a>
         </div>
 
         <div class="hero-meta" role="list">
-          <span class="hero-meta-item" role="listitem">Junior / entry-level</span>
-          <span class="hero-meta-item" role="listitem">Remote-friendly</span>
-          <span class="hero-meta-item" role="listitem">Philippines-based</span>
+          <span class="hero-meta-item" role="listitem">Web Development</span>
+          <span class="hero-meta-item" role="listitem">Backend &amp; APIs</span>
+          <span class="hero-meta-item" role="listitem">Embedded Systems</span>
         </div>
       </div>
     </section>
@@ -1239,20 +1234,19 @@
 
         <div class="about-body reveal reveal-d2">
           <p>
-            I'm <strong>Tonie</strong>, a developer from the Philippines working
-            toward a full-stack career. I build across the stack — web
-            interfaces, backend services, and occasional embedded systems work.
+            I'm <strong>Tonie</strong>, a developer from the Philippines interested in
+            building software across different layers of a system — from interfaces
+            and APIs to hardware and embedded projects.
           </p>
           <p>
-            I don't have years of professional experience yet, but I approach
-            learning the way I approach code: methodically, with real projects
-            over tutorials whenever possible. I'd rather understand a system
-            deeply than collect tools I don't fully use.
+            Most of what I learn comes from building things myself. I enjoy taking an
+            idea from a rough concept to something functional, then improving it as I
+            understand the problem better.
           </p>
           <p>
-            Currently looking for <strong>junior roles, internships, or project
-              collaborations</strong> where I can contribute meaningfully and keep
-            growing.
+            I'm currently looking for <strong>internships, junior opportunities,
+              freelance work, and collaborations</strong> where I can build useful
+            software and continue developing my skills.
           </p>
         </div>
 
@@ -1273,9 +1267,11 @@
               know to improve.</p>
           </div>
           <div class="goal-row">
-            <span class="goal-tag">LOCATE</span>
-            <p class="goal-text"><strong>Philippines, remote-friendly</strong> — comfortable working asynchronously
-              across time zones.</p>
+            <span class="goal-tag">COLLAB</span>
+            <p class="goal-text">
+              <strong>Work with others</strong> — contribute to projects where I can
+              learn from experienced developers while bringing my own ideas to the table.
+            </p>
           </div>
           <div class="goal-row">
             <span class="goal-tag">FOCUS</span>
@@ -1295,7 +1291,7 @@
 
         <div class="skills-list reveal reveal-d2">
           <div class="skill-row">
-            <div class="skill-cat">Frontend<span class="count">7 tools</span></div>
+            <div class="skill-cat">Frontend</div>
             <div>
               <div class="skill-chips">
                 <span class="skill-chip" data-tech="html">HTML &amp; CSS</span>
@@ -1312,7 +1308,7 @@
           </div>
 
           <div class="skill-row">
-            <div class="skill-cat">Backend<span class="count">11 tools</span></div>
+            <div class="skill-cat">Backend</div>
             <div>
               <div class="skill-chips">
                 <span class="skill-chip" data-tech="node">Node.js</span>
@@ -1333,7 +1329,7 @@
           </div>
 
           <div class="skill-row">
-            <div class="skill-cat">Embedded<span class="count">7 tools</span></div>
+            <div class="skill-cat">Embedded</div>
             <div>
               <div class="skill-chips">
                 <span class="skill-chip">ESP32</span>
@@ -1350,7 +1346,7 @@
           </div>
 
           <div class="skill-row">
-            <div class="skill-cat">Tooling<span class="count">7 tools</span></div>
+            <div class="skill-cat">Tooling</div>
             <div>
               <div class="skill-chips">
                 <span class="skill-chip">Git &amp; GitHub</span>
@@ -1641,8 +1637,8 @@
         <p class="eyebrow"><span class="num">04</span> Contact</p>
         <h2 class="section-title reveal">Get in touch</h2>
         <p class="section-sub reveal reveal-d1">
-          Open for freelance work, collaborations, and new opportunities. If
-          you have a project in mind or just want to connect, reach out.
+          Interested in working together? I'm open to internships, freelance projects,
+          collaborations, and entry-level opportunities.
         </p>
 
         <div class="contact-grid reveal reveal-d2">
