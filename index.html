@@ -35,13 +35,22 @@
   <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
 
   <!--
-  Type system: JetBrains Mono for headings/labels/UI (monospace, pixel-adjacent,
-  reads as "developer") + Inter for body copy (clean, highly legible at small sizes).
+  Type system:
+  - Inter: body copy (clean, highly legible at small sizes) — unchanged.
+  - JetBrains Mono: nav, buttons, project titles/stats, code — the
+    structural/readable monospace workhorse — unchanged.
+  - Handjet: hero name + big section eyebrow numbers (01, 02...) — a
+    variable pixel/LCD display font, used only where text is large.
+  - Jersey 15: hero terminal prompt + hero meta/role tags — blocky
+    scoreboard-style pixel font for short label-length text.
+  - Pixelify Sans: section eyebrow labels + goal/skill category tags —
+    the most legible of the three pixel fonts (real weight range), so
+    it's the one used on slightly longer small-UI text.
 -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap"
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Handjet:wght,ELSH@100..900,2&family=Jersey+15&family=Pixelify+Sans:wght@400..700&display=swap"
     rel="stylesheet" />
 
   <style>
@@ -69,9 +78,24 @@
       --border: color-mix(in srgb, var(--text) 14%, transparent);
       --border-h: color-mix(in srgb, var(--text) 26%, transparent);
 
+      /* One deliberate exception to the strict B&W system: a quiet,
+         desaturated blue used ONLY for footer <a> links, so the
+         footer alone teaches "this color = clickable" without
+         introducing color anywhere else on the site. Kept close in
+         lightness to --text-muted so it reads as a tint, not a
+         bright accent. */
+      --footer-link: #d7e9ff;
+      --footer-link-hover: #a9bcd8;
+
       /* Type */
       --ff-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Consolas, monospace;
       --ff-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      /* Pixel/display accents — used sparingly, never for body or
+         dense UI text. Each falls back to --ff-mono so layout and
+         legibility hold up even if a font fails to load. */
+      --ff-pixel-display: 'Handjet', var(--ff-mono);
+      --ff-pixel-label: 'Jersey 15', var(--ff-mono);
+      --ff-pixel-ui: 'Pixelify Sans', var(--ff-mono);
 
       /* Motion */
       --ease: cubic-bezier(0.16, 1, 0.3, 1);
@@ -101,6 +125,10 @@
       --border-h: rgba(0, 0, 0, 0.26);
       --border: color-mix(in srgb, var(--text) 14%, transparent);
       --border-h: color-mix(in srgb, var(--text) 26%, transparent);
+      /* Slightly deeper/more saturated in light mode so the same
+         "this is a link" cue holds contrast against a white background. */
+      --footer-link: #3d5a80;
+      --footer-link-hover: #24405e;
     }
 
     /* ═══════════════════════════════════════════════════════
@@ -201,8 +229,8 @@
     }
 
     .eyebrow {
-      font-family: var(--ff-mono);
-      font-size: 12px;
+      font-family: var(--ff-pixel-ui);
+      font-size: 13px;
       font-weight: 500;
       letter-spacing: 0.02em;
       color: var(--text-muted);
@@ -213,6 +241,9 @@
     }
 
     .eyebrow .num {
+      font-family: var(--ff-pixel-display);
+      font-weight: 700;
+      font-size: 17px;
       color: var(--text-muted);
     }
 
@@ -394,8 +425,9 @@
     }
 
     .hero-prompt {
-      font-family: var(--ff-mono);
-      font-size: 13px;
+      font-family: var(--ff-pixel-label);
+      font-size: 17px;
+      letter-spacing: 0.02em;
       color: var(--text-muted);
       margin-bottom: 24px;
       opacity: 0;
@@ -407,19 +439,20 @@
     }
 
     .hero-name {
-      font-family: var(--ff-mono);
+      font-family: var(--ff-pixel-display);
       font-weight: 700;
-      font-size: clamp(40px, 8vw, 76px);
+      font-size: clamp(52px, 10vw, 96px);
       line-height: 1.05;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.01em;
       color: var(--text);
       opacity: 0;
       animation: rise 0.55s var(--ease) 0.2s forwards;
     }
 
     .hero-role {
-      font-family: var(--ff-mono);
-      font-size: clamp(13px, 1.6vw, 16px);
+      font-family: var(--ff-pixel-label);
+      font-size: clamp(15px, 1.9vw, 19px);
+      letter-spacing: 0.02em;
       color: var(--text-muted);
       margin-top: 10px;
       opacity: 0;
@@ -456,8 +489,8 @@
     }
 
     .hero-meta-item {
-      font-family: var(--ff-mono);
-      font-size: 11px;
+      font-family: var(--ff-pixel-label);
+      font-size: 14px;
       letter-spacing: 0.03em;
       color: var(--text-muted);
       display: flex;
@@ -589,8 +622,9 @@
     }
 
     .goal-tag {
-      font-family: var(--ff-mono);
-      font-size: 10.5px;
+      font-family: var(--ff-pixel-ui);
+      font-size: 13px;
+      font-weight: 600;
       letter-spacing: 0.04em;
       color: var(--text-muted);
       padding-top: 2px;
@@ -634,8 +668,8 @@
     }
 
     .skill-cat {
-      font-family: var(--ff-mono);
-      font-size: 12px;
+      font-family: var(--ff-pixel-ui);
+      font-size: 15px;
       font-weight: 600;
       letter-spacing: 0.02em;
       color: var(--text);
@@ -1027,9 +1061,16 @@
 
     /* ═══════════════════════════════════════════════════════
    FOOTER
+   Redesigned to read as a distinct, clearly-bounded section
+   rather than a thin trailing line: a full top rule, generous
+   padding, a heavier eyebrow-style label, and explicit dividers
+   (border-based, not typed "|" characters) between each link so
+   the group is scannable at a glance. Certifications get their
+   own labeled row since they're a different kind of link.
 ═══════════════════════════════════════════════════════ */
     footer {
-      padding: 28px 0;
+      padding: 48px 0 28px;
+      border-top: 1px solid var(--text);
     }
 
     .footer-inner {
@@ -1037,35 +1078,111 @@
       margin-inline: auto;
       padding-inline: var(--pad);
       display: flex;
-      align-items: center;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .footer-top {
+      display: flex;
+      align-items: flex-start;
       justify-content: space-between;
       flex-wrap: wrap;
-      gap: 12px;
+      gap: 20px;
+      padding-bottom: 24px;
+      border-bottom: var(--rule);
+    }
+
+    .footer-top>div {
+      min-width: 0;
+    }
+
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 0;
+    }
+
+    .footer-logo {
+      font-family: var(--ff-mono);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--text);
     }
 
     .footer-copy {
       font-family: var(--ff-mono);
-      font-size: 10.5px;
+      font-size: 11px;
       color: var(--text-muted);
+      max-width: 40ch;
+      overflow-wrap: break-word;
     }
 
+    .footer-col-label {
+      font-family: var(--ff-mono);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+
+    /* Link groups: a horizontal row of links on wide screens with a
+       vertical-rule divider between each — built from border-left,
+       not a typed separator character, so it lines up cleanly and
+       respects the theme's border color at every breakpoint. Wraps
+       to a divided-list layout on narrow screens automatically. */
     .footer-links {
       display: flex;
-      gap: 20px;
+      flex-wrap: wrap;
       list-style: none;
+    }
+
+    .footer-links li {
+      border-left: 1px solid var(--border);
+      padding: 0 16px;
+    }
+
+    .footer-links li:first-child {
+      border-left: none;
+      padding-left: 0;
     }
 
     .footer-links a {
       font-family: var(--ff-mono);
-      font-size: 10.5px;
+      font-size: 11.5px;
       letter-spacing: 0.02em;
-      color: var(--text-muted);
+      color: var(--footer-link);
       text-decoration: none;
       transition: color 0.15s;
+      overflow-wrap: break-word;
     }
 
-    .footer-links a:hover {
-      color: var(--text);
+    .footer-links a:hover,
+    .footer-links a:focus-visible {
+      color: var(--footer-link-hover);
+    }
+
+    .footer-bottom {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px 24px;
+    }
+
+    .footer-bottom>div {
+      min-width: 0;
+    }
+
+    .footer-meta {
+      font-family: var(--ff-mono);
+      font-size: 10px;
+      letter-spacing: 0.02em;
+      color: var(--text-muted);
+      white-space: nowrap;
     }
 
     @media (max-width: 1199px) and (min-width: 993px) {
@@ -1081,6 +1198,13 @@
 
       .contact-grid {
         grid-template-columns: repeat(2, 1fr);
+      }
+
+      /* Footer: at tablet width the two footer-top columns (brand +
+         Connect links) can get tight side-by-side — let them wrap to
+         full width individually rather than squeezing the link row. */
+      .footer-top>div {
+        flex: 1 1 240px;
       }
     }
 
@@ -1176,6 +1300,61 @@
       .project-stat:nth-child(3),
       .project-stat:nth-child(4) {
         border-top: var(--rule);
+      }
+
+      /* Footer: on mobile every group goes full-width and stacks;
+         link dividers switch from vertical (border-left) to
+         horizontal (border-top) rules once items stack, so each
+         divided list is easy to scan on a narrow screen. The
+         "Certifications" label + meta line also stack instead of
+         trying to share a row, and long certification link text is
+         allowed to wrap rather than overflow the viewport. */
+      footer {
+        padding: 36px 0 24px;
+      }
+
+      .footer-inner {
+        gap: 20px;
+      }
+
+      .footer-top {
+        flex-direction: column;
+        gap: 24px;
+      }
+
+      .footer-top>div {
+        flex: 1 1 auto;
+        width: 100%;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+      }
+
+      .footer-bottom>div {
+        width: 100%;
+      }
+
+      .footer-meta {
+        white-space: normal;
+      }
+
+      .footer-links {
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .footer-links li {
+        border-left: none;
+        border-top: 1px solid var(--border);
+        padding: 10px 0;
+      }
+
+      .footer-links li:first-child {
+        border-top: none;
+        padding-top: 0;
       }
     }
   </style>
@@ -1693,24 +1872,36 @@
 
   <footer>
     <div class="footer-inner">
-      <p class="footer-copy">© <span id="yr"></span> Tonie C. — Built with intent.</p>
-      <ul class="footer-links">
-        <li><a href="mailto:cadizal06@gmail.com">Email</a></li>
-        <li><a href="https://github.com/toniec" target="_blank" rel="noopener">GitHub</a></li>
-        <li><a href="https://www.linkedin.com/in/jesstonie-cadizal-8a80a9392" target="_blank"
-            rel="noopener">LinkedIn</a></li>
-        <li><a href="images/cadizal-resume.pdf" download>Resume</a></li>
-        <li>
-          <a href="https://freecodecamp.org/certification/tonie06/responsive-web-design-v9" target="_blank"
-            rel="noopener">
-            RWD Certification
-          </a>
-          <a href="https://freecodecamp.org/certification/tonie06/javascript-v9" target="_blank"
-            rel="noopener">
-            JavaScript Certification
-          </a>
-        </li>
-      </ul>
+      <div class="footer-top">
+        <div class="footer-brand">
+          <span class="footer-logo">tonie</span>
+          <p class="footer-copy">© <span id="yr"></span> Tonie C. — Built with intent.</p>
+        </div>
+
+        <div>
+          <p class="footer-col-label">Connect</p>
+          <ul class="footer-links">
+            <li><a href="mailto:cadizal06@gmail.com">Email</a></li>
+            <li><a href="https://github.com/toniec" target="_blank" rel="noopener">GitHub</a></li>
+            <li><a href="https://www.linkedin.com/in/jesstonie-cadizal-8a80a9392" target="_blank"
+                rel="noopener">LinkedIn</a></li>
+            <li><a href="images/cadizal-resume.pdf" download>Resume</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>
+          <p class="footer-col-label">Certifications</p>
+          <ul class="footer-links">
+            <li><a href="https://freecodecamp.org/certification/tonie06/responsive-web-design-v9" target="_blank"
+                rel="noopener">RWD Certification</a></li>
+            <li><a href="https://freecodecamp.org/certification/tonie06/javascript-v9" target="_blank"
+                rel="noopener">JavaScript Certification</a></li>
+          </ul>
+        </div>
+        <span class="footer-meta">Philippines · Remote-friendly</span>
+      </div>
     </div>
   </footer>
 
@@ -1888,6 +2079,24 @@
       });
     })();
 
+    /* ── PROJECTS CAROUSEL ───────────────────────────────────
+       Desktop/tablet: a true one-card-at-a-time, infinite/looping
+       slider. Implemented with the standard "clone edge cards"
+       technique so we don't duplicate real project content in the
+       HTML: a JS-only clone of the last real card is inserted before
+       the first, and a JS-only clone of the first real card is
+       appended after the last. The track then always sits one step
+       into that padded sequence. Advancing past either end slides
+       (with the normal transition) onto the adjacent clone, and once
+       that slide finishes we instantly — with transitions disabled
+       for a single frame — snap back to the matching real card. The
+       user only ever sees one smooth slide, never a scroll through
+       every intermediate project.
+
+       Mobile: the whole loop/slide mechanism is torn down — clones
+       removed, inline transform cleared — and CSS takes over to show
+       every project stacked vertically (see the max-width: 640px
+       media query). Arrows are hidden on mobile via CSS as well. */
     (function () {
       const viewport = document.getElementById('projects-viewport');
       const grid = document.getElementById('projects-grid');
@@ -1929,6 +2138,9 @@
         lastClone.setAttribute('aria-hidden', 'true');
         firstClone.setAttribute('inert', '');
         lastClone.setAttribute('inert', '');
+        // Clones are presentation-only copies used purely to make the
+        // wrap-around slide look continuous; keep them out of the a11y
+        // tree and tab order rather than duplicating real content.
         firstClone.classList.add('project-clone');
         lastClone.classList.add('project-clone');
         grid.insertBefore(lastClone, realCards[0]);
@@ -1942,6 +2154,8 @@
         setTransition(false);
         grid.style.transform = 'none';
         initialized = false;
+        // Force reflow so the cleared transform is applied before any
+        // later re-init tries to animate again.
         void grid.offsetHeight;
         setTransition(true);
       }
@@ -1950,6 +2164,9 @@
         if (animating || count < 2) return;
         animating = true;
 
+        // Position within the padded sequence: real cards occupy
+        // steps 1..count, with the clone-of-last at 0 and the
+        // clone-of-first at count+1.
         const step = newIndex + 1 + (dir > 0 && newIndex === 0 ? count : 0)
           - (dir < 0 && newIndex === count - 1 ? count : 0);
 
@@ -1959,6 +2176,9 @@
         const onEnd = () => {
           grid.removeEventListener('transitionend', onEnd);
           index = newIndex;
+          // If we slid onto a clone (wrapped either direction), jump
+          // back to the equivalent real card with transitions off so
+          // the reset is invisible to the user.
           if (step === 0 || step === count + 1) {
             setTransition(false);
             applyTransform(index + 1);
