@@ -675,11 +675,17 @@
 
     /* ═══════════════════════════════════════════════════════
    PROJECTS
-   Desktop/tablet: horizontal scrolling carousel.
-   .projects-carousel-viewport is the scroll container;
-   .projects-grid becomes the flex row of cards inside it.
-   Mobile (<=640px): reverts to a natural stacked column, no
-   scroll-snap/carousel behavior, no arrows (see media query).
+   Desktop/tablet: true one-card-at-a-time, infinite/looping
+   carousel. .projects-carousel-viewport is a fixed-size window
+   with overflow hidden; .projects-grid is a flex track that
+   translateX()s to the active card. Looping is done in JS by
+   cloning the first/last card at each end of the track (a
+   standard "infinite carousel" technique) so the visual wrap
+   is a single smooth slide, never a scroll through every card.
+   Mobile (<=640px): reverts to a natural stacked column — the
+   track transform is cleared, overflow is visible, and every
+   card is shown; no scroll-snap/carousel behavior, no arrows
+   (see media query / JS mobile branch).
 ═══════════════════════════════════════════════════════ */
 
     .projects-carousel {
@@ -687,23 +693,19 @@
     }
 
     .projects-carousel-viewport {
-      overflow-x: auto;
-      overflow-y: hidden;
-      scroll-behavior: smooth;
-      scroll-snap-type: x proximity;
-      /* Hide scrollbar while keeping native scroll functionality */
-      scrollbar-width: none;
-      -ms-overflow-style: none;
-    }
-
-    .projects-carousel-viewport::-webkit-scrollbar {
-      display: none;
+      overflow: hidden;
+      width: 100%;
     }
 
     .projects-grid {
       display: flex;
-      gap: 20px;
-      min-width: 0;
+      align-items: stretch;
+      /* JS sets transform: translateX(...) here to move between
+         cards; the transition is what makes the loop feel like a
+         single smooth slide. Disabled momentarily during the
+         "invisible jump" step of the infinite-loop technique. */
+      transition: transform 0.4s var(--ease);
+      will-change: transform;
     }
 
     .project {
@@ -711,8 +713,9 @@
       min-width: 0;
       display: flex;
       flex-direction: column;
-      flex: 0 0 clamp(300px, 46vw, 560px);
-      scroll-snap-align: start;
+      /* Exactly one full-width card per view on desktop/tablet. */
+      flex: 0 0 100%;
+      width: 100%;
     }
 
     .carousel-arrow {
@@ -1126,24 +1129,35 @@
         grid-template-columns: 1fr;
       }
 
-      /* Mobile: projects revert to a natural stacked column — no
-         carousel scrolling, no snap, no arrows. */
+      /* Mobile: projects revert to a natural stacked column — every
+         card shown, no carousel sliding, no infinite loop, no arrows.
+         The JS mobile branch also clears any inline transform and
+         removes cloned looping cards, but these rules make that the
+         visual default regardless of script timing. */
       .projects-carousel-viewport {
-        overflow-x: visible;
-        overflow-y: visible;
+        overflow: visible;
       }
 
       .projects-grid {
         flex-direction: column;
+        gap: 20px;
+        transform: none !important;
+        transition: none !important;
       }
 
       .project {
         flex: 1 1 auto;
         width: 100%;
-        scroll-snap-align: none;
       }
 
       .carousel-arrow {
+        display: none;
+      }
+
+      /* Safety net: clones only ever exist for the desktop/tablet loop.
+         If a resize fires mid-animation, hide any clone immediately
+         rather than let it flash in the stacked mobile list. */
+      .project-clone {
         display: none;
       }
 
@@ -1874,7 +1888,6 @@
       });
     })();
 
-    /* ── PROJECTS CAROUSEL ───────────────────────────────── */
     (function () {
       const viewport = document.getElementById('projects-viewport');
       const grid = document.getElementById('projects-grid');
@@ -1885,47 +1898,128 @@
       const mobileMQ = window.matchMedia('(max-width: 640px)');
       const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
+      // The original, real project cards — captured once before any
+      // clones are ever inserted, so this list never includes clones.
+      const realCards = Array.prototype.slice.call(grid.querySelectorAll('.project'));
+      const count = realCards.length;
+
+      let initialized = false; // true once clone cards exist in the DOM
+      let index = 0;           // current real-card index, 0..count-1
+      let animating = false;   // guards against overlapping clicks mid-slide
+
       function isMobile() {
         return mobileMQ.matches;
       }
 
-      function cardStep() {
-        const card = grid.querySelector('.project');
-        if (!card) return viewport.clientWidth;
-        const style = getComputedStyle(grid);
-        const gap = parseFloat(style.columnGap || style.gap || '0') || 0;
-        return card.getBoundingClientRect().width + gap;
+      function setTransition(on) {
+        grid.style.transition = on ? '' : 'none';
       }
 
-      function updateArrows() {
+      function applyTransform(step) {
+        // step is the position within the padded [cloneLast, ...real, cloneFirst]
+        // sequence; each card is 100% of the viewport width.
+        grid.style.transform = 'translateX(-' + (step * 100) + '%)';
+      }
+
+      function buildLoop() {
+        if (initialized || count < 2) return;
+        const firstClone = realCards[0].cloneNode(true);
+        const lastClone = realCards[count - 1].cloneNode(true);
+        firstClone.setAttribute('aria-hidden', 'true');
+        lastClone.setAttribute('aria-hidden', 'true');
+        firstClone.setAttribute('inert', '');
+        lastClone.setAttribute('inert', '');
+        firstClone.classList.add('project-clone');
+        lastClone.classList.add('project-clone');
+        grid.insertBefore(lastClone, realCards[0]);
+        grid.appendChild(firstClone);
+        initialized = true;
+      }
+
+      function teardownLoop() {
+        if (!initialized) return;
+        grid.querySelectorAll('.project-clone').forEach((el) => el.remove());
+        setTransition(false);
+        grid.style.transform = 'none';
+        initialized = false;
+        void grid.offsetHeight;
+        setTransition(true);
+      }
+
+      function goTo(newIndex, dir) {
+        if (animating || count < 2) return;
+        animating = true;
+
+        const step = newIndex + 1 + (dir > 0 && newIndex === 0 ? count : 0)
+          - (dir < 0 && newIndex === count - 1 ? count : 0);
+
+        setTransition(true);
+        applyTransform(step);
+
+        const onEnd = () => {
+          grid.removeEventListener('transitionend', onEnd);
+          index = newIndex;
+          if (step === 0 || step === count + 1) {
+            setTransition(false);
+            applyTransform(index + 1);
+            void grid.offsetHeight;
+            setTransition(true);
+          }
+          animating = false;
+        };
+
+        if (reducedMotion.matches) {
+          // Skip the animated slide entirely; land directly on the
+          // target real card.
+          setTransition(false);
+          index = newIndex;
+          applyTransform(index + 1);
+          void grid.offsetHeight;
+          setTransition(true);
+          animating = false;
+        } else {
+          grid.addEventListener('transitionend', onEnd);
+        }
+      }
+
+      function next() {
+        const newIndex = (index + 1) % count;
+        goTo(newIndex, 1);
+      }
+
+      function prev() {
+        const newIndex = (index - 1 + count) % count;
+        goTo(newIndex, -1);
+      }
+
+      function syncMode() {
         if (isMobile()) {
+          teardownLoop();
           prevBtn.disabled = true;
           nextBtn.disabled = true;
           return;
         }
-        const max = viewport.scrollWidth - viewport.clientWidth;
-        prevBtn.disabled = viewport.scrollLeft <= 2;
-        // Also disable Next when the row doesn't overflow at all.
-        nextBtn.disabled = max <= 2 || viewport.scrollLeft >= max - 2;
+        buildLoop();
+        setTransition(false);
+        applyTransform(index + 1);
+        void grid.offsetHeight;
+        setTransition(true);
+        // Infinite carousel: neither arrow is ever a dead end.
+        prevBtn.disabled = count < 2;
+        nextBtn.disabled = count < 2;
       }
 
-      function scrollStep(dir) {
-        viewport.scrollBy({
-          left: dir * cardStep(),
-          behavior: reducedMotion.matches ? 'auto' : 'smooth'
-        });
-      }
+      prevBtn.addEventListener('click', prev);
+      nextBtn.addEventListener('click', next);
 
-      prevBtn.addEventListener('click', () => scrollStep(-1));
+      let resizeTimer = null;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(syncMode, 120);
+      });
 
-      nextBtn.addEventListener('click', () => scrollStep(1));
-
-      viewport.addEventListener('scroll', updateArrows, { passive: true });
-      window.addEventListener('resize', updateArrows);
-      // Card widths can shift once web fonts land — re-check disabled states.
-      window.addEventListener('load', updateArrows);
-
-      updateArrows();
+      syncMode();
+      window.addEventListener('load', syncMode);
     })();
 
     /* ── FOOTER YEAR ──────────────────────────────────────── */
