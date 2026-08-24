@@ -46,12 +46,30 @@
   - Pixelify Sans: section eyebrow labels + goal/skill category tags —
     the most legible of the three pixel fonts (real weight range), so
     it's the one used on slightly longer small-UI text.
+
+  PERFORMANCE: this was the single biggest cause of slow first load.
+  A synchronous <link rel="stylesheet"> here blocks rendering until
+  the stylesheet round-trips to Google's servers AND is parsed, before
+  the browser can even start painting the page. Two fixes applied:
+  1. The @font-face CSS is now loaded asynchronously — the browser
+     fetches it in the background (via the preload+onload swap below)
+     while it paints the page immediately using the system-font
+     fallbacks already defined in --ff-mono/--ff-body/--ff-pixel-*.
+     A <noscript> fallback keeps fonts working with JS disabled.
+  2. The requested weight ranges are trimmed to only what the site
+     actually sets in font-weight (500/600/700 for the pixel fonts,
+     not the full 100–900 variable axis; 300–600 for Inter;
+     400–700 for JetBrains Mono), roughly halving the font payload.
 -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Handjet:wght,ELSH@100..900,2&family=Jersey+15&family=Pixelify+Sans:wght@400..700&display=swap"
-    rel="stylesheet" />
+  <link rel="preload" as="style"
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Handjet:wght@500;600;700&family=Jersey+15&family=Pixelify+Sans:wght@500;600;700&display=swap"
+    onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript>
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Handjet:wght@500;600;700&family=Jersey+15&family=Pixelify+Sans:wght@500;600;700&display=swap" />
+  </noscript>
 
   <style>
     /* ═══════════════════════════════════════════════════════
@@ -84,7 +102,7 @@
          introducing color anywhere else on the site. Kept close in
          lightness to --text-muted so it reads as a tint, not a
          bright accent. */
-      --footer-link: #d7e9ff;
+      --footer-link: #7d95b8;
       --footer-link-hover: #a9bcd8;
 
       /* Type */
@@ -418,10 +436,25 @@
 
     /* ═══════════════════════════════════════════════════════
    HERO — signature element: terminal-style intro
+   Two-column on desktop/tablet: identity on the left, a terminal-
+   style system panel on the right so the hero doesn't end in empty
+   space. Collapses to a single stacked column on mobile (identity,
+   then panel, then CTA/nav) via the existing 640px breakpoint.
 ═══════════════════════════════════════════════════════ */
     #hero {
       padding: clamp(64px, 14vh, 140px) 0 clamp(56px, 10vh, 96px);
       border-bottom: var(--rule);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+      gap: clamp(32px, 5vw, 64px);
+      align-items: center;
+    }
+
+    .hero-left {
+      min-width: 0;
     }
 
     .hero-prompt {
@@ -507,6 +540,194 @@
       to {
         opacity: 1;
         transform: none;
+      }
+    }
+
+    /* ── HERO PANEL — terminal/system-status window ──────────
+       A self-contained "window chrome" card: title bar with three
+       dots + a path label, then rows that read like real terminal
+       output (whoami, status, an active-projects list sourced from
+       the real project cards below, and a current-focus line pulled
+       from the existing hero-meta tags). Nothing here is animated
+       heavily — a blinking caret and a fade-in are the only motion,
+       both cheap (opacity/steps), both respect reduced-motion. */
+    .hero-panel {
+      border: 1px solid var(--border-h);
+      background: var(--surface);
+      font-family: var(--ff-mono);
+      opacity: 0;
+      animation: rise 0.6s var(--ease) 0.35s forwards;
+      min-width: 0;
+    }
+
+    .hero-panel-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      border-bottom: var(--rule);
+    }
+
+    .hero-panel-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .hero-panel-dots span {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      border: 1px solid var(--border-h);
+    }
+
+    .hero-panel-path {
+      font-size: 11px;
+      letter-spacing: 0.02em;
+      color: var(--text-muted);
+      margin-left: 4px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .hero-panel-status {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 10px;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+      flex-shrink: 0;
+    }
+
+    .hero-panel-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--text-muted);
+      flex-shrink: 0;
+      animation: pulse 2.4s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 0.4;
+      }
+
+      50% {
+        opacity: 1;
+      }
+    }
+
+    .hero-panel-body {
+      padding: 18px 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .hero-panel-line {
+      font-size: 12.5px;
+      line-height: 1.7;
+    }
+
+    .hero-panel-line .prompt {
+      color: var(--text-muted);
+    }
+
+    .hero-panel-line .prompt::before {
+      content: '$ ';
+    }
+
+    .hero-panel-out {
+      font-size: 12.5px;
+      line-height: 1.7;
+      color: var(--text);
+      padding-left: 14px;
+    }
+
+    .hero-panel-out.muted {
+      color: var(--text-muted);
+    }
+
+    .hero-panel-list {
+      list-style: none;
+      padding-left: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .hero-panel-list li {
+      font-size: 12.5px;
+      line-height: 1.6;
+      color: var(--text);
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+    }
+
+    .hero-panel-list li::before {
+      content: '>';
+      color: var(--text-muted);
+      flex-shrink: 0;
+    }
+
+    .hero-panel-list .status-ok {
+      margin-left: auto;
+      font-size: 10px;
+      letter-spacing: 0.03em;
+      color: var(--text-muted);
+      flex-shrink: 0;
+    }
+
+    .hero-panel-focus {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding-left: 14px;
+    }
+
+    .hero-panel-focus span {
+      font-size: 10.5px;
+      letter-spacing: 0.02em;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      padding: 3px 8px;
+    }
+
+    .hero-panel-caret {
+      display: inline-block;
+      width: 7px;
+      height: 13px;
+      background: var(--text);
+      vertical-align: -2px;
+      margin-left: 2px;
+      animation: caret-blink 1s steps(1) infinite;
+    }
+
+    @keyframes caret-blink {
+
+      0%,
+      49% {
+        opacity: 1;
+      }
+
+      50%,
+      100% {
+        opacity: 0;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+      .hero-panel-dot,
+      .hero-panel-caret {
+        animation: none;
+        opacity: 1;
       }
     }
 
@@ -1206,11 +1427,30 @@
       .footer-top>div {
         flex: 1 1 240px;
       }
+
+      /* Hero: below tablet width, two columns get too tight for the
+         panel to stay readable — stack identity above the panel with
+         generous spacing instead of squeezing both narrower. Uses its
+         own breakpoint (wider than the global 640px mobile cutoff)
+         specifically for this section. */
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-panel {
+        max-width: 480px;
+      }
     }
 
     @media (max-width: 640px) {
       :root {
         --wrap-w: 100vw;
+      }
+
+      /* Hero panel goes full-width on phones, no horizontal scroll
+         risk since long lines wrap/truncate rather than overflow. */
+      .hero-panel {
+        max-width: none;
       }
 
       .nav-links {
@@ -1394,27 +1634,68 @@
     <!-- ═══ HERO ═══ -->
     <section id="hero" aria-label="Introduction">
       <div class="wrap">
-        <p class="hero-prompt"><span class="sym">$</span> whoami</p>
-        <h1 class="hero-name">Tonie C.</h1>
-        <p class="hero-role">Developer — Philippines</p>
+        <div class="hero-grid">
+          <div class="hero-left">
+            <p class="hero-prompt"><span class="sym">$</span> whoami</p>
+            <h1 class="hero-name">Tonie C.</h1>
+            <p class="hero-role">Developer — Philippines</p>
 
-        <p class="hero-tagline">
-          I build web applications, backend systems, and embedded projects. I
-          learn by building, shipping, and improving real software.
-        </p>
+            <p class="hero-tagline">
+              I build web applications, backend systems, and embedded projects. I
+              learn by building, shipping, and improving real software.
+            </p>
 
-        <div class="hero-cta">
-          <a href="#projects" class="btn btn-primary">View Projects</a>
-          <a href="#contact" class="btn btn-ghost">Get in Touch</a>
-          <a href="https://www.linkedin.com/in/jesstonie-cadizal-8a80a9392" class="btn btn-ghost" target="_blank"
-            rel="noopener noreferrer">LinkedIn</a>
+            <div class="hero-cta">
+              <a href="#projects" class="btn btn-primary">View Projects</a>
+              <a href="#contact" class="btn btn-ghost">Get in Touch</a>
+              <a href="https://www.linkedin.com/in/jesstonie-cadizal-8a80a9392" class="btn btn-ghost" target="_blank"
+                rel="noopener noreferrer">LinkedIn</a>
+            </div>
+
+            <div class="hero-meta" role="list">
+              <span class="hero-meta-item" role="listitem">Web Development</span>
+              <span class="hero-meta-item" role="listitem">Backend &amp; APIs</span>
+              <span class="hero-meta-item" role="listitem">Embedded Systems</span>
+            </div>
+          </div>
+
+          <div class="hero-right">
+            <div class="hero-panel" role="img"
+              aria-label="Terminal panel showing: whoami returns Tonie C.; status online; active projects tflows.py and Siklista; current focus web development, backend and APIs, and embedded systems.">
+              <div class="hero-panel-bar">
+                <div class="hero-panel-dots" aria-hidden="true">
+                  <span></span><span></span><span></span>
+                </div>
+                <span class="hero-panel-path">tonie@portfolio</span>
+                <span class="hero-panel-status">
+                  <span aria-hidden="true"></span>
+                  online
+                </span>
+              </div>
+
+              <div class="hero-panel-line">
+              </div>
+
+              <div class="hero-panel-line">
+              </div>
+
+              <div class="hero-panel-line">
+                <span class="prompt">projects --active</span>
+              </div>
+              <ul class="hero-panel-list">
+                <li>tflows.py<span class="status-ok">wip</span></li>
+                <li>Siklista<span class="status-ok">wip</span></li>
+                <li>Uptime Monitor<span class="status-ok">Online</span></li>
+              </ul>
+
+
+              <div class="hero-panel-line">
+                <span class="prompt"></span><span class="hero-panel-caret"></span>
+              </div>
+            </div>
+          </div>
         </div>
-
-        <div class="hero-meta" role="list">
-          <span class="hero-meta-item" role="listitem">Web Development</span>
-          <span class="hero-meta-item" role="listitem">Backend &amp; APIs</span>
-          <span class="hero-meta-item" role="listitem">Embedded Systems</span>
-        </div>
+      </div>
       </div>
     </section>
 
@@ -1423,53 +1704,66 @@
       <div class="wrap">
         <p class="eyebrow"><span class="num">01</span> About</p>
         <h2 class="section-title reveal">Who I am</h2>
-        <p class="section-sub reveal reveal-d1">Where I've been, and what I'm working toward.</p>
+        <p class="section-sub reveal reveal-d1">What I build, how I learn, and where I'm heading.</p>
 
         <div class="about-body reveal reveal-d2">
           <p>
-            I'm <strong>Tonie</strong>, a developer from the Philippines interested in
-            building software across different layers of a system — from interfaces
-            and APIs to hardware and embedded projects.
+            I'm <strong>Tonie</strong>, a developer from the Philippines who builds
+            software across different layers of a system — from interfaces and APIs
+            to hardware, automation, and embedded projects.
           </p>
           <p>
-            Most of what I learn comes from building things myself. I enjoy taking an
-            idea from a rough concept to something functional, then improving it as I
-            understand the problem better.
+            Most of what I know comes from building things myself. I usually start
+            with a rough idea, turn it into something functional, then keep breaking,
+            fixing, and improving it until I understand the problem better.
           </p>
           <p>
             I'm currently looking for <strong>internships, junior opportunities,
-              freelance work, and collaborations</strong> where I can build useful
-            software and continue developing my skills.
+              freelance work, and collaborations</strong> where I can work on real
+            projects, solve practical problems, and keep getting better at building
+            software.
           </p>
         </div>
 
         <div class="about-goals reveal reveal-d2">
           <div class="goal-row">
             <span class="goal-tag">BUILD</span>
-            <p class="goal-text"><strong>Maintainable systems</strong> — code that reads clearly and holds up over time
-              matters more than clever solutions.</p>
+            <p class="goal-text">
+              <strong>Maintainable systems</strong> — clear code and sensible structure
+              matter more than clever solutions.
+            </p>
           </div>
+
           <div class="goal-row">
             <span class="goal-tag">WORK</span>
-            <p class="goal-text"><strong>Across layers</strong> — comfortable moving between UI, server, and hardware
-              without a full context switch.</p>
+            <p class="goal-text">
+              <strong>Across layers</strong> — moving between UI, servers, automation,
+              and hardware is part of the work.
+            </p>
           </div>
+
           <div class="goal-row">
             <span class="goal-tag">LEARN</span>
-            <p class="goal-text"><strong>By shipping</strong> — real feedback from real software is the fastest way I
-              know to improve.</p>
+            <p class="goal-text">
+              <strong>By building</strong> — working software teaches more than
+              following another tutorial.
+            </p>
           </div>
+
           <div class="goal-row">
             <span class="goal-tag">COLLAB</span>
             <p class="goal-text">
-              <strong>Work with others</strong> — contribute to projects where I can
-              learn from experienced developers while bringing my own ideas to the table.
+              <strong>With other developers</strong> — contributing to existing
+              projects while learning how other people solve problems.
             </p>
           </div>
+
           <div class="goal-row">
             <span class="goal-tag">FOCUS</span>
-            <p class="goal-text"><strong>Real-world impact</strong> — solving actual problems, not just showcasing
-              technical ability.</p>
+            <p class="goal-text">
+              <strong>Useful software</strong> — building things that solve an actual
+              problem instead of existing just to demonstrate a technology.
+            </p>
           </div>
         </div>
       </div>
@@ -1480,7 +1774,9 @@
       <div class="wrap">
         <p class="eyebrow"><span class="num">02</span> Skills</p>
         <h2 class="section-title reveal">What I work with</h2>
-        <p class="section-sub reveal reveal-d1">Tools I use regularly, grouped by where they sit in the stack.</p>
+        <p class="section-sub reveal reveal-d1">
+          Technologies I use to build, connect, and ship things.
+        </p>
 
         <div class="skills-list reveal reveal-d2">
           <div class="skill-row">
@@ -1495,7 +1791,9 @@
                 <span class="skill-chip">Next.js</span>
                 <span class="skill-chip">Framer Motion</span>
               </div>
-              <p class="skill-note">Primary focus — built several production interfaces and this portfolio from scratch.
+              <p class="skill-note">
+                Where I build interfaces — from simple pages to full applications,
+                including this portfolio.
               </p>
             </div>
           </div>
@@ -1516,8 +1814,10 @@
                 <span class="skill-chip">Prisma</span>
                 <span class="skill-chip">WebSockets</span>
               </div>
-              <p class="skill-note">Comfortable with async patterns, API design, database integration, and connecting
-                services end-to-end.</p>
+              <p class="skill-note">
+                Building APIs, handling asynchronous workloads, working with
+                databases, and connecting services together.
+              </p>
             </div>
           </div>
 
@@ -1533,8 +1833,10 @@
                 <span class="skill-chip">MQTT</span>
                 <span class="skill-chip">Sensor Integration</span>
               </div>
-              <p class="skill-note">Built IoT prototypes bridging hardware sensors to web dashboards — one of my
-                favorite problem spaces.</p>
+              <p class="skill-note">
+                Connecting hardware, sensors, and software — usually through
+                microcontrollers and small IoT systems.
+              </p>
             </div>
           </div>
 
@@ -1550,8 +1852,10 @@
                 <span class="skill-chip" data-tech="docker">Docker</span>
                 <span class="skill-chip">CI/CD</span>
               </div>
-              <p class="skill-note">Daily-driver tools — published packages to both NPM and PyPI, comfortable in
-                terminal-first workflows.</p>
+              <p class="skill-note">
+                The tools I use to build, test, publish, deploy, and maintain
+                projects.
+              </p>
             </div>
           </div>
         </div>
@@ -1578,7 +1882,133 @@
           <div class="projects-carousel-viewport" id="projects-viewport" role="region" aria-label="Project carousel"
             tabindex="0">
             <div class="projects-grid" id="projects-grid">
+              <div class="project">
 
+                <div class="project-top">
+
+                  <span class="project-badge">Featured Project</span>
+
+                  <h3 class="project-title">Uptime Monitor</h3>
+
+                  <p class="project-desc">
+                    A self-hosted uptime monitoring application for tracking the availability
+                    and performance of web services. Provides continuous health checks,
+                    response-time monitoring, uptime history, and incident tracking through
+                    a focused operations dashboard.
+                  </p>
+
+                  <div class="project-tags">
+                    <span class="project-tag">JAVASCRIPT</span>
+                    <span class="project-tag">WEB SOCKETS</span>
+                    <span class="project-tag">HTTP</span>
+                    <span class="project-tag">MONITORING</span>
+                    <span class="project-tag">SELF-HOSTED</span>
+                  </div>
+
+                  <div class="project-links">
+
+                    <a href="https://github.com/TonieC/Uptime-Monitor" class="btn btn-primary" target="_blank"
+                      rel="noopener noreferrer">
+                      GitHub
+                    </a>
+
+                  </div>
+
+                </div>
+
+
+                <div class="project-bottom">
+
+                  <div class="detail-label">
+                    Architecture Overview
+                  </div>
+
+                  <ul class="arch-list">
+
+                    <li>
+                      HTTP and HTTPS health checks periodically verify whether configured
+                      services are reachable and responding correctly.
+                    </li>
+
+                    <li>
+                      Response-time measurements are recorded alongside service status,
+                      allowing performance degradation to be distinguished from complete
+                      outages.
+                    </li>
+
+                    <li>
+                      WebSocket-based updates keep the dashboard synchronized with monitoring
+                      activity without requiring constant page refreshes.
+                    </li>
+
+                    <li>
+                      A modular frontend separates dashboard, service details, incidents,
+                      charts, uptime visualization, and modal interactions into dedicated
+                      components.
+                    </li>
+
+                  </ul>
+
+
+                  <div class="detail-label">
+                    Real Use Cases
+                  </div>
+
+                  <div class="use-case-grid">
+
+                    <div class="use-case">
+                      <strong>Website Monitoring</strong>
+                      Continuously check websites and web services for availability and
+                      unexpected downtime.
+                    </div>
+
+                    <div class="use-case">
+                      <strong>API Monitoring</strong>
+                      Track HTTP endpoints and identify failed requests or abnormal response
+                      times.
+                    </div>
+
+                    <div class="use-case">
+                      <strong>Performance Tracking</strong>
+                      Monitor response times over time to identify services becoming slower
+                      before they completely fail.
+                    </div>
+
+                    <div class="use-case">
+                      <strong>Incident Tracking</strong>
+                      Keep a record of service outages and degraded states for later review.
+                    </div>
+
+                  </div>
+
+                </div>
+
+
+                <div class="project-stats">
+
+                  <div class="project-stat">
+                    <div class="stat-value">HTTP</div>
+                    <div class="stat-label">HEALTH CHECKS</div>
+                  </div>
+
+                  <div class="project-stat">
+                    <div class="stat-value">Live</div>
+                    <div class="stat-label">REAL-TIME STATUS</div>
+                  </div>
+
+                  <div class="project-stat">
+                    <div class="stat-value">Uptime</div>
+                    <div class="stat-label">HISTORY TRACKING</div>
+                  </div>
+
+                  <div class="project-stat">
+                    <div class="stat-value">OSS</div>
+                    <div class="stat-label">OPEN SOURCE</div>
+                  </div>
+
+                </div>
+
+              </div>
               <!-- ═══════════════════════════════════════════════════════
                PROJECT 1 — tflows.py
           ═══════════════════════════════════════════════════════ -->
@@ -1717,133 +2147,7 @@
 
               </div>
 
-              <div class="project">
 
-                <div class="project-top">
-
-                  <span class="project-badge">Featured Project</span>
-
-                  <h3 class="project-title">Uptime Monitor</h3>
-
-                  <p class="project-desc">
-                    A self-hosted uptime monitoring application for tracking the availability
-                    and performance of web services. Provides continuous health checks,
-                    response-time monitoring, uptime history, and incident tracking through
-                    a focused operations dashboard.
-                  </p>
-
-                  <div class="project-tags">
-                    <span class="project-tag">JAVASCRIPT</span>
-                    <span class="project-tag">WEB SOCKETS</span>
-                    <span class="project-tag">HTTP</span>
-                    <span class="project-tag">MONITORING</span>
-                    <span class="project-tag">SELF-HOSTED</span>
-                  </div>
-
-                  <div class="project-links">
-
-                    <a href="https://github.com/TonieC/Uptime-Monitor" class="btn btn-primary" target="_blank"
-                      rel="noopener noreferrer">
-                      GitHub
-                    </a>
-
-                  </div>
-
-                </div>
-
-
-                <div class="project-bottom">
-
-                  <div class="detail-label">
-                    Architecture Overview
-                  </div>
-
-                  <ul class="arch-list">
-
-                    <li>
-                      HTTP and HTTPS health checks periodically verify whether configured
-                      services are reachable and responding correctly.
-                    </li>
-
-                    <li>
-                      Response-time measurements are recorded alongside service status,
-                      allowing performance degradation to be distinguished from complete
-                      outages.
-                    </li>
-
-                    <li>
-                      WebSocket-based updates keep the dashboard synchronized with monitoring
-                      activity without requiring constant page refreshes.
-                    </li>
-
-                    <li>
-                      A modular frontend separates dashboard, service details, incidents,
-                      charts, uptime visualization, and modal interactions into dedicated
-                      components.
-                    </li>
-
-                  </ul>
-
-
-                  <div class="detail-label">
-                    Real Use Cases
-                  </div>
-
-                  <div class="use-case-grid">
-
-                    <div class="use-case">
-                      <strong>Website Monitoring</strong>
-                      Continuously check websites and web services for availability and
-                      unexpected downtime.
-                    </div>
-
-                    <div class="use-case">
-                      <strong>API Monitoring</strong>
-                      Track HTTP endpoints and identify failed requests or abnormal response
-                      times.
-                    </div>
-
-                    <div class="use-case">
-                      <strong>Performance Tracking</strong>
-                      Monitor response times over time to identify services becoming slower
-                      before they completely fail.
-                    </div>
-
-                    <div class="use-case">
-                      <strong>Incident Tracking</strong>
-                      Keep a record of service outages and degraded states for later review.
-                    </div>
-
-                  </div>
-
-                </div>
-
-
-                <div class="project-stats">
-
-                  <div class="project-stat">
-                    <div class="stat-value">HTTP</div>
-                    <div class="stat-label">HEALTH CHECKS</div>
-                  </div>
-
-                  <div class="project-stat">
-                    <div class="stat-value">Live</div>
-                    <div class="stat-label">REAL-TIME STATUS</div>
-                  </div>
-
-                  <div class="project-stat">
-                    <div class="stat-value">Uptime</div>
-                    <div class="stat-label">HISTORY TRACKING</div>
-                  </div>
-
-                  <div class="project-stat">
-                    <div class="stat-value">OSS</div>
-                    <div class="stat-label">OPEN SOURCE</div>
-                  </div>
-
-                </div>
-
-              </div>
               <!-- ═══════════════════════════════════════════════════════
                PROJECT 2
           ═══════════════════════════════════════════════════════ -->
@@ -2018,16 +2322,12 @@
 
       <div class="footer-bottom">
         <div>
-          <p class="footer-col-label">Other Links</p>
+          <p class="footer-col-label">Certifications</p>
           <ul class="footer-links">
             <li><a href="https://freecodecamp.org/certification/tonie06/responsive-web-design-v9" target="_blank"
                 rel="noopener">RWD Certification</a></li>
             <li><a href="https://freecodecamp.org/certification/tonie06/javascript-v9" target="_blank"
                 rel="noopener">JavaScript Certification</a></li>
-                <li><a href="https://tonie6.itch.io/" target="_blank"
-                rel="noopener">Itch.io Profile</a></li>
-                <li><a href="https://github.com/TonieC/Uptime-Monitor" target="_blank"
-                rel="noopener">Uptime Monitor</a></li>
           </ul>
         </div>
         <span class="footer-meta">Philippines · Remote-friendly</span>
