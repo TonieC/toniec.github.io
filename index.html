@@ -1030,6 +1030,23 @@
       margin-bottom: 16px;
     }
 
+    .project-badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .project-badge-row .project-badge {
+      margin-bottom: 0;
+    }
+
+    .project-badge.ai-note {
+      color: var(--text-muted);
+      border-color: var(--border);
+      font-weight: 500;
+    }
+
     .project-title {
       font-family: var(--ff-mono);
       font-weight: 700;
@@ -1686,6 +1703,7 @@
                 <li>tflows.py<span class="status-ok">wip</span></li>
                 <li>Siklista<span class="status-ok">wip</span></li>
                 <li>Uptime Monitor<span class="status-ok">Online</span></li>
+                <li>Email Studio<span class="status-ok">Online</span></li>
               </ul>
 
 
@@ -1863,6 +1881,7 @@
     </section>
 
     <!-- ═══ PROJECTS ═══ -->
+
     <section id="projects" class="section" aria-label="Projects">
       <div class="wrap">
 
@@ -1883,10 +1902,102 @@
             tabindex="0">
             <div class="projects-grid" id="projects-grid">
               <div class="project">
+                <div class="project-top">
+                  <div class="project-badge-row">
+                    <span class="project-badge">Featured Project</span>
+                    <span class="project-badge ai-note">AI-assisted, human-directed</span>
+                  </div>
+                  <h3 class="project-title">Email Studio</h3>
+                  <p class="project-desc">
+                    A self-hosted developer email IDE. Write HTML/CSS in a CodeMirror editor,
+                    preview responsive layouts, convert to email-safe HTML, and send via Gmail
+                    OAuth or any SMTP provider — all from the browser.
+                  </p>
+                  <div class="project-tags">
+                    <span class="project-tag">NODE.JS</span>
+                    <span class="project-tag">EXPRESS</span>
+                    <span class="project-tag">SQLITE</span>
+                    <span class="project-tag">CODEMIRROR</span>
+                    <span class="project-tag">OAUTH 2.0</span>
+                  </div>
+                  <div class="project-links">
+                    <a href="https://github.com/TonieC/Email-Studio" class="btn btn-primary" target="_blank"
+                      rel="noopener noreferrer">
+                      GitHub
+                    </a>
+                  </div>
+                </div>
+                <div class="project-bottom">
+                  <div class="detail-label">
+                    Architecture Overview
+                  </div>
+                  <ul class="arch-list">
+                    <li>
+                      Email conversion pipeline sanitizes markup, inlines CSS, converts flex
+                      layouts to tables, and hardens the output for email clients.
+                    </li>
+                    <li>
+                      Compatibility analysis checks rendered output against Gmail, Outlook,
+                      Apple Mail, and Yahoo, with guidance for fixing issues.
+                    </li>
+                    <li>
+                      Gmail OAuth 2.0 or SMTP credentials are supported for sending, both
+                      encrypted at rest — Gmail passwords are never requested or stored.
+                    </li>
+                    <li>
+                      A visual editor with a property inspector and undo/redo sits alongside
+                      the code editor, backed by a sandboxed responsive preview.
+                    </li>
+                  </ul>
+                  <div class="detail-label">
+                    Real Use Cases
+                  </div>
+                  <div class="use-case-grid">
+                    <div class="use-case">
+                      <strong>Newsletter Design</strong>
+                      Build and preview HTML newsletters without fighting email client quirks.
+                    </div>
+                    <div class="use-case">
+                      <strong>Transactional Emails</strong>
+                      Convert clean HTML/CSS into email-safe markup ready to send.
+                    </div>
+                    <div class="use-case">
+                      <strong>Client Delivery</strong>
+                      Export a project as a ZIP or single HTML file for handoff.
+                    </div>
+                    <div class="use-case">
+                      <strong>Compatibility Testing</strong>
+                      Catch Gmail/Outlook rendering issues before sending to real inboxes.
+                    </div>
+                  </div>
+                </div>
+                <div class="project-stats">
+                  <div class="project-stat">
+                    <div class="stat-value">OAuth</div>
+                    <div class="stat-label">GMAIL SEND</div>
+                  </div>
+                  <div class="project-stat">
+                    <div class="stat-value">SMTP</div>
+                    <div class="stat-label">ANY PROVIDER</div>
+                  </div>
+                  <div class="project-stat">
+                    <div class="stat-value">Docker</div>
+                    <div class="stat-label">SELF-HOSTED</div>
+                  </div>
+                  <div class="project-stat">
+                    <div class="stat-value">OSS</div>
+                    <div class="stat-label">MIT LICENSED</div>
+                  </div>
+                </div>
+              </div>
+              <div class="project">
 
                 <div class="project-top">
 
-                  <span class="project-badge">Featured Project</span>
+                  <div class="project-badge-row">
+                    <span class="project-badge">Featured Project</span>
+                    <span class="project-badge ai-note">AI-assisted, human-directed</span>
+                  </div>
 
                   <h3 class="project-title">Uptime Monitor</h3>
 
@@ -2009,9 +2120,7 @@
                 </div>
 
               </div>
-              <!-- ═══════════════════════════════════════════════════════
-               PROJECT 1 — tflows.py
-          ═══════════════════════════════════════════════════════ -->
+
               <div class="project">
 
                 <div class="project-top">
@@ -2148,9 +2257,6 @@
               </div>
 
 
-              <!-- ═══════════════════════════════════════════════════════
-               PROJECT 2
-          ═══════════════════════════════════════════════════════ -->
               <div class="project">
 
                 <div class="project-top">
