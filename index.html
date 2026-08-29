@@ -34,33 +34,6 @@
 
   <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
 
-  <!--
-  Type system:
-  - Inter: body copy (clean, highly legible at small sizes) — unchanged.
-  - JetBrains Mono: nav, buttons, project titles/stats, code — the
-    structural/readable monospace workhorse — unchanged.
-  - Handjet: hero name + big section eyebrow numbers (01, 02...) — a
-    variable pixel/LCD display font, used only where text is large.
-  - Jersey 15: hero terminal prompt + hero meta/role tags — blocky
-    scoreboard-style pixel font for short label-length text.
-  - Pixelify Sans: section eyebrow labels + goal/skill category tags —
-    the most legible of the three pixel fonts (real weight range), so
-    it's the one used on slightly longer small-UI text.
-
-  PERFORMANCE: this was the single biggest cause of slow first load.
-  A synchronous <link rel="stylesheet"> here blocks rendering until
-  the stylesheet round-trips to Google's servers AND is parsed, before
-  the browser can even start painting the page. Two fixes applied:
-  1. The @font-face CSS is now loaded asynchronously — the browser
-     fetches it in the background (via the preload+onload swap below)
-     while it paints the page immediately using the system-font
-     fallbacks already defined in --ff-mono/--ff-body/--ff-pixel-*.
-     A <noscript> fallback keeps fonts working with JS disabled.
-  2. The requested weight ranges are trimmed to only what the site
-     actually sets in font-weight (500/600/700 for the pixel fonts,
-     not the full 100–900 variable axis; 300–600 for Inter;
-     400–700 for JetBrains Mono), roughly halving the font payload.
--->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preload" as="style"
@@ -72,68 +45,34 @@
   </noscript>
 
   <style>
-    /* ═══════════════════════════════════════════════════════
-   TOKENS — strict black & white, no accent color
-═══════════════════════════════════════════════════════ */
     :root {
-      /* ── STRICT 4-COLOR SYSTEM ─────────────────────────────
-     Only these four custom properties carry color anywhere in
-     the site. Everything else (borders, hovers, dividers, chip
-     fills) derives from --text or --text-muted via opacity, or
-     reuses --bg/--surface directly. No hex values appear outside
-     this block. */
       --bg: #0a0a0a;
       --surface: #141414;
       --text: #ffffff;
       --text-muted: #8a8a8a;
 
-      /* Borders/dividers — contrast-only, built from --text at low
-     opacity rather than a separate color token. color-mix() is used
-     where supported, with a plain rgba fallback declared first so
-     browsers without color-mix() still get visible rules. */
       --border: rgba(255, 255, 255, 0.14);
       --border-h: rgba(255, 255, 255, 0.26);
       --border: color-mix(in srgb, var(--text) 14%, transparent);
       --border-h: color-mix(in srgb, var(--text) 26%, transparent);
 
-      /* One deliberate exception to the strict B&W system: a quiet,
-         desaturated blue used ONLY for footer <a> links, so the
-         footer alone teaches "this color = clickable" without
-         introducing color anywhere else on the site. Kept close in
-         lightness to --text-muted so it reads as a tint, not a
-         bright accent. */
       --footer-link: #7d95b8;
       --footer-link-hover: #a9bcd8;
 
-      /* Type */
       --ff-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Consolas, monospace;
       --ff-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      /* Pixel/display accents — used sparingly, never for body or
-         dense UI text. Each falls back to --ff-mono so layout and
-         legibility hold up even if a font fails to load. */
       --ff-pixel-display: 'Handjet', var(--ff-mono);
       --ff-pixel-label: 'Jersey 15', var(--ff-mono);
       --ff-pixel-ui: 'Pixelify Sans', var(--ff-mono);
 
-      /* Motion */
       --ease: cubic-bezier(0.16, 1, 0.3, 1);
 
-      /* Layout
-         --max-w widened from a narrow single-column feel to a spacious
-         desktop measure (1100–1300px band). --wrap-w is the width the
-         .wrap container actually resolves to at any viewport, computed
-         with clamp() so it steps down smoothly through tablet and mobile
-         instead of jumping. --pad is now a horizontal-only clamp used via
-         padding-inline, kept modest so it doesn't eat into the wider
-         container on large screens. */
       --max-w: 1240px;
       --wrap-w: clamp(320px, 94vw, var(--max-w));
       --pad: clamp(16px, 4vw, 48px);
       --rule: 1px solid var(--border);
     }
 
-    /* Light theme — same 4 roles, inverted. Dark stays the default.
-       Same color-mix()-with-rgba-fallback pattern as :root above. */
     :root[data-theme="light"] {
       --bg: #ffffff;
       --surface: #f2f2f2;
@@ -143,15 +82,10 @@
       --border-h: rgba(0, 0, 0, 0.26);
       --border: color-mix(in srgb, var(--text) 14%, transparent);
       --border-h: color-mix(in srgb, var(--text) 26%, transparent);
-      /* Slightly deeper/more saturated in light mode so the same
-         "this is a link" cue holds contrast against a white background. */
       --footer-link: #3d5a80;
       --footer-link-hover: #24405e;
     }
 
-    /* ═══════════════════════════════════════════════════════
-   RESET
-═══════════════════════════════════════════════════════ */
     *,
     *::before,
     *::after {
@@ -163,8 +97,6 @@
     html {
       font-size: 16px;
       scroll-behavior: smooth;
-      /* Keeps anchored targets clear of the 60px sticky header
-         without touching the layout itself. */
       scroll-padding-top: 72px;
     }
 
@@ -191,9 +123,6 @@
       color: inherit;
     }
 
-    /* ═══════════════════════════════════════════════════════
-   ACCESSIBILITY
-═══════════════════════════════════════════════════════ */
     .skip-link {
       position: absolute;
       top: -48px;
@@ -231,15 +160,6 @@
       }
     }
 
-    /* ═══════════════════════════════════════════════════════
-   SHARED
-   .wrap now resolves its width via --wrap-w (a clamp against
-   --max-w) instead of a hard max-width + auto margins alone.
-   width: min(100%, var(--wrap-w)) keeps it fluid below the cap,
-   and margin-inline: auto replaces margin: 0 auto for flexible,
-   logical-property-based centering. Horizontal padding moved to
-   padding-inline using the responsive --pad clamp.
-═══════════════════════════════════════════════════════ */
     .wrap {
       width: min(100%, var(--wrap-w));
       margin-inline: auto;
@@ -280,9 +200,6 @@
       color: var(--text);
     }
 
-    /* ═══════════════════════════════════════════════════════
-   REVEAL — one subtle fade, nothing else
-═══════════════════════════════════════════════════════ */
     .reveal {
       opacity: 0;
       transform: translateY(10px);
@@ -302,11 +219,6 @@
       transition-delay: 0.12s;
     }
 
-    /* ═══════════════════════════════════════════════════════
-   HEADER / NAV
-   Nav inner mirrors .wrap's flexible sizing so the header's
-   content lines up with section content at every breakpoint.
-═══════════════════════════════════════════════════════ */
     header {
       position: sticky;
       top: 0;
@@ -434,13 +346,6 @@
       transform: translateY(-6px) rotate(-45deg);
     }
 
-    /* ═══════════════════════════════════════════════════════
-   HERO — signature element: terminal-style intro
-   Two-column on desktop/tablet: identity on the left, a terminal-
-   style system panel on the right so the hero doesn't end in empty
-   space. Collapses to a single stacked column on mobile (identity,
-   then panel, then CTA/nav) via the existing 640px breakpoint.
-═══════════════════════════════════════════════════════ */
     #hero {
       padding: clamp(64px, 14vh, 140px) 0 clamp(56px, 10vh, 96px);
       border-bottom: var(--rule);
@@ -543,14 +448,6 @@
       }
     }
 
-    /* ── HERO PANEL — terminal/system-status window ──────────
-       A self-contained "window chrome" card: title bar with three
-       dots + a path label, then rows that read like real terminal
-       output (whoami, status, an active-projects list sourced from
-       the real project cards below, and a current-focus line pulled
-       from the existing hero-meta tags). Nothing here is animated
-       heavily — a blinking caret and a fade-in are the only motion,
-       both cheap (opacity/steps), both respect reduced-motion. */
     .hero-panel {
       border: 1px solid var(--border-h);
       background: var(--surface);
@@ -731,9 +628,6 @@
       }
     }
 
-    /* ═══════════════════════════════════════════════════════
-   BUTTONS — pure B&W, invert on hover
-═══════════════════════════════════════════════════════ */
     .btn {
       display: inline-flex;
       align-items: center;
@@ -774,16 +668,11 @@
       background: var(--surface);
     }
 
-    /* ═══════════════════════════════════════════════════════
-   SECTION BASE
-═══════════════════════════════════════════════════════ */
     .section {
       padding: clamp(56px, 9vw, 96px) 0;
       border-bottom: var(--rule);
     }
 
-    /* Contact is the last section before the footer — no divider needed,
-   matches the page's original visual rhythm (was an inline style). */
     #contact.section {
       border-bottom: none;
     }
@@ -805,12 +694,6 @@
       margin-bottom: 48px;
     }
 
-    /* ═══════════════════════════════════════════════════════
-   ABOUT
-   about-body/goals get a touch more breathing room on the wider
-   canvas via an internal two-column-ish measure on large screens,
-   without changing typography or component structure.
-═══════════════════════════════════════════════════════ */
     .about-body p {
       font-size: 14.5px;
       line-height: 1.9;
@@ -864,12 +747,6 @@
       font-weight: 500;
     }
 
-    /* ═══════════════════════════════════════════════════════
-   SKILLS — data-table feel, no color coding
-   Category column widened slightly on large screens so the
-   row doesn't feel like a cramped single strip against the
-   wider container.
-═══════════════════════════════════════════════════════ */
     .skills-list {
       display: flex;
       flex-direction: column;
@@ -918,8 +795,6 @@
       color: var(--text);
     }
 
-
-
     .skill-note {
       font-size: 12.5px;
       line-height: 1.7;
@@ -927,21 +802,6 @@
       font-weight: 300;
       max-width: 64ch;
     }
-
-    /* ═══════════════════════════════════════════════════════
-   PROJECTS
-   Desktop/tablet: true one-card-at-a-time, infinite/looping
-   carousel. .projects-carousel-viewport is a fixed-size window
-   with overflow hidden; .projects-grid is a flex track that
-   translateX()s to the active card. Looping is done in JS by
-   cloning the first/last card at each end of the track (a
-   standard "infinite carousel" technique) so the visual wrap
-   is a single smooth slide, never a scroll through every card.
-   Mobile (<=640px): reverts to a natural stacked column — the
-   track transform is cleared, overflow is visible, and every
-   card is shown; no scroll-snap/carousel behavior, no arrows
-   (see media query / JS mobile branch).
-═══════════════════════════════════════════════════════ */
 
     .projects-carousel {
       position: relative;
@@ -955,10 +815,6 @@
     .projects-grid {
       display: flex;
       align-items: stretch;
-      /* JS sets transform: translateX(...) here to move between
-         cards; the transition is what makes the loop feel like a
-         single smooth slide. Disabled momentarily during the
-         "invisible jump" step of the infinite-loop technique. */
       transition: transform 0.4s var(--ease);
       will-change: transform;
     }
@@ -968,7 +824,6 @@
       min-width: 0;
       display: flex;
       flex-direction: column;
-      /* Exactly one full-width card per view on desktop/tablet. */
       flex: 0 0 100%;
       width: 100%;
     }
@@ -1029,7 +884,6 @@
       padding: 4px 8px;
       margin-bottom: 16px;
     }
-
 
     .project-title {
       font-family: var(--ff-mono);
@@ -1185,9 +1039,6 @@
       color: var(--text-muted);
     }
 
-    /* ═══════════════════════════════════════════════════════
-   CONTACT
-═══════════════════════════════════════════════════════ */
     .contact-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -1213,8 +1064,6 @@
       color: var(--text);
     }
 
-    /* Non-interactive contact entry (e.g. Location) — same visual shell,
-   but no hover affordance since there's nothing to activate. */
     .contact-item.is-static {
       cursor: default;
     }
@@ -1246,11 +1095,6 @@
       color: var(--text-muted);
     }
 
-
-
-    /* ═══════════════════════════════════════════════════════
-   REFERENCES (formerly "trust/testimonials") — plain, no quote marks
-═══════════════════════════════════════════════════════ */
     .ref-list {
       display: flex;
       flex-direction: column;
@@ -1281,15 +1125,6 @@
       color: var(--text-muted);
     }
 
-    /* ═══════════════════════════════════════════════════════
-   FOOTER
-   Redesigned to read as a distinct, clearly-bounded section
-   rather than a thin trailing line: a full top rule, generous
-   padding, a heavier eyebrow-style label, and explicit dividers
-   (border-based, not typed "|" characters) between each link so
-   the group is scannable at a glance. Certifications get their
-   own labeled row since they're a different kind of link.
-═══════════════════════════════════════════════════════ */
     footer {
       padding: 48px 0 28px;
       border-top: 1px solid var(--text);
@@ -1351,11 +1186,6 @@
       margin-bottom: 14px;
     }
 
-    /* Link groups: a horizontal row of links on wide screens with a
-       vertical-rule divider between each — built from border-left,
-       not a typed separator character, so it lines up cleanly and
-       respects the theme's border color at every breakpoint. Wraps
-       to a divided-list layout on narrow screens automatically. */
     .footer-links {
       display: flex;
       flex-wrap: wrap;
@@ -1422,18 +1252,10 @@
         grid-template-columns: repeat(2, 1fr);
       }
 
-      /* Footer: at tablet width the two footer-top columns (brand +
-         Connect links) can get tight side-by-side — let them wrap to
-         full width individually rather than squeezing the link row. */
       .footer-top>div {
         flex: 1 1 240px;
       }
 
-      /* Hero: below tablet width, two columns get too tight for the
-         panel to stay readable — stack identity above the panel with
-         generous spacing instead of squeezing both narrower. Uses its
-         own breakpoint (wider than the global 640px mobile cutoff)
-         specifically for this section. */
       .hero-grid {
         grid-template-columns: 1fr;
       }
@@ -1443,159 +1265,805 @@
       }
     }
 
+    /* ═══════════════════════════════════════════════════════════════
+       MOBILE (<=640px) — purpose-built mobile experience.
+
+       Everything in this block is scoped to the mobile breakpoint only.
+       Desktop/tablet rules above are untouched. Rather than stacking the
+       desktop components, mobile gets its own component language built
+       from .mobile-only / .desktop-only toggles plus dedicated mobile
+       classes (mobile-hero, mobile-tabbar, m-about, m-skills,
+       m-projects, m-contact, m-footer). The underlying content is the
+       same — it's re-presented through compact, touch-first components:
+       a dashboard-style hero, a sticky bottom tab bar instead of a
+       fullscreen nav overlay, scannable About rows, filterable Skills
+       chips, a swipeable one-project-at-a-time Projects rail with
+       accordion detail panels, and a compact Contact/footer close.
+    ═══════════════════════════════════════════════════════════════ */
+
+    .desktop-only { display: block; }
+    .mobile-only { display: none; }
+
     @media (max-width: 640px) {
       :root {
         --wrap-w: 100vw;
+        --pad: 18px;
       }
 
-      /* Hero panel goes full-width on phones, no horizontal scroll
-         risk since long lines wrap/truncate rather than overflow. */
-      .hero-panel {
-        max-width: none;
+      html {
+        scroll-padding-top: 60px;
       }
 
-      .nav-links {
-        display: none;
+      body {
+        /* Room for the fixed bottom tab bar so content never sits under it. */
+        padding-bottom: calc(58px + env(safe-area-inset-bottom, 0px));
       }
 
-      .burger {
+      .desktop-only { display: none !important; }
+      .mobile-only { display: block; }
+
+      /* ── shared mobile primitives ─────────────────────────── */
+      .m-eyebrow {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-family: var(--ff-mono);
+        font-size: 10.5px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        margin-bottom: 14px;
+      }
+
+      .m-eyebrow .m-num {
+        font-family: var(--ff-mono);
+        font-weight: 700;
+        color: var(--text);
+        border: 1px solid var(--border-h);
+        padding: 1px 6px;
+        font-size: 10px;
+      }
+
+      .m-section {
+        padding: 36px 0;
+        border-bottom: var(--rule);
+      }
+
+      #contact.m-section {
+        border-bottom: none;
+        padding-bottom: 28px;
+      }
+
+      .m-title {
+        font-family: var(--ff-mono);
+        font-weight: 700;
+        font-size: 21px;
+        letter-spacing: -0.01em;
+        margin-bottom: 6px;
+      }
+
+      .m-sub {
+        font-size: 13px;
+        line-height: 1.65;
+        color: var(--text-muted);
+        font-weight: 300;
+        margin-bottom: 22px;
+        max-width: 42ch;
+      }
+
+      /* Nav links / burger from desktop header are fully replaced on mobile. */
+      header .nav-links,
+      header .burger {
+        display: none !important;
+      }
+
+      .nav-inner {
+        height: 54px;
+      }
+
+      .logo {
+        font-size: 13px;
+      }
+
+      .theme-toggle {
+        font-size: 10px;
+        padding: 6px 10px;
+      }
+
+      /* ══ MOBILE HERO — compact dashboard, not a stacked desktop hero ══ */
+      #hero {
+        padding: 22px 0 0;
+        border-bottom: none;
+      }
+
+      .mobile-hero {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+        min-height: calc(100svh - 54px - 58px - env(safe-area-inset-bottom, 0px));
+        justify-content: center;
+        padding-bottom: 28px;
+      }
+
+      .mh-prompt {
+        font-family: var(--ff-mono);
+        font-size: 11px;
+        letter-spacing: 0.04em;
+        color: var(--text-muted);
+      }
+
+      .mh-prompt .sym {
+        color: var(--text-muted);
+      }
+
+      .mh-name {
+        font-family: var(--ff-pixel-display);
+        font-weight: 700;
+        font-size: 58px;
+        line-height: 1;
+        letter-spacing: -0.01em;
+        color: var(--text);
+      }
+
+      .mh-role {
+        font-family: var(--ff-pixel-label);
+        font-size: 16px;
+        letter-spacing: 0.02em;
+        color: var(--text-muted);
+        margin-top: 2px;
+      }
+
+      .mh-tagline {
+        font-size: 13.5px;
+        line-height: 1.65;
+        color: var(--text-muted);
+        font-weight: 300;
+        max-width: 38ch;
+      }
+
+      /* Compact system-status strip — the terminal concept, shrunk to
+         a scannable card instead of a full desktop terminal window. */
+      .mh-status {
+        border: 1px solid var(--border-h);
+        background: var(--surface);
+        font-family: var(--ff-mono);
+      }
+
+      .mh-status-head {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 12px;
+        border-bottom: var(--rule);
+        font-size: 10.5px;
+        letter-spacing: 0.04em;
+        color: var(--text-muted);
+      }
+
+      .mh-status-head .dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--text-muted);
+        animation: pulse 2.4s ease-in-out infinite;
+        flex-shrink: 0;
+      }
+
+      .mh-status-head .id {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      .mh-status-head .state {
+        margin-left: auto;
+      }
+
+      .mh-status-rows {
         display: flex;
       }
 
-      .nav-links.mobile-open {
-        display: flex;
-        position: fixed;
-        inset: 60px 0 0 0;
-        background: var(--bg);
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 4px;
-        padding: 24px var(--pad);
-        z-index: 90;
+      .mh-status-row {
+        flex: 1;
+        padding: 10px 8px;
+        text-align: center;
+        border-right: var(--rule);
       }
 
-      .nav-links.mobile-open a {
-        font-size: 15px;
-        padding: 12px 0;
-        width: 100%;
-      }
-
-      .skill-row {
-        grid-template-columns: 1fr;
-        gap: 10px;
-      }
-
-      .goal-row {
-        grid-template-columns: 1fr;
-        gap: 6px;
-      }
-
-      .contact-grid {
-        grid-template-columns: 1fr;
-      }
-
-      /* Mobile: projects revert to a natural stacked column — every
-         card shown, no carousel sliding, no infinite loop, no arrows.
-         The JS mobile branch also clears any inline transform and
-         removes cloned looping cards, but these rules make that the
-         visual default regardless of script timing. */
-      .projects-carousel-viewport {
-        overflow: visible;
-      }
-
-      .projects-grid {
-        flex-direction: column;
-        gap: 20px;
-        transform: none !important;
-        transition: none !important;
-      }
-
-      .project {
-        flex: 1 1 auto;
-        width: 100%;
-      }
-
-      .carousel-arrow {
-        display: none;
-      }
-
-      /* Safety net: clones only ever exist for the desktop/tablet loop.
-         If a resize fires mid-animation, hide any clone immediately
-         rather than let it flash in the stacked mobile list. */
-      .project-clone {
-        display: none;
-      }
-
-      .use-case-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .project-stats {
-        grid-template-columns: repeat(1, 1fr);
-      }
-
-      .project-stat:nth-child(2) {
+      .mh-status-row:last-child {
         border-right: none;
       }
 
-      .project-stat:nth-child(3),
-      .project-stat:nth-child(4) {
+      .mh-status-row .k {
+        display: block;
+        font-size: 9.5px;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        margin-bottom: 4px;
+      }
+
+      .mh-status-row .v {
+        display: block;
+        font-size: 10.5px;
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      .mh-actions {
+        display: flex;
+        gap: 10px;
+      }
+
+      .mh-actions .btn {
+        flex: 1;
+        justify-content: center;
+        padding: 13px 14px;
+        font-size: 12px;
+        min-height: 46px;
+      }
+
+      /* ══ MOBILE BOTTOM NAV — replaces fullscreen hamburger menu ══ */
+      .mobile-tabbar {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 200;
+        display: flex;
+        align-items: stretch;
+        background: var(--bg);
+        background: color-mix(in srgb, var(--bg) 92%, transparent);
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+        border-top: 1px solid var(--border-h);
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+      }
+
+      .mobile-tabbar button {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 3px;
+        min-height: 58px;
+        background: none;
+        border: none;
+        color: var(--text-muted);
+        font-family: var(--ff-mono);
+        cursor: pointer;
+        transition: color 0.15s;
+      }
+
+      .mobile-tabbar button .icon {
+        font-size: 15px;
+        line-height: 1;
+      }
+
+      .mobile-tabbar button .lbl {
+        font-size: 9px;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+
+      .mobile-tabbar button.active {
+        color: var(--text);
+      }
+
+      .mobile-tabbar button.active .icon::after {
+        content: '';
+        display: block;
+      }
+
+      .mobile-tabbar button:first-child {
+        border-right: none;
+      }
+
+      .mobile-tabbar .tb-divider {
+        width: 1px;
+        background: var(--border);
+        flex: 0 0 1px;
+        margin: 10px 0;
+      }
+
+      /* ══ MOBILE ABOUT — scannable rows instead of 3 long paragraphs ══ */
+      .m-about-intro {
+        font-size: 13.5px;
+        line-height: 1.75;
+        color: var(--text-muted);
+        font-weight: 300;
+        margin-bottom: 22px;
+      }
+
+      .m-about-intro strong {
+        color: var(--text);
+        font-weight: 500;
+      }
+
+      .m-card {
+        border: var(--rule);
+        padding: 14px 16px;
+        margin-bottom: 10px;
+      }
+
+      .m-card-label {
+        font-family: var(--ff-mono);
+        font-size: 10px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        margin-bottom: 8px;
+      }
+
+      .m-card-body {
+        font-size: 13px;
+        line-height: 1.65;
+        color: var(--text-muted);
+        font-weight: 300;
+      }
+
+      .m-card-body strong {
+        color: var(--text);
+        font-weight: 500;
+      }
+
+      .m-goals {
+        margin-top: 22px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .m-goal-row {
+        display: flex;
+        gap: 12px;
+        padding: 13px 0;
+        border-top: var(--rule);
+        align-items: flex-start;
+      }
+
+      .m-goals .m-goal-row:last-child {
+        border-bottom: var(--rule);
+      }
+
+      .m-goal-tag {
+        flex: 0 0 auto;
+        font-family: var(--ff-pixel-ui);
+        font-size: 11.5px;
+        font-weight: 600;
+        letter-spacing: 0.03em;
+        color: var(--text-muted);
+        border: 1px solid var(--border);
+        padding: 4px 8px;
+        min-width: 72px;
+        text-align: center;
+      }
+
+      .m-goal-text {
+        font-size: 12.5px;
+        line-height: 1.6;
+        color: var(--text-muted);
+        font-weight: 300;
+      }
+
+      .m-goal-text strong {
+        color: var(--text);
+        font-weight: 500;
+      }
+
+      /* ══ MOBILE SKILLS — horizontal category rail + one panel ══ */
+      .m-skills-rail {
+        display: flex;
+        gap: 8px;
+        overflow-x: auto;
+        padding-bottom: 4px;
+        margin-bottom: 18px;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .m-skills-rail::-webkit-scrollbar {
+        display: none;
+      }
+
+      .m-skill-tab {
+        flex: 0 0 auto;
+        font-family: var(--ff-pixel-ui);
+        font-size: 12.5px;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        color: var(--text-muted);
+        background: transparent;
+        border: 1px solid var(--border-h);
+        padding: 10px 16px;
+        min-height: 40px;
+        cursor: pointer;
+        transition: background 0.15s, color 0.15s, border-color 0.15s;
+        white-space: nowrap;
+      }
+
+      .m-skill-tab.active {
+        background: var(--text);
+        color: var(--bg);
+        border-color: var(--text);
+      }
+
+      .m-skill-panel {
+        display: none;
+      }
+
+      .m-skill-panel.active {
+        display: block;
+      }
+
+      .m-skill-panel .skill-chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 14px;
+      }
+
+      .m-skill-panel .skill-chip {
+        padding: 8px 12px;
+        font-size: 12px;
+        min-height: 36px;
+        display: inline-flex;
+        align-items: center;
+      }
+
+      .m-skill-panel .skill-note {
+        font-size: 12.5px;
+        line-height: 1.65;
+      }
+
+      /* ══ MOBILE PROJECTS — discovery-first swipe rail ══ */
+      .m-projects-rail {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        gap: 14px;
+        margin: 0 calc(-1 * var(--pad));
+        padding: 0 var(--pad) 6px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+
+      .m-projects-rail::-webkit-scrollbar {
+        display: none;
+      }
+
+      .m-project-card {
+        flex: 0 0 calc(100% - 8px);
+        scroll-snap-align: start;
+        border: var(--rule);
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+      }
+
+      .m-project-top {
+        padding: 18px;
+      }
+
+      .m-project-badge {
+        display: inline-block;
+        font-family: var(--ff-mono);
+        font-size: 9.5px;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        border: 1px solid var(--border-h);
+        padding: 3px 7px;
+        margin-bottom: 12px;
+      }
+
+      .m-project-title {
+        font-family: var(--ff-mono);
+        font-weight: 700;
+        font-size: 19px;
+        letter-spacing: -0.01em;
+        margin-bottom: 8px;
+      }
+
+      .m-project-desc {
+        font-size: 12.5px;
+        line-height: 1.6;
+        color: var(--text-muted);
+        font-weight: 300;
+        margin-bottom: 14px;
+      }
+
+      .m-project-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        margin-bottom: 16px;
+      }
+
+      .m-project-tag {
+        font-family: var(--ff-mono);
+        font-size: 9px;
+        letter-spacing: 0.02em;
+        padding: 4px 8px;
+        border: 1px solid var(--border);
+        color: var(--text-muted);
+      }
+
+      .m-project-links {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-bottom: 4px;
+      }
+
+      .m-project-links .btn {
+        padding: 10px 14px;
+        font-size: 11px;
+        min-height: 40px;
+      }
+
+      /* Expandable technical details — real <details>/<summary>. */
+      .m-project-details {
         border-top: var(--rule);
       }
 
-      /* Footer: on mobile every group goes full-width and stacks;
-         link dividers switch from vertical (border-left) to
-         horizontal (border-top) rules once items stack, so each
-         divided list is easy to scan on a narrow screen. The
-         "Certifications" label + meta line also stack instead of
-         trying to share a row, and long certification link text is
-         allowed to wrap rather than overflow the viewport. */
+      .m-project-details summary {
+        list-style: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 18px;
+        font-family: var(--ff-mono);
+        font-size: 11px;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        min-height: 44px;
+      }
+
+      .m-project-details summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .m-project-details summary::after {
+        content: '+';
+        font-family: var(--ff-mono);
+        font-size: 15px;
+        color: var(--text-muted);
+        flex-shrink: 0;
+      }
+
+      .m-project-details[open] summary::after {
+        content: '−';
+      }
+
+      .m-project-details-body {
+        padding: 0 18px 18px;
+        background: var(--surface);
+      }
+
+      .m-project-details .detail-label {
+        margin-top: 14px;
+      }
+
+      .m-project-details .detail-label:first-child {
+        margin-top: 0;
+      }
+
+      .m-project-details .arch-list li {
+        font-size: 11.5px;
+      }
+
+      .m-project-details .use-case-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .m-project-details .project-stats {
+        grid-template-columns: repeat(2, 1fr);
+        margin-top: 14px;
+      }
+
+      .m-project-details .project-stat:nth-child(2) {
+        border-right: none;
+      }
+
+      .m-project-details .project-stat:nth-child(3),
+      .m-project-details .project-stat:nth-child(4) {
+        border-top: var(--rule);
+      }
+
+      .m-projects-index {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+        margin-top: 16px;
+        font-family: var(--ff-mono);
+      }
+
+      .m-projects-index .idx-btn {
+        width: 34px;
+        height: 34px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid var(--border-h);
+        background: transparent;
+        color: var(--text);
+        cursor: pointer;
+        font-size: 14px;
+      }
+
+      .m-projects-index .idx-btn[disabled] {
+        opacity: 0.3;
+        pointer-events: none;
+      }
+
+      .m-projects-index .idx-count {
+        font-size: 12px;
+        color: var(--text-muted);
+        letter-spacing: 0.03em;
+        min-width: 44px;
+        text-align: center;
+      }
+
+      .m-projects-index .idx-count strong {
+        color: var(--text);
+      }
+
+      .m-projects-hint {
+        text-align: center;
+        font-family: var(--ff-mono);
+        font-size: 10px;
+        letter-spacing: 0.04em;
+        color: var(--text-muted);
+        margin-top: 8px;
+        text-transform: uppercase;
+      }
+
+      /* ══ MOBILE CONTACT — compact closing action area ══ */
+      .m-contact-lead {
+        font-family: var(--ff-mono);
+        font-weight: 700;
+        font-size: 22px;
+        letter-spacing: -0.01em;
+        margin-bottom: 8px;
+      }
+
+      .m-contact-sub {
+        font-size: 13px;
+        line-height: 1.6;
+        color: var(--text-muted);
+        margin-bottom: 20px;
+        max-width: 40ch;
+      }
+
+      .m-contact-list {
+        border-top: var(--rule);
+        margin-bottom: 20px;
+      }
+
+      .m-contact-list a,
+      .m-contact-list .m-contact-static {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 15px 2px;
+        border-bottom: var(--rule);
+        text-decoration: none;
+        color: var(--text);
+        min-height: 48px;
+      }
+
+      .m-contact-list .m-clabel {
+        font-family: var(--ff-mono);
+        font-size: 10px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+      }
+
+      .m-contact-list .m-cvalue {
+        font-family: var(--ff-mono);
+        font-size: 12.5px;
+        color: var(--text);
+        max-width: 60%;
+        text-align: right;
+        overflow-wrap: break-word;
+      }
+
+      .m-contact-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 16px;
+      }
+
+      .m-contact-actions .btn {
+        justify-content: center;
+        width: 100%;
+        min-height: 46px;
+        font-size: 12.5px;
+      }
+
+      .m-contact-secondary {
+        display: flex;
+        gap: 10px;
+      }
+
+      .m-contact-secondary .btn {
+        flex: 1;
+      }
+
+      .m-contact-meta {
+        font-family: var(--ff-mono);
+        font-size: 10.5px;
+        color: var(--text-muted);
+        letter-spacing: 0.02em;
+      }
+
+      #copy-status.m-copy-status {
+        margin-top: 10px;
+        display: block;
+      }
+
+      /* ══ MOBILE FOOTER — compact single column ══ */
       footer {
-        padding: 36px 0 24px;
+        padding: 26px 0 22px;
       }
 
-      .footer-inner {
-        gap: 20px;
+      .m-footer-brand {
+        font-family: var(--ff-mono);
+        font-weight: 700;
+        font-size: 13px;
+        margin-bottom: 4px;
       }
 
-      .footer-top {
+      .m-footer-copy {
+        font-family: var(--ff-mono);
+        font-size: 10.5px;
+        color: var(--text-muted);
+        margin-bottom: 16px;
+      }
+
+      .m-footer-links {
+        list-style: none;
+        display: flex;
         flex-direction: column;
-        gap: 24px;
+        margin-bottom: 14px;
       }
 
-      .footer-top>div {
-        flex: 1 1 auto;
-        width: 100%;
+      .m-footer-links li {
+        border-top: var(--rule);
       }
 
-      .footer-bottom {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 20px;
+      .m-footer-links li:last-child {
+        border-bottom: var(--rule);
       }
 
-      .footer-bottom>div {
-        width: 100%;
+      .m-footer-links a {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 2px;
+        font-family: var(--ff-mono);
+        font-size: 11.5px;
+        color: var(--footer-link);
+        text-decoration: none;
+        min-height: 44px;
       }
 
-      .footer-meta {
-        white-space: normal;
+      .m-footer-links a::after {
+        content: '↗';
+        color: var(--text-muted);
+        font-size: 11px;
       }
 
-      .footer-links {
-        flex-direction: column;
-        width: 100%;
-      }
-
-      .footer-links li {
-        border-left: none;
-        border-top: 1px solid var(--border);
-        padding: 10px 0;
-      }
-
-      .footer-links li:first-child {
-        border-top: none;
-        padding-top: 0;
+      .m-footer-meta {
+        font-family: var(--ff-mono);
+        font-size: 9.5px;
+        letter-spacing: 0.02em;
+        color: var(--text-muted);
       }
     }
   </style>
@@ -1635,7 +2103,9 @@
     <!-- ═══ HERO ═══ -->
     <section id="hero" aria-label="Introduction">
       <div class="wrap">
-        <div class="hero-grid">
+
+        <!-- Desktop/tablet hero — unchanged -->
+        <div class="hero-grid desktop-only">
           <div class="hero-left">
             <p class="hero-prompt"><span class="sym">$</span> whoami</p>
             <h1 class="hero-name">Tonie C.</h1>
@@ -1659,44 +2129,54 @@
               <span class="hero-meta-item" role="listitem">Embedded Systems</span>
             </div>
           </div>
-
-          <div class="hero-right">
-  <div class="hero-panel" role="img" aria-label="Portfolio terminal interface showing system status.">
-
-    <div class="hero-panel-bar">
-      <div class="hero-panel-dots" aria-hidden="true">
-        <span></span><span></span><span></span>
-      </div>
-      <span class="hero-panel-path">tonie@portfolio</span>
-      <span class="hero-panel-status">
-        <span aria-hidden="true"></span>
-        online
-      </span>
-    </div>
-
-    <div class="hero-panel-line">
-      <span class="prompt">system --status</span>
-    </div>
-
-    <ul class="hero-panel-list">
-      <li>portfolio<span class="status-ok">online</span></li>
-      <li>projects<span class="status-ok">active</span></li>
-      <li>tools<span class="status-ok">growing</span></li>
-    </ul>
-
-    <div class="hero-panel-line">
-      <span class="prompt"></span><span class="hero-panel-caret"></span>
-    </div>
-
-  </div>
-</div>
         </div>
-      </div>
+
+        <!-- Mobile hero — compact developer dashboard, fits ~first viewport -->
+        <div class="mobile-hero mobile-only">
+          <div>
+            <p class="mh-prompt"><span class="sym">$</span> whoami</p>
+            <h1 class="mh-name">Tonie C.</h1>
+            <p class="mh-role">Developer — Philippines</p>
+          </div>
+
+          <p class="mh-tagline">
+            I build web applications, backend systems, and embedded projects —
+            learning by shipping real software.
+          </p>
+
+          <div class="mh-status" role="img" aria-label="System status: portfolio online, projects active, tools growing.">
+            <div class="mh-status-head">
+              <span class="dot" aria-hidden="true"></span>
+              <span class="id">TONIE / DEV</span>
+              <span class="state">ONLINE</span>
+            </div>
+            <div class="mh-status-rows">
+              <div class="mh-status-row">
+                <span class="k">Web</span>
+                <span class="v">Active</span>
+              </div>
+              <div class="mh-status-row">
+                <span class="k">Backend</span>
+                <span class="v">Active</span>
+              </div>
+              <div class="mh-status-row">
+                <span class="k">Embedded</span>
+                <span class="v">Learning</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mh-actions">
+            <a href="#projects" class="btn btn-primary" data-tab-target="projects">View Projects</a>
+            <a href="#contact" class="btn btn-ghost" data-tab-target="contact">Contact</a>
+          </div>
+        </div>
+
       </div>
     </section>
 
     <!-- ═══ ABOUT ═══ -->
-    <section id="about" class="section" aria-label="About">
+    <section id="about" class="section desktop-only" aria-label="About">
       <div class="wrap">
         <p class="eyebrow"><span class="num">01</span> About</p>
         <h2 class="section-title reveal">Who I am</h2>
@@ -1765,8 +2245,64 @@
       </div>
     </section>
 
+    <!-- ═══ ABOUT (mobile) ═══ -->
+    <section id="about-m" class="m-section mobile-only" aria-label="About">
+      <div class="wrap">
+        <p class="m-eyebrow"><span class="m-num">01</span> ABOUT</p>
+        <h2 class="m-title">Who I am</h2>
+        <p class="m-sub">What I build, how I learn, where I'm heading.</p>
+
+        <p class="m-about-intro">
+          I'm <strong>Tonie</strong>, a developer from the Philippines building
+          software across interfaces, APIs, and hardware.
+        </p>
+
+        <div class="m-card">
+          <div class="m-card-label">How I Work</div>
+          <p class="m-card-body">
+            I start with a rough idea, turn it into something functional, then
+            keep breaking, fixing, and improving it until I understand the
+            problem better. Most of what I know comes from building things
+            myself.
+          </p>
+        </div>
+
+        <div class="m-card">
+          <div class="m-card-label">Currently</div>
+          <p class="m-card-body">
+            Looking for <strong>internships, junior opportunities, freelance
+            work, and collaborations</strong> — real projects, practical
+            problems, and getting better at building software.
+          </p>
+        </div>
+
+        <div class="m-goals">
+          <div class="m-goal-row">
+            <span class="m-goal-tag">BUILD</span>
+            <p class="m-goal-text"><strong>Maintainable systems</strong> — clear code over clever solutions.</p>
+          </div>
+          <div class="m-goal-row">
+            <span class="m-goal-tag">WORK</span>
+            <p class="m-goal-text"><strong>Across layers</strong> — UI, servers, automation, hardware.</p>
+          </div>
+          <div class="m-goal-row">
+            <span class="m-goal-tag">LEARN</span>
+            <p class="m-goal-text"><strong>By building</strong> — working software teaches more than tutorials.</p>
+          </div>
+          <div class="m-goal-row">
+            <span class="m-goal-tag">COLLAB</span>
+            <p class="m-goal-text"><strong>With other devs</strong> — contributing and learning how others solve problems.</p>
+          </div>
+          <div class="m-goal-row">
+            <span class="m-goal-tag">FOCUS</span>
+            <p class="m-goal-text"><strong>Useful software</strong> — solving real problems, not just demoing tech.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- ═══ SKILLS ═══ -->
-    <section id="skills" class="section" aria-label="Skills">
+    <section id="skills" class="section desktop-only" aria-label="Skills">
       <div class="wrap">
         <p class="eyebrow"><span class="num">02</span> Skills</p>
         <h2 class="section-title reveal">What I work with</h2>
@@ -1858,9 +2394,81 @@
       </div>
     </section>
 
+    <!-- ═══ SKILLS (mobile) ═══ -->
+    <section id="skills-m" class="m-section mobile-only" aria-label="Skills">
+      <div class="wrap">
+        <p class="m-eyebrow"><span class="m-num">02</span> SKILLS</p>
+        <h2 class="m-title">What I work with</h2>
+        <p class="m-sub">Tap a category to see the stack.</p>
+
+        <div class="m-skills-rail" role="tablist" aria-label="Skill categories" id="m-skills-rail">
+          <button type="button" class="m-skill-tab active" role="tab" aria-selected="true" aria-controls="m-skill-panel-frontend" id="m-skill-tab-frontend" data-panel="frontend">Frontend</button>
+          <button type="button" class="m-skill-tab" role="tab" aria-selected="false" aria-controls="m-skill-panel-backend" id="m-skill-tab-backend" data-panel="backend">Backend</button>
+          <button type="button" class="m-skill-tab" role="tab" aria-selected="false" aria-controls="m-skill-panel-embedded" id="m-skill-tab-embedded" data-panel="embedded">Embedded</button>
+          <button type="button" class="m-skill-tab" role="tab" aria-selected="false" aria-controls="m-skill-panel-tooling" id="m-skill-tab-tooling" data-panel="tooling">Tooling</button>
+        </div>
+
+        <div class="m-skill-panel active" id="m-skill-panel-frontend" role="tabpanel" aria-labelledby="m-skill-tab-frontend">
+          <div class="skill-chips">
+            <span class="skill-chip">HTML &amp; CSS</span>
+            <span class="skill-chip">JavaScript</span>
+            <span class="skill-chip">TypeScript</span>
+            <span class="skill-chip">React</span>
+            <span class="skill-chip">Tailwind CSS</span>
+            <span class="skill-chip">Next.js</span>
+            <span class="skill-chip">Framer Motion</span>
+          </div>
+          <p class="skill-note">Where I build interfaces — from simple pages to full applications, including this portfolio.</p>
+        </div>
+
+        <div class="m-skill-panel" id="m-skill-panel-backend" role="tabpanel" aria-labelledby="m-skill-tab-backend" hidden>
+          <div class="skill-chips">
+            <span class="skill-chip">Node.js</span>
+            <span class="skill-chip">Express</span>
+            <span class="skill-chip">REST APIs</span>
+            <span class="skill-chip">Python</span>
+            <span class="skill-chip">AsyncIO</span>
+            <span class="skill-chip">MongoDB</span>
+            <span class="skill-chip">PostgreSQL</span>
+            <span class="skill-chip">SQLite</span>
+            <span class="skill-chip">Redis</span>
+            <span class="skill-chip">Prisma</span>
+            <span class="skill-chip">WebSockets</span>
+          </div>
+          <p class="skill-note">Building APIs, handling asynchronous workloads, working with databases, and connecting services together.</p>
+        </div>
+
+        <div class="m-skill-panel" id="m-skill-panel-embedded" role="tabpanel" aria-labelledby="m-skill-tab-embedded" hidden>
+          <div class="skill-chips">
+            <span class="skill-chip">ESP32</span>
+            <span class="skill-chip">Arduino</span>
+            <span class="skill-chip">C / C++</span>
+            <span class="skill-chip">I2C / SPI</span>
+            <span class="skill-chip">BLE / Wi-Fi</span>
+            <span class="skill-chip">MQTT</span>
+            <span class="skill-chip">Sensor Integration</span>
+          </div>
+          <p class="skill-note">Connecting hardware, sensors, and software — usually through microcontrollers and small IoT systems.</p>
+        </div>
+
+        <div class="m-skill-panel" id="m-skill-panel-tooling" role="tabpanel" aria-labelledby="m-skill-tab-tooling" hidden>
+          <div class="skill-chips">
+            <span class="skill-chip">Git &amp; GitHub</span>
+            <span class="skill-chip">Linux</span>
+            <span class="skill-chip">NPM packages</span>
+            <span class="skill-chip">PyPI packages</span>
+            <span class="skill-chip">Discord API</span>
+            <span class="skill-chip">Docker</span>
+            <span class="skill-chip">CI/CD</span>
+          </div>
+          <p class="skill-note">The tools I use to build, test, publish, deploy, and maintain projects.</p>
+        </div>
+      </div>
+    </section>
+
     <!-- ═══ PROJECTS ═══ -->
 
-    <section id="projects" class="section" aria-label="Projects">
+    <section id="projects" class="section desktop-only" aria-label="Projects">
       <div class="wrap">
 
         <p class="eyebrow"><span class="num">03</span> Projects</p>
@@ -2336,8 +2944,214 @@
       </div>
     </section>
 
+    <!-- ═══ PROJECTS (mobile) ═══ -->
+    <section id="projects-m" class="m-section mobile-only" aria-label="Projects">
+      <div class="wrap">
+        <p class="m-eyebrow"><span class="m-num">03</span> PROJECTS</p>
+        <h2 class="m-title">What I've built</h2>
+        <p class="m-sub">Swipe to browse. Tap details to go deeper.</p>
+
+        <div class="m-projects-rail" id="m-projects-rail" role="region" aria-label="Project browser" tabindex="0">
+
+          <!-- Project 1: Email Studio -->
+          <article class="m-project-card">
+            <div class="m-project-top">
+              <span class="m-project-badge">Featured Project</span>
+              <h3 class="m-project-title">Email Studio</h3>
+              <p class="m-project-desc">
+                A self-hosted developer email IDE. Write HTML/CSS, preview
+                responsive layouts, convert to email-safe HTML, and send via
+                Gmail OAuth or SMTP.
+              </p>
+              <div class="m-project-tags">
+                <span class="m-project-tag">NODE.JS</span>
+                <span class="m-project-tag">EXPRESS</span>
+                <span class="m-project-tag">SQLITE</span>
+                <span class="m-project-tag">OAUTH 2.0</span>
+              </div>
+              <div class="m-project-links">
+                <a href="https://github.com/TonieC/Email-Studio" class="btn btn-primary" target="_blank" rel="noopener noreferrer">GitHub</a>
+              </div>
+            </div>
+            <details class="m-project-details">
+              <summary>Technical Details</summary>
+              <div class="m-project-details-body">
+                <div class="detail-label">Architecture Overview</div>
+                <ul class="arch-list">
+                  <li>Email conversion pipeline sanitizes markup, inlines CSS, converts flex layouts to tables, and hardens output for email clients.</li>
+                  <li>Compatibility analysis checks rendered output against Gmail, Outlook, Apple Mail, and Yahoo.</li>
+                  <li>Gmail OAuth 2.0 or SMTP credentials supported for sending, both encrypted at rest.</li>
+                  <li>Visual editor with property inspector and undo/redo alongside the code editor.</li>
+                </ul>
+                <div class="detail-label">Real Use Cases</div>
+                <div class="use-case-grid">
+                  <div class="use-case"><strong>Newsletter Design</strong>Build and preview HTML newsletters without fighting client quirks.</div>
+                  <div class="use-case"><strong>Transactional Emails</strong>Convert clean HTML/CSS into email-safe markup.</div>
+                  <div class="use-case"><strong>Client Delivery</strong>Export as ZIP or single HTML file for handoff.</div>
+                  <div class="use-case"><strong>Compatibility Testing</strong>Catch rendering issues before sending.</div>
+                </div>
+                <div class="project-stats">
+                  <div class="project-stat"><div class="stat-value">OAuth</div><div class="stat-label">GMAIL SEND</div></div>
+                  <div class="project-stat"><div class="stat-value">SMTP</div><div class="stat-label">ANY PROVIDER</div></div>
+                  <div class="project-stat"><div class="stat-value">Docker</div><div class="stat-label">SELF-HOSTED</div></div>
+                  <div class="project-stat"><div class="stat-value">OSS</div><div class="stat-label">MIT LICENSED</div></div>
+                </div>
+              </div>
+            </details>
+          </article>
+
+          <!-- Project 2: Uptime Monitor -->
+          <article class="m-project-card">
+            <div class="m-project-top">
+              <span class="m-project-badge">Featured Project</span>
+              <h3 class="m-project-title">Uptime Monitor</h3>
+              <p class="m-project-desc">
+                A self-hosted uptime monitoring application with continuous
+                health checks, response-time monitoring, and incident tracking
+                through an operations dashboard.
+              </p>
+              <div class="m-project-tags">
+                <span class="m-project-tag">JAVASCRIPT</span>
+                <span class="m-project-tag">WEB SOCKETS</span>
+                <span class="m-project-tag">HTTP</span>
+              </div>
+              <div class="m-project-links">
+                <a href="https://github.com/TonieC/Uptime-Monitor" class="btn btn-primary" target="_blank" rel="noopener noreferrer">GitHub</a>
+              </div>
+            </div>
+            <details class="m-project-details">
+              <summary>Technical Details</summary>
+              <div class="m-project-details-body">
+                <div class="detail-label">Architecture Overview</div>
+                <ul class="arch-list">
+                  <li>HTTP and HTTPS health checks periodically verify service reachability and correctness.</li>
+                  <li>Response-time measurements distinguish performance degradation from complete outages.</li>
+                  <li>WebSocket-based updates keep the dashboard synchronized without page refreshes.</li>
+                  <li>Modular frontend separates dashboard, details, incidents, charts, and modal interactions.</li>
+                </ul>
+                <div class="detail-label">Real Use Cases</div>
+                <div class="use-case-grid">
+                  <div class="use-case"><strong>Website Monitoring</strong>Continuously check availability and downtime.</div>
+                  <div class="use-case"><strong>API Monitoring</strong>Track endpoints and abnormal response times.</div>
+                  <div class="use-case"><strong>Performance Tracking</strong>Spot services becoming slower before failure.</div>
+                  <div class="use-case"><strong>Incident Tracking</strong>Keep a record of outages for later review.</div>
+                </div>
+                <div class="project-stats">
+                  <div class="project-stat"><div class="stat-value">HTTP</div><div class="stat-label">HEALTH CHECKS</div></div>
+                  <div class="project-stat"><div class="stat-value">Live</div><div class="stat-label">REAL-TIME STATUS</div></div>
+                  <div class="project-stat"><div class="stat-value">Uptime</div><div class="stat-label">HISTORY TRACKING</div></div>
+                  <div class="project-stat"><div class="stat-value">OSS</div><div class="stat-label">OPEN SOURCE</div></div>
+                </div>
+              </div>
+            </details>
+          </article>
+
+          <!-- Project 3: tflows.py -->
+          <article class="m-project-card">
+            <div class="m-project-top">
+              <span class="m-project-badge">Featured Project</span>
+              <h3 class="m-project-title">tflows.py</h3>
+              <p class="m-project-desc">
+                A lightweight Python framework for Discord bots and task
+                automation, built around a scripting engine that keeps bot
+                logic modular and testable.
+              </p>
+              <div class="m-project-tags">
+                <span class="m-project-tag">PYTHON</span>
+                <span class="m-project-tag">ASYNCIO</span>
+                <span class="m-project-tag">PYPI</span>
+              </div>
+              <div class="m-project-links">
+                <a href="https://github.com/TonieC/tflows.py" class="btn btn-primary" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <a href="https://pypi.org/project/tflows/" class="btn btn-ghost" target="_blank" rel="noopener noreferrer">PyPI</a>
+                <a href="https://toniec.github.io/tflows" class="btn btn-ghost" target="_blank" rel="noopener noreferrer">Docs</a>
+              </div>
+            </div>
+            <details class="m-project-details">
+              <summary>Technical Details</summary>
+              <div class="m-project-details-body">
+                <div class="detail-label">Architecture Overview</div>
+                <ul class="arch-list">
+                  <li>Async-first design built on Python's <code>asyncio</code> — handlers and tasks run concurrently.</li>
+                  <li>Scripting engine separates bot commands from Discord plumbing for isolated testing.</li>
+                  <li>Modular loader lets you add, remove, or reload modules at runtime.</li>
+                  <li>Thin abstraction over discord.py — reduces repetitive wiring without hiding the library.</li>
+                </ul>
+                <div class="detail-label">Real Use Cases</div>
+                <div class="use-case-grid">
+                  <div class="use-case"><strong>Server Moderation</strong>Event-driven auto-moderation rules.</div>
+                  <div class="use-case"><strong>Task Automation</strong>Scheduled jobs and webhook triggers.</div>
+                  <div class="use-case"><strong>Rapid Prototyping</strong>Functional bot in minutes.</div>
+                  <div class="use-case"><strong>Scripting Engine</strong>Define flows as plain functions.</div>
+                </div>
+                <div class="project-stats">
+                  <div class="project-stat"><div class="stat-value">PyPI</div><div class="stat-label">PUBLISHED</div></div>
+                  <div class="project-stat"><div class="stat-value">OSS</div><div class="stat-label">OPEN SOURCE</div></div>
+                  <div class="project-stat"><div class="stat-value">Async</div><div class="stat-label">ASYNCIO-BASED</div></div>
+                  <div class="project-stat"><div class="stat-value">Docs</div><div class="stat-label">DOCUMENTED</div></div>
+                </div>
+              </div>
+            </details>
+          </article>
+
+          <!-- Project 4: Siklista -->
+          <article class="m-project-card">
+            <div class="m-project-top">
+              <span class="m-project-badge">Horror Game</span>
+              <h3 class="m-project-title">Siklista</h3>
+              <p class="m-project-desc">
+                A short horror game about a cyclist descending the Cordillera
+                mountains at 3:00 AM, racing to reach La Union before sunrise.
+              </p>
+              <div class="m-project-tags">
+                <span class="m-project-tag">GAME</span>
+                <span class="m-project-tag">HORROR</span>
+                <span class="m-project-tag">SURVIVAL</span>
+              </div>
+              <div class="m-project-links">
+                <a href="https://tonie6.itch.io/siklista" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Itch.io</a>
+              </div>
+            </div>
+            <details class="m-project-details">
+              <summary>Game Details</summary>
+              <div class="m-project-details-body">
+                <div class="detail-label">Game Overview</div>
+                <ul class="arch-list">
+                  <li>Descend isolated Cordillera roads before sunrise.</li>
+                  <li>Manage energy and stop at sari-sari stores for supplies.</li>
+                  <li>Control your speed to avoid crashes and injuries.</li>
+                  <li>Encounter creatures inspired by Philippine mythology.</li>
+                  <li>Make choices that affect your journey and ending.</li>
+                </ul>
+                <div class="detail-label">Core Gameplay</div>
+                <div class="use-case-grid">
+                  <div class="use-case"><strong>01 — Survive</strong>Avoid creatures and survive the night.</div>
+                  <div class="use-case"><strong>02 — Manage Energy</strong>Find food and drinks to keep cycling.</div>
+                  <div class="use-case"><strong>03 — Control Speed</strong>Ride carefully through dangerous roads.</div>
+                  <div class="use-case"><strong>04 — Choose Your Fate</strong>Your decisions determine the ending.</div>
+                </div>
+                <div class="project-stats">
+                  <div class="project-stat"><div class="stat-value">30m–2h</div><div class="stat-label">PLAYTIME</div></div>
+                  <div class="project-stat"><div class="stat-value">Horror</div><div class="stat-label">GENRE</div></div>
+                  <div class="project-stat"><div class="stat-value">In Dev</div><div class="stat-label">STATUS</div></div>
+                </div>
+              </div>
+            </details>
+          </article>
+
+        </div>
+
+        <div class="m-projects-index">
+          <button type="button" class="idx-btn" id="m-proj-prev" aria-label="Previous project">‹</button>
+          <span class="idx-count"><strong id="m-proj-current">01</strong> / <span id="m-proj-total">04</span></span>
+          <button type="button" class="idx-btn" id="m-proj-next" aria-label="Next project">›</button>
+        </div>
+        <p class="m-projects-hint">Swipe or tap arrows to browse</p>
+      </div>
+    </section>
+
     <!-- ═══ CONTACT ═══ -->
-    <section id="contact" class="section" aria-label="Contact">
+    <section id="contact" class="section desktop-only" aria-label="Contact">
       <div class="wrap">
         <p class="eyebrow"><span class="num">04</span> Contact</p>
         <h2 class="section-title reveal">Get in touch</h2>
@@ -2380,9 +3194,52 @@
       </div>
     </section>
 
+    <!-- ═══ CONTACT (mobile) ═══ -->
+    <section id="contact-m" class="m-section mobile-only" aria-label="Contact">
+      <div class="wrap">
+        <p class="m-eyebrow"><span class="m-num">04</span> CONTACT</p>
+        <p class="m-contact-lead">Let's build something.</p>
+        <p class="m-contact-sub">Open to internships, freelance projects, collaborations, and entry-level roles.</p>
+
+        <div class="m-contact-list">
+          <a href="mailto:cadizal06@gmail.com">
+            <span class="m-clabel">Email</span>
+            <span class="m-cvalue">cadizal06@gmail.com</span>
+          </a>
+          <a href="https://github.com/toniec" target="_blank" rel="noopener noreferrer">
+            <span class="m-clabel">GitHub</span>
+            <span class="m-cvalue">github.com/toniec</span>
+          </a>
+          <a href="https://www.linkedin.com/in/jesstonie-cadizal-8a80a9392" target="_blank" rel="noopener noreferrer">
+            <span class="m-clabel">LinkedIn</span>
+            <span class="m-cvalue">jesstonie-cadizal</span>
+          </a>
+          <span class="m-contact-static">
+            <span class="m-clabel">Location</span>
+            <span class="m-cvalue">Philippines · Remote</span>
+          </span>
+        </div>
+
+        <div class="m-contact-actions">
+          <a href="images/cadizal-resume.pdf" class="btn btn-primary" download>Download Resume</a>
+          <button id="copy-btn-m" type="button" class="btn btn-ghost">
+            <span id="copy-label-m">Copy Email</span>
+          </button>
+        </div>
+
+        <div class="m-contact-secondary">
+          <a href="https://pypi.org/user/tonie06/" class="btn btn-ghost" target="_blank" rel="noopener noreferrer">PyPI</a>
+          <a href="https://www.npmjs.com/~tonie06" class="btn btn-ghost" target="_blank" rel="noopener noreferrer">NPM</a>
+        </div>
+
+        <div id="copy-status-m" class="m-copy-status" aria-live="polite" aria-atomic="true"></div>
+      </div>
+    </section>
+
   </main>
 
-  <footer>
+  <!-- Desktop footer — unchanged -->
+  <footer class="desktop-only">
     <div class="footer-inner">
       <div class="footer-top">
         <div class="footer-brand">
@@ -2417,6 +3274,53 @@
     </div>
   </footer>
 
+  <!-- Mobile footer — compact single column -->
+  <footer class="mobile-only">
+    <div class="footer-inner">
+      <p class="m-footer-brand">tonie</p>
+      <p class="m-footer-copy">© <span id="yr-m"></span> Tonie C. — Built with intent.</p>
+
+      <ul class="m-footer-links">
+        <li><a href="mailto:cadizal06@gmail.com">Email</a></li>
+        <li><a href="https://github.com/toniec" target="_blank" rel="noopener">GitHub</a></li>
+        <li><a href="https://www.linkedin.com/in/jesstonie-cadizal-8a80a9392" target="_blank" rel="noopener">LinkedIn</a></li>
+        <li><a href="images/cadizal-resume.pdf" download>Resume</a></li>
+        <li><a href="https://freecodecamp.org/certification/tonie06/responsive-web-design-v9" target="_blank" rel="noopener">RWD Certification</a></li>
+        <li><a href="https://freecodecamp.org/certification/tonie06/javascript-v9" target="_blank" rel="noopener">JavaScript Certification</a></li>
+      </ul>
+
+      <span class="m-footer-meta">Philippines · Remote-friendly</span>
+    </div>
+  </footer>
+
+  <!-- Mobile bottom tab bar navigation -->
+  <nav class="mobile-tabbar mobile-only" aria-label="Mobile section navigation" id="mobile-tabbar">
+    <button type="button" data-tab-target="hero" class="active" aria-current="page">
+      <span class="icon" aria-hidden="true">◆</span>
+      <span class="lbl">Home</span>
+    </button>
+    <button type="button" data-tab-target="about-m">
+      <span class="icon" aria-hidden="true">?</span>
+      <span class="lbl">About</span>
+    </button>
+    <button type="button" data-tab-target="skills-m">
+      <span class="icon" aria-hidden="true">▤</span>
+      <span class="lbl">Skills</span>
+    </button>
+    <button type="button" data-tab-target="projects-m">
+      <span class="icon" aria-hidden="true">▣</span>
+      <span class="lbl">Work</span>
+    </button>
+    <button type="button" data-tab-target="contact-m">
+      <span class="icon" aria-hidden="true">✉</span>
+      <span class="lbl">Contact</span>
+    </button>
+    <button type="button" id="theme-toggle-tab" aria-pressed="false">
+      <span class="icon" aria-hidden="true">◐</span>
+      <span class="lbl" id="theme-toggle-tab-label">Theme</span>
+    </button>
+  </nav>
+
   <script>
     'use strict';
 
@@ -2438,19 +3342,13 @@
       els.forEach((el) => obs.observe(el));
     })();
 
-    /* ── SMOOTH ANCHOR SCROLL ──────────────────────────────
-       Anchors are left to the browser's native fragment navigation.
-       html { scroll-behavior: smooth; scroll-padding-top } handles the
-       smooth scroll and the sticky-header offset, and back/forward keep
-       their normal history behavior (the old handler called
-       history.replaceState, which broke back/forward). */
-
-    /* ── THEME TOGGLE ─────────────────────────────────────── */
+    /* ── THEME TOGGLE (shared by desktop button + mobile tab) ── */
     (function () {
       var btn = document.getElementById('theme-toggle');
       var label = document.getElementById('theme-toggle-label');
+      var tabBtn = document.getElementById('theme-toggle-tab');
+      var tabLabel = document.getElementById('theme-toggle-tab-label');
       var metaThemeColor = document.getElementById('meta-theme-color');
-      if (!btn || !label) return;
 
       function isLight() {
         return document.documentElement.getAttribute('data-theme') === 'light';
@@ -2458,24 +3356,28 @@
 
       function syncUI() {
         var light = isLight();
-        label.textContent = light ? 'LIGHT' : 'DARK';
-        btn.setAttribute('aria-pressed', light ? 'true' : 'false');
+        if (label) label.textContent = light ? 'LIGHT' : 'DARK';
+        if (btn) btn.setAttribute('aria-pressed', light ? 'true' : 'false');
+        if (tabBtn) tabBtn.setAttribute('aria-pressed', light ? 'true' : 'false');
+        if (tabLabel) tabLabel.textContent = light ? 'Light' : 'Dark';
         if (metaThemeColor) metaThemeColor.setAttribute('content', light ? '#ffffff' : '#0a0a0a');
       }
 
-      // Reflect whatever the early head script already applied.
       syncUI();
 
-      btn.addEventListener('click', function () {
+      function toggleTheme() {
         var next = isLight() ? 'dark' : 'light';
         if (next === 'light') {
           document.documentElement.setAttribute('data-theme', 'light');
         } else {
           document.documentElement.removeAttribute('data-theme');
         }
-        try { localStorage.setItem('theme', next); } catch (e) { /* non-fatal: choice just won't persist */ }
+        try { localStorage.setItem('theme', next); } catch (e) { /* non-fatal */ }
         syncUI();
-      });
+      }
+
+      if (btn) btn.addEventListener('click', toggleTheme);
+      if (tabBtn) tabBtn.addEventListener('click', toggleTheme);
     })();
 
     /* ── MOBILE NAV ───────────────────────────────────────── */
@@ -2523,7 +3425,6 @@
         }
       });
 
-      // Menu was left open across a mobile→desktop resize: restore page scroll.
       function onDesktopChange() {
         if (desktopMQ.matches) closeMenu();
       }
@@ -2534,11 +3435,169 @@
       }
     })();
 
-    /* ── COPY EMAIL ───────────────────────────────────────── */
+    /* ── MOBILE BOTTOM TAB BAR — active-section tracking + jump nav ── */
     (function () {
-      const btn = document.getElementById('copy-btn');
-      const label = document.getElementById('copy-label');
-      const status = document.getElementById('copy-status');
+      const tabbar = document.getElementById('mobile-tabbar');
+      if (!tabbar) return;
+
+      const sectionIds = ['hero', 'about-m', 'skills-m', 'projects-m', 'contact-m'];
+      const buttons = Array.prototype.slice.call(tabbar.querySelectorAll('[data-tab-target]'));
+      const heroActionButtons = Array.prototype.slice.call(document.querySelectorAll('.mh-actions [data-tab-target]'));
+
+      function setActive(id) {
+        buttons.forEach((b) => {
+          const match = b.getAttribute('data-tab-target') === id;
+          b.classList.toggle('active', match);
+          if (match) {
+            b.setAttribute('aria-current', 'page');
+          } else {
+            b.removeAttribute('aria-current');
+          }
+        });
+      }
+
+      function jumpTo(id) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+        setActive(id);
+      }
+
+      buttons.forEach((b) => {
+        const target = b.getAttribute('data-tab-target');
+        if (!target) return; // theme toggle button has no target
+        b.addEventListener('click', () => jumpTo(target));
+      });
+
+      heroActionButtons.forEach((b) => {
+        b.addEventListener('click', function (e) {
+          // Let default anchor navigation happen too; just sync active tab.
+          const target = b.getAttribute('data-tab-target');
+          if (target) setActive(target);
+        });
+      });
+
+      if ('IntersectionObserver' in window) {
+        const sections = sectionIds.map((id) => document.getElementById(id)).filter(Boolean);
+        const obs = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              setActive(entry.target.id);
+            }
+          });
+        }, { threshold: 0.5, rootMargin: '-56px 0px -40% 0px' });
+        sections.forEach((s) => obs.observe(s));
+      }
+    })();
+
+    /* ── MOBILE SKILLS TABS ───────────────────────────────── */
+    (function () {
+      const rail = document.getElementById('m-skills-rail');
+      if (!rail) return;
+      const tabs = Array.prototype.slice.call(rail.querySelectorAll('.m-skill-tab'));
+
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const panelKey = tab.getAttribute('data-panel');
+          tabs.forEach((t) => {
+            const active = t === tab;
+            t.classList.toggle('active', active);
+            t.setAttribute('aria-selected', active ? 'true' : 'false');
+          });
+          document.querySelectorAll('.m-skill-panel').forEach((panel) => {
+            const match = panel.id === 'm-skill-panel-' + panelKey;
+            panel.classList.toggle('active', match);
+            panel.hidden = !match;
+          });
+        });
+      });
+    })();
+
+    /* ── MOBILE PROJECTS SWIPE RAIL ──────────────────────────
+       Native scroll-snap handles the swipe gesture itself; JS just
+       tracks which card is centered (for the 01/04 index + arrow
+       state) and lets the arrow buttons scroll programmatically. */
+    (function () {
+      const rail = document.getElementById('m-projects-rail');
+      const prevBtn = document.getElementById('m-proj-prev');
+      const nextBtn = document.getElementById('m-proj-next');
+      const currentEl = document.getElementById('m-proj-current');
+      const totalEl = document.getElementById('m-proj-total');
+      if (!rail || !prevBtn || !nextBtn || !currentEl || !totalEl) return;
+
+      const cards = Array.prototype.slice.call(rail.querySelectorAll('.m-project-card'));
+      const total = cards.length;
+      totalEl.textContent = String(total).padStart(2, '0');
+
+      let current = 0;
+      let scrollTimer = null;
+
+      function pad(n) {
+        return String(n + 1).padStart(2, '0');
+      }
+
+      function updateUI() {
+        currentEl.textContent = pad(current);
+        prevBtn.disabled = current === 0;
+        nextBtn.disabled = current === total - 1;
+      }
+
+      function scrollToIndex(i, smooth) {
+        const card = cards[i];
+        if (!card) return;
+        rail.scrollTo({
+          left: card.offsetLeft - rail.offsetLeft,
+          behavior: smooth && !window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'smooth' : 'auto'
+        });
+      }
+
+      prevBtn.addEventListener('click', () => {
+        if (current > 0) {
+          current -= 1;
+          scrollToIndex(current, true);
+          updateUI();
+        }
+      });
+
+      nextBtn.addEventListener('click', () => {
+        if (current < total - 1) {
+          current += 1;
+          scrollToIndex(current, true);
+          updateUI();
+        }
+      });
+
+      rail.addEventListener('scroll', () => {
+        clearTimeout(scrollTimer);
+        scrollTimer = setTimeout(() => {
+          const railRect = rail.getBoundingClientRect();
+          const centerX = railRect.left + railRect.width / 2;
+          let closest = 0;
+          let closestDist = Infinity;
+          cards.forEach((card, i) => {
+            const rect = card.getBoundingClientRect();
+            const cardCenter = rect.left + rect.width / 2;
+            const dist = Math.abs(cardCenter - centerX);
+            if (dist < closestDist) {
+              closestDist = dist;
+              closest = i;
+            }
+          });
+          if (closest !== current) {
+            current = closest;
+            updateUI();
+          }
+        }, 100);
+      }, { passive: true });
+
+      updateUI();
+    })();
+
+    /* ── COPY EMAIL (desktop) ─────────────────────────────── */
+    function wireCopyEmail(btnId, labelId, statusId) {
+      const btn = document.getElementById(btnId);
+      const label = document.getElementById(labelId);
+      const status = document.getElementById(statusId);
       if (!btn) return;
 
       const email = 'cadizal06@gmail.com';
@@ -2549,7 +3608,6 @@
         if (status) status.textContent = '';
       }
 
-      // Fallback for browsers / contexts without a working Clipboard API.
       function legacyCopy() {
         const ta = document.createElement('textarea');
         ta.value = email;
@@ -2580,35 +3638,25 @@
         copyEmail().then((ok) => {
           if (resetTimer) clearTimeout(resetTimer);
           if (ok) {
-            label.textContent = 'Copied ✓';
-            status.textContent = email + ' copied to clipboard';
+            if (label) label.textContent = 'Copied ✓';
+            if (status) status.textContent = email + ' copied to clipboard';
           } else {
-            label.textContent = 'Copy Email';
-            status.textContent = email;
+            if (label) label.textContent = 'Copy Email';
+            if (status) status.textContent = email;
           }
           resetTimer = setTimeout(resetStatus, 2200);
         });
       });
-    })();
+    }
 
-    /* ── PROJECTS CAROUSEL ───────────────────────────────────
-       Desktop/tablet: a true one-card-at-a-time, infinite/looping
-       slider. Implemented with the standard "clone edge cards"
-       technique so we don't duplicate real project content in the
-       HTML: a JS-only clone of the last real card is inserted before
-       the first, and a JS-only clone of the first real card is
-       appended after the last. The track then always sits one step
-       into that padded sequence. Advancing past either end slides
-       (with the normal transition) onto the adjacent clone, and once
-       that slide finishes we instantly — with transitions disabled
-       for a single frame — snap back to the matching real card. The
-       user only ever sees one smooth slide, never a scroll through
-       every intermediate project.
+    wireCopyEmail('copy-btn', 'copy-label', 'copy-status');
+    wireCopyEmail('copy-btn-m', 'copy-label-m', 'copy-status-m');
 
-       Mobile: the whole loop/slide mechanism is torn down — clones
-       removed, inline transform cleared — and CSS takes over to show
-       every project stacked vertically (see the max-width: 640px
-       media query). Arrows are hidden on mobile via CSS as well. */
+    /* ── PROJECTS CAROUSEL (desktop/tablet only) ─────────────
+       Unchanged from the original — desktop keeps its infinite
+       looping single-project-per-view carousel. On mobile the whole
+       thing tears down and the .m-projects-rail (native scroll-snap)
+       takes over instead. */
     (function () {
       const viewport = document.getElementById('projects-viewport');
       const grid = document.getElementById('projects-grid');
@@ -2619,14 +3667,12 @@
       const mobileMQ = window.matchMedia('(max-width: 640px)');
       const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-      // The original, real project cards — captured once before any
-      // clones are ever inserted, so this list never includes clones.
       const realCards = Array.prototype.slice.call(grid.querySelectorAll('.project'));
       const count = realCards.length;
 
-      let initialized = false; // true once clone cards exist in the DOM
-      let index = 0;           // current real-card index, 0..count-1
-      let animating = false;   // guards against overlapping clicks mid-slide
+      let initialized = false;
+      let index = 0;
+      let animating = false;
 
       function isMobile() {
         return mobileMQ.matches;
@@ -2637,8 +3683,6 @@
       }
 
       function applyTransform(step) {
-        // step is the position within the padded [cloneLast, ...real, cloneFirst]
-        // sequence; each card is 100% of the viewport width.
         grid.style.transform = 'translateX(-' + (step * 100) + '%)';
       }
 
@@ -2650,9 +3694,6 @@
         lastClone.setAttribute('aria-hidden', 'true');
         firstClone.setAttribute('inert', '');
         lastClone.setAttribute('inert', '');
-        // Clones are presentation-only copies used purely to make the
-        // wrap-around slide look continuous; keep them out of the a11y
-        // tree and tab order rather than duplicating real content.
         firstClone.classList.add('project-clone');
         lastClone.classList.add('project-clone');
         grid.insertBefore(lastClone, realCards[0]);
@@ -2666,8 +3707,6 @@
         setTransition(false);
         grid.style.transform = 'none';
         initialized = false;
-        // Force reflow so the cleared transform is applied before any
-        // later re-init tries to animate again.
         void grid.offsetHeight;
         setTransition(true);
       }
@@ -2676,9 +3715,6 @@
         if (animating || count < 2) return;
         animating = true;
 
-        // Position within the padded sequence: real cards occupy
-        // steps 1..count, with the clone-of-last at 0 and the
-        // clone-of-first at count+1.
         const step = newIndex + 1 + (dir > 0 && newIndex === 0 ? count : 0)
           - (dir < 0 && newIndex === count - 1 ? count : 0);
 
@@ -2688,9 +3724,6 @@
         const onEnd = () => {
           grid.removeEventListener('transitionend', onEnd);
           index = newIndex;
-          // If we slid onto a clone (wrapped either direction), jump
-          // back to the equivalent real card with transitions off so
-          // the reset is invisible to the user.
           if (step === 0 || step === count + 1) {
             setTransition(false);
             applyTransform(index + 1);
@@ -2701,8 +3734,6 @@
         };
 
         if (reducedMotion.matches) {
-          // Skip the animated slide entirely; land directly on the
-          // target real card.
           setTransition(false);
           index = newIndex;
           applyTransform(index + 1);
@@ -2736,7 +3767,6 @@
         applyTransform(index + 1);
         void grid.offsetHeight;
         setTransition(true);
-        // Infinite carousel: neither arrow is ever a dead end.
         prevBtn.disabled = count < 2;
         nextBtn.disabled = count < 2;
       }
@@ -2758,6 +3788,8 @@
     (function () {
       const yr = document.getElementById('yr');
       if (yr) yr.textContent = new Date().getFullYear();
+      const yrM = document.getElementById('yr-m');
+      if (yrM) yrM.textContent = new Date().getFullYear();
     })();
   </script>
 </body>
