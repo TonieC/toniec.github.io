@@ -1281,8 +1281,13 @@
        accordion detail panels, and a compact Contact/footer close.
     ═══════════════════════════════════════════════════════════════ */
 
-    .desktop-only { display: block; }
-    .mobile-only { display: none; }
+    .desktop-only {
+      display: block;
+    }
+
+    .mobile-only {
+      display: none;
+    }
 
     @media (max-width: 640px) {
       :root {
@@ -1299,8 +1304,13 @@
         padding-bottom: calc(58px + env(safe-area-inset-bottom, 0px));
       }
 
-      .desktop-only { display: none !important; }
-      .mobile-only { display: block; }
+      .desktop-only {
+        display: none !important;
+      }
+
+      .mobile-only {
+        display: block;
+      }
 
       /* ── shared mobile primitives ─────────────────────────── */
       .m-eyebrow {
@@ -2144,7 +2154,8 @@
             learning by shipping real software.
           </p>
 
-          <div class="mh-status" role="img" aria-label="System status: portfolio online, projects active, tools growing.">
+          <div class="mh-status" role="img"
+            aria-label="System status: portfolio online, projects active, tools growing.">
             <div class="mh-status-head">
               <span class="dot" aria-hidden="true"></span>
               <span class="id">TONIE / DEV</span>
@@ -2271,7 +2282,7 @@
           <div class="m-card-label">Currently</div>
           <p class="m-card-body">
             Looking for <strong>internships, junior opportunities, freelance
-            work, and collaborations</strong> — real projects, practical
+              work, and collaborations</strong> — real projects, practical
             problems, and getting better at building software.
           </p>
         </div>
@@ -2291,7 +2302,8 @@
           </div>
           <div class="m-goal-row">
             <span class="m-goal-tag">COLLAB</span>
-            <p class="m-goal-text"><strong>With other devs</strong> — contributing and learning how others solve problems.</p>
+            <p class="m-goal-text"><strong>With other devs</strong> — contributing and learning how others solve
+              problems.</p>
           </div>
           <div class="m-goal-row">
             <span class="m-goal-tag">FOCUS</span>
@@ -2402,13 +2414,18 @@
         <p class="m-sub">Tap a category to see the stack.</p>
 
         <div class="m-skills-rail" role="tablist" aria-label="Skill categories" id="m-skills-rail">
-          <button type="button" class="m-skill-tab active" role="tab" aria-selected="true" aria-controls="m-skill-panel-frontend" id="m-skill-tab-frontend" data-panel="frontend">Frontend</button>
-          <button type="button" class="m-skill-tab" role="tab" aria-selected="false" aria-controls="m-skill-panel-backend" id="m-skill-tab-backend" data-panel="backend">Backend</button>
-          <button type="button" class="m-skill-tab" role="tab" aria-selected="false" aria-controls="m-skill-panel-embedded" id="m-skill-tab-embedded" data-panel="embedded">Embedded</button>
-          <button type="button" class="m-skill-tab" role="tab" aria-selected="false" aria-controls="m-skill-panel-tooling" id="m-skill-tab-tooling" data-panel="tooling">Tooling</button>
+          <button type="button" class="m-skill-tab active" role="tab" aria-selected="true"
+            aria-controls="m-skill-panel-frontend" id="m-skill-tab-frontend" data-panel="frontend">Frontend</button>
+          <button type="button" class="m-skill-tab" role="tab" aria-selected="false"
+            aria-controls="m-skill-panel-backend" id="m-skill-tab-backend" data-panel="backend">Backend</button>
+          <button type="button" class="m-skill-tab" role="tab" aria-selected="false"
+            aria-controls="m-skill-panel-embedded" id="m-skill-tab-embedded" data-panel="embedded">Embedded</button>
+          <button type="button" class="m-skill-tab" role="tab" aria-selected="false"
+            aria-controls="m-skill-panel-tooling" id="m-skill-tab-tooling" data-panel="tooling">Tooling</button>
         </div>
 
-        <div class="m-skill-panel active" id="m-skill-panel-frontend" role="tabpanel" aria-labelledby="m-skill-tab-frontend">
+        <div class="m-skill-panel active" id="m-skill-panel-frontend" role="tabpanel"
+          aria-labelledby="m-skill-tab-frontend">
           <div class="skill-chips">
             <span class="skill-chip">HTML &amp; CSS</span>
             <span class="skill-chip">JavaScript</span>
@@ -2418,10 +2435,12 @@
             <span class="skill-chip">Next.js</span>
             <span class="skill-chip">Framer Motion</span>
           </div>
-          <p class="skill-note">Where I build interfaces — from simple pages to full applications, including this portfolio.</p>
+          <p class="skill-note">Where I build interfaces — from simple pages to full applications, including this
+            portfolio.</p>
         </div>
 
-        <div class="m-skill-panel" id="m-skill-panel-backend" role="tabpanel" aria-labelledby="m-skill-tab-backend" hidden>
+        <div class="m-skill-panel" id="m-skill-panel-backend" role="tabpanel" aria-labelledby="m-skill-tab-backend"
+          hidden>
           <div class="skill-chips">
             <span class="skill-chip">Node.js</span>
             <span class="skill-chip">Express</span>
@@ -2435,10 +2454,12 @@
             <span class="skill-chip">Prisma</span>
             <span class="skill-chip">WebSockets</span>
           </div>
-          <p class="skill-note">Building APIs, handling asynchronous workloads, working with databases, and connecting services together.</p>
+          <p class="skill-note">Building APIs, handling asynchronous workloads, working with databases, and connecting
+            services together.</p>
         </div>
 
-        <div class="m-skill-panel" id="m-skill-panel-embedded" role="tabpanel" aria-labelledby="m-skill-tab-embedded" hidden>
+        <div class="m-skill-panel" id="m-skill-panel-embedded" role="tabpanel" aria-labelledby="m-skill-tab-embedded"
+          hidden>
           <div class="skill-chips">
             <span class="skill-chip">ESP32</span>
             <span class="skill-chip">Arduino</span>
@@ -2448,10 +2469,12 @@
             <span class="skill-chip">MQTT</span>
             <span class="skill-chip">Sensor Integration</span>
           </div>
-          <p class="skill-note">Connecting hardware, sensors, and software — usually through microcontrollers and small IoT systems.</p>
+          <p class="skill-note">Connecting hardware, sensors, and software — usually through microcontrollers and small
+            IoT systems.</p>
         </div>
 
-        <div class="m-skill-panel" id="m-skill-panel-tooling" role="tabpanel" aria-labelledby="m-skill-tab-tooling" hidden>
+        <div class="m-skill-panel" id="m-skill-panel-tooling" role="tabpanel" aria-labelledby="m-skill-tab-tooling"
+          hidden>
           <div class="skill-chips">
             <span class="skill-chip">Git &amp; GitHub</span>
             <span class="skill-chip">Linux</span>
@@ -2714,16 +2737,16 @@
                   <h3 class="project-title">tflows.py</h3>
 
                   <p class="project-desc">
-                    A lightweight Python framework for building Discord bots and task
-                    automation pipelines. Built around a scripting engine that keeps
-                    bot logic modular, testable, and separate from Discord's event
-                    system.
+                    A lightweight Python framework for building Discord bots with
+                    script-based commands. Define bot behavior with simple scripts,
+                    use built-in functions and variables, and extend the framework with
+                    custom Python functionality while retaining the flexibility of discord.py.
                   </p>
 
                   <div class="project-tags">
                     <span class="project-tag">PYTHON</span>
-                    <span class="project-tag">ASYNCIO</span>
-                    <span class="project-tag">DISCORD API</span>
+                    <span class="project-tag">DISCORD.PY</span>
+                    <span class="project-tag">SCRIPTING</span>
                     <span class="project-tag">OPEN SOURCE</span>
                     <span class="project-tag">PYPI</span>
                   </div>
@@ -2749,7 +2772,6 @@
 
                 </div>
 
-
                 <div class="project-bottom">
 
                   <div class="detail-label">
@@ -2759,24 +2781,27 @@
                   <ul class="arch-list">
 
                     <li>
-                      Async-first design built on Python's
-                      <code>asyncio</code> — event handlers and tasks run
-                      concurrently without blocking.
+                      Built on <code>discord.py</code> with
+                      <code>FlowBot</code> providing the main bot interface while
+                      retaining access to Discord.py's functionality.
                     </li>
 
                     <li>
-                      Scripting engine separates bot commands from Discord plumbing,
-                      making individual flows testable in isolation.
+                      Script engine executes registered commands line by line,
+                      resolving functions and variables through the framework's
+                      <code>FunctionRegistry</code>.
                     </li>
 
                     <li>
-                      Modular loader system lets you add, remove, or reload bot
-                      modules at runtime without restarting.
+                      Built-in functions and variables provide common Discord bot
+                      functionality without requiring every action to be implemented
+                      as Python code.
                     </li>
 
                     <li>
-                      Thin abstraction layer over discord.py — doesn't hide the
-                      library, just reduces repetitive wiring.
+                      Extensible registry system allows developers to add their own
+                      Python functions, variables, and aliases when scripts need
+                      additional functionality.
                     </li>
 
                   </ul>
@@ -2789,30 +2814,32 @@
                   <div class="use-case-grid">
 
                     <div class="use-case">
-                      <strong>Server Moderation</strong>
-                      Event-driven auto-moderation rules without custom bot
-                      architecture.
+                      <strong>Discord Bots</strong>
+                      Build commands and bot functionality using concise script-based
+                      definitions.
                     </div>
 
                     <div class="use-case">
-                      <strong>Task Automation</strong>
-                      Scheduled jobs and webhook triggers wired to Discord channels.
+                      <strong>Server Automation</strong>
+                      Automate common Discord actions such as replies, reactions,
+                      message management, delays, and embeds.
                     </div>
 
                     <div class="use-case">
                       <strong>Rapid Prototyping</strong>
-                      Stand up a functional bot in minutes with minimal boilerplate.
+                      Create functional Discord commands without writing a separate
+                      Python function for every simple command.
                     </div>
 
                     <div class="use-case">
-                      <strong>Scripting Engine</strong>
-                      Define flows as plain functions; the framework handles wiring.
+                      <strong>Python Extensions</strong>
+                      Combine scripts with custom Python functions, variables, and
+                      normal discord.py features for more complex functionality.
                     </div>
 
                   </div>
 
                 </div>
-
 
                 <div class="project-stats">
 
@@ -2827,18 +2854,19 @@
                   </div>
 
                   <div class="project-stat">
-                    <div class="stat-value">Async</div>
-                    <div class="stat-label">ASYNCIO-BASED</div>
+                    <div class="stat-value">Scripts</div>
+                    <div class="stat-label">SCRIPT-BASED</div>
                   </div>
 
                   <div class="project-stat">
-                    <div class="stat-value">Docs</div>
-                    <div class="stat-label">DOCUMENTED</div>
+                    <div class="stat-value">Discord.py</div>
+                    <div class="stat-label">BASED ON</div>
                   </div>
 
                 </div>
 
               </div>
+
 
 
               <div class="project">
@@ -2970,7 +2998,8 @@
                 <span class="m-project-tag">OAUTH 2.0</span>
               </div>
               <div class="m-project-links">
-                <a href="https://github.com/TonieC/Email-Studio" class="btn btn-primary" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <a href="https://github.com/TonieC/Email-Studio" class="btn btn-primary" target="_blank"
+                  rel="noopener noreferrer">GitHub</a>
               </div>
             </div>
             <details class="m-project-details">
@@ -2978,23 +3007,40 @@
               <div class="m-project-details-body">
                 <div class="detail-label">Architecture Overview</div>
                 <ul class="arch-list">
-                  <li>Email conversion pipeline sanitizes markup, inlines CSS, converts flex layouts to tables, and hardens output for email clients.</li>
+                  <li>Email conversion pipeline sanitizes markup, inlines CSS, converts flex layouts to tables, and
+                    hardens output for email clients.</li>
                   <li>Compatibility analysis checks rendered output against Gmail, Outlook, Apple Mail, and Yahoo.</li>
                   <li>Gmail OAuth 2.0 or SMTP credentials supported for sending, both encrypted at rest.</li>
                   <li>Visual editor with property inspector and undo/redo alongside the code editor.</li>
                 </ul>
                 <div class="detail-label">Real Use Cases</div>
                 <div class="use-case-grid">
-                  <div class="use-case"><strong>Newsletter Design</strong>Build and preview HTML newsletters without fighting client quirks.</div>
-                  <div class="use-case"><strong>Transactional Emails</strong>Convert clean HTML/CSS into email-safe markup.</div>
-                  <div class="use-case"><strong>Client Delivery</strong>Export as ZIP or single HTML file for handoff.</div>
-                  <div class="use-case"><strong>Compatibility Testing</strong>Catch rendering issues before sending.</div>
+                  <div class="use-case"><strong>Newsletter Design</strong>Build and preview HTML newsletters without
+                    fighting client quirks.</div>
+                  <div class="use-case"><strong>Transactional Emails</strong>Convert clean HTML/CSS into email-safe
+                    markup.</div>
+                  <div class="use-case"><strong>Client Delivery</strong>Export as ZIP or single HTML file for handoff.
+                  </div>
+                  <div class="use-case"><strong>Compatibility Testing</strong>Catch rendering issues before sending.
+                  </div>
                 </div>
                 <div class="project-stats">
-                  <div class="project-stat"><div class="stat-value">OAuth</div><div class="stat-label">GMAIL SEND</div></div>
-                  <div class="project-stat"><div class="stat-value">SMTP</div><div class="stat-label">ANY PROVIDER</div></div>
-                  <div class="project-stat"><div class="stat-value">Docker</div><div class="stat-label">SELF-HOSTED</div></div>
-                  <div class="project-stat"><div class="stat-value">OSS</div><div class="stat-label">MIT LICENSED</div></div>
+                  <div class="project-stat">
+                    <div class="stat-value">OAuth</div>
+                    <div class="stat-label">GMAIL SEND</div>
+                  </div>
+                  <div class="project-stat">
+                    <div class="stat-value">SMTP</div>
+                    <div class="stat-label">ANY PROVIDER</div>
+                  </div>
+                  <div class="project-stat">
+                    <div class="stat-value">Docker</div>
+                    <div class="stat-label">SELF-HOSTED</div>
+                  </div>
+                  <div class="project-stat">
+                    <div class="stat-value">OSS</div>
+                    <div class="stat-label">MIT LICENSED</div>
+                  </div>
                 </div>
               </div>
             </details>
@@ -3016,7 +3062,8 @@
                 <span class="m-project-tag">HTTP</span>
               </div>
               <div class="m-project-links">
-                <a href="https://github.com/TonieC/Uptime-Monitor" class="btn btn-primary" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <a href="https://github.com/TonieC/Uptime-Monitor" class="btn btn-primary" target="_blank"
+                  rel="noopener noreferrer">GitHub</a>
               </div>
             </div>
             <details class="m-project-details">
@@ -3031,68 +3078,170 @@
                 </ul>
                 <div class="detail-label">Real Use Cases</div>
                 <div class="use-case-grid">
-                  <div class="use-case"><strong>Website Monitoring</strong>Continuously check availability and downtime.</div>
-                  <div class="use-case"><strong>API Monitoring</strong>Track endpoints and abnormal response times.</div>
-                  <div class="use-case"><strong>Performance Tracking</strong>Spot services becoming slower before failure.</div>
-                  <div class="use-case"><strong>Incident Tracking</strong>Keep a record of outages for later review.</div>
+                  <div class="use-case"><strong>Website Monitoring</strong>Continuously check availability and downtime.
+                  </div>
+                  <div class="use-case"><strong>API Monitoring</strong>Track endpoints and abnormal response times.
+                  </div>
+                  <div class="use-case"><strong>Performance Tracking</strong>Spot services becoming slower before
+                    failure.</div>
+                  <div class="use-case"><strong>Incident Tracking</strong>Keep a record of outages for later review.
+                  </div>
                 </div>
                 <div class="project-stats">
-                  <div class="project-stat"><div class="stat-value">HTTP</div><div class="stat-label">HEALTH CHECKS</div></div>
-                  <div class="project-stat"><div class="stat-value">Live</div><div class="stat-label">REAL-TIME STATUS</div></div>
-                  <div class="project-stat"><div class="stat-value">Uptime</div><div class="stat-label">HISTORY TRACKING</div></div>
-                  <div class="project-stat"><div class="stat-value">OSS</div><div class="stat-label">OPEN SOURCE</div></div>
+                  <div class="project-stat">
+                    <div class="stat-value">HTTP</div>
+                    <div class="stat-label">HEALTH CHECKS</div>
+                  </div>
+                  <div class="project-stat">
+                    <div class="stat-value">Live</div>
+                    <div class="stat-label">REAL-TIME STATUS</div>
+                  </div>
+                  <div class="project-stat">
+                    <div class="stat-value">Uptime</div>
+                    <div class="stat-label">HISTORY TRACKING</div>
+                  </div>
+                  <div class="project-stat">
+                    <div class="stat-value">OSS</div>
+                    <div class="stat-label">OPEN SOURCE</div>
+                  </div>
                 </div>
               </div>
             </details>
           </article>
 
           <!-- Project 3: tflows.py -->
+
           <article class="m-project-card">
             <div class="m-project-top">
               <span class="m-project-badge">Featured Project</span>
               <h3 class="m-project-title">tflows.py</h3>
               <p class="m-project-desc">
-                A lightweight Python framework for Discord bots and task
-                automation, built around a scripting engine that keeps bot
-                logic modular and testable.
+                A lightweight Python framework for building Discord bots with
+                script-based commands. Define bot behavior with simple scripts,
+                use built-in variables and functions, and extend the framework with
+                your own Python functions while retaining full discord.py compatibility.
               </p>
+
               <div class="m-project-tags">
                 <span class="m-project-tag">PYTHON</span>
-                <span class="m-project-tag">ASYNCIO</span>
+                <span class="m-project-tag">DISCORD.PY</span>
                 <span class="m-project-tag">PYPI</span>
+                <span class="m-project-tag">SCRIPTING</span>
               </div>
+
               <div class="m-project-links">
-                <a href="https://github.com/TonieC/tflows.py" class="btn btn-primary" target="_blank" rel="noopener noreferrer">GitHub</a>
-                <a href="https://pypi.org/project/tflows/" class="btn btn-ghost" target="_blank" rel="noopener noreferrer">PyPI</a>
-                <a href="https://toniec.github.io/tflows" class="btn btn-ghost" target="_blank" rel="noopener noreferrer">Docs</a>
+                <a href="https://github.com/TonieC/tflows.py" class="btn btn-primary" target="_blank"
+                  rel="noopener noreferrer">GitHub</a>
+                <a href="https://pypi.org/project/tflows/" class="btn btn-ghost" target="_blank"
+                  rel="noopener noreferrer">PyPI</a>
+                <a href="https://toniec.github.io/tflows" class="btn btn-ghost" target="_blank"
+                  rel="noopener noreferrer">Docs</a>
               </div>
             </div>
+
             <details class="m-project-details">
               <summary>Technical Details</summary>
               <div class="m-project-details-body">
+
                 <div class="detail-label">Architecture Overview</div>
                 <ul class="arch-list">
-                  <li>Async-first design built on Python's <code>asyncio</code> — handlers and tasks run concurrently.</li>
-                  <li>Scripting engine separates bot commands from Discord plumbing for isolated testing.</li>
-                  <li>Modular loader lets you add, remove, or reload modules at runtime.</li>
-                  <li>Thin abstraction over discord.py — reduces repetitive wiring without hiding the library.</li>
+                  <li>
+                    <strong>FlowBot</strong> extends discord.py's
+                    <code>commands.Bot</code>, providing a familiar Discord bot
+                    foundation while adding the tflows scripting system.
+                  </li>
+                  <li>
+                    <strong>Script Engine</strong> executes command scripts line by
+                    line, resolving functions and variables through the registry.
+                  </li>
+                  <li>
+                    <strong>FunctionRegistry</strong> provides the extension system
+                    for built-in and custom functions, variables, and aliases.
+                  </li>
+                  <li>
+                    <strong>FlowContext</strong> provides script functions with access
+                    to the Discord message, author, channel, guild, bot, arguments,
+                    and command context.
+                  </li>
                 </ul>
-                <div class="detail-label">Real Use Cases</div>
+
+                <div class="detail-label">What It Provides</div>
                 <div class="use-case-grid">
-                  <div class="use-case"><strong>Server Moderation</strong>Event-driven auto-moderation rules.</div>
-                  <div class="use-case"><strong>Task Automation</strong>Scheduled jobs and webhook triggers.</div>
-                  <div class="use-case"><strong>Rapid Prototyping</strong>Functional bot in minutes.</div>
-                  <div class="use-case"><strong>Scripting Engine</strong>Define flows as plain functions.</div>
+                  <div class="use-case">
+                    <strong>Script Commands</strong>
+                    Define Discord commands using simple script lines instead of
+                    implementing every command as Python code.
+                  </div>
+
+                  <div class="use-case">
+                    <strong>Built-in Functions</strong>
+                    Send replies, wait, react, delete messages, clear messages,
+                    create embeds, and perform other common bot actions.
+                  </div>
+
+                  <div class="use-case">
+                    <strong>Dynamic Variables</strong>
+                    Access users, servers, channels, arguments, ping, uptime,
+                    member counts, and other runtime information directly in scripts.
+                  </div>
+
+                  <div class="use-case">
+                    <strong>Python Extensions</strong>
+                    Register custom Python functions and variables when scripts
+                    need functionality beyond the built-in system.
+                  </div>
                 </div>
+
+                <div class="detail-label">Example</div>
+                <div class="use-case-grid">
+                  <div class="use-case">
+                    <strong>Install</strong>
+                    <code>pip install tflows</code>
+                  </div>
+
+                  <div class="use-case">
+                    <strong>Create a Command</strong>
+                    <code>bot.command("ping", "reply Pong! $ping")</code>
+                  </div>
+
+                  <div class="use-case">
+                    <strong>Extend</strong>
+                    Register custom functions and variables through the registry.
+                  </div>
+
+                  <div class="use-case">
+                    <strong>Integrate</strong>
+                    Continue using normal discord.py commands, cogs, events,
+                    listeners, and async Python code alongside tflows scripts.
+                  </div>
+                </div>
+
                 <div class="project-stats">
-                  <div class="project-stat"><div class="stat-value">PyPI</div><div class="stat-label">PUBLISHED</div></div>
-                  <div class="project-stat"><div class="stat-value">OSS</div><div class="stat-label">OPEN SOURCE</div></div>
-                  <div class="project-stat"><div class="stat-value">Async</div><div class="stat-label">ASYNCIO-BASED</div></div>
-                  <div class="project-stat"><div class="stat-value">Docs</div><div class="stat-label">DOCUMENTED</div></div>
+                  <div class="project-stat">
+                    <div class="stat-value">PyPI</div>
+                    <div class="stat-label">PUBLISHED</div>
+                  </div>
+
+                  <div class="project-stat">
+                    <div class="stat-value">OSS</div>
+                    <div class="stat-label">OPEN SOURCE</div>
+                  </div>
+
+                  <div class="project-stat">
+                    <div class="stat-value">Script</div>
+                    <div class="stat-label">COMMAND ENGINE</div>
+                  </div>
+
+                  <div class="project-stat">
+                    <div class="stat-value">Discord.py</div>
+                    <div class="stat-label">COMPATIBLE</div>
+                  </div>
                 </div>
+
               </div>
             </details>
           </article>
+
 
           <!-- Project 4: Siklista -->
           <article class="m-project-card">
@@ -3109,7 +3258,8 @@
                 <span class="m-project-tag">SURVIVAL</span>
               </div>
               <div class="m-project-links">
-                <a href="https://tonie6.itch.io/siklista" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Itch.io</a>
+                <a href="https://tonie6.itch.io/siklista" class="btn btn-primary" target="_blank"
+                  rel="noopener noreferrer">Itch.io</a>
               </div>
             </div>
             <details class="m-project-details">
@@ -3131,9 +3281,18 @@
                   <div class="use-case"><strong>04 — Choose Your Fate</strong>Your decisions determine the ending.</div>
                 </div>
                 <div class="project-stats">
-                  <div class="project-stat"><div class="stat-value">30m–2h</div><div class="stat-label">PLAYTIME</div></div>
-                  <div class="project-stat"><div class="stat-value">Horror</div><div class="stat-label">GENRE</div></div>
-                  <div class="project-stat"><div class="stat-value">In Dev</div><div class="stat-label">STATUS</div></div>
+                  <div class="project-stat">
+                    <div class="stat-value">30m–2h</div>
+                    <div class="stat-label">PLAYTIME</div>
+                  </div>
+                  <div class="project-stat">
+                    <div class="stat-value">Horror</div>
+                    <div class="stat-label">GENRE</div>
+                  </div>
+                  <div class="project-stat">
+                    <div class="stat-value">In Dev</div>
+                    <div class="stat-label">STATUS</div>
+                  </div>
                 </div>
               </div>
             </details>
@@ -3228,8 +3387,10 @@
         </div>
 
         <div class="m-contact-secondary">
-          <a href="https://pypi.org/user/tonie06/" class="btn btn-ghost" target="_blank" rel="noopener noreferrer">PyPI</a>
-          <a href="https://www.npmjs.com/~tonie06" class="btn btn-ghost" target="_blank" rel="noopener noreferrer">NPM</a>
+          <a href="https://pypi.org/user/tonie06/" class="btn btn-ghost" target="_blank"
+            rel="noopener noreferrer">PyPI</a>
+          <a href="https://www.npmjs.com/~tonie06" class="btn btn-ghost" target="_blank"
+            rel="noopener noreferrer">NPM</a>
         </div>
 
         <div id="copy-status-m" class="m-copy-status" aria-live="polite" aria-atomic="true"></div>
@@ -3283,10 +3444,13 @@
       <ul class="m-footer-links">
         <li><a href="mailto:cadizal06@gmail.com">Email</a></li>
         <li><a href="https://github.com/toniec" target="_blank" rel="noopener">GitHub</a></li>
-        <li><a href="https://www.linkedin.com/in/jesstonie-cadizal-8a80a9392" target="_blank" rel="noopener">LinkedIn</a></li>
+        <li><a href="https://www.linkedin.com/in/jesstonie-cadizal-8a80a9392" target="_blank"
+            rel="noopener">LinkedIn</a></li>
         <li><a href="images/cadizal-resume.pdf" download>Resume</a></li>
-        <li><a href="https://freecodecamp.org/certification/tonie06/responsive-web-design-v9" target="_blank" rel="noopener">RWD Certification</a></li>
-        <li><a href="https://freecodecamp.org/certification/tonie06/javascript-v9" target="_blank" rel="noopener">JavaScript Certification</a></li>
+        <li><a href="https://freecodecamp.org/certification/tonie06/responsive-web-design-v9" target="_blank"
+            rel="noopener">RWD Certification</a></li>
+        <li><a href="https://freecodecamp.org/certification/tonie06/javascript-v9" target="_blank"
+            rel="noopener">JavaScript Certification</a></li>
       </ul>
 
       <span class="m-footer-meta">Philippines · Remote-friendly</span>
