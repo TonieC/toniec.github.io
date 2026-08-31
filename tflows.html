@@ -3,16 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tflows — Discord Bot DSL Documentation</title>
-  <meta name="description" content="Tflows is a FlowBot-based scripting system for Discord bots. Define bot behavior using a powerful DSL." />
+  <title>Tflows — Discord Bot Framework Documentation</title>
+  <meta name="description" content="Tflows is a script-driven Discord bot framework built on discord.py. Define bot behavior with registry-resolved script commands." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=Syne:wght@400;600;700;800&family=JetBrains+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
 
   <style>
-    /* ============================================================
-       TOKENS
-    ============================================================ */
     :root {
       --bg:           #060b1a;
       --bg-sidebar:   #09101f;
@@ -108,9 +105,6 @@
       --shadow-lg:    0 16px 56px rgba(0,0,0,.14);
     }
 
-    /* ============================================================
-       RESET
-    ============================================================ */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     html {
@@ -134,7 +128,6 @@
       transition: background var(--t), color var(--t);
     }
 
-    /* Subtle grid background */
     body::before {
       content: '';
       position: fixed;
@@ -150,9 +143,6 @@
 
     [data-theme="light"] body::before { opacity: 0.5; }
 
-    /* ============================================================
-       SEARCH OVERLAY
-    ============================================================ */
     .search-overlay {
       position: fixed;
       inset: 0;
@@ -283,9 +273,6 @@
       padding: 0 1px;
     }
 
-    /* ============================================================
-       SIDEBAR
-    ============================================================ */
     aside {
       width: var(--sidebar-w);
       background: var(--bg-sidebar);
@@ -299,7 +286,6 @@
       transition: background var(--t), border-color var(--t);
     }
 
-    /* Sidebar top */
     .sb-top {
       padding: 1.1rem 1rem 0.8rem;
       border-bottom: 1px solid var(--border);
@@ -367,7 +353,6 @@
     }
     .icon-btn:hover { border-color: var(--accent); color: var(--accent-hi); }
 
-    /* Search button in sidebar */
     .sb-search {
       margin: 0.6rem 0.75rem;
       display: flex;
@@ -395,7 +380,6 @@
       border-radius: 4px;
     }
 
-    /* Links row */
     .sb-links {
       padding: 0 0.75rem 0.65rem;
       display: flex;
@@ -429,7 +413,6 @@
       border: 1px solid var(--border);
     }
 
-    /* Nav */
     .sb-nav {
       padding: 0.5rem 0 1rem;
       flex: 1;
@@ -499,7 +482,6 @@
       border-radius: 2px;
     }
 
-    /* Variable sub-nav (auto-generated) */
     .var-subnav a {
       font-size: 0.78rem;
       padding-left: 1.6rem;
@@ -509,9 +491,6 @@
     .var-subnav a:hover { color: var(--accent-hi); }
     .var-subnav a.active { color: var(--accent-hi); }
 
-    /* ============================================================
-       MAIN CONTENT
-    ============================================================ */
     main {
       margin-left: var(--sidebar-w);
       margin-right: var(--toc-w);
@@ -527,7 +506,6 @@
       scroll-margin-top: 2rem;
     }
 
-    /* Section title strip */
     .section-label {
       display: inline-flex;
       align-items: center;
@@ -575,7 +553,6 @@
     .section-title .anchor { opacity: 0; font-size: 1rem; font-weight: 400; color: var(--text-muted); text-decoration: none; transition: opacity var(--t); margin-left: 0.2rem; }
     .section-title:hover .anchor { opacity: 1; }
 
-    /* Var headings (h2 inside #variables) */
     #variables h2 {
       font-family: var(--font-mono);
       font-size: 1.2rem;
@@ -639,9 +616,6 @@
     a { color: var(--accent-hi); text-decoration: none; }
     a:hover { text-decoration: underline; }
 
-    /* ============================================================
-       CODE BLOCKS
-    ============================================================ */
     .code-block {
       margin: 1.4rem 0;
       border-radius: var(--radius);
@@ -711,7 +685,6 @@
       padding: 0;
     }
 
-    /* Syntax tokens */
     .kw  { color: #c084fc; }
     .fn  { color: #67e8f9; }
     .st  { color: #86efac; }
@@ -733,9 +706,6 @@
     [data-theme="light"] .nu  { color: #c2410c; }
     [data-theme="light"] .ty  { color: #065f46; }
 
-    /* ============================================================
-       CALLOUTS
-    ============================================================ */
     .callout {
       display: flex;
       gap: 0.85rem;
@@ -753,9 +723,6 @@
     .callout-warn  { background: var(--amber-bg); border: 1px solid var(--amber-bdr); color: var(--amber); }
     .callout-danger{ background: var(--red-bg);   border: 1px solid var(--red-bdr);   color: var(--red); }
 
-    /* ============================================================
-       FEATURE GRID
-    ============================================================ */
     .feature-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
@@ -790,9 +757,6 @@
     }
     .feature-card p { font-size: 0.8rem; margin: 0; line-height: 1.55; }
 
-    /* ============================================================
-       PARAM TABLE
-    ============================================================ */
     .param-table {
       width: 100%;
       border-collapse: collapse;
@@ -834,9 +798,6 @@
       margin-left: 0.4rem;
     }
 
-    /* ============================================================
-       VARIABLE CARD
-    ============================================================ */
     .var-card {
       background: var(--bg-card);
       border: 1px solid var(--border);
@@ -867,10 +828,8 @@
     }
     .badge-static { background: var(--green-bg); color: var(--green); border-color: var(--green-bdr); }
     .badge-fn     { background: var(--amber-bg); color: var(--amber); border-color: var(--amber-bdr); }
+    .badge-dynamic{ background: var(--blue-bg); color: var(--blue); border-color: var(--blue-bdr); }
 
-    /* ============================================================
-       STEPS
-    ============================================================ */
     .step-list { display: flex; flex-direction: column; gap: 0.9rem; margin: 1.25rem 0; }
 
     .step-item { display: flex; gap: 0.9rem; align-items: flex-start; }
@@ -901,9 +860,6 @@
     }
     .step-body p { font-size: 0.82rem; margin: 0; }
 
-    /* ============================================================
-       ARCH / FLOW DIAGRAM
-    ============================================================ */
     .flow-wrap {
       overflow-x: auto;
       padding: 1rem 0;
@@ -938,9 +894,6 @@
       flex-shrink: 0;
     }
 
-    /* ============================================================
-       ARCH GRID
-    ============================================================ */
     .arch-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
@@ -973,9 +926,6 @@
     }
     .arch-card p { font-size: 0.78rem; margin: 0; }
 
-    /* ============================================================
-       DIVIDERS / MISC
-    ============================================================ */
     .divider { height: 1px; background: var(--border); margin: 2.5rem 0; }
 
     .tag-row { display: flex; flex-wrap: wrap; gap: 0.45rem; margin: 1rem 0; }
@@ -997,7 +947,6 @@
       font-family: var(--font-mono);
     }
 
-    /* Intro hero area */
     .hero-tagline {
       font-size: 1.1rem;
       color: var(--text-muted);
@@ -1046,7 +995,6 @@
     }
     .btn-secondary:hover { color: var(--text); border-color: var(--border-hi); text-decoration: none; }
 
-    /* Comparison table */
     .compare-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -1072,7 +1020,6 @@
     }
     .compare-col li { font-size: 0.82rem; margin-bottom: 0.45rem; }
 
-    /* Mistake / best practice cards */
     .bp-list { display: flex; flex-direction: column; gap: 0.85rem; margin: 1.25rem 0; }
 
     .bp-card {
@@ -1090,9 +1037,6 @@
     .bp-body h4 { font-size: 0.875rem; font-weight: 600; color: var(--text); margin: 0 0 0.3rem; text-transform: none; letter-spacing: 0; }
     .bp-body p  { font-size: 0.81rem; margin: 0; }
 
-    /* ============================================================
-       RIGHT TOC
-    ============================================================ */
     .toc-rail {
       width: var(--toc-w);
       position: fixed;
@@ -1136,9 +1080,6 @@
 
     .toc-sub a { padding-left: 1.1rem; font-size: 0.72rem; }
 
-    /* ============================================================
-       RESPONSIVE
-    ============================================================ */
     @media (max-width: 1260px) {
       .toc-rail { display: none; }
       main { margin-right: 0; }
@@ -1168,9 +1109,6 @@
 </head>
 <body>
 
-<!-- ============================================================
-     SEARCH OVERLAY
-============================================================ -->
 <div class="search-overlay" id="search-overlay" role="dialog" aria-modal="true" aria-label="Search documentation">
   <div class="search-modal">
     <div class="search-header">
@@ -1189,14 +1127,10 @@
   </div>
 </div>
 
-<!-- Mobile menu btn -->
 <button class="mob-menu-btn" id="mob-menu" aria-label="Toggle menu">
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
 </button>
 
-<!-- ============================================================
-     SIDEBAR
-============================================================ -->
 <aside id="sidebar">
 
   <div class="sb-top">
@@ -1206,7 +1140,7 @@
       </div>
       <div class="logo-info">
         <span class="logo-name">Tflows</span>
-        <span class="logo-tag">v1.x</span>
+        <span class="logo-tag">v2.x</span>
       </div>
     </a>
     <div class="sb-controls">
@@ -1236,7 +1170,6 @@
 
   <nav class="sb-nav">
 
-    <!-- Getting Started -->
     <div class="nav-group" data-group="started">
       <div class="nav-group-label" role="button" tabindex="0">
         <span class="nav-group-title">Getting Started</span>
@@ -1249,7 +1182,6 @@
       </div>
     </div>
 
-    <!-- Core -->
     <div class="nav-group" data-group="core">
       <div class="nav-group-label" role="button" tabindex="0">
         <span class="nav-group-title">Core</span>
@@ -1258,33 +1190,48 @@
       <div class="nav-items">
         <a href="#architecture">Architecture</a>
         <a href="#flowbot">FlowBot</a>
-        <a href="#commands">DSL Commands</a>
-        <a href="#embed">Embed DSL</a>
+        <a href="#commands">Script Commands</a>
+        <a href="#execution-model">Execution Model</a>
+        <a href="#embed">Embed Blocks</a>
       </div>
     </div>
 
-    <!-- Reference -->
+    <div class="nav-group" data-group="extend">
+      <div class="nav-group-label" role="button" tabindex="0">
+        <span class="nav-group-title">Extending</span>
+        <svg class="nav-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="nav-items">
+        <a href="#custom-functions">Custom Functions</a>
+        <a href="#custom-variables">Custom Variables</a>
+        <a href="#aliases">Aliases</a>
+        <a href="#isolated-registry">Isolated Registries</a>
+      </div>
+    </div>
+
     <div class="nav-group" data-group="ref">
       <div class="nav-group-label" role="button" tabindex="0">
         <span class="nav-group-title">Reference</span>
         <svg class="nav-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
       </div>
       <div class="nav-items">
+        <a href="#builtins">Built-in Modules</a>
+        <a href="#flowbot-options">FlowBot Options</a>
+        <a href="#help-system">Help System</a>
         <a href="#variables">Variables</a>
-        <!-- auto-generated variable sub-nav inserted here by JS -->
         <div class="var-subnav nav-items" id="var-subnav"></div>
       </div>
     </div>
 
-    <!-- Guides -->
     <div class="nav-group" data-group="guides">
       <div class="nav-group-label" role="button" tabindex="0">
         <span class="nav-group-title">Guides</span>
         <svg class="nav-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
       </div>
       <div class="nav-items">
-        <a href="#execution-flow">Execution Flow</a>
+        <a href="#mixed-mode">Mixing with discord.py</a>
         <a href="#best-practices">Best Practices</a>
+        <a href="#debugging">Debugging &amp; Errors</a>
         <a href="#common-mistakes">Common Mistakes</a>
         <a href="#examples">Examples</a>
       </div>
@@ -1293,16 +1240,12 @@
   </nav>
 </aside>
 
-<!-- ============================================================
-     MAIN CONTENT
-============================================================ -->
 <main>
 
-  <!-- ====== OVERVIEW ====== -->
   <section id="overview">
     <div class="section-label">Introduction</div>
     <h1>Tflows</h1>
-    <p class="hero-tagline">A FlowBot-based scripting system that lets you define Discord bot behavior entirely through a concise, expressive DSL — no callback hell, no boilerplate.</p>
+    <p class="hero-tagline">A registry-driven scripting framework for discord.py bots — write commands as short text scripts, resolve them against a shared FunctionRegistry, and extend the whole system with your own Python functions and variables.</p>
 
     <div class="hero-actions">
       <a class="btn-primary" href="#quickstart">
@@ -1316,28 +1259,26 @@
     </div>
 
     <h3>What is Tflows?</h3>
-    <p>Tflows is a lightweight Python library built on top of <strong>discord.py</strong> that replaces the traditional event-callback model with a compact <strong>domain-specific language (DSL)</strong>. Instead of writing Python handler functions for every command, you pass a plain-text script to <code>bot.command()</code> and Tflows handles parsing, variable resolution, and Discord output at runtime.</p>
-    <p>It is designed for developers who want fast iteration — define a new command in seconds, iterate on its output without restarting the bot, and keep all logic in one readable place.</p>
+    <p>Tflows is a lightweight Python framework built on top of <strong>discord.py 2.x</strong> that lets you define bot behavior using registry-resolved script commands instead of writing a Python event handler for every single command. Commands are written as plain text script lines; each line is a function call, and functions are resolved from a shared <code>FunctionRegistry</code> at execution time.</p>
+    <p>Because <code>FlowBot</code> extends <code>discord.ext.commands.Bot</code> directly, nothing about normal discord.py development goes away — cogs, listeners, app commands, and regular <code>@bot.command()</code> functions all continue to work side by side with script commands. Tflows is meant to sit on top of discord.py for automation and rapid iteration, not to replace it.</p>
 
     <div class="compare-grid">
       <div class="compare-col">
         <h4>🐢 Traditional discord.py</h4>
         <ul>
-          <li>Per-command function callbacks</li>
-          <li>Manual ctx.send() everywhere</li>
-          <li>Boilerplate embed construction</li>
-          <li>Verbose variable lookup code</li>
-          <li>Restart required for every change</li>
+          <li>Per-command async function callbacks</li>
+          <li>Manual ctx.send() and Embed construction</li>
+          <li>Verbose context lookups for author/guild/channel</li>
+          <li>Restart usually required to change command text</li>
         </ul>
       </div>
       <div class="compare-col">
-        <h4>⚡ Tflows DSL</h4>
+        <h4>⚡ Tflows Scripting</h4>
         <ul>
-          <li>Scripts passed as plain text strings</li>
-          <li>Auto-routed text or embed output</li>
-          <li>Inline embed directives</li>
-          <li><code>$variable</code> syntax, resolved at runtime</li>
-          <li>Hot-editable scripts, minimal surface</li>
+          <li>Commands registered via <code>bot.command(name, code, ...)</code></li>
+          <li>Functions and variables resolved from a shared registry</li>
+          <li><code>$variable</code> interpolation resolved by the Engine</li>
+          <li>Custom functions still get full access to discord.py via FlowContext</li>
         </ul>
       </div>
     </div>
@@ -1346,53 +1287,52 @@
     <div class="feature-grid">
       <div class="feature-card">
         <span class="fc-icon">📝</span>
-        <h4>Command Scripting</h4>
-        <p>Define bot commands with a simple string-based DSL instead of callback functions.</p>
+        <h4>Script Commands</h4>
+        <p>Register commands with <code>bot.command(name, code, description="", aliases=())</code>.</p>
       </div>
       <div class="feature-card">
         <span class="fc-icon">⚙️</span>
-        <h4>Runtime Parsing</h4>
-        <p>Scripts are parsed and executed at invocation time — no pre-compilation required.</p>
+        <h4>Registry-Driven Engine</h4>
+        <p>Every function and variable call is resolved from a <code>FunctionRegistry</code> at execution time.</p>
       </div>
       <div class="feature-card">
-        <span class="fc-icon">💎</span>
-        <h4>Variable System</h4>
-        <p>Rich built-in variables: <code>$ping</code>, <code>$id</code>, <code>$image</code>, <code>$server</code>, and more.</p>
+        <span class="fc-icon">🧩</span>
+        <h4>Extensible</h4>
+        <p><code>registry.register()</code> and <code>registry.register_var()</code> let you add your own functions and variables.</p>
       </div>
       <div class="feature-card">
-        <span class="fc-icon">🖼️</span>
-        <h4>Embed DSL</h4>
-        <p>Build rich Discord embeds with just a few directives — no Embed objects needed.</p>
+        <span class="fc-icon">🏷️</span>
+        <h4>Aliasing</h4>
+        <p><code>register_alias</code> and <code>register_var_alias</code> give existing entries friendlier names.</p>
       </div>
       <div class="feature-card">
-        <span class="fc-icon">🎛️</span>
-        <h4>Mode Flags</h4>
-        <p>Context-aware variables with mode flags for flexible output formatting.</p>
+        <span class="fc-icon">🔒</span>
+        <h4>Isolated Registries</h4>
+        <p>Pass <code>registry=FunctionRegistry()</code> to keep a bot's function set separate from the defaults.</p>
       </div>
       <div class="feature-card">
-        <span class="fc-icon">🚀</span>
-        <h4>Zero Config</h4>
-        <p>Works out of the box. Just install, import <code>FlowBot</code>, and start scripting.</p>
+        <span class="fc-icon">🤝</span>
+        <h4>Fully Compatible</h4>
+        <p><code>FlowBot</code> is a <code>commands.Bot</code> subclass — cogs, listeners, and app commands all still work.</p>
       </div>
     </div>
 
     <h3>Who is it for?</h3>
-    <p>Tflows is for Discord bot developers who want to ship command logic quickly — whether you're prototyping a bot, building a community tool, or just tired of writing the same boilerplate over and over. It's especially useful when you want non-technical collaborators to edit bot behavior without touching Python.</p>
+    <p>Tflows is for developers who want to ship straightforward commands quickly without writing an async function for each one, while keeping full discord.py available for anything more involved. It's a good fit for bots with a lot of small, similar commands — greetings, status messages, moderation shortcuts — where a script line is faster to write and easier to review than a full command function.</p>
 
     <div class="callout callout-info">
       <div class="callout-icon">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
       </div>
-      <p>Tflows currently wraps <code>discord.py</code>. Python 3.8+ and a valid Discord bot token are required.</p>
+      <p>Tflows wraps <code>discord.py</code> and requires Python 3.8+ along with a valid Discord bot token.</p>
     </div>
   </section>
 
-  <!-- ====== INSTALLATION ====== -->
   <section id="installation">
     <div class="section-label">Setup</div>
     <h2 class="section-title">Installation <a class="anchor" href="#installation">#</a></h2>
 
-    <p>Install Tflows from PyPI using pip. No additional dependencies need to be manually installed — discord.py is pulled in automatically.</p>
+    <p>Install Tflows from PyPI using pip. discord.py is pulled in automatically as a dependency.</p>
 
     <div class="code-block">
       <div class="code-header">
@@ -1422,7 +1362,6 @@
     </ul>
   </section>
 
-  <!-- ====== QUICK START ====== -->
   <section id="quickstart">
     <div class="section-label">Setup</div>
     <h2 class="section-title">Quick Start <a class="anchor" href="#quickstart">#</a></h2>
@@ -1439,8 +1378,8 @@
 bot <span class="pn">=</span> <span class="fn">FlowBot</span><span class="pn">(</span>prefix<span class="pn">=</span><span class="st">"!"</span><span class="pn">)</span>
 
 bot<span class="pn">.</span><span class="fn">command</span><span class="pn">(</span>
-  name<span class="pn">=</span><span class="st">"test"</span><span class="pn">,</span>
-  code<span class="pn">=</span><span class="st">"""
+  <span class="st">"test"</span><span class="pn">,</span>
+  <span class="st">"""
 send Hello World <span class="var">$ping</span>
 """</span>
 <span class="pn">)</span>
@@ -1448,7 +1387,7 @@ send Hello World <span class="var">$ping</span>
 bot<span class="pn">.</span><span class="fn">run</span><span class="pn">(</span><span class="st">"YOUR_BOT_TOKEN"</span><span class="pn">)</span></code></pre>
     </div>
 
-    <p>Trigger it in Discord with <code>!test</code>. The bot replies: <code>Hello World 42ms</code> (latency will vary).</p>
+    <p>Trigger it in Discord with <code>!test</code>. The bot replies: <code>Hello World 42</code> (latency will vary).</p>
 
     <div class="callout callout-warn">
       <div class="callout-icon">
@@ -1460,40 +1399,38 @@ bot<span class="pn">.</span><span class="fn">run</span><span class="pn">(</span>
     <h3>A richer example with an embed</h3>
     <div class="code-block">
       <div class="code-header">
-        <span class="code-lang"><span class="code-dot"></span>tflows DSL</span>
+        <span class="code-lang"><span class="code-dot"></span>tflows script</span>
         <button class="copy-btn"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button>
       </div>
       <pre><code><span class="dsl">embed</span>
-<span class="dsl">$title</span><span class="pn">[</span>Server Status<span class="pn">]</span>
-<span class="dsl">$desc</span><span class="pn">[</span>
-Latency: <span class="var">$ping</span>ms
-Server: <span class="var">$server</span>
-Members: <span class="var">$membercount</span>
-Time: <span class="var">$time</span>(24h)
-<span class="pn">]</span></code></pre>
+title Server Status
+desc Latency: <span class="var">$ping</span>ms
+desc Server: <span class="var">$server</span>
+desc Members: <span class="var">$membercount</span>
+desc Time: <span class="var">$time</span>(24h)
+<span class="dsl">endembed</span></code></pre>
     </div>
   </section>
 
-  <!-- ====== ARCHITECTURE ====== -->
   <section id="architecture">
     <div class="section-label">Core</div>
     <h2 class="section-title">Architecture <a class="anchor" href="#architecture">#</a></h2>
 
-    <p>Tflows is a thin orchestration layer over <code>discord.py</code>. It replaces the event-callback model with a parse-and-execute pipeline that runs inside a command's context.</p>
+    <p>Tflows is organized around four pieces that work together on every command invocation: <code>FlowBot</code>, the <code>Engine</code>, <code>FlowContext</code>, and the <code>FunctionRegistry</code>. Understanding how they relate makes it much easier to reason about custom functions, isolated registries, and error handling.</p>
 
     <div class="flow-wrap">
       <div class="flow">
-        <div class="flow-node hi"><div class="fn-title">FlowBot</div><div class="fn-sub">Main class</div></div>
+        <div class="flow-node hi"><div class="fn-title">Message</div><div class="fn-sub">prefix + name</div></div>
         <div class="flow-arr">→</div>
-        <div class="flow-node"><div class="fn-title">Registry</div><div class="fn-sub">name + code</div></div>
+        <div class="flow-node"><div class="fn-title">FlowBot</div><div class="fn-sub">command lookup</div></div>
         <div class="flow-arr">→</div>
-        <div class="flow-node"><div class="fn-title">Parser</div><div class="fn-sub">line-by-line</div></div>
+        <div class="flow-node"><div class="fn-title">FlowContext</div><div class="fn-sub">built per call</div></div>
         <div class="flow-arr">→</div>
-        <div class="flow-node"><div class="fn-title">Resolver</div><div class="fn-sub">$variables</div></div>
+        <div class="flow-node hi"><div class="fn-title">Engine</div><div class="fn-sub">line-by-line</div></div>
         <div class="flow-arr">→</div>
-        <div class="flow-node"><div class="fn-title">Builder</div><div class="fn-sub">text / embed</div></div>
+        <div class="flow-node"><div class="fn-title">FunctionRegistry</div><div class="fn-sub">resolve calls</div></div>
         <div class="flow-arr">→</div>
-        <div class="flow-node hi"><div class="fn-title">Discord</div><div class="fn-sub">ctx.send()</div></div>
+        <div class="flow-node"><div class="fn-title">Discord</div><div class="fn-sub">send / react / etc.</div></div>
       </div>
     </div>
 
@@ -1502,42 +1439,72 @@ Time: <span class="var">$time</span>(24h)
       <div class="arch-card">
         <div class="arch-card-label">class</div>
         <h4>FlowBot</h4>
-        <p>Extends discord.py's bot client. Adds <code>.command()</code> for DSL registration and holds the command registry.</p>
+        <p>The main bot class. Extends <code>discord.ext.commands.Bot</code>, adds <code>.command(name, code, ...)</code> for script registration, and owns the default <code>FunctionRegistry</code>.</p>
+      </div>
+      <div class="arch-card">
+        <div class="arch-card-label">class</div>
+        <h4>Engine</h4>
+        <p>The script interpreter. Executes a command's script text line by line against a <code>FlowContext</code>, resolving variables and dispatching function calls.</p>
+      </div>
+      <div class="arch-card">
+        <div class="arch-card-label">class</div>
+        <h4>FlowContext</h4>
+        <p>The execution context passed to every function and variable. Carries the real discord.py objects for this invocation — message, author, guild, channel, args.</p>
+      </div>
+      <div class="arch-card">
+        <div class="arch-card-label">class</div>
+        <h4>FunctionRegistry</h4>
+        <p>A lookup table of function and variable names to Python callables. Pre-loaded with built-ins by default, or supplied fresh for isolation.</p>
       </div>
       <div class="arch-card">
         <div class="arch-card-label">module</div>
-        <h4>Command Registry</h4>
-        <p>A dictionary mapping command names to their DSL code strings. Looked up on every invocation.</p>
+        <h4>tflows.builtins</h4>
+        <p>Sets up the base registry with the standard library of functions and variables before any bot-specific code runs.</p>
       </div>
       <div class="arch-card">
-        <div class="arch-card-label">module</div>
-        <h4>Script Parser</h4>
-        <p>Reads the code string line-by-line, identifies directives (<code>embed</code>, <code>send</code>), and delegates each token.</p>
+        <div class="arch-card-label">package</div>
+        <h4>tflows.function</h4>
+        <p>Additional function modules, discovered and loaded automatically, alphabetically by file name, at bot startup.</p>
       </div>
-      <div class="arch-card">
-        <div class="arch-card-label">module</div>
-        <h4>Variable Resolver</h4>
-        <p>Scans each line for <code>$variable</code> patterns and replaces them with live values from the Discord context.</p>
+    </div>
+
+    <h3>How a command flows through these pieces</h3>
+    <div class="step-list">
+      <div class="step-item">
+        <div class="step-num">1</div>
+        <div class="step-body"><h4>Message received</h4><p>A message arrives that matches the configured prefix and a registered command name.</p></div>
       </div>
-      <div class="arch-card">
-        <div class="arch-card-label">module</div>
-        <h4>Output Builder</h4>
-        <p>Constructs either a plain string or a <code>discord.Embed</code> object depending on whether <code>embed</code> mode was activated.</p>
+      <div class="step-item">
+        <div class="step-num">2</div>
+        <div class="step-body"><h4>Script lookup</h4><p>FlowBot retrieves the stored script text for that command name (or alias).</p></div>
       </div>
-      <div class="arch-card">
-        <div class="arch-card-label">integration</div>
-        <h4>discord.py</h4>
-        <p>The underlying library handles gateway events, authentication, message delivery, and rate limits.</p>
+      <div class="step-item">
+        <div class="step-num">3</div>
+        <div class="step-body"><h4>Context built</h4><p>A FlowContext is constructed for this invocation, wrapping the message, author, guild, channel, and parsed arguments.</p></div>
       </div>
+      <div class="step-item">
+        <div class="step-num">4</div>
+        <div class="step-body"><h4>Engine executes the script</h4><p>The Engine walks the script line by line, resolving <code>$variables</code> and calling functions from the FunctionRegistry as it goes.</p></div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">5</div>
+        <div class="step-body"><h4>Output reaches Discord</h4><p>Function calls like <code>send</code>, <code>react</code>, or an <code>embed</code> block use the real discord.py objects in the FlowContext to produce output.</p></div>
+      </div>
+    </div>
+
+    <div class="callout callout-tip">
+      <div class="callout-icon">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+      </div>
+      <p>Because FlowBot is a genuine <code>commands.Bot</code> subclass, none of this replaces discord.py's gateway handling — it only adds a script execution layer on top of a normal command invocation.</p>
     </div>
   </section>
 
-  <!-- ====== FLOWBOT ====== -->
   <section id="flowbot">
     <div class="section-label">Core</div>
     <h2 class="section-title">FlowBot <a class="anchor" href="#flowbot">#</a></h2>
 
-    <p><code>FlowBot</code> is the main entry point. It subclasses discord.py's <code>commands.Bot</code> and adds DSL-aware command registration.</p>
+    <p><code>FlowBot</code> is the main entry point. It subclasses <code>discord.ext.commands.Bot</code>, so every normal discord.py feature — commands, cogs, listeners, checks, app commands — keeps working exactly as it would in a plain discord.py bot. On top of that, it adds script command registration and manages the shared <code>FunctionRegistry</code>.</p>
 
     <div class="code-block">
       <div class="code-header">
@@ -1549,10 +1516,12 @@ Time: <span class="var">$time</span>(24h)
 bot <span class="pn">=</span> <span class="fn">FlowBot</span><span class="pn">(</span>prefix<span class="pn">=</span><span class="st">"!"</span><span class="pn">)</span>
 
 bot<span class="pn">.</span><span class="fn">command</span><span class="pn">(</span>
-    name<span class="pn">=</span><span class="st">"greet"</span><span class="pn">,</span>
-    code<span class="pn">=</span><span class="st">"""
+    <span class="st">"greet"</span><span class="pn">,</span>
+    <span class="st">"""
 send Hi <span class="var">$id</span>(user)<span class="pn">!</span>
-"""</span>
+"""</span><span class="pn">,</span>
+    description<span class="pn">=</span><span class="st">"Greets the invoking user."</span><span class="pn">,</span>
+    aliases<span class="pn">=</span><span class="pn">(</span><span class="st">"hi"</span><span class="pn">,</span><span class="pn">)</span>
 <span class="pn">)</span>
 
 bot<span class="pn">.</span><span class="fn">run</span><span class="pn">(</span><span class="st">"TOKEN"</span><span class="pn">)</span></code></pre>
@@ -1565,175 +1534,422 @@ bot<span class="pn">.</span><span class="fn">run</span><span class="pn">(</span>
         <tr>
           <td class="pn-name">prefix</td>
           <td class="pn-type">str</td>
-          <td class="pn-desc">The command prefix character(s), e.g. <code>"!"</code>, <code>"?"</code>, <code>".."</code>.</td>
+          <td class="pn-desc">The command prefix, e.g. <code>"!"</code>, <code>"?"</code>, <code>".."</code>.</td>
+        </tr>
+        <tr>
+          <td class="pn-name">help_command</td>
+          <td class="pn-type">HelpCommand | None</td>
+          <td class="pn-desc">Overrides or disables the built-in help command. See <a href="#help-system">Help System</a>.</td>
+        </tr>
+        <tr>
+          <td class="pn-name">log_errors</td>
+          <td class="pn-type">bool</td>
+          <td class="pn-desc">Catch and log exceptions raised during script execution instead of letting them propagate.</td>
+        </tr>
+        <tr>
+          <td class="pn-name">log_unknown_functions</td>
+          <td class="pn-type">bool</td>
+          <td class="pn-desc">Log calls to unregistered function names instead of silently skipping them.</td>
+        </tr>
+        <tr>
+          <td class="pn-name">case_insensitive</td>
+          <td class="pn-type">bool</td>
+          <td class="pn-desc">Match command names case-insensitively, passed through to the underlying commands.Bot behavior.</td>
+        </tr>
+        <tr>
+          <td class="pn-name">members_intent</td>
+          <td class="pn-type">bool</td>
+          <td class="pn-desc">Enables the guild members intent, required for accurate member-based variables like membercount breakdowns.</td>
+        </tr>
+        <tr>
+          <td class="pn-name">registry</td>
+          <td class="pn-type">FunctionRegistry</td>
+          <td class="pn-desc">Optional. Supply a pre-built registry for isolated function sets. See <a href="#isolated-registry">Isolated Registries</a>.</td>
         </tr>
       </tbody>
     </table>
 
-    <h3><code>bot.command()</code> Parameters</h3>
+    <p>See <a href="#flowbot-options">FlowBot Options</a> for a deeper look at how each of these affects runtime behavior.</p>
+  </section>
+
+  <section id="commands">
+    <div class="section-label">Core</div>
+    <h2 class="section-title">Script Commands <a class="anchor" href="#commands">#</a></h2>
+
+    <p>Script commands are registered with <code>bot.command()</code>:</p>
+
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-lang"><span class="code-dot"></span>python</span>
+        <button class="copy-btn"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button>
+      </div>
+      <pre><code>bot<span class="pn">.</span><span class="fn">command</span><span class="pn">(</span>
+    name<span class="pn">,</span>
+    code<span class="pn">,</span>
+    description<span class="pn">=</span><span class="st">""</span><span class="pn">,</span>
+    aliases<span class="pn">=</span><span class="pn">()</span>
+<span class="pn">)</span></code></pre>
+    </div>
+
     <table class="param-table">
       <thead><tr><th>Parameter</th><th>Type</th><th>Description</th></tr></thead>
       <tbody>
         <tr>
           <td class="pn-name">name</td>
           <td class="pn-type">str</td>
-          <td class="pn-desc">The command trigger name. Users invoke it as <code>{prefix}{name}</code>.</td>
+          <td class="pn-desc">The command's trigger name, invoked as <code>{prefix}{name}</code>.</td>
         </tr>
         <tr>
           <td class="pn-name">code</td>
           <td class="pn-type">str</td>
-          <td class="pn-desc">A multi-line DSL script string. Parsed and executed at invocation time.</td>
+          <td class="pn-desc">The script text — usually a triple-quoted multi-line string.</td>
+        </tr>
+        <tr>
+          <td class="pn-name">description</td>
+          <td class="pn-type">str</td>
+          <td class="pn-desc">Optional. Shown in the help command output.</td>
+        </tr>
+        <tr>
+          <td class="pn-name">aliases</td>
+          <td class="pn-type">tuple</td>
+          <td class="pn-desc">Optional. Alternate names that trigger the same script.</td>
         </tr>
       </tbody>
     </table>
 
-    <h3>Execution lifecycle</h3>
-    <div class="step-list">
-      <div class="step-item">
-        <div class="step-num">1</div>
-        <div class="step-body"><h4>Command triggered</h4><p>User types <code>!{name}</code> in a Discord channel with the correct prefix.</p></div>
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-lang"><span class="code-dot"></span>python</span>
+        <button class="copy-btn"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button>
       </div>
-      <div class="step-item">
-        <div class="step-num">2</div>
-        <div class="step-body"><h4>Registry lookup</h4><p>FlowBot finds the matching command entry and retrieves the <code>code</code> string.</p></div>
-      </div>
-      <div class="step-item">
-        <div class="step-num">3</div>
-        <div class="step-body"><h4>DSL parsing</h4><p>The code is split into lines and each line is tokenised by the Script Parser.</p></div>
-      </div>
-      <div class="step-item">
-        <div class="step-num">4</div>
-        <div class="step-body"><h4>Variable resolution</h4><p>All <code>$variable</code> tokens are replaced with live values from the Discord context object.</p></div>
-      </div>
-      <div class="step-item">
-        <div class="step-num">5</div>
-        <div class="step-body"><h4>Output dispatched</h4><p>The Output Builder calls <code>ctx.send()</code> with a plain string or a constructed <code>discord.Embed</code>.</p></div>
-      </div>
+      <pre><code>bot<span class="pn">.</span><span class="fn">command</span><span class="pn">(</span>
+    <span class="st">"greet"</span><span class="pn">,</span>
+    <span class="st">"""
+send Hello, <span class="var">$user</span>!
+"""</span><span class="pn">,</span>
+    description<span class="pn">=</span><span class="st">"Greets the user who ran the command."</span><span class="pn">,</span>
+    aliases<span class="pn">=</span><span class="pn">(</span><span class="st">"hi"</span><span class="pn">,</span> <span class="st">"hello"</span><span class="pn">)</span>
+<span class="pn">)</span></code></pre>
     </div>
+
+    <p>Because FlowBot extends <code>commands.Bot</code>, script commands live in the same namespace as regular discord.py commands — you can freely mix the two on the same bot. See <a href="#mixed-mode">Mixing with discord.py</a> for patterns.</p>
   </section>
 
-  <!-- ====== COMMANDS ====== -->
-  <section id="commands">
+  <section id="execution-model">
     <div class="section-label">Core</div>
-    <h2 class="section-title">DSL Commands <a class="anchor" href="#commands">#</a></h2>
+    <h2 class="section-title">Execution Model <a class="anchor" href="#execution-model">#</a></h2>
 
-    <p>The DSL supports a small set of keywords that control output mode and content. Every script is evaluated line-by-line from top to bottom.</p>
-
-    <h3><code>send</code></h3>
-    <p>Sends a plain text message to the channel. Everything after the keyword is the message content.</p>
+    <p>The Engine treats a script as a sequence of lines executed top to bottom. Each non-empty, non-comment line is a function call; the first token is the function name and the rest of the line is passed as arguments.</p>
 
     <div class="code-block">
       <div class="code-header">
-        <span class="code-lang"><span class="code-dot"></span>tflows DSL</span>
+        <span class="code-lang"><span class="code-dot"></span>tflows script</span>
         <button class="copy-btn"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button>
       </div>
-      <pre><code>send Hello World <span class="var">$ping</span></code></pre>
+      <pre><code>send Hello there!
+react 👍
+wait 2</code></pre>
     </div>
 
-    <h3><code>embed</code></h3>
-    <p>Switches the output mode to embed. After this keyword, subsequent <code>$title</code> and <code>$desc</code> directives build up a <code>discord.Embed</code> object. No arguments required.</p>
+    <h3>Variable resolution</h3>
+    <p>Variables are written as <code>$name</code> or <code>$name(arg)</code> and are resolved before the line's function is called. Built-in examples include <code>$user</code>, <code>$server</code>, <code>$args</code>, <code>$ping</code>, and <code>$command</code>.</p>
+
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang"><span class="code-dot"></span>tflows script</span></div>
+      <pre><code>send Welcome to <span class="var">$server</span>, <span class="var">$user</span>!
+send Your command arguments were: <span class="var">$args</span></code></pre>
+    </div>
 
     <div class="callout callout-info">
       <div class="callout-icon">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
       </div>
-      <p>The embed is sent automatically when the script block finishes execution. You do not need a closing statement.</p>
+      <p>If a variable name isn't recognized, it's left in the output unchanged rather than raising an error. This makes typos and unregistered variables obvious in testing without crashing the command.</p>
     </div>
 
-    <h3>Embed directives</h3>
-    <table class="param-table">
-      <thead><tr><th>Directive</th><th>Description</th></tr></thead>
-      <tbody>
-        <tr>
-          <td class="pn-name">$title[TEXT]</td>
-          <td class="pn-desc">Sets the embed title. Supports <code>$ping</code> and other variable interpolation.</td>
-        </tr>
-        <tr>
-          <td class="pn-name">$desc[TEXT]</td>
-          <td class="pn-desc">Sets the embed description. Supports multiline content and all variable types.</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <h3>Available variables in directives</h3>
-    <div class="tag-row">
-      <span class="tag">$ping</span>
-      <span class="tag">$time()</span>
-      <span class="tag">$id</span>
-      <span class="tag">$image</span>
-      <span class="tag">$server</span>
-      <span class="tag">$membercount</span>
+    <h3>Comments</h3>
+    <p>Three comment styles are supported. Any of them can annotate a script without affecting execution:</p>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang"><span class="code-dot"></span>tflows script</span></div>
+      <pre><code><span class="cm">// this is a comment</span>
+<span class="cm"># this is also a comment</span>
+<span class="cm">-- this is also a comment</span></code></pre>
     </div>
+
+    <h3>Unknown functions</h3>
+    <p>If a line calls a function name that isn't in the registry, the Engine does not crash the whole bot. Depending on the <code>log_unknown_functions</code> option, the call is either silently skipped or logged, and execution of the rest of the script continues. A single typo in one command won't take down every other command running on the bot.</p>
+
+    <h3>Errors during execution</h3>
+    <p>Errors raised inside a function during execution can be caught and logged rather than propagated as an unhandled exception, depending on the <code>log_errors</code> option — useful in production, where you'd rather see an error in your logs than have the bot silently stop responding to that command.</p>
   </section>
 
-  <!-- ====== EMBED DSL ====== -->
   <section id="embed">
     <div class="section-label">Core</div>
-    <h2 class="section-title">Embed DSL <a class="anchor" href="#embed">#</a></h2>
+    <h2 class="section-title">Embed Blocks <a class="anchor" href="#embed">#</a></h2>
 
-    <p>Embeds are Discord's rich message format — they support titles, descriptions, colors, and more. Tflows' embed mode lets you build them declaratively with zero Python embed object management.</p>
+    <p>A script can build a rich Discord embed using an <code>embed</code> / <code>endembed</code> block. Inside the block, recognized fields are set line by line and sent as a single <code>discord.Embed</code> when the block closes.</p>
 
     <div class="code-block">
       <div class="code-header">
-        <span class="code-lang"><span class="code-dot"></span>tflows DSL</span>
+        <span class="code-lang"><span class="code-dot"></span>tflows script</span>
         <button class="copy-btn"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button>
       </div>
       <pre><code><span class="dsl">embed</span>
-<span class="dsl">$title</span><span class="pn">[</span>Hello from Tflows<span class="pn">]</span>
-<span class="dsl">$desc</span><span class="pn">[</span>
-Ping: <span class="var">$ping</span>ms
-Server: <span class="var">$server</span>
-Members: <span class="var">$membercount</span>
-<span class="pn">]</span></code></pre>
-    </div>
-
-    <h3>How it works</h3>
-    <div class="step-list">
-      <div class="step-item">
-        <div class="step-num">1</div>
-        <div class="step-body"><h4>Mode switch</h4><p>The parser reads <code>embed</code> on its own line and activates embed mode for all subsequent lines.</p></div>
-      </div>
-      <div class="step-item">
-        <div class="step-num">2</div>
-        <div class="step-body"><h4>Directive parsing</h4><p><code>$title[…]</code> and <code>$desc[…]</code> capture everything between the brackets as their value.</p></div>
-      </div>
-      <div class="step-item">
-        <div class="step-num">3</div>
-        <div class="step-body"><h4>Variable interpolation</h4><p>Values inside brackets are scanned for <code>$variable</code> tokens and resolved before the embed is built.</p></div>
-      </div>
-      <div class="step-item">
-        <div class="step-num">4</div>
-        <div class="step-body"><h4>Auto-send</h4><p>At end-of-script, the completed <code>discord.Embed</code> is sent via <code>ctx.send(embed=...)</code>.</p></div>
-      </div>
+title Server Stats
+desc Here's what's happening in <span class="var">$server</span> right now.
+color #5865F2
+thumbnail <span class="var">$avatar</span>
+footer Requested by <span class="var">$user</span>
+<span class="dsl">endembed</span></code></pre>
     </div>
 
     <h3>Supported fields</h3>
     <table class="param-table">
-      <thead><tr><th>Directive</th><th>Type</th><th>Notes</th></tr></thead>
+      <thead><tr><th>Field</th><th>Description</th></tr></thead>
       <tbody>
-        <tr>
-          <td class="pn-name">$title[TEXT]</td>
-          <td class="pn-type">string</td>
-          <td class="pn-desc">Embed title. Variables supported inside brackets.</td>
-        </tr>
-        <tr>
-          <td class="pn-name">$desc[TEXT]</td>
-          <td class="pn-type">string</td>
-          <td class="pn-desc">Embed description. Multiline content supported. Variables supported inside brackets.</td>
-        </tr>
+        <tr><td class="pn-name">title</td><td class="pn-desc">Embed title. Supports variable interpolation.</td></tr>
+        <tr><td class="pn-name">desc</td><td class="pn-desc">Embed description. Multiple <code>desc</code> lines append to the description.</td></tr>
+        <tr><td class="pn-name">footer</td><td class="pn-desc">Footer text, shown at the bottom of the embed.</td></tr>
+        <tr><td class="pn-name">color</td><td class="pn-desc">Accent color, given as a hex value.</td></tr>
+        <tr><td class="pn-name">thumbnail</td><td class="pn-desc">Small image shown in the top-right of the embed. Accepts an image URL or a variable like <code>$avatar</code>.</td></tr>
+        <tr><td class="pn-name">image</td><td class="pn-desc">Large image shown at the bottom of the embed body.</td></tr>
+        <tr><td class="pn-name">author</td><td class="pn-desc">Author line shown above the title.</td></tr>
+      </tbody>
+    </table>
+
+    <p>Variables are resolved inside embed fields the same way they are on any other line, so <code>$user</code>, <code>$server</code>, and custom variables all work inside <code>title</code>, <code>desc</code>, and the other fields.</p>
+
+    <div class="callout callout-warn">
+      <div class="callout-icon">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      </div>
+      <p>An <code>embed</code> block must be closed with <code>endembed</code>. Without it, the Engine won't know where the embed's field lines end and the rest of the script begins.</p>
+    </div>
+  </section>
+
+  <section id="custom-functions">
+    <div class="section-label">Extending</div>
+    <h2 class="section-title">Custom Functions <a class="anchor" href="#custom-functions">#</a></h2>
+
+    <p>Register a new function into the registry with <code>registry.register()</code>:</p>
+
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-lang"><span class="code-dot"></span>python</span>
+        <button class="copy-btn"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button>
+      </div>
+      <pre><code><span class="kw">def</span> <span class="fn">say_loud</span><span class="pn">(</span>ctx<span class="pn">,</span> <span class="pn">*</span>args<span class="pn">):</span>
+    <span class="kw">return</span> <span class="st">" "</span><span class="pn">.</span><span class="fn">join</span><span class="pn">(</span>args<span class="pn">)</span><span class="pn">.</span><span class="fn">upper</span><span class="pn">()</span> <span class="pn">+</span> <span class="st">"!!!"</span>
+
+registry<span class="pn">.</span><span class="fn">register</span><span class="pn">(</span><span class="st">"shout"</span><span class="pn">,</span> say_loud<span class="pn">)</span></code></pre>
+    </div>
+
+    <p>Once registered, <code>shout</code> can be called from any script the same way a built-in function is called:</p>
+
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang"><span class="code-dot"></span>tflows script</span></div>
+      <pre><code>shout this is important</code></pre>
+    </div>
+
+    <p>Custom functions receive the current <code>FlowContext</code> as their first argument, giving them access to the real discord.py objects for the invocation — <code>ctx.channel</code>, <code>ctx.author</code>, <code>ctx.guild</code>, and so on — so a custom function can do anything a normal discord.py command could do.</p>
+
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-lang"><span class="code-dot"></span>python</span>
+        <button class="copy-btn"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button>
+      </div>
+      <pre><code><span class="kw">def</span> <span class="fn">timeout_user</span><span class="pn">(</span>ctx<span class="pn">,</span> member_id<span class="pn">,</span> minutes<span class="pn">):</span>
+    member <span class="pn">=</span> ctx<span class="pn">.</span>guild<span class="pn">.</span><span class="fn">get_member</span><span class="pn">(</span><span class="fn">int</span><span class="pn">(</span>member_id<span class="pn">))</span>
+    <span class="cm"># perform a real discord.py action using ctx.guild, ctx.channel, etc.</span>
+    <span class="kw">return</span> <span class="fn">f</span><span class="st">"Timed out {member.display_name} for {minutes} minutes."</span>
+
+registry<span class="pn">.</span><span class="fn">register</span><span class="pn">(</span><span class="st">"timeout"</span><span class="pn">,</span> timeout_user<span class="pn">)</span></code></pre>
+    </div>
+
+    <p>This is the intended way to use Tflows for anything beyond simple text or embed output: write a script line as the trigger, and let a registered Python function do the real work using full discord.py access.</p>
+  </section>
+
+  <section id="custom-variables">
+    <div class="section-label">Extending</div>
+    <h2 class="section-title">Custom Variables <a class="anchor" href="#custom-variables">#</a></h2>
+
+    <p>Register a new variable with <code>registry.register_var()</code>:</p>
+
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-lang"><span class="code-dot"></span>python</span>
+        <button class="copy-btn"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button>
+      </div>
+      <pre><code><span class="kw">def</span> <span class="fn">nickname</span><span class="pn">(</span>ctx<span class="pn">):</span>
+    <span class="kw">return</span> ctx<span class="pn">.</span>author<span class="pn">.</span>display_name
+
+registry<span class="pn">.</span><span class="fn">register_var</span><span class="pn">(</span><span class="st">"nick"</span><span class="pn">,</span> nickname<span class="pn">)</span></code></pre>
+    </div>
+
+    <p>This makes <code>$nick</code> available inside any script:</p>
+
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang"><span class="code-dot"></span>tflows script</span></div>
+      <pre><code>send Welcome back, <span class="var">$nick</span>!</code></pre>
+    </div>
+
+    <p>Custom variables work exactly like built-in variables once registered — they can appear standalone, inside embed fields, or as arguments to other function calls.</p>
+  </section>
+
+  <section id="aliases">
+    <div class="section-label">Extending</div>
+    <h2 class="section-title">Aliases <a class="anchor" href="#aliases">#</a></h2>
+
+    <p>Give an existing function or variable an additional name without duplicating its implementation, using <code>register_alias</code> and <code>register_var_alias</code>:</p>
+
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-lang"><span class="code-dot"></span>python</span>
+        <button class="copy-btn"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button>
+      </div>
+      <pre><code>registry<span class="pn">.</span><span class="fn">register_alias</span><span class="pn">(</span><span class="st">"yell"</span><span class="pn">,</span> <span class="st">"shout"</span><span class="pn">)</span>
+registry<span class="pn">.</span><span class="fn">register_var_alias</span><span class="pn">(</span><span class="st">"name"</span><span class="pn">,</span> <span class="st">"nick"</span><span class="pn">)</span></code></pre>
+    </div>
+
+    <p>After this, <code>yell</code> behaves identically to <code>shout</code>, and <code>$name</code> resolves the same way as <code>$nick</code>. Aliases are useful when you want a friendlier or shorter name for users writing scripts, without maintaining two separate implementations.</p>
+  </section>
+
+  <section id="isolated-registry">
+    <div class="section-label">Extending</div>
+    <h2 class="section-title">Isolated Registries <a class="anchor" href="#isolated-registry">#</a></h2>
+
+    <p>By default, FlowBot creates and owns a single shared <code>FunctionRegistry</code> that is pre-loaded with all the built-ins. If you're running multiple bots in the same codebase, or you want to strictly control what functions a particular bot can call, pass in your own registry instance:</p>
+
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-lang"><span class="code-dot"></span>python</span>
+        <button class="copy-btn"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button>
+      </div>
+      <pre><code><span class="kw">from</span> tflows <span class="kw">import</span> FlowBot<span class="pn">,</span> FunctionRegistry
+
+custom_registry <span class="pn">=</span> <span class="fn">FunctionRegistry</span><span class="pn">()</span>
+custom_registry<span class="pn">.</span><span class="fn">register</span><span class="pn">(</span><span class="st">"shout"</span><span class="pn">,</span> say_loud<span class="pn">)</span>
+
+bot <span class="pn">=</span> <span class="fn">FlowBot</span><span class="pn">(</span>
+    prefix<span class="pn">=</span><span class="st">"!"</span><span class="pn">,</span>
+    registry<span class="pn">=</span>custom_registry
+<span class="pn">)</span></code></pre>
+    </div>
+
+    <div class="callout callout-warn">
+      <div class="callout-icon">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      </div>
+      <p>Constructing a fresh <code>FunctionRegistry()</code> does not automatically include the standard built-ins unless your setup explicitly loads them onto it — this is what "isolated" means here.</p>
+    </div>
+
+    <p>Isolation is useful for testing a minimal function set, or for embedding Tflows scripting into a larger application where you want tight control over exactly what a script is allowed to do.</p>
+  </section>
+
+  <section id="builtins">
+    <div class="section-label">Reference</div>
+    <h2 class="section-title">Built-in Modules <a class="anchor" href="#builtins">#</a></h2>
+
+    <p>FlowBot automatically loads a default set of functions and variables at startup from two places:</p>
+
+    <div class="arch-grid">
+      <div class="arch-card">
+        <div class="arch-card-label">module</div>
+        <h4>tflows.builtins</h4>
+        <p>Sets up the base registry — this is where the standard library of functions and variables gets registered before any bot-specific code runs.</p>
+      </div>
+      <div class="arch-card">
+        <div class="arch-card-label">package</div>
+        <h4>tflows.function</h4>
+        <p>Additional function modules are discovered and loaded dynamically during startup, in alphabetical order by file name. If a module fails to import or initialize, the failure is logged and loading continues with the rest.</p>
+      </div>
+    </div>
+
+    <p>This means the built-in function set can grow over time without changing how FlowBot is constructed — new modules under <code>tflows.function</code> are picked up automatically.</p>
+
+    <h3>Module summary</h3>
+    <table class="param-table">
+      <thead><tr><th>Module</th><th>Purpose</th></tr></thead>
+      <tbody>
+        <tr><td class="pn-name">send</td><td class="pn-desc">Send a plain text message to the current channel.</td></tr>
+        <tr><td class="pn-name">reply</td><td class="pn-desc">Reply directly to the message that invoked the command.</td></tr>
+        <tr><td class="pn-name">log</td><td class="pn-desc">Print debug output while developing a script.</td></tr>
+        <tr><td class="pn-name">wait</td><td class="pn-desc">Pause script execution for a given duration before continuing.</td></tr>
+        <tr><td class="pn-name">react</td><td class="pn-desc">Add one or more reactions to the invoking message.</td></tr>
+        <tr><td class="pn-name">delete</td><td class="pn-desc">Delete a specific message.</td></tr>
+        <tr><td class="pn-name">clear</td><td class="pn-desc">Purge a number of messages from the current channel.</td></tr>
+        <tr><td class="pn-name">ping</td><td class="pn-desc">Report the bot's current latency.</td></tr>
+        <tr><td class="pn-name">time</td><td class="pn-desc">Return the current time, with optional formatting.</td></tr>
+        <tr><td class="pn-name">uptime</td><td class="pn-desc">Return how long the bot process has been running.</td></tr>
+        <tr><td class="pn-name">user</td><td class="pn-desc">Access information about the command's invoking author.</td></tr>
+        <tr><td class="pn-name">guild</td><td class="pn-desc">Access information about the current server.</td></tr>
+        <tr><td class="pn-name">channel</td><td class="pn-desc">Access information about the current channel.</td></tr>
+        <tr><td class="pn-name">membercount</td><td class="pn-desc">Return member counts for the guild, optionally filtered.</td></tr>
+        <tr><td class="pn-name">image / avatar</td><td class="pn-desc">Return a profile image or avatar URL.</td></tr>
+        <tr><td class="pn-name">id</td><td class="pn-desc">Return a Discord snowflake ID for the author, a mentioned user, or another target.</td></tr>
+        <tr><td class="pn-name">random</td><td class="pn-desc">Generate random values for use in scripts.</td></tr>
+        <tr><td class="pn-name">botinfo</td><td class="pn-desc">Return information about the bot itself.</td></tr>
+        <tr><td class="pn-name">embed</td><td class="pn-desc">The <code>embed</code> / <code>endembed</code> block described in <a href="#embed">Embed Blocks</a>.</td></tr>
+      </tbody>
+    </table>
+
+    <p>Other modules may exist under <code>tflows.function</code> beyond this list — since modules are loaded automatically, check your installed package for the current full set if you need something not listed here.</p>
+  </section>
+
+  <section id="flowbot-options">
+    <div class="section-label">Reference</div>
+    <h2 class="section-title">FlowBot Options <a class="anchor" href="#flowbot-options">#</a></h2>
+
+    <p>These options are typically all you need to configure for most bots — the defaults are reasonable for development, and <code>log_errors</code> / <code>log_unknown_functions</code> are worth turning on deliberately once you move toward production.</p>
+
+    <table class="param-table">
+      <thead><tr><th>Option</th><th>Effect</th></tr></thead>
+      <tbody>
+        <tr><td class="pn-name">prefix</td><td class="pn-desc">The command prefix string(s) that trigger command lookup, same as in discord.py.</td></tr>
+        <tr><td class="pn-name">help_command</td><td class="pn-desc">Pass your own <code>commands.HelpCommand</code> subclass to replace the built-in help, or <code>None</code> to disable it entirely.</td></tr>
+        <tr><td class="pn-name">log_errors</td><td class="pn-desc">Catches and logs exceptions raised during script execution instead of propagating them as unhandled exceptions.</td></tr>
+        <tr><td class="pn-name">log_unknown_functions</td><td class="pn-desc">Logs calls to unregistered function names instead of silently ignoring them — useful while developing.</td></tr>
+        <tr><td class="pn-name">case_insensitive</td><td class="pn-desc">Controls whether command names are matched case-insensitively.</td></tr>
+        <tr><td class="pn-name">members_intent</td><td class="pn-desc">Controls whether the guild members intent is requested, required for functions/variables needing full member lists.</td></tr>
+        <tr><td class="pn-name">registry</td><td class="pn-desc">Optionally pass a pre-built <code>FunctionRegistry</code>. See <a href="#isolated-registry">Isolated Registries</a>.</td></tr>
       </tbody>
     </table>
   </section>
 
-  <!-- ====== VARIABLES ====== -->
+  <section id="help-system">
+    <div class="section-label">Reference</div>
+    <h2 class="section-title">Help System <a class="anchor" href="#help-system">#</a></h2>
+
+    <p>FlowBot's built-in help command lists registered script commands alongside any regular discord.py commands on the bot. For each script command, the help output can show:</p>
+
+    <ul>
+      <li>The command name and any registered aliases</li>
+      <li>The description passed to <code>bot.command()</code></li>
+      <li>Basic usage information</li>
+      <li>In some cases, the underlying script source, useful for debugging or for letting trusted users see exactly what a command does</li>
+    </ul>
+
+    <p>If you want full control over how help is presented, or you're integrating Tflows into a bot that already has its own help system, pass <code>help_command=None</code> (or your own <code>HelpCommand</code> subclass) when constructing FlowBot.</p>
+
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-lang"><span class="code-dot"></span>python</span>
+        <button class="copy-btn"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button>
+      </div>
+      <pre><code>bot <span class="pn">=</span> <span class="fn">FlowBot</span><span class="pn">(</span>
+    prefix<span class="pn">=</span><span class="st">"!"</span><span class="pn">,</span>
+    help_command<span class="pn">=</span><span class="kw">None</span>  <span class="cm"># disable built-in help</span>
+<span class="pn">)</span></code></pre>
+    </div>
+  </section>
+
   <section id="variables">
     <div class="section-label">Reference</div>
     <h2 class="section-title">Variables <a class="anchor" href="#variables">#</a></h2>
 
-    <p>Variables are special tokens embedded in your DSL scripts, prefixed with <code>$</code>. They are resolved at runtime against the live Discord command context and replaced with their current values before output is generated.</p>
-    <p>Variables come in two flavors: <strong>static</strong> (no arguments, always produce the same type of value) and <strong>function</strong> (accept an optional mode flag in parentheses).</p>
+    <p>Variables are special tokens embedded in your scripts, prefixed with <code>$</code>. They are resolved at runtime against the live FlowContext and replaced with their current values before output is generated.</p>
+    <p>Variables come in three flavors: <strong>static</strong> (no arguments, always produce the same type of value), <strong>function</strong> (accept an optional mode flag in parentheses), and <strong>dynamic</strong> (multiple formatting modes, such as time-based output).</p>
 
-    <!-- $ping -->
     <div class="var-card">
       <div class="var-card-head">
         <h2 id="var-ping">$ping</h2>
@@ -1747,204 +1963,31 @@ Members: <span class="var">$membercount</span>
         </tbody>
       </table>
       <div class="code-block">
-        <div class="code-header"><span class="code-lang"><span class="code-dot"></span>tflows DSL</span><button class="copy-btn"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button></div>
+        <div class="code-header"><span class="code-lang"><span class="code-dot"></span>tflows script</span><button class="copy-btn"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button></div>
         <pre><code>send Pong! <span class="var">$ping</span>ms</code></pre>
       </div>
     </div>
 
-    <!-- $uptime -->
-<div class="var-card">
-  <div class="var-card-head">
-    <h2 id="var-uptime">$uptime</h2>
-    <span class="var-badge badge-dynamic">dynamic</span>
-  </div>
-
-  <p>
-    Returns how long the bot has been running since startup. Supports multiple formatting modes including full, short, clock, seconds, and custom token-based output.
-  </p>
-
-  <table class="param-table">
-    <thead>
-      <tr>
-        <th>Usage</th>
-        <th>Returns</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <tr>
-        <td class="pn-name">$uptime</td>
-        <td class="pn-desc">Default format, e.g. <code>1h 23m 10s</code></td>
-      </tr>
-
-      <tr>
-        <td class="pn-name">$uptime(full)</td>
-        <td class="pn-desc">Full format including days, e.g. <code>0d 1h 23m 10s</code></td>
-      </tr>
-
-      <tr>
-        <td class="pn-name">$uptime(short)</td>
-        <td class="pn-desc">Compact format, e.g. <code>1h 23m</code></td>
-      </tr>
-
-      <tr>
-        <td class="pn-name">$uptime(clock)</td>
-        <td class="pn-desc">Clock-style format, e.g. <code>01:23:10</code></td>
-      </tr>
-
-      <tr>
-        <td class="pn-name">$uptime(seconds)</td>
-        <td class="pn-desc">Raw uptime in seconds, e.g. <code>4990</code></td>
-      </tr>
-
-      <tr>
-        <td class="pn-name">$uptime(d, h, m, s)</td>
-        <td class="pn-desc">Custom formatted output using tokens</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <div class="code-block">
-    <div class="code-header">
-      <span class="code-lang"><span class="code-dot"></span>tflows DSL</span>
-      <button class="copy-btn">
-        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
-          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-        </svg>
-        Copy
-      </button>
-    </div>
-
-    <pre><code>embed
-$title[Uptime Variants]
-
-$desc[
-Default: $uptime
-Full: $uptime(full)
-Short: $uptime(short)
-Clock: $uptime(clock)
-Seconds: $uptime(seconds)
-Custom: $uptime(d, h, m, s)
-]</code></pre>
-  </div>
-</div>
-
-<!-- $log -->
-<div class="var-card">
-  <div class="var-card-head">
-    <h2 id="var-log">$log</h2>
-    <span class="var-badge badge-fn">function</span>
-  </div>
-
-  <p>
-    Sends a message to a specific Discord channel for tracking command usage, user actions, and bot events.
-    Unlike console logging, this outputs directly inside a server channel.
-  </p>
-
-  <table class="param-table">
-    <thead>
-      <tr>
-        <th>Parameter</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <tr>
-        <td class="pn-name">CHANNEL_ID</td>
-        <td class="pn-desc">Target Discord channel ID where the log message will be sent</td>
-      </tr>
-      <tr>
-        <td class="pn-name">MESSAGE</td>
-        <td class="pn-desc">Content of the log message</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <div class="code-block">
-    <div class="code-header">
-      <span class="code-lang"><span class="code-dot"></span>tflows DSL</span>
-      <button class="copy-btn">
-        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
-          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-        </svg>
-        Copy
-      </button>
-    </div>
-
-    <pre><code>$log(CHANNEL_ID){User executed a command}</code></pre>
-  </div>
-
-  <h3>Behavior</h3>
-  <ul>
-    <li>Sends a message directly to the specified Discord channel</li>
-    <li>Executes when the command runs successfully (unless wrapped in error handling logic)</li>
-    <li>Supports variables like <code>$id</code>, <code>$time</code>, and other engine variables</li>
-    <li>Does not print to console, only sends to Discord channels</li>
-  </ul>
-
-  <h3>Examples</h3>
-
-  <div class="code-block">
-    <div class="code-header">
-      <span class="code-lang"><span class="code-dot"></span>tflows DSL</span>
-    </div>
-
-    <pre><code>$log(123456789012345678){User executed !ping command}</code></pre>
-  </div>
-
-  <div class="code-block">
-    <div class="code-header">
-      <span class="code-lang"><span class="code-dot"></span>tflows DSL</span>
-    </div>
-
-    <pre><code>$log(123456789012345678){$user used a command at $time}</code></pre>
-  </div>
-
-  <div class="code-block">
-    <div class="code-header">
-      <span class="code-lang"><span class="code-dot"></span>tflows DSL</span>
-    </div>
-
-    <pre><code>$log(987654321098765432){$user was muted by <@$id> for spam}</code></pre>
-  </div>
-
-  <h3>Notes</h3>
-  <ul>
-    <li>Bot must have permission to send messages in the target channel</li>
-    <li>If the channel ID is invalid, logging may silently fail or throw an error depending on configuration</li>
-    <li>You can use <code><@$id></code> to mention the command user since <code>$id</code> returns raw ID</li>
-  </ul>
-</div>
-
-    <!-- $image -->
     <div class="var-card">
       <div class="var-card-head">
-        <h2 id="var-image">$image</h2>
+        <h2 id="var-user">$user</h2>
         <span class="var-badge badge-fn">function</span>
       </div>
-      <p>Returns a Discord CDN avatar image URL. Accepts an optional mode flag to control whose avatar is returned.</p>
+      <p>Returns information about the command's invoking author. Defaults to the author's display name.</p>
       <table class="param-table">
         <thead><tr><th>Mode</th><th>Description</th></tr></thead>
         <tbody>
-          <tr><td class="pn-name">$image <span class="pn-default">default</span></td><td class="pn-desc">Command author's avatar URL</td></tr>
-          <tr><td class="pn-name">$image(user)</td><td class="pn-desc">Same as default — author's avatar</td></tr>
-          <tr><td class="pn-name">$image(mention)</td><td class="pn-desc">First mentioned user's avatar. Falls back to author if no mention.</td></tr>
-          <tr><td class="pn-name">$image(act)</td><td class="pn-desc">Mentioned user's avatar if a mention is present, otherwise author's.</td></tr>
+          <tr><td class="pn-name">$user <span class="pn-default">default</span></td><td class="pn-desc">Author's display name</td></tr>
+          <tr><td class="pn-name">$user(name)</td><td class="pn-desc">Author's raw username</td></tr>
+          <tr><td class="pn-name">$user(mention)</td><td class="pn-desc">Author mention string</td></tr>
         </tbody>
       </table>
       <div class="code-block">
-        <div class="code-header"><span class="code-lang"><span class="code-dot"></span>tflows DSL</span><button class="copy-btn"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button></div>
-        <pre><code><span class="var">$image</span>
-<span class="var">$image</span><span class="pn">(</span>user<span class="pn">)</span>
-<span class="var">$image</span><span class="pn">(</span>mention<span class="pn">)</span>
-<span class="var">$image</span><span class="pn">(</span>act<span class="pn">)</span></code></pre>
+        <div class="code-header"><span class="code-lang"><span class="code-dot"></span>tflows script</span></div>
+        <pre><code>send Welcome, <span class="var">$user</span>!</code></pre>
       </div>
     </div>
 
-    <!-- $server -->
     <div class="var-card">
       <div class="var-card-head">
         <h2 id="var-server">$server</h2>
@@ -1961,7 +2004,7 @@ Custom: $uptime(d, h, m, s)
         </tbody>
       </table>
       <div class="code-block">
-        <div class="code-header"><span class="code-lang"><span class="code-dot"></span>tflows DSL</span><button class="copy-btn"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button></div>
+        <div class="code-header"><span class="code-lang"><span class="code-dot"></span>tflows script</span></div>
         <pre><code><span class="var">$server</span>
 <span class="var">$server</span><span class="pn">(</span>name<span class="pn">)</span>
 <span class="var">$server</span><span class="pn">(</span>boost<span class="pn">)</span>
@@ -1969,13 +2012,228 @@ Custom: $uptime(d, h, m, s)
       </div>
     </div>
 
-    <!-- $membercount -->
+    <div class="var-card">
+      <div class="var-card-head">
+        <h2 id="var-args">$args</h2>
+        <span class="var-badge badge-static">static</span>
+      </div>
+      <p>Returns the raw text the user typed after the command name — everything following <code>{prefix}{name}</code>, unparsed.</p>
+      <table class="param-table">
+        <thead><tr><th>Usage</th><th>Returns</th></tr></thead>
+        <tbody>
+          <tr><td class="pn-name">$args</td><td class="pn-desc">Raw argument string, e.g. <code>spam bot 15</code></td></tr>
+        </tbody>
+      </table>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang"><span class="code-dot"></span>tflows script</span></div>
+        <pre><code>warn <span class="var">$args</span></code></pre>
+      </div>
+    </div>
+
+    <div class="var-card">
+      <div class="var-card-head">
+        <h2 id="var-command">$command</h2>
+        <span class="var-badge badge-static">static</span>
+      </div>
+      <p>Returns the name of the command currently being executed — the registered name, not the alias the user typed, if any.</p>
+      <table class="param-table">
+        <thead><tr><th>Usage</th><th>Returns</th></tr></thead>
+        <tbody>
+          <tr><td class="pn-name">$command</td><td class="pn-desc">Command name, e.g. <code>greet</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="var-card">
+      <div class="var-card-head">
+        <h2 id="var-uptime">$uptime</h2>
+        <span class="var-badge badge-dynamic">dynamic</span>
+      </div>
+
+      <p>
+        Returns how long the bot has been running since startup. Supports multiple formatting modes including full, short, clock, seconds, and custom token-based output.
+      </p>
+
+      <table class="param-table">
+        <thead>
+          <tr>
+            <th>Usage</th>
+            <th>Returns</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td class="pn-name">$uptime</td>
+            <td class="pn-desc">Default format, e.g. <code>1h 23m 10s</code></td>
+          </tr>
+
+          <tr>
+            <td class="pn-name">$uptime(full)</td>
+            <td class="pn-desc">Full format including days, e.g. <code>0d 1h 23m 10s</code></td>
+          </tr>
+
+          <tr>
+            <td class="pn-name">$uptime(short)</td>
+            <td class="pn-desc">Compact format, e.g. <code>1h 23m</code></td>
+          </tr>
+
+          <tr>
+            <td class="pn-name">$uptime(clock)</td>
+            <td class="pn-desc">Clock-style format, e.g. <code>01:23:10</code></td>
+          </tr>
+
+          <tr>
+            <td class="pn-name">$uptime(seconds)</td>
+            <td class="pn-desc">Raw uptime in seconds, e.g. <code>4990</code></td>
+          </tr>
+
+          <tr>
+            <td class="pn-name">$uptime(d, h, m, s)</td>
+            <td class="pn-desc">Custom formatted output using tokens</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang"><span class="code-dot"></span>tflows script</span>
+          <button class="copy-btn">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+            </svg>
+            Copy
+          </button>
+        </div>
+
+        <pre><code><span class="dsl">embed</span>
+title Uptime Variants
+desc Default: <span class="var">$uptime</span>
+desc Full: <span class="var">$uptime</span>(full)
+desc Short: <span class="var">$uptime</span>(short)
+desc Clock: <span class="var">$uptime</span>(clock)
+desc Seconds: <span class="var">$uptime</span>(seconds)
+desc Custom: <span class="var">$uptime</span>(d, h, m, s)
+<span class="dsl">endembed</span></code></pre>
+      </div>
+    </div>
+
+    <div class="var-card">
+      <div class="var-card-head">
+        <h2 id="var-log">$log</h2>
+        <span class="var-badge badge-fn">function</span>
+      </div>
+
+      <p>
+        Sends a message to a specific Discord channel for tracking command usage, user actions, and bot events.
+        Unlike console logging, this outputs directly inside a server channel.
+      </p>
+
+      <table class="param-table">
+        <thead>
+          <tr>
+            <th>Parameter</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td class="pn-name">CHANNEL_ID</td>
+            <td class="pn-desc">Target Discord channel ID where the log message will be sent</td>
+          </tr>
+          <tr>
+            <td class="pn-name">MESSAGE</td>
+            <td class="pn-desc">Content of the log message</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang"><span class="code-dot"></span>tflows script</span>
+          <button class="copy-btn">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+            </svg>
+            Copy
+          </button>
+        </div>
+
+        <pre><code>$log(CHANNEL_ID){User executed a command}</code></pre>
+      </div>
+
+      <h3>Behavior</h3>
+      <ul>
+        <li>Sends a message directly to the specified Discord channel</li>
+        <li>Executes when the command runs successfully (unless wrapped in error handling logic)</li>
+        <li>Supports variables like <code>$user</code>, <code>$time</code>, and other engine variables</li>
+        <li>Does not print to console, only sends to Discord channels</li>
+      </ul>
+
+      <h3>Examples</h3>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang"><span class="code-dot"></span>tflows script</span>
+        </div>
+        <pre><code>$log(123456789012345678){User executed !ping command}</code></pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang"><span class="code-dot"></span>tflows script</span>
+        </div>
+        <pre><code>$log(123456789012345678){$user used a command at $time}</code></pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang"><span class="code-dot"></span>tflows script</span>
+        </div>
+        <pre><code>$log(987654321098765432){$user was warned by $id for spam}</code></pre>
+      </div>
+
+      <h3>Notes</h3>
+      <ul>
+        <li>Bot must have permission to send messages in the target channel</li>
+        <li>If the channel ID is invalid, logging may silently fail or throw an error depending on configuration</li>
+        <li>You can use <code>&lt;@$id&gt;</code> to mention the command user since <code>$id</code> returns a raw ID</li>
+      </ul>
+    </div>
+
+    <div class="var-card">
+      <div class="var-card-head">
+        <h2 id="var-image">$image</h2>
+        <span class="var-badge badge-fn">function</span>
+      </div>
+      <p>Returns a Discord CDN avatar image URL. Accepts an optional mode flag to control whose avatar is returned. <code>$avatar</code> is registered as an alias of this variable.</p>
+      <table class="param-table">
+        <thead><tr><th>Mode</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td class="pn-name">$image <span class="pn-default">default</span></td><td class="pn-desc">Command author's avatar URL</td></tr>
+          <tr><td class="pn-name">$image(user)</td><td class="pn-desc">Same as default — author's avatar</td></tr>
+          <tr><td class="pn-name">$image(mention)</td><td class="pn-desc">First mentioned user's avatar. Falls back to author if no mention.</td></tr>
+          <tr><td class="pn-name">$image(act)</td><td class="pn-desc">Mentioned user's avatar if a mention is present, otherwise author's.</td></tr>
+        </tbody>
+      </table>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang"><span class="code-dot"></span>tflows script</span><button class="copy-btn"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button></div>
+        <pre><code><span class="var">$image</span>
+<span class="var">$image</span><span class="pn">(</span>user<span class="pn">)</span>
+<span class="var">$image</span><span class="pn">(</span>mention<span class="pn">)</span>
+<span class="var">$image</span><span class="pn">(</span>act<span class="pn">)</span></code></pre>
+      </div>
+    </div>
+
     <div class="var-card">
       <div class="var-card-head">
         <h2 id="var-membercount">$membercount</h2>
         <span class="var-badge badge-fn">function</span>
       </div>
-      <p>Returns the guild member count. Can be filtered to include all members, only humans, or only bots.</p>
+      <p>Returns the guild member count. Can be filtered to include all members, only humans, or only bots. Requires <code>members_intent=True</code> for accurate human/bot breakdowns.</p>
       <table class="param-table">
         <thead><tr><th>Mode</th><th>Description</th></tr></thead>
         <tbody>
@@ -1986,7 +2244,7 @@ Custom: $uptime(d, h, m, s)
         </tbody>
       </table>
       <div class="code-block">
-        <div class="code-header"><span class="code-lang"><span class="code-dot"></span>tflows DSL</span><button class="copy-btn"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button></div>
+        <div class="code-header"><span class="code-lang"><span class="code-dot"></span>tflows script</span><button class="copy-btn"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button></div>
         <pre><code><span class="var">$membercount</span>
 <span class="var">$membercount</span><span class="pn">(</span>all<span class="pn">)</span>
 <span class="var">$membercount</span><span class="pn">(</span>user<span class="pn">)</span>
@@ -1994,7 +2252,6 @@ Custom: $uptime(d, h, m, s)
       </div>
     </div>
 
-    <!-- $time -->
     <div class="var-card">
       <div class="var-card-head">
         <h2 id="var-time">$time</h2>
@@ -2013,7 +2270,7 @@ Custom: $uptime(d, h, m, s)
         </tbody>
       </table>
       <div class="code-block">
-        <div class="code-header"><span class="code-lang"><span class="code-dot"></span>tflows DSL</span><button class="copy-btn"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button></div>
+        <div class="code-header"><span class="code-lang"><span class="code-dot"></span>tflows script</span><button class="copy-btn"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button></div>
         <pre><code><span class="var">$time</span><span class="pn">()</span>
 <span class="var">$time</span><span class="pn">(</span>12h<span class="pn">)</span>
 <span class="var">$time</span><span class="pn">(</span>24h<span class="pn">)</span>
@@ -2023,7 +2280,6 @@ Custom: $uptime(d, h, m, s)
       </div>
     </div>
 
-    <!-- $id -->
     <div class="var-card">
       <div class="var-card-head">
         <h2 id="var-id">$id</h2>
@@ -2040,7 +2296,7 @@ Custom: $uptime(d, h, m, s)
         </tbody>
       </table>
       <div class="code-block">
-        <div class="code-header"><span class="code-lang"><span class="code-dot"></span>tflows DSL</span><button class="copy-btn"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button></div>
+        <div class="code-header"><span class="code-lang"><span class="code-dot"></span>tflows script</span><button class="copy-btn"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button></div>
         <pre><code><span class="var">$id</span>
 <span class="var">$id</span><span class="pn">(</span>user<span class="pn">)</span>
 <span class="var">$id</span><span class="pn">(</span>mention<span class="pn">)</span>
@@ -2050,74 +2306,68 @@ Custom: $uptime(d, h, m, s)
 
   </section>
 
-  <!-- ====== EXECUTION FLOW ====== -->
-  <section id="execution-flow">
+  <section id="mixed-mode">
     <div class="section-label">Guide</div>
-    <h2 class="section-title">Execution Flow <a class="anchor" href="#execution-flow">#</a></h2>
+    <h2 class="section-title">Mixing with discord.py <a class="anchor" href="#mixed-mode">#</a></h2>
 
-    <p>Understanding exactly what happens when a user invokes a Tflows command helps you write more predictable scripts and debug issues faster.</p>
+    <p>Because FlowBot is a subclass of <code>commands.Bot</code>, script commands and regular discord.py commands, cogs, listeners, and app commands all coexist on the same bot without any special handling.</p>
 
-    <div class="step-list">
-      <div class="step-item">
-        <div class="step-num">1</div>
-        <div class="step-body">
-          <h4>Discord gateway event</h4>
-          <p>A user sends a message in a channel your bot can read. The discord.py gateway fires an <code>on_message</code> event containing the full message object and context.</p>
-        </div>
+    <h3>Normal command alongside a script command</h3>
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-lang"><span class="code-dot"></span>python</span>
+        <button class="copy-btn"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button>
       </div>
-      <div class="step-item">
-        <div class="step-num">2</div>
-        <div class="step-body">
-          <h4>Prefix check</h4>
-          <p>FlowBot checks whether the message starts with the configured prefix. If not, it's ignored entirely.</p>
-        </div>
-      </div>
-      <div class="step-item">
-        <div class="step-num">3</div>
-        <div class="step-body">
-          <h4>Registry lookup</h4>
-          <p>The command name (the word after the prefix) is looked up in the registry dictionary. If not found, the invocation silently fails.</p>
-        </div>
-      </div>
-      <div class="step-item">
-        <div class="step-num">4</div>
-        <div class="step-body">
-          <h4>Script handed to parser</h4>
-          <p>The stored <code>code</code> string is split by newlines. Empty lines are skipped. Each non-empty line is processed in order.</p>
-        </div>
-      </div>
-      <div class="step-item">
-        <div class="step-num">5</div>
-        <div class="step-body">
-          <h4>Mode detection</h4>
-          <p>If a line is the literal token <code>embed</code>, the parser switches into embed mode. All subsequent directive lines feed into the embed builder.</p>
-        </div>
-      </div>
-      <div class="step-item">
-        <div class="step-num">6</div>
-        <div class="step-body">
-          <h4>Variable resolution</h4>
-          <p>Each line is scanned with a regex for <code>$identifier</code> patterns. Matched tokens are replaced by calling the corresponding resolver with the live Discord context.</p>
-        </div>
-      </div>
-      <div class="step-item">
-        <div class="step-num">7</div>
-        <div class="step-body">
-          <h4>Output dispatch</h4>
-          <p>In text mode: the resolved line content is sent via <code>ctx.send(content)</code>. In embed mode: a <code>discord.Embed</code> is assembled from the resolved directives and sent via <code>ctx.send(embed=...)</code>.</p>
-        </div>
-      </div>
+      <pre><code><span class="pn">@</span>bot<span class="pn">.</span><span class="fn">command</span><span class="pn">()</span>
+<span class="kw">async</span> <span class="kw">def</span> <span class="fn">python_ping</span><span class="pn">(</span>ctx<span class="pn">):</span>
+    <span class="kw">await</span> ctx<span class="pn">.</span><span class="fn">send</span><span class="pn">(</span><span class="fn">f</span><span class="st">"Pong! {round(bot.latency * 1000)}ms"</span><span class="pn">)</span>
+
+bot<span class="pn">.</span><span class="fn">command</span><span class="pn">(</span>
+    <span class="st">"ping"</span><span class="pn">,</span>
+    <span class="st">"send Pong! $ping ms"</span>
+<span class="pn">)</span></code></pre>
     </div>
 
-    <div class="callout callout-tip">
-      <div class="callout-icon">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+    <h3>Listeners</h3>
+    <p>Listeners work exactly as in discord.py:</p>
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-lang"><span class="code-dot"></span>python</span>
+        <button class="copy-btn"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button>
       </div>
-      <p>Scripts are re-parsed on every invocation. This means you can update the <code>code</code> string at runtime and the change takes effect on the very next command call — without restarting the bot.</p>
+      <pre><code><span class="pn">@</span>bot<span class="pn">.</span>event
+<span class="kw">async</span> <span class="kw">def</span> <span class="fn">on_member_join</span><span class="pn">(</span>member<span class="pn">):</span>
+    channel <span class="pn">=</span> member<span class="pn">.</span>guild<span class="pn">.</span>system_channel
+    <span class="kw">if</span> channel<span class="pn">:</span>
+        <span class="kw">await</span> channel<span class="pn">.</span><span class="fn">send</span><span class="pn">(</span><span class="fn">f</span><span class="st">"Welcome, {member.mention}!"</span><span class="pn">)</span></code></pre>
     </div>
+
+    <h3>Cogs</h3>
+    <p>Cogs work exactly as in discord.py, and can even register script commands during setup by calling <code>bot.command()</code> from within the cog's <code>__init__</code>, since <code>bot.command()</code> is just a method on the FlowBot instance:</p>
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-lang"><span class="code-dot"></span>python</span>
+        <button class="copy-btn"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button>
+      </div>
+      <pre><code><span class="kw">class</span> <span class="ty">Moderation</span><span class="pn">(</span>commands<span class="pn">.</span>Cog<span class="pn">):</span>
+    <span class="kw">def</span> <span class="fn">__init__</span><span class="pn">(</span><span class="kw">self</span><span class="pn">,</span> bot<span class="pn">):</span>
+        <span class="kw">self</span><span class="pn">.</span>bot <span class="pn">=</span> bot
+        bot<span class="pn">.</span><span class="fn">command</span><span class="pn">(</span>
+            <span class="st">"rules"</span><span class="pn">,</span>
+            <span class="st">"send Please review the server rules in #rules."</span>
+        <span class="pn">)</span>
+
+    <span class="pn">@</span>commands<span class="pn">.</span><span class="fn">command</span><span class="pn">()</span>
+    <span class="kw">async</span> <span class="kw">def</span> <span class="fn">warn</span><span class="pn">(</span><span class="kw">self</span><span class="pn">,</span> ctx<span class="pn">,</span> member<span class="pn">:</span> discord<span class="pn">.</span>Member<span class="pn">,</span> <span class="pn">*,</span> reason<span class="pn">):</span>
+        <span class="kw">await</span> ctx<span class="pn">.</span><span class="fn">send</span><span class="pn">(</span><span class="fn">f</span><span class="st">"{member.mention} was warned: {reason}"</span><span class="pn">)</span>
+
+bot<span class="pn">.</span><span class="fn">add_cog</span><span class="pn">(</span><span class="ty">Moderation</span><span class="pn">(</span>bot<span class="pn">))</span></code></pre>
+    </div>
+
+    <h3>Custom functions calling into discord.py</h3>
+    <p>Custom functions registered into the registry can call straight into discord.py from inside the FlowContext, so a script command can trigger arbitrarily complex Python logic while still being invoked as a simple script line — see <a href="#custom-functions">Custom Functions</a> for the full pattern.</p>
   </section>
 
-  <!-- ====== BEST PRACTICES ====== -->
   <section id="best-practices">
     <div class="section-label">Guide</div>
     <h2 class="section-title">Best Practices <a class="anchor" href="#best-practices">#</a></h2>
@@ -2128,85 +2378,142 @@ Custom: $uptime(d, h, m, s)
       <div class="bp-card">
         <div class="bp-icon">🎯</div>
         <div class="bp-body">
-          <h4>One command, one purpose</h4>
-          <p>Keep each command focused. A <code>!status</code> command should show server stats; don't mix in unrelated data. Lean scripts are easier to debug and iterate on.</p>
+          <h4>Keep scripts short and single-purpose</h4>
+          <p>If a script is doing several unrelated things, it's often a sign that logic should move into a custom function instead.</p>
+        </div>
+      </div>
+      <div class="bp-card">
+        <div class="bp-icon">🧩</div>
+        <div class="bp-body">
+          <h4>Prefer reusable custom functions over duplication</h4>
+          <p>If two commands both need the same lookup or action, register it once as a custom function rather than copy-pasting script lines.</p>
+        </div>
+      </div>
+      <div class="bp-card">
+        <div class="bp-icon">🏷️</div>
+        <div class="bp-body">
+          <h4>Use aliases for friendlier command and variable names</h4>
+          <p><code>register_alias</code> and <code>register_var_alias</code> let you expose short, user-friendly names without renaming the underlying implementation.</p>
         </div>
       </div>
       <div class="bp-card">
         <div class="bp-icon">🔐</div>
         <div class="bp-body">
-          <h4>Never expose your bot token</h4>
-          <p>Store tokens in environment variables or a <code>.env</code> file loaded with <code>python-dotenv</code>. Use <code>os.environ.get("BOT_TOKEN")</code> instead of string literals.</p>
+          <h4>Validate arguments before acting</h4>
+          <p>Especially for destructive functions like <code>delete</code> or <code>clear</code> — validate inside the custom function before performing the action.</p>
         </div>
       </div>
       <div class="bp-card">
         <div class="bp-icon">📦</div>
         <div class="bp-body">
-          <h4>Use embeds for information-dense output</h4>
-          <p>If you're displaying more than two or three pieces of data, switch to embed mode. Embeds are visually structured and easier for users to scan.</p>
-        </div>
-      </div>
-      <div class="bp-card">
-        <div class="bp-icon">🔄</div>
-        <div class="bp-body">
-          <h4>Prefer <code>act</code> mode for flexible mention handling</h4>
-          <p>Using <code>$id(act)</code> and <code>$image(act)</code> means your command works gracefully whether or not the user mentions someone — sensible fallback built-in.</p>
+          <h4>Store larger scripts in separate files</h4>
+          <p>For bots with many commands, keep script text in <code>.txt</code> or <code>.flow</code> files and load them with <code>open().read()</code> to keep your main Python file clean.</p>
         </div>
       </div>
       <div class="bp-card">
         <div class="bp-icon">🧪</div>
         <div class="bp-body">
-          <h4>Test variables individually</h4>
-          <p>Build a <code>!debug</code> command that dumps all variables you need. Verify their output before composing them into production commands.</p>
-        </div>
-      </div>
-      <div class="bp-card">
-        <div class="bp-icon">📝</div>
-        <div class="bp-body">
-          <h4>Keep script strings in separate files for large bots</h4>
-          <p>For bots with many commands, store DSL scripts as <code>.txt</code> or <code>.tflow</code> files and load them with <code>open().read()</code>. This keeps your main Python file clean.</p>
+          <h4>Separate reusable logic from one-off scripts</h4>
+          <p>Reusable custom functions belong in their own module that can be imported and registered into multiple bots' registries — don't bury them inside a single bot's setup file.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ====== COMMON MISTAKES ====== -->
+  <section id="debugging">
+    <div class="section-label">Guide</div>
+    <h2 class="section-title">Debugging &amp; Errors <a class="anchor" href="#debugging">#</a></h2>
+
+    <p>A few habits make debugging scripts and handling errors much less painful:</p>
+
+    <div class="bp-list">
+      <div class="bp-card">
+        <div class="bp-icon">🪵</div>
+        <div class="bp-body">
+          <h4>Enable log_errors and log_unknown_functions in development</h4>
+          <p>They turn silent failures into visible ones, which is almost always what you want while writing new scripts.</p>
+        </div>
+      </div>
+      <div class="bp-card">
+        <div class="bp-icon">🖨️</div>
+        <div class="bp-body">
+          <h4>Use the log function to print intermediate values</h4>
+          <p>Print values from inside a script while you're figuring out why a command isn't behaving as expected.</p>
+        </div>
+      </div>
+      <div class="bp-card">
+        <div class="bp-icon">🛑</div>
+        <div class="bp-body">
+          <h4>Catch expected failures inside custom functions</h4>
+          <p>A bad ID, a missing permission, a network hiccup — catch the specific exception and return a clear, user-facing message rather than letting a raw traceback leak into script output.</p>
+        </div>
+      </div>
+      <div class="bp-card">
+        <div class="bp-icon">🧫</div>
+        <div class="bp-body">
+          <h4>Test new variables in isolation</h4>
+          <p>Try a throwaway command like <code>send Value: $newvar</code> before wiring a new variable into a more complex embed or multi-line script.</p>
+        </div>
+      </div>
+      <div class="bp-card">
+        <div class="bp-icon">🔇</div>
+        <div class="bp-body">
+          <h4>Tune logging for production</h4>
+          <p>Once a bot is live, consider routing <code>log_unknown_functions</code> output to a private log channel instead of the console, so a stream of user typos doesn't drown out real errors.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section id="common-mistakes">
     <div class="section-label">Guide</div>
     <h2 class="section-title">Common Mistakes <a class="anchor" href="#common-mistakes">#</a></h2>
 
     <p>These are the most frequent errors new Tflows users encounter, and how to fix them.</p>
 
-    <h3>Forgetting the <code>embed</code> keyword</h3>
-    <p>Using <code>$title</code> or <code>$desc</code> without first writing <code>embed</code> on its own line will not produce an embed — the directives will either error or be ignored.</p>
+    <h3>Forgetting to close an embed block</h3>
+    <p>An <code>embed</code> block that is never closed with <code>endembed</code> leaves the Engine unable to tell where the embed's fields end and the rest of the script begins.</p>
 
     <div class="code-block">
       <div class="code-header"><span class="code-lang"><span class="code-dot" style="background:#f87171"></span>incorrect</span></div>
-      <pre><code><span class="cm"># ❌ embed mode never activated</span>
-<span class="dsl">$title</span><span class="pn">[</span>My Title<span class="pn">]</span>
-<span class="dsl">$desc</span><span class="pn">[</span>My description<span class="pn">]</span></code></pre>
-    </div>
-
-    <div class="code-block">
-      <div class="code-header"><span class="code-lang"><span class="code-dot" style="background:#34d399"></span>correct</span></div>
-      <pre><code><span class="cm"># ✅ embed mode activated first</span>
+      <pre><code><span class="cm"># ❌ missing endembed</span>
 <span class="dsl">embed</span>
-<span class="dsl">$title</span><span class="pn">[</span>My Title<span class="pn">]</span>
-<span class="dsl">$desc</span><span class="pn">[</span>My description<span class="pn">]</span></code></pre>
-    </div>
-
-    <h3>Wrong bracket syntax for directives</h3>
-    <p>Directive values must use square brackets <code>[…]</code>. Parentheses and curly braces will not be parsed correctly.</p>
-
-    <div class="code-block">
-      <div class="code-header"><span class="code-lang"><span class="code-dot" style="background:#f87171"></span>incorrect</span></div>
-      <pre><code><span class="dsl">$title</span><span class="pn">(</span>Wrong brackets<span class="pn">)</span>   <span class="cm"># ❌ parentheses</span>
-<span class="dsl">$desc</span><span class="pn">{</span>Also wrong<span class="pn">}</span>       <span class="cm"># ❌ curly braces</span></code></pre>
+title My Title
+desc My description</code></pre>
     </div>
 
     <div class="code-block">
       <div class="code-header"><span class="code-lang"><span class="code-dot" style="background:#34d399"></span>correct</span></div>
-      <pre><code><span class="dsl">$title</span><span class="pn">[</span>Correct<span class="pn">]</span>          <span class="cm"># ✅ square brackets</span></code></pre>
+      <pre><code><span class="cm"># ✅ block properly closed</span>
+<span class="dsl">embed</span>
+title My Title
+desc My description
+<span class="dsl">endembed</span></code></pre>
+    </div>
+
+    <h3>Registering a variable through registry.register() instead of register_var()</h3>
+    <p>Functions and variables are tracked separately in the FunctionRegistry. A callable registered with <code>register()</code> is only reachable as a function call, not as a <code>$variable</code>.</p>
+
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang"><span class="code-dot" style="background:#f87171"></span>incorrect</span></div>
+      <pre><code><span class="cm"># ❌ won't be usable as $nick</span>
+registry<span class="pn">.</span><span class="fn">register</span><span class="pn">(</span><span class="st">"nick"</span><span class="pn">,</span> nickname<span class="pn">)</span></code></pre>
+    </div>
+
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang"><span class="code-dot" style="background:#34d399"></span>correct</span></div>
+      <pre><code><span class="cm"># ✅ usable as $nick</span>
+registry<span class="pn">.</span><span class="fn">register_var</span><span class="pn">(</span><span class="st">"nick"</span><span class="pn">,</span> nickname<span class="pn">)</span></code></pre>
+    </div>
+
+    <h3>Assuming an isolated registry includes the built-ins</h3>
+    <p>A freshly constructed <code>FunctionRegistry()</code> is empty — passing it to FlowBot does not implicitly load <code>send</code>, <code>embed</code>, or any other built-in unless your setup explicitly registers them onto it.</p>
+
+    <div class="callout callout-danger">
+      <div class="callout-icon">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      </div>
+      <p>If scripts on an isolated-registry bot report every function as unknown, check whether the built-ins were actually loaded onto that registry.</p>
     </div>
 
     <h3>Incorrect mode flag names</h3>
@@ -2218,18 +2525,10 @@ Custom: $uptime(d, h, m, s)
 <span class="var">$image</span><span class="pn">(</span>Mention<span class="pn">)</span>       <span class="cm"># ❌ should be lowercase "mention"</span></code></pre>
     </div>
 
-    <div class="callout callout-danger">
-      <div class="callout-icon">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-      </div>
-      <p>All variable mode flags are <strong>lowercase</strong>. <code>$time(24H)</code> will not work; use <code>$time(24h)</code>.</p>
-    </div>
-
-    <h3>Using <code>mention</code> without an actual mention</h3>
+    <h3>Using mention without an actual mention</h3>
     <p><code>$id(mention)</code> and <code>$image(mention)</code> fall back to the author if no mention is present — but the fallback exists to prevent crashes, not to produce the expected output. If you need flexible mention handling, use <code>act</code> mode instead and document the expected usage.</p>
   </section>
 
-  <!-- ====== EXAMPLES ====== -->
   <section id="examples">
     <div class="section-label">Guide</div>
     <h2 class="section-title">Examples <a class="anchor" href="#examples">#</a></h2>
@@ -2238,102 +2537,160 @@ Custom: $uptime(d, h, m, s)
     <div class="code-block">
       <div class="code-header"><span class="code-lang"><span class="code-dot"></span>python</span><button class="copy-btn"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button></div>
       <pre><code>bot<span class="pn">.</span><span class="fn">command</span><span class="pn">(</span>
-    name<span class="pn">=</span><span class="st">"server"</span><span class="pn">,</span>
-    code<span class="pn">=</span><span class="st">"""
+    <span class="st">"server"</span><span class="pn">,</span>
+    <span class="st">"""
 <span class="dsl">embed</span>
-<span class="dsl">$title</span><span class="pn">[</span><span class="var">$server</span> Info<span class="pn">]</span>
-<span class="dsl">$desc</span><span class="pn">[</span>
-Members: <span class="var">$membercount</span>
-Humans: <span class="var">$membercount</span>(user)
-Bots: <span class="var">$membercount</span>(bots)
-Boost Level: <span class="var">$server</span>(boostlvl)
-Boosts: <span class="var">$server</span>(boost)
-<span class="pn">]</span>
-"""</span>
+title <span class="var">$server</span> Info
+desc Members: <span class="var">$membercount</span>
+desc Humans: <span class="var">$membercount</span>(user)
+desc Bots: <span class="var">$membercount</span>(bots)
+desc Boost Level: <span class="var">$server</span>(boostlvl)
+desc Boosts: <span class="var">$server</span>(boost)
+<span class="dsl">endembed</span>
+"""</span><span class="pn">,</span>
+    description<span class="pn">=</span><span class="st">"Shows server statistics."</span>
 <span class="pn">)</span></code></pre>
     </div>
 
-    <h3>Ping + time status command</h3>
+    <h3>Custom greeting with a custom variable</h3>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang"><span class="code-dot"></span>python</span><button class="copy-btn"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button></div>
+      <pre><code><span class="kw">def</span> <span class="fn">nickname</span><span class="pn">(</span>ctx<span class="pn">):</span>
+    <span class="kw">return</span> ctx<span class="pn">.</span>author<span class="pn">.</span>display_name
+
+registry<span class="pn">.</span><span class="fn">register_var</span><span class="pn">(</span><span class="st">"nick"</span><span class="pn">,</span> nickname<span class="pn">)</span>
+
+bot<span class="pn">.</span><span class="fn">command</span><span class="pn">(</span>
+    <span class="st">"welcome"</span><span class="pn">,</span>
+    <span class="st">"""
+<span class="dsl">embed</span>
+title Welcome!
+desc Hey <span class="var">$nick</span>, glad you're here in <span class="var">$server</span>.
+footer Member #<span class="var">$membercount</span>(all)
+<span class="dsl">endembed</span>
+"""</span><span class="pn">,</span>
+    description<span class="pn">=</span><span class="st">"Greets the invoking user."</span>
+<span class="pn">)</span></code></pre>
+    </div>
+
+    <h3>Moderation function wired to a script command</h3>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang"><span class="code-dot"></span>python</span><button class="copy-btn"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button></div>
+      <pre><code><span class="kw">def</span> <span class="fn">warn_user</span><span class="pn">(</span>ctx<span class="pn">,</span> member_id<span class="pn">,</span> <span class="pn">*</span>reason_words<span class="pn">):</span>
+    reason <span class="pn">=</span> <span class="st">" "</span><span class="pn">.</span><span class="fn">join</span><span class="pn">(</span>reason_words<span class="pn">)</span> <span class="kw">or</span> <span class="st">"No reason given."</span>
+    <span class="kw">return</span> <span class="fn">f</span><span class="st">"&lt;@{member_id}&gt; has been warned: {reason}"</span>
+
+registry<span class="pn">.</span><span class="fn">register</span><span class="pn">(</span><span class="st">"warn"</span><span class="pn">,</span> warn_user<span class="pn">)</span>
+
+bot<span class="pn">.</span><span class="fn">command</span><span class="pn">(</span>
+    <span class="st">"warn"</span><span class="pn">,</span>
+    <span class="st">"warn $args"</span><span class="pn">,</span>
+    description<span class="pn">=</span><span class="st">"Warn a user by ID with a reason."</span><span class="pn">,</span>
+    aliases<span class="pn">=</span><span class="pn">(</span><span class="st">"w"</span><span class="pn">,</span><span class="pn">)</span>
+<span class="pn">)</span></code></pre>
+    </div>
+
+    <h3>Uptime status command</h3>
     <div class="code-block">
       <div class="code-header"><span class="code-lang"><span class="code-dot"></span>python</span><button class="copy-btn"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button></div>
       <pre><code>bot<span class="pn">.</span><span class="fn">command</span><span class="pn">(</span>
-    name<span class="pn">=</span><span class="st">"status"</span><span class="pn">,</span>
-    code<span class="pn">=</span><span class="st">"""
+    <span class="st">"status"</span><span class="pn">,</span>
+    <span class="st">"""
 <span class="dsl">embed</span>
-<span class="dsl">$title</span><span class="pn">[</span>Bot Status<span class="pn">]</span>
-<span class="dsl">$desc</span><span class="pn">[</span>
-Latency: <span class="var">$ping</span>ms
-Time: <span class="var">$time</span>(nodate;24h)
-Date: <span class="var">$time</span>(notime)
-<span class="pn">]</span>
+title Bot Status
+desc Latency: <span class="var">$ping</span>ms
+desc Uptime: <span class="var">$uptime</span>(short)
+desc Time: <span class="var">$time</span>(nodate;24h)
+<span class="dsl">endembed</span>
 """</span>
 <span class="pn">)</span></code></pre>
     </div>
 
-    <h3>Avatar + ID lookup</h3>
+    <h3>Combining a script command with a discord.py cog</h3>
     <div class="code-block">
-      <div class="code-header"><span class="code-lang"><span class="code-dot"></span>python</span><button class="copy-btn"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button></div>
-      <pre><code>bot<span class="pn">.</span><span class="fn">command</span><span class="pn">(</span>
-    name<span class="pn">=</span><span class="st">"whois"</span><span class="pn">,</span>
-    code<span class="pn">=</span><span class="st">"""
+      <div class="code-header"><span class="code-lang"><span class="code-dot"></span>python · main.py</span><button class="copy-btn"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button></div>
+      <pre><code><span class="kw">import</span> discord
+<span class="kw">from</span> discord<span class="pn">.</span>ext <span class="kw">import</span> commands
+<span class="kw">from</span> tflows <span class="kw">import</span> FlowBot<span class="pn">,</span> FunctionRegistry
+
+registry <span class="pn">=</span> <span class="fn">FunctionRegistry</span><span class="pn">()</span>
+
+<span class="kw">def</span> <span class="fn">nickname</span><span class="pn">(</span>ctx<span class="pn">):</span>
+    <span class="kw">return</span> ctx<span class="pn">.</span>author<span class="pn">.</span>display_name
+
+registry<span class="pn">.</span><span class="fn">register_var</span><span class="pn">(</span><span class="st">"nick"</span><span class="pn">,</span> nickname<span class="pn">)</span>
+registry<span class="pn">.</span><span class="fn">register_var_alias</span><span class="pn">(</span><span class="st">"name"</span><span class="pn">,</span> <span class="st">"nick"</span><span class="pn">)</span>
+
+<span class="kw">def</span> <span class="fn">warn_user</span><span class="pn">(</span>ctx<span class="pn">,</span> member_id<span class="pn">,</span> <span class="pn">*</span>reason_words<span class="pn">):</span>
+    reason <span class="pn">=</span> <span class="st">" "</span><span class="pn">.</span><span class="fn">join</span><span class="pn">(</span>reason_words<span class="pn">)</span> <span class="kw">or</span> <span class="st">"No reason given."</span>
+    <span class="kw">return</span> <span class="fn">f</span><span class="st">"&lt;@{member_id}&gt; has been warned: {reason}"</span>
+
+registry<span class="pn">.</span><span class="fn">register</span><span class="pn">(</span><span class="st">"warn"</span><span class="pn">,</span> warn_user<span class="pn">)</span>
+
+bot <span class="pn">=</span> <span class="fn">FlowBot</span><span class="pn">(</span>
+    prefix<span class="pn">=</span><span class="st">"!"</span><span class="pn">,</span>
+    log_errors<span class="pn">=</span><span class="kw">True</span><span class="pn">,</span>
+    log_unknown_functions<span class="pn">=</span><span class="kw">True</span><span class="pn">,</span>
+    case_insensitive<span class="pn">=</span><span class="kw">True</span><span class="pn">,</span>
+    members_intent<span class="pn">=</span><span class="kw">True</span><span class="pn">,</span>
+    registry<span class="pn">=</span>registry
+<span class="pn">)</span>
+
+bot<span class="pn">.</span><span class="fn">command</span><span class="pn">(</span>
+    <span class="st">"welcome"</span><span class="pn">,</span>
+    <span class="st">"""
+<span class="cm">// greets the user with their display name</span>
 <span class="dsl">embed</span>
-<span class="dsl">$title</span><span class="pn">[</span>User Info<span class="pn">]</span>
-<span class="dsl">$desc</span><span class="pn">[</span>
-ID: <span class="var">$id</span>(act)
-Avatar: <span class="var">$image</span>(act)
-<span class="pn">]</span>
-"""</span>
-<span class="pn">)</span></code></pre>
+title Welcome!
+desc Hey <span class="var">$nick</span>, glad you're here in <span class="var">$server</span>.
+footer Member #<span class="var">$membercount</span>(all)
+<span class="dsl">endembed</span>
+"""</span><span class="pn">,</span>
+    description<span class="pn">=</span><span class="st">"Greets the invoking user."</span>
+<span class="pn">)</span>
+
+bot<span class="pn">.</span><span class="fn">command</span><span class="pn">(</span>
+    <span class="st">"warn"</span><span class="pn">,</span>
+    <span class="st">"warn $args"</span><span class="pn">,</span>
+    description<span class="pn">=</span><span class="st">"Warn a user by ID with a reason."</span><span class="pn">,</span>
+    aliases<span class="pn">=</span><span class="pn">(</span><span class="st">"w"</span><span class="pn">,</span><span class="pn">)</span>
+<span class="pn">)</span>
+
+<span class="kw">class</span> <span class="ty">Moderation</span><span class="pn">(</span>commands<span class="pn">.</span>Cog<span class="pn">):</span>
+    <span class="kw">def</span> <span class="fn">__init__</span><span class="pn">(</span><span class="kw">self</span><span class="pn">,</span> bot<span class="pn">):</span>
+        <span class="kw">self</span><span class="pn">.</span>bot <span class="pn">=</span> bot
+
+    <span class="pn">@</span>commands<span class="pn">.</span><span class="fn">command</span><span class="pn">()</span>
+    <span class="kw">async</span> <span class="kw">def</span> <span class="fn">kick</span><span class="pn">(</span><span class="kw">self</span><span class="pn">,</span> ctx<span class="pn">,</span> member<span class="pn">:</span> discord<span class="pn">.</span>Member<span class="pn">,</span> <span class="pn">*,</span> reason<span class="pn">=</span><span class="kw">None</span><span class="pn">):</span>
+        <span class="kw">await</span> member<span class="pn">.</span><span class="fn">kick</span><span class="pn">(</span>reason<span class="pn">=</span>reason<span class="pn">)</span>
+        <span class="kw">await</span> ctx<span class="pn">.</span><span class="fn">send</span><span class="pn">(</span><span class="fn">f</span><span class="st">"Kicked {member.display_name}."</span><span class="pn">)</span>
+
+bot<span class="pn">.</span><span class="fn">add_cog</span><span class="pn">(</span><span class="ty">Moderation</span><span class="pn">(</span>bot<span class="pn">))</span>
+
+<span class="pn">@</span>bot<span class="pn">.</span>event
+<span class="kw">async</span> <span class="kw">def</span> <span class="fn">on_member_join</span><span class="pn">(</span>member<span class="pn">):</span>
+    channel <span class="pn">=</span> member<span class="pn">.</span>guild<span class="pn">.</span>system_channel
+    <span class="kw">if</span> channel<span class="pn">:</span>
+        <span class="kw">await</span> channel<span class="pn">.</span><span class="fn">send</span><span class="pn">(</span><span class="fn">f</span><span class="st">"Welcome to the server, {member.mention}!"</span><span class="pn">)</span>
+
+bot<span class="pn">.</span><span class="fn">run</span><span class="pn">(</span><span class="st">"YOUR_BOT_TOKEN"</span><span class="pn">)</span></code></pre>
     </div>
 
-    <h3>Simple plain-text output</h3>
-    <div class="code-block">
-      <div class="code-header"><span class="code-lang"><span class="code-dot"></span>tflows DSL</span><button class="copy-btn"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button></div>
-      <pre><code>send Pong! <span class="var">$ping</span>ms — <span class="var">$time</span>(nodate;24h)</code></pre>
-    </div>
-
-    <h3>Complete time system demo</h3>
-    <div class="code-block">
-      <div class="code-header"><span class="code-lang"><span class="code-dot"></span>python</span><button class="copy-btn"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button></div>
-      <pre><code>bot<span class="pn">.</span><span class="fn">command</span><span class="pn">(</span>
-    name<span class="pn">=</span><span class="st">"time"</span><span class="pn">,</span>
-    code<span class="pn">=</span><span class="st">"""
-<span class="dsl">embed</span>
-<span class="dsl">$title</span><span class="pn">[</span>Tflows Time Demo<span class="pn">]</span>
-<span class="dsl">$desc</span><span class="pn">[</span>
-Default: <span class="var">$time</span>()
-No Date: <span class="var">$time</span>(nodate)
-No Time: <span class="var">$time</span>(notime)
-24h: <span class="var">$time</span>(24h)
-12h: <span class="var">$time</span>(12h)
-24h No Date: <span class="var">$time</span>(nodate;24h)
-<span class="pn">]</span>
-"""</span>
-<span class="pn">)</span></code></pre>
-    </div>
+    <p>This bot uses an isolated registry with a custom variable (<code>$nick</code> / <code>$name</code>) and a custom moderation function (<code>warn</code>), registers two script commands, and still has a fully normal discord.py cog and event listener running alongside them — demonstrating how Tflows scripting and standard discord.py code are meant to be used together rather than as alternatives to each other.</p>
 
   </section>
 
 </main>
 
-<!-- ============================================================
-     RIGHT TOC
-============================================================ -->
 <div class="toc-rail" id="toc-rail">
   <div class="toc-heading">On this page</div>
   <ul class="toc-ul" id="toc-list"></ul>
 </div>
 
-<!-- ============================================================
-     JAVASCRIPT
-============================================================ -->
 <script>
 (function () {
   'use strict';
 
-  // ──────────────────────────────────────────────
-  // 1. THEME
-  // ──────────────────────────────────────────────
   const themeBtn     = document.getElementById('theme-btn');
   const iconDark     = document.getElementById('theme-icon-dark');
   const iconLight    = document.getElementById('theme-icon-light');
@@ -2356,9 +2713,6 @@ No Time: <span class="var">$time</span>(notime)
     applyTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
   });
 
-  // ──────────────────────────────────────────────
-  // 2. MOBILE MENU
-  // ──────────────────────────────────────────────
   const sidebar   = document.getElementById('sidebar');
   const mobBtn    = document.getElementById('mob-menu');
   if (mobBtn) {
@@ -2370,9 +2724,6 @@ No Time: <span class="var">$time</span>(notime)
     });
   }
 
-  // ──────────────────────────────────────────────
-  // 3. COLLAPSIBLE NAV GROUPS
-  // ──────────────────────────────────────────────
   document.querySelectorAll('.nav-group-label').forEach(label => {
     label.addEventListener('click', () => {
       label.parentElement.classList.toggle('closed');
@@ -2383,14 +2734,10 @@ No Time: <span class="var">$time</span>(notime)
         label.parentElement.classList.toggle('closed');
       }
     });
-    // Set initial max-height for animation
     const items = label.nextElementSibling;
     if (items) items.style.maxHeight = items.scrollHeight + 'px';
   });
 
-  // ──────────────────────────────────────────────
-  // 4. AUTO VARIABLE SIDEBAR NAV (CRITICAL)
-  // ──────────────────────────────────────────────
   function buildVarNav() {
     const varSection = document.getElementById('variables');
     if (!varSection) return;
@@ -2398,20 +2745,17 @@ No Time: <span class="var">$time</span>(notime)
     const container  = document.getElementById('var-subnav');
     if (!container)  return;
 
-    // Find all h2 elements inside #variables whose text starts with $
     const varH2s = varSection.querySelectorAll('h2');
 
     varH2s.forEach(h2 => {
       const text = h2.textContent.replace('#', '').trim();
       if (!text.startsWith('$')) return;
 
-      // Ensure the h2 has an id
       if (!h2.id) {
         const slug = 'var-' + text.replace(/[^a-zA-Z0-9]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '').toLowerCase();
         h2.id = slug;
       }
 
-      // Add anchor link to h2 if not already present
       if (!h2.querySelector('.anchor')) {
         const anchor = document.createElement('a');
         anchor.className = 'anchor';
@@ -2429,9 +2773,6 @@ No Time: <span class="var">$time</span>(notime)
 
   buildVarNav();
 
-  // ──────────────────────────────────────────────
-  // 5. ANCHOR LINKS ON SECTION TITLES
-  // ──────────────────────────────────────────────
   document.querySelectorAll('.section-title').forEach(el => {
     const id = el.closest('section')?.id;
     if (!id) return;
@@ -2445,9 +2786,6 @@ No Time: <span class="var">$time</span>(notime)
     }
   });
 
-  // ──────────────────────────────────────────────
-  // 6. RIGHT TOC GENERATION
-  // ──────────────────────────────────────────────
   function buildTOC() {
     const list     = document.getElementById('toc-list');
     if (!list) return;
@@ -2464,7 +2802,6 @@ No Time: <span class="var">$time</span>(notime)
       a.textContent = label;
       li.appendChild(a);
 
-      // h3 sub-items
       const h3s = sec.querySelectorAll('h3');
       if (h3s.length > 0 && h3s.length <= 8) {
         const sub = document.createElement('ul');
@@ -2472,7 +2809,6 @@ No Time: <span class="var">$time</span>(notime)
         h3s.forEach(h3 => {
           const text = h3.textContent.trim();
           if (text.length < 2) return;
-          // Give h3 an id for deep linking
           if (!h3.id) {
             const slug = sec.id + '-' + text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g,'');
             h3.id = slug;
@@ -2493,9 +2829,6 @@ No Time: <span class="var">$time</span>(notime)
 
   buildTOC();
 
-  // ──────────────────────────────────────────────
-  // 7. COPY TO CLIPBOARD
-  // ──────────────────────────────────────────────
   document.querySelectorAll('.copy-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       const pre = btn.closest('.code-block')?.querySelector('pre');
@@ -2510,7 +2843,6 @@ No Time: <span class="var">$time</span>(notime)
           btn.classList.remove('ok');
         }, 2000);
       }).catch(() => {
-        // Fallback for non-HTTPS
         const ta = document.createElement('textarea');
         ta.value = text;
         ta.style.position = 'fixed';
@@ -2523,9 +2855,6 @@ No Time: <span class="var">$time</span>(notime)
     });
   });
 
-  // ──────────────────────────────────────────────
-  // 8. SCROLL SPY
-  // ──────────────────────────────────────────────
   const allNavLinks = () => document.querySelectorAll('.sb-nav a, .toc-ul a');
 
   function setActive(id) {
@@ -2546,9 +2875,6 @@ No Time: <span class="var">$time</span>(notime)
     spyTargets.forEach(el => io.observe(el));
   }
 
-  // ──────────────────────────────────────────────
-  // 9. SEARCH SYSTEM
-  // ──────────────────────────────────────────────
   const overlay    = document.getElementById('search-overlay');
   const searchInp  = document.getElementById('search-input');
   const resultsEl  = document.getElementById('search-results');
@@ -2568,27 +2894,23 @@ No Time: <span class="var">$time</span>(notime)
   sbBtn.addEventListener('click', openSearch);
   overlay.addEventListener('click', e => { if (e.target === overlay) closeSearch(); });
 
-  // Build index after DOM is ready
   function buildIdx() {
     document.querySelectorAll('main section[id]').forEach(sec => {
       const secId    = sec.id;
       const secTitle = (sec.querySelector('.section-title') || sec.querySelector('h2'))?.textContent.replace('#','').trim() || secId;
 
-      // Headings
       sec.querySelectorAll('h2, h3').forEach(h => {
         const text = h.textContent.replace('#','').trim();
         if (text.length < 2) return;
         searchIdx.push({ id: h.id || secId, label: secTitle, title: text, preview: '', type: h.tagName });
       });
 
-      // Paragraphs
       sec.querySelectorAll('p').forEach(p => {
         const text = p.textContent.trim();
         if (text.length < 10) return;
         searchIdx.push({ id: secId, label: secTitle, title: secTitle, preview: text.slice(0, 90), type: 'P' });
       });
 
-      // Code
       sec.querySelectorAll('pre code').forEach(c => {
         const text = c.textContent.trim();
         if (text.length < 3) return;
@@ -2612,7 +2934,6 @@ No Time: <span class="var">$time</span>(notime)
       return;
     }
 
-    // Score and filter
     const seen    = new Set();
     const results = [];
     searchIdx.forEach(item => {
@@ -2673,9 +2994,6 @@ No Time: <span class="var">$time</span>(notime)
     }
   });
 
-  // ──────────────────────────────────────────────
-  // 10. KEYBOARD SHORTCUTS
-  // ──────────────────────────────────────────────
   document.addEventListener('keydown', e => {
     const tag = document.activeElement?.tagName;
     if (tag === 'INPUT' || tag === 'TEXTAREA') return;
@@ -2683,7 +3001,6 @@ No Time: <span class="var">$time</span>(notime)
     if (e.key === 'Escape') closeSearch();
   });
 
-  // Also Escape when search is focused
   searchInp.addEventListener('keydown', e => {
     if (e.key === 'Escape') closeSearch();
   });
