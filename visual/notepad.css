@@ -1,0 +1,43 @@
+/* ============================================================
+   NOTEPAD APP
+   ============================================================ */
+.np {
+  display:flex;
+  flex-direction:column;
+
+  height:100%
+}
+
+.np-bar {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  padding:8px 12px;
+
+  background:var(--surface-2);
+
+  border-bottom:1px solid var(--line);
+
+  color:var(--text-faint);
+
+  font-family:var(--mono);
+  font-size:10px
+}
+
+.np-area {
+  flex:1;
+
+  padding:14px;
+
+  border:none;
+  outline:none;
+  resize:none;
+
+  background:var(--surface);
+  color:var(--text);
+
+  font-family:var(--mono);
+  font-size:13px;
+  line-height:1.7
+}

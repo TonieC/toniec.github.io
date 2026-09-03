@@ -1,0 +1,144 @@
+.windows-layer {
+  position:absolute;
+  inset:0;
+  z-index:2;
+  pointer-events:none
+}
+
+.window {
+  position:absolute;
+  display:flex;
+  flex-direction:column;
+  min-width:280px;
+  min-height:180px;
+  overflow:hidden;
+  background:var(--surface);
+  border:1px solid var(--line-strong);
+  border-radius:6px;
+  box-shadow:var(--shadow);
+  pointer-events:auto
+}
+
+.window.dragging,.window.resizing {
+  transition:none !important;
+  user-select:none
+}
+
+.window.maximized {
+  border-radius:0;
+  border-left:none;
+  border-right:none;
+  border-top:none
+}
+
+.win-titlebar {
+  height:38px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:0 5px 0 11px;
+  flex-shrink:0;
+  background:var(--surface-2);
+  border-bottom:1px solid var(--line);
+  cursor:grab;
+  touch-action:none
+}
+
+.win-titlebar:active {
+  cursor:grabbing
+}
+
+.win-ttl-icon {
+  position:relative;
+  width:14px;
+  height:14px;
+  flex-shrink:0
+}
+
+.win-title {
+  flex:1;
+  overflow:hidden;
+  color:var(--text-dim);
+  font-family:var(--sans);
+  font-size:12px;
+  font-weight:500;
+  white-space:nowrap;
+  text-overflow:ellipsis
+}
+
+.win-controls {
+  display:flex;
+  align-items:center;
+  gap:1px
+}
+
+.win-btn {
+  width:29px;
+  height:27px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:0;
+  border-radius:3px;
+  background:transparent;
+  color:var(--text-dim);
+  cursor:pointer
+}
+
+.win-btn:hover {
+  background:var(--surface-3);
+  color:var(--text)
+}
+
+.win-btn.win-close:hover {
+  background:var(--danger);
+  color:#fff
+}
+
+.win-btn svg {
+  width:10px;
+  height:10px
+}
+
+.win-body {
+  position:relative;
+  flex:1;
+  overflow:auto;
+  background:var(--surface);
+  -webkit-overflow-scrolling:touch
+}
+
+.win-body::-webkit-scrollbar,.start-menu::-webkit-scrollbar,.term-out::-webkit-scrollbar,.m-appview-body::-webkit-scrollbar {
+  width:10px
+}
+
+.win-body::-webkit-scrollbar-track,.start-menu::-webkit-scrollbar-track,.term-out::-webkit-scrollbar-track,.m-appview-body::-webkit-scrollbar-track {
+  background:var(--surface)
+}
+
+.win-body::-webkit-scrollbar-thumb,.start-menu::-webkit-scrollbar-thumb,.m-appview-body::-webkit-scrollbar-thumb {
+  background:#45474d;
+  border:2px solid var(--surface);
+  border-radius:5px
+}
+
+.win-resize {
+  position:absolute;
+  right:0;
+  bottom:0;
+  width:17px;
+  height:17px;
+  cursor:nwse-resize;
+  touch-action:none
+}
+
+.win-resize::after {
+  content:"";
+  position:absolute;
+  right:4px;
+  bottom:4px;
+  width:7px;
+  height:7px;
+  border-right:1px solid var(--text-faint);
+  border-bottom:1px solid var(--text-faint)
+}

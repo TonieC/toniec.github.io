@@ -1,0 +1,115 @@
+.noscript-page {
+  display:none
+}
+
+noscript .noscript-page {
+  display:block;
+  position:fixed;
+  inset:0;
+  overflow:auto;
+  padding:40px 20px;
+  background:var(--bg);
+  color:var(--text)
+}
+
+#boot {
+  position:fixed;
+  inset:0;
+  z-index:10000;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:flex-start;
+  padding:8vh 8vw;
+  background:#080808;
+  color:#e6e6e6;
+  font-family:var(--mono);
+  cursor:pointer;
+  transition:opacity .25s ease
+}
+
+#boot.boot-out {
+  opacity:0;
+  pointer-events:none
+}
+
+.boot-logo {
+  margin-bottom:24px;
+  font-size:clamp(22px,4vw,32px);
+  font-weight:700;
+  letter-spacing:-.03em
+}
+
+.boot-logo span {
+  color:var(--accent)
+}
+
+.boot-lines {
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+  min-height:120px
+}
+
+.boot-line {
+  opacity:0;
+  color:#929292;
+  font-size:12px;
+  transform:translateY(2px);
+  transition:opacity .15s ease,transform .15s ease
+}
+
+.boot-line.on {
+  opacity:1;
+  transform:none
+}
+
+.boot-line.ready {
+  margin-top:7px;
+  color:var(--accent);
+  font-weight:600
+}
+
+.boot-skip {
+  position:absolute;
+  right:8vw;
+  bottom:6vh;
+  color:#8c8c8c;
+  font-size:10px;
+  letter-spacing:.04em
+}
+
+.noscript-inner {
+  max-width:640px;
+  margin:0 auto;
+  font-family:Inter,sans-serif
+}
+
+.noscript-h1 {
+  font-family:'JetBrains Mono',monospace
+}
+
+.noscript-lead {
+  margin:14px 0;
+  color:#9a9da5;
+  line-height:1.8
+}
+
+.noscript-h2 {
+  margin-top:28px;
+  font-family:'JetBrains Mono',monospace
+}
+
+.noscript-p {
+  line-height:1.8;
+  color:#9a9da5
+}
+
+.noscript-list {
+  line-height:2;
+  color:#9a9da5
+}
+
+.power-screen .boot-logo {
+  margin-bottom:0
+}

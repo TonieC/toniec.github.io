@@ -6,17 +6,17 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://toniec.github.io/notepad.html</loc>
+    <loc>https://toniec.github.io/samples/notepad.html</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://toniec.github.io/playground.html</loc>
+    <loc>https://toniec.github.io/samples/playground.html</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://toniec.github.io/taskify.html</loc>
+    <loc>https://toniec.github.io/samples/taskify.html</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>

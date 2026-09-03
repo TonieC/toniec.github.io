@@ -1,0 +1,169 @@
+/* ============================================================
+   SETTINGS APP
+   ============================================================ */
+.set-group {
+  margin-bottom:22px
+}
+
+.set-label {
+  margin-bottom:8px;
+
+  color:var(--text-faint);
+
+  font-family:var(--mono);
+  font-size:9px;
+  font-weight:600;
+
+  letter-spacing:.04em;
+  text-transform:uppercase
+}
+
+.set-row {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  gap:16px;
+
+  padding:13px 2px;
+
+  border-bottom:1px solid var(--line)
+}
+
+.set-row .t {
+  color:var(--text);
+
+  font-size:13px;
+  font-weight:500
+}
+
+.set-row .d {
+  margin-top:3px;
+
+  color:var(--text-faint);
+
+  font-size:11px
+}
+
+.set-toggle {
+  position:relative;
+
+  width:42px;
+  height:24px;
+
+  flex-shrink:0;
+
+  border:1px solid var(--line-strong);
+  border-radius:13px;
+
+  background:var(--surface-3);
+
+  cursor:pointer
+}
+
+.set-toggle::after {
+  content:"";
+
+  position:absolute;
+
+  top:2px;
+  left:2px;
+
+  width:18px;
+  height:18px;
+
+  border-radius:50%;
+
+  background:var(--text-faint);
+
+  transition:transform .15s ease, background .15s ease
+}
+
+.set-toggle.on {
+  border-color:var(--accent);
+
+  background:var(--accent-dim)
+}
+
+.set-toggle.on::after {
+  background:var(--accent);
+
+  transform:translateX(18px)
+}
+
+.wp-grid {
+  display:grid;
+
+  grid-template-columns:repeat(2, 1fr);
+
+  gap:8px
+}
+
+.wp-opt {
+  overflow:hidden;
+
+  padding:0;
+
+  border:2px solid var(--line);
+  border-radius:4px;
+
+  background:var(--surface-2);
+
+  cursor:pointer
+}
+
+.wp-opt .n {
+  display:block;
+
+  padding:6px 8px;
+
+  color:var(--text-dim);
+
+  font-size:11px;
+  text-align:left
+}
+
+.wp-opt.active {
+  border-color:var(--accent)
+}
+
+.wp-opt.active .n {
+  color:var(--text)
+}
+
+.set-danger {
+  margin-top:6px
+}
+
+.seg-group {
+  display:flex;
+
+  gap:6px
+}
+
+.seg-btn {
+  flex:1;
+
+  padding:9px 10px;
+
+  border:1px solid var(--line-strong);
+  border-radius:3px;
+
+  background:var(--surface-2);
+  color:var(--text-dim);
+
+  font-size:12px;
+
+  cursor:pointer
+}
+
+.seg-btn:hover {
+  background:var(--surface-3)
+}
+
+.seg-btn.active {
+  border-color:var(--accent);
+
+  background:var(--accent-dim);
+  color:var(--text)
+}

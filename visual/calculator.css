@@ -1,0 +1,87 @@
+/* ============================================================
+   CALCULATOR
+   ============================================================ */
+.calc {
+  display:flex;
+  flex-direction:column;
+
+  height:100%;
+
+  padding:14px
+}
+
+.calc-display {
+  padding:14px 12px;
+
+  overflow:hidden;
+
+  background:var(--surface-2);
+
+  border:1px solid var(--line);
+  border-radius:4px;
+
+  color:var(--text);
+
+  font-family:var(--mono);
+  font-size:24px;
+  text-align:right;
+
+  white-space:nowrap;
+  text-overflow:ellipsis
+}
+
+.calc-sub {
+  min-height:16px;
+
+  margin:6px 2px 10px;
+
+  color:var(--text-faint);
+
+  font-family:var(--mono);
+  font-size:10px;
+  text-align:right
+}
+
+.calc-keys {
+  flex:1;
+
+  display:grid;
+
+  grid-template-columns:repeat(4, 1fr);
+
+  gap:6px
+}
+
+.calc-key {
+  border:1px solid var(--line);
+  border-radius:4px;
+
+  background:var(--surface-2);
+  color:var(--text);
+
+  font-size:15px;
+
+  cursor:pointer
+}
+
+.calc-key:hover {
+  background:var(--surface-3)
+}
+
+.calc-key.op {
+  color:var(--accent);
+
+  font-weight:700
+}
+
+.calc-key.eq {
+  background:var(--accent);
+  border-color:var(--accent);
+  color:var(--accent-ink);
+
+  font-weight:700
+}
+
+.calc-key.eq:hover {
+  background:var(--accent-hover)
+}

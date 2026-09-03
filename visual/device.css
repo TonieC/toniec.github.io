@@ -1,0 +1,130 @@
+/* ============================================================
+   DEVICE — tray, quick settings, brightness overlay
+   ============================================================ */
+
+.tb-tray {
+  gap:7px;
+}
+
+.tb-tray .wifi-off {
+  display:none;
+}
+
+.tb-tray.offline {
+  color:var(--danger);
+}
+
+.tb-tray.offline .wifi-off {
+  display:block;
+}
+
+.tb-tray.lowbatt {
+  color:var(--danger);
+}
+
+.tray-batt {
+  display:flex;
+  align-items:center;
+  gap:5px;
+}
+
+.tray-pct {
+  font-family:var(--mono);
+  font-size:10px;
+}
+
+.tray-panel {
+  position:absolute;
+
+  right:8px;
+  bottom:calc(var(--taskbar-h) + 8px);
+
+  z-index:60;
+
+  width:300px;
+
+  padding:6px 0;
+
+  background:var(--surface);
+
+  border:1px solid var(--line-strong);
+  border-radius:5px;
+
+  box-shadow:var(--shadow);
+}
+
+.tray-row {
+  display:flex;
+  align-items:center;
+
+  gap:12px;
+
+  padding:12px 14px;
+}
+
+.tray-row + .tray-row {
+  border-top:1px solid var(--line);
+}
+
+.tray-row-ico {
+  display:flex;
+  align-items:center;
+
+  flex-shrink:0;
+
+  color:var(--text-dim);
+}
+
+.tray-row-tx {
+  display:flex;
+  flex-direction:column;
+
+  min-width:0;
+}
+
+.tray-row-tx .t {
+  color:var(--text);
+
+  font-size:12px;
+  font-weight:500;
+}
+
+.tray-row-tx .d {
+  margin-top:2px;
+
+  color:var(--text-faint);
+
+  font-family:var(--mono);
+  font-size:10px;
+}
+
+.tray-slider {
+  flex:1;
+
+  min-width:0;
+
+  accent-color:var(--accent);
+
+  cursor:pointer;
+}
+
+.m-set-slider {
+  width:130px;
+
+  flex-shrink:0;
+
+  accent-color:var(--accent);
+
+  cursor:pointer;
+}
+
+#bright-overlay {
+  position:fixed;
+  inset:0;
+  z-index:5000;
+
+  background:#000;
+  opacity:0;
+
+  pointer-events:none;
+}

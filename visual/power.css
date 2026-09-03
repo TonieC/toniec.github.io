@@ -1,0 +1,35 @@
+.power-screen {
+  position:absolute;
+  inset:0;
+  z-index:200;
+
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:flex-start;
+
+  gap:18px;
+
+  padding:8vh 8vw;
+
+  background:#080808;
+  color:#e6e6e6;
+
+  font-family:var(--mono)
+}
+
+.power-text {
+  color:#929292;
+
+  font-size:13px
+}
+
+.power-screen.off .power-text {
+  color:var(--accent);
+
+  font-weight:600
+}
+
+#power-reopen {
+  margin-top:8px
+}
