@@ -9,15 +9,19 @@
  * index.html, mirror the new URLs in PRECACHE too (query strings are
  * part of the cache key).
  */
-var CACHE_NAME = 'tcos-v1';
+var CACHE_NAME = 'tcos-v2';
 
 var PRECACHE = [
   '/',
   '/index.html',
+  '/404.html',
   '/manifest.json',
   '/images/favicon.ico',
   '/images/workshop.png',
   '/images/workshop-nobg.png',
+  '/icons/icon-192.png',
+  '/icons/icon-512.png',
+  '/icons/icon-maskable-512.png',
   '/images/wallpaper-1920.jpg',
   '/images/wallpaper-1920.webp',
   '/images/wallpaper-828.jpg',

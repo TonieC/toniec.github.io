@@ -18,7 +18,7 @@ and a taskbar — the way work actually feels on my computer.
 - Shutdown / restart flows with boot replay, power menu in Start
 - Task Manager (processes, performance, startup, run-new-task, `Ctrl+Shift+Esc`)
 - Notification center: tray bell, panel, toast stack, sounds
-- Pin/unpin apps to the taskbar, calculators, notepad, settings, terminal
+- Pin/unpin apps to the taskbar, Calculator, Notepad, Settings, terminal
 
 **Mobile OS** (≤640px)
 - Home grid with search + recently opened, long-press drag reorder
