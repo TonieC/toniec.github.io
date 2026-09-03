@@ -1,22 +1,31 @@
 {
-    "name": "Tonie's Portfolio",
-    "short_name": "Tonie Portfolio",
-    "description": "Showcase of my web development projects and skills.",
-    "start_url": "/index.html",
-    "display": "standalone", 
-    "background_color": "#97562C",  
-    "theme_color": "#AF7244", 
-    "icons": [
-      {
-        "src": "icons/icon-192x192.png", 
-        "sizes": "192x192", 
-        "type": "image/png"
-      },
-      {
-        "src": "icons/icon-512x512.png", 
-        "sizes": "512x512", 
-        "type": "image/png"
-      }
-    ]
-  }
-  
+  "name": "Tonie C.",
+  "short_name": "Tonie C.",
+  "description": "TC/OS — the personal developer environment of Tonie C., a developer from the Philippines building web applications, backend systems, and embedded projects.",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#111214",
+  "theme_color": "#0b0c0e",
+  "icons": [
+    {
+      "src": "images/workshop.png",
+      "sizes": "any",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "images/workshop-nobg.png",
+      "sizes": "any",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "images/favicon.ico",
+      "sizes": "any",
+      "type": "image/x-icon"
+    }
+  ]
+}
