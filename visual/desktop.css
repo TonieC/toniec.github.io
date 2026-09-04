@@ -286,3 +286,247 @@
 .link-blue {
   color:var(--blue)
 }
+
+/* ============================================================
+   ALT+TAB / LOCK / SECURITY SCREENS
+   ============================================================ */
+
+.altab {
+  position:absolute;
+  inset:0;
+  z-index:250;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  padding:20px;
+
+  background:rgba(0,0,0,.45)
+}
+
+.altab-row {
+  display:flex;
+
+  gap:8px;
+
+  max-width:100%;
+
+  overflow-x:auto;
+
+  padding:12px;
+
+  background:var(--surface);
+
+  border:1px solid var(--line-strong);
+  border-radius:6px;
+
+  box-shadow:var(--shadow)
+}
+
+.altab-app {
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+
+  gap:8px;
+
+  width:96px;
+
+  flex-shrink:0;
+
+  padding:12px 6px;
+
+  border:1px solid transparent;
+  border-radius:4px;
+
+  background:none;
+  color:var(--text);
+
+  font-size:11px;
+
+  cursor:default
+}
+
+.altab-app .g {
+  position:relative;
+
+  width:28px;
+  height:28px
+}
+
+.altab-app .g .glyph-file,
+.altab-app .g .glyph-folder,
+.altab-app .g .glyph-app,
+.altab-app .g .glyph-link {
+  width:56px;
+  height:56px;
+
+  transform:scale(.5);
+  transform-origin:top left
+}
+
+.altab-app .t {
+  max-width:88px;
+
+  overflow:hidden;
+
+  white-space:nowrap;
+  text-overflow:ellipsis
+}
+
+.altab-app.active {
+  background:var(--surface-3);
+
+  border-color:var(--accent)
+}
+
+.lock-screen {
+  position:absolute;
+  inset:0;
+  z-index:300;
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+
+  gap:6px;
+
+  background:rgba(8,8,8,.92);
+
+  font-family:var(--mono);
+
+  cursor:pointer
+}
+
+.lock-time {
+  color:#fff;
+
+  font-size:clamp(56px, 12vw, 110px);
+  font-weight:700;
+
+  letter-spacing:-.04em
+}
+
+.lock-date {
+  color:#b1b3b8;
+
+  font-size:14px
+}
+
+.lock-hint {
+  margin-top:26px;
+
+  color:#73767d;
+
+  font-size:11px
+}
+
+.cad-screen {
+  position:absolute;
+  inset:0;
+  z-index:300;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  padding:20px;
+
+  background:rgba(8,8,8,.9)
+}
+
+.cad-box {
+  width:min(300px, 100%);
+
+  display:flex;
+  flex-direction:column;
+
+  gap:6px;
+
+  padding:14px;
+
+  background:var(--surface);
+
+  border:1px solid var(--line-strong);
+  border-radius:6px;
+
+  box-shadow:var(--shadow)
+}
+
+.cad-btn {
+  padding:11px 12px;
+
+  border:none;
+  border-radius:3px;
+
+  background:none;
+  color:var(--text);
+
+  font-size:13px;
+  text-align:left;
+
+  cursor:pointer
+}
+
+.cad-btn:hover {
+  background:var(--surface-3);
+  color:var(--accent)
+}
+
+.uac-screen {
+  position:absolute;
+  inset:0;
+  z-index:320;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  padding:20px;
+
+  background:rgba(8,8,8,.88)
+}
+
+.uac-box {
+  width:min(360px, 100%);
+
+  padding:20px;
+
+  background:var(--surface);
+
+  border:1px solid var(--line-strong);
+  border-radius:6px;
+
+  box-shadow:var(--shadow)
+}
+
+.uac-title {
+  color:var(--accent);
+
+  font-family:var(--mono);
+  font-size:11px;
+  font-weight:700;
+
+  letter-spacing:.04em;
+  text-transform:uppercase
+}
+
+.uac-text {
+  margin-top:10px;
+
+  color:var(--text);
+
+  font-size:13px;
+  line-height:1.6
+}
+
+.uac-btns {
+  display:flex;
+  justify-content:flex-end;
+
+  gap:8px;
+
+  margin-top:16px
+}

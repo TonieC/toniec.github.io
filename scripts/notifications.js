@@ -69,6 +69,11 @@
     return new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
   }
 
+  function groupLabel(n){
+    if(!n.app) return 'System';
+    if(window.TCOS_pinLabel) return window.TCOS_pinLabel(n.app);
+    return n.app;
+  }
   function renderList(){
     list.innerHTML = '';
     if(!items.length){
@@ -78,7 +83,16 @@
       list.appendChild(e);
       return;
     }
+    var lastGroup = null;
     items.forEach(function(n){
+      var g = groupLabel(n);
+      if(g !== lastGroup){
+        lastGroup = g;
+        var h = document.createElement('div');
+        h.className = 'notif-group';
+        h.textContent = g;
+        list.appendChild(h);
+      }
       var b = document.createElement('button');
       b.className = 'notif-item';
       b.innerHTML = '<span class="t">' + esc(n.title) + '</span>' +
@@ -112,6 +126,9 @@
     items = items.slice(0, 20);
     paintBadge();
     renderList();
+    var dnd = false;
+    try { dnd = localStorage.getItem('tcos-dnd') === '1'; } catch(e){}
+    if(dnd) return;
     playSound();
 
     var card = document.createElement('div');

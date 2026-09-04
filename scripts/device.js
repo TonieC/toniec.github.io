@@ -57,22 +57,25 @@
   function online(){ return navigator.onLine !== false; }
   function paintNet(){
     var on = online();
+    var air = flag('tcos-air', false);
+    var showOn = on && !air;
     var t = document.getElementById('tray-net-state');
-    if(t) t.textContent = on ? 'Online · Connected' : 'Offline · No connection';
+    if(t) t.textContent = air ? 'Airplane mode (simulated)' : (on ? 'Online · Connected' : 'Offline · No connection');
     var m = document.getElementById('m-set-wifi');
-    if(m) m.textContent = on ? 'Online · Connected' : 'Offline · No connection';
+    if(m) m.textContent = air ? 'Airplane mode (simulated)' : (on ? 'Online · Connected' : 'Offline · No connection');
     var btn = document.getElementById('tray-btn');
-    if(btn) btn.classList.toggle('offline', !on);
+    if(btn) btn.classList.toggle('offline', !showOn);
     /* direct display control (works even if tray CSS is stale/missing) */
     var slash = document.getElementById('tray-wifi-off');
-    if(slash) slash.style.display = on ? 'none' : 'block';
+    if(slash) slash.style.display = showOn ? 'none' : 'block';
     var mSlash = document.getElementById('m-st-wifi-off');
-    if(mSlash) mSlash.style.display = on ? 'none' : 'block';
+    if(mSlash) mSlash.style.display = showOn ? 'none' : 'block';
     var mw = document.getElementById('m-st-wifi');
     if(mw){
-      mw.classList.toggle('offline', !on);
-      mw.setAttribute('aria-label', on ? 'Network: online' : 'Network: offline');
+      mw.classList.toggle('offline', !showOn);
+      mw.setAttribute('aria-label', showOn ? 'Network: online' : 'Network: offline');
     }
+    paintFlags();
   }
   window.addEventListener('online', paintNet);
   window.addEventListener('offline', paintNet);
@@ -162,10 +165,50 @@
     });
   }
 
+  function flag(key, fallback){
+    try {
+      var v = localStorage.getItem(key);
+      return v === null ? fallback : v === '1';
+    } catch(e){ return fallback; }
+  }
+  function paintFlags(){
+    var map = [['[data-tray-dnd]', 'tcos-dnd', false], ['[data-tray-night]', 'tcos-night', false],
+               ['[data-tray-bt]', 'tcos-bt', true], ['[data-tray-air]', 'tcos-air', false]];
+    map.forEach(function(m){
+      var b = document.querySelector(m[0]);
+      if(b){
+        var on = flag(m[1], m[2]);
+        b.classList.toggle('on', on);
+        b.setAttribute('aria-checked', on);
+      }
+    });
+  }
+  function flipFlag(key, fallback){
+    var on = !flag(key, fallback);
+    try { localStorage.setItem(key, on ? '1' : '0'); } catch(e){}
+    return on;
+  }
+  [['[data-tray-dnd]', 'tcos-dnd', false], ['[data-tray-night]', 'tcos-night', false],
+   ['[data-tray-bt]', 'tcos-bt', true], ['[data-tray-air]', 'tcos-air', false]].forEach(function(m){
+    var b = document.querySelector(m[0]);
+    if(b) b.addEventListener('click', function(){
+      var on = flipFlag(m[1], m[2]);
+      b.classList.toggle('on', on);
+      b.setAttribute('aria-checked', on);
+      if(m[1] === 'tcos-night' && window.TCOS_night) window.TCOS_night();
+      paintNet();
+    });
+  });
+
   var vs = document.getElementById('tray-vol');
   if(vs) vs.addEventListener('input', function(){ setVolume(parseInt(vs.value, 10)); });
   var bs = document.getElementById('tray-bright');
   if(bs) bs.addEventListener('input', function(){ setBright(parseInt(bs.value, 10)); });
+  /* night warmth sliders live in tray, settings, and mobile — one delegated listener */
+  document.addEventListener('input', function(e){
+    var t = e.target && e.target.closest ? e.target.closest('[data-night-temp]') : null;
+    if(t && window.TCOS_nightTemp) window.TCOS_nightTemp(parseInt(t.value, 10));
+  });
 
   /* ---------- public API ---------- */
   window.TCOS_device = {

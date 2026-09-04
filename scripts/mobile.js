@@ -15,6 +15,7 @@ function initMobileOS(){
     {app:'projects', label:'Projects'},
     {app:'skills', label:'Skills'},
     {app:'lab', label:'Lab'},
+    {app:'explorer', label:'Explorer'},
     {app:'contact', label:'Contact'},
     {app:'github', label:'GitHub', kind:'link', href:DATA.contact.github},
     {app:'resume', label:'Resume'},
@@ -171,18 +172,42 @@ function initMobileOS(){
       '<div class="m-settings-row"><div><div class="t">Reduced motion</div><div class="d">Follows your device setting.</div></div><span class="c-value mono m-static-val">'+(prefersReducedMotion()?'On':'Off')+'</span></div>'+
       '<div class="m-settings-row"><div><div class="t">Wi-Fi</div><div class="d" id="m-set-wifi">Checking…</div></div></div>'+
       '<div class="m-settings-row"><div><div class="t">Volume</div><div class="d">TC/OS sounds</div></div><input class="m-set-slider" id="m-set-vol" type="range" min="0" max="100" value="100" aria-label="TC/OS volume" /></div>'+
+      '<div class="m-settings-row"><div><div class="t">Do Not Disturb</div><div class="d">Silence notification popups.</div></div><button class="m-toggle" id="m-dnd-toggle" aria-label="Toggle do not disturb"></button></div>'+
       '<div class="m-settings-row"><div><div class="t">Brightness</div><div class="d">Screen dimmer</div></div><input class="m-set-slider" id="m-set-bright" type="range" min="40" max="100" value="100" aria-label="Screen brightness" /></div>'+
+      '<div class="m-settings-row"><div><div class="t">Night light</div><div class="d">Warm tint.</div></div><button class="m-toggle" id="m-night-toggle" aria-label="Toggle night light"></button></div>'+
+      '<div class="m-settings-row"><div><div class="t">Warmth</div><div class="d">Cooler to warmer.</div></div><input class="m-set-slider" data-night-temp type="range" min="0" max="100" value="60" aria-label="Night light warmth" /></div>'+
       '<div class="m-settings-row"><div><div class="t">Battery</div><div class="d" id="m-set-batt">Checking…</div></div></div>'+
       '<div class="m-settings-row"><div><div class="t">About TC/OS</div><div class="d">Version and session info.</div></div><button class="case-btn m-small-btn" id="m-about-btn">Open</button></div>'+
       '</div>';
     appview.classList.add('open');
     document.body.style.overflow='hidden';
     appviewBody.querySelector('#m-theme-toggle').addEventListener('click', function(){ toggleTheme(); this.classList.toggle('on'); });
+    var mDnd = appviewBody.querySelector('#m-dnd-toggle');
+    if(mDnd){
+      try { if(localStorage.getItem('tcos-dnd') === '1') mDnd.classList.add('on'); } catch(e){}
+      mDnd.setAttribute('aria-checked', mDnd.classList.contains('on'));
+      mDnd.addEventListener('click', function(){
+        var on = mDnd.classList.toggle('on');
+        mDnd.setAttribute('aria-checked', on);
+        try { localStorage.setItem('tcos-dnd', on ? '1' : '0'); } catch(e){}
+      });
+    }
     appviewBody.querySelector('#m-about-btn').addEventListener('click', function(){ openMobileApp('about-tcos'); });
     var mVol = appviewBody.querySelector('#m-set-vol');
     if(mVol) mVol.addEventListener('input', function(){ if(window.TCOS_device) window.TCOS_device.setVolume(parseInt(mVol.value, 10)); });
     var mBright = appviewBody.querySelector('#m-set-bright');
     if(mBright) mBright.addEventListener('input', function(){ if(window.TCOS_device) window.TCOS_device.setBrightness(parseInt(mBright.value, 10)); });
+    var mNight = appviewBody.querySelector('#m-night-toggle');
+    if(mNight){
+      try { if(localStorage.getItem('tcos-night') === '1') mNight.classList.add('on'); } catch(e){}
+      mNight.setAttribute('aria-checked', mNight.classList.contains('on'));
+      mNight.addEventListener('click', function(){
+        var on = mNight.classList.toggle('on');
+        mNight.setAttribute('aria-checked', on);
+        try { localStorage.setItem('tcos-night', on ? '1' : '0'); } catch(e){}
+        if(window.TCOS_night) window.TCOS_night();
+      });
+    }
     if(window.TCOS_device) window.TCOS_device.refresh();
   }
 }

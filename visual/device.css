@@ -42,6 +42,9 @@
   z-index:60;
 
   width:300px;
+  max-height:min(70vh, 480px);
+
+  overflow:auto;
 
   padding:6px 0;
 
@@ -108,6 +111,20 @@
   cursor:pointer;
 }
 
+.tray-temp {
+  gap:8px
+}
+
+.tray-scale {
+  flex-shrink:0;
+
+  color:var(--text-faint);
+
+  font-family:var(--mono);
+  font-size:9px;
+  text-transform:uppercase
+}
+
 .m-set-slider {
   width:130px;
 
@@ -126,5 +143,15 @@
   background:#000;
   opacity:0;
 
-  pointer-events:none;
+  pointer-events:none
+}
+
+#night-overlay {
+  position:fixed;
+  inset:0;
+  z-index:4999;
+
+  background:rgba(255,140,0,.13);
+
+  pointer-events:none
 }

@@ -18,24 +18,11 @@ function tickClock(){
   var vd = document.getElementById('m-view-date'); if(vd) vd.textContent = date;
   var cb = document.getElementById('clock-big'); if(cb) cb.textContent = time;
   var cs = document.getElementById('clock-sub'); if(cs) cs.textContent = date;
+  var lt = document.getElementById('lock-time'); if(lt) lt.textContent = time;
+  var ld = document.getElementById('lock-date'); if(ld) ld.textContent = date;
 }
 tickClock();
 setInterval(tickClock, 1000);
-
-/* taskbar wifi status */
-(function(){
-  var wifi = document.getElementById('tb-wifi');
-  if(!wifi) return;
-  function paint(){
-    var online = navigator.onLine !== false;
-    wifi.classList.toggle('offline', !online);
-    wifi.setAttribute('aria-label', online ? 'Online' : 'Offline');
-    wifi.title = online ? 'Online' : 'Offline — changes are saved locally';
-  }
-  window.addEventListener('online', paint);
-  window.addEventListener('offline', paint);
-  paint();
-})();
 
 /* ============================================================
    START MENU
@@ -50,6 +37,7 @@ setInterval(tickClock, 1000);
     {app:'about-me', label:'About Me'},
     {app:'projects', label:'Projects'},
     {app:'lab', label:'Lab'},
+    {app:'explorer', label:'Explorer'},
     {app:'skills', label:'Skills'},
     {app:'contact', label:'Contact'},
     {app:'taskmanager', label:'Task Manager'},
@@ -60,21 +48,154 @@ setInterval(tickClock, 1000);
     {app:'resume', label:'Resume'}
   ];
 
-  function renderList(filter){
-    var f = (filter||'').toLowerCase();
-    var filtered = items.filter(function(i){ return i.label.toLowerCase().indexOf(f)>-1; });
-    if(!filtered.length){ list.innerHTML = '<div class="sm-empty">No matches in TC/OS.</div>'; return; }
-    list.innerHTML = filtered.map(function(i){
-      var meta = ICON_LIST.filter(function(x){return x.app===i.app;})[0] || {kind:'app'};
-      return '<button class="sm-item" data-sm="'+i.app+'"><span class="g">'+iconGlyphFor(meta)+'</span>'+esc(i.label)+'</button>';
-    }).join('');
-    list.querySelectorAll('[data-sm]').forEach(function(b){
+  var smMode = 'home';
+  var pinnedSec = document.getElementById('sm-pinned-sec');
+  var pinnedGrid = document.getElementById('sm-pinned');
+  var allBtn = document.getElementById('sm-allbtn');
+
+  function smOpenApp(app, kind, href){
+    closeMenu();
+    if(kind === 'link'){ window.open(href, '_blank', 'noopener'); }
+    else WM.open(app);
+  }
+
+  function renderPinned(){
+    if(!pinnedGrid) return;
+    pinnedGrid.innerHTML = '';
+    getPinned().forEach(function(appId){
+      var label = recentLabel(appId);
+      var meta = items.filter(function(i){ return i.app === appId; })[0];
+      var b = document.createElement('button');
+      b.className = 'sm-app';
+      b.innerHTML = '<span class="g">' + recentGlyph(appId) + '</span><span class="lbl">' + esc(label) + '</span>';
+      b.addEventListener('click', function(){ smOpenApp(appId, meta && meta.kind, meta && meta.href); });
+      pinnedGrid.appendChild(b);
+    });
+    if(pinnedSec) pinnedSec.classList.toggle('hidden', !getPinned().length && !smMode);
+  }
+
+  var SETTINGS_INDEX = [
+    {label:'Appearance', section:'personalization'},
+    {label:'Theme', section:'personalization'},
+    {label:'Wallpaper', section:'personalization'},
+    {label:'Taskbar alignment', section:'personalization'},
+    {label:'Accent color', section:'personalization'},
+    {label:'Notification sounds', section:'system'},
+    {label:'Do Not Disturb', section:'system'},
+    {label:'Volume', section:'system'},
+    {label:'Brightness', section:'system'},
+    {label:'Night light', section:'system'},
+    {label:'Reset TC/OS data', section:'system'},
+    {label:'Installed apps', section:'apps'},
+    {label:'Network status', section:'network'},
+    {label:'Wi-Fi', section:'network'},
+    {label:'Battery', section:'network'},
+    {label:'Bluetooth', section:'network'},
+    {label:'Airplane mode', section:'network'},
+    {label:'Game controllers', section:'gaming'},
+    {label:'Storage usage', section:'privacy'},
+    {label:'Keyboard shortcuts', section:'accessibility'},
+    {label:'Updates', section:'updates'},
+    {label:'About this device', section:'about'}
+  ];
+
+  function walkFiles(){
+    var out = [];
+    if(!window.TCOS_fs) return out;
+    var guard = 0;
+    (function walk(path){
+      if(guard++ > 300) return;
+      var kids = window.TCOS_fs.list(path) || [];
+      kids.forEach(function(k){
+        var p = (path === '/' ? '' : path) + '/' + k.name;
+        out.push({ node:k, path:p });
+        if(k.type === 'dir') walk(p);
+      });
+    })('/Home');
+    return out;
+  }
+  function openFSNode(node, path){
+    if(node.type === 'dir'){
+      window.__tcosExplorerOpen = { path:path };
+      if(WM.isOpen('explorer')) WM.close('explorer');
+      WM.open('explorer');
+      return;
+    }
+    if(node.kind === 'link' && node.app){
+      if(node.app === 'github'){ window.open(DATA.contact.github, '_blank', 'noopener'); return; }
+      WM.open(node.app);
+      return;
+    }
+    if(node.kind === 'text' || /\.(txt|md|json|log)$/i.test(node.name)){
+      window.__tcosOpenFile = { name:node.name, path:path, content:node.content || '' };
+      WM.open('notepad');
+      return;
+    }
+    showToast('No viewer for ' + node.kind + ' files yet.');
+  }
+
+  function appRow(i){
+    var meta = ICON_LIST.filter(function(x){return x.app===i.app;})[0] || {kind:'app'};
+    return '<button class="sm-item" data-sm="'+i.app+'"><span class="g">'+iconGlyphFor(meta)+'</span>'+esc(i.label)+'</button>';
+  }
+  function wireAppRows(scope){
+    scope.querySelectorAll('[data-sm]').forEach(function(b){
       b.addEventListener('click', function(){
         var app = b.getAttribute('data-sm');
         var meta = items.filter(function(i){return i.app===app;})[0];
+        smOpenApp(app, meta && meta.kind, meta && meta.href);
+      });
+    });
+  }
+
+  function renderList(filter){
+    var f = (filter||'').toLowerCase();
+    if(!f && smMode === 'home'){
+      list.classList.add('hidden');
+      renderPinned();
+      if(pinnedSec) pinnedSec.classList.remove('hidden');
+      renderRecent();
+      return;
+    }
+    if(pinnedSec) pinnedSec.classList.add('hidden');
+    if(!f && smMode === 'all'){
+      list.classList.remove('hidden');
+      list.innerHTML = items.map(appRow).join('');
+      wireAppRows(list);
+      renderRecent();
+      return;
+    }
+    /* categorized search */
+    list.classList.remove('hidden');
+    var apps = items.filter(function(i){ return i.label.toLowerCase().indexOf(f)>-1; });
+    var files = walkFiles().filter(function(w){ return w.node.name.toLowerCase().indexOf(f)>-1; }).slice(0, 8);
+    var sets = SETTINGS_INDEX.filter(function(s){ return s.label.toLowerCase().indexOf(f)>-1; }).slice(0, 5);
+    if(!apps.length && !files.length && !sets.length){
+      list.innerHTML = '<div class="sm-empty">No matches in TC/OS.</div>';
+      return;
+    }
+    var html = '';
+    if(apps.length) html += '<div class="sm-cat-label">Apps</div>' + apps.map(appRow).join('');
+    if(files.length) html += '<div class="sm-cat-label">Files</div>' + files.map(function(w, k){
+      return '<button class="sm-item" data-fx="' + k + '"><span class="g">' + recentGlyph('explorer') + '</span>' + esc(w.node.name) + '</button>';
+    }).join('');
+    if(sets.length) html += '<div class="sm-cat-label">Settings</div>' + sets.map(function(s, k){
+      return '<button class="sm-item" data-ss="' + k + '">' + esc(s.label) + '</button>';
+    }).join('');
+    list.innerHTML = html;
+    wireAppRows(list);
+    list.querySelectorAll('[data-fx]').forEach(function(b){
+      b.addEventListener('click', function(){
+        var w = files[parseInt(b.getAttribute('data-fx'), 10)];
         closeMenu();
-        if(meta && meta.kind==='link'){ window.open(meta.href,'_blank','noopener'); }
-        else WM.open(app);
+        if(w) openFSNode(w.node, w.path);
+      });
+    });
+    list.querySelectorAll('[data-ss]').forEach(function(b){
+      b.addEventListener('click', function(){
+        var s = sets[parseInt(b.getAttribute('data-ss'), 10)];
+        closeMenu();
+        if(s){ window.__tcosSettingsSection = s.section; WM.open('settings'); }
       });
     });
   }
@@ -132,6 +253,8 @@ setInterval(tickClock, 1000);
     startBtn.classList.add('active');
     startBtn.setAttribute('aria-expanded','true');
     searchInput.value='';
+    smMode = 'home';
+    if(allBtn) allBtn.textContent = 'All apps ›';
     renderList('');
     setTimeout(function(){ searchInput.focus(); }, 60);
   }
@@ -149,6 +272,13 @@ setInterval(tickClock, 1000);
     menu.classList.contains('open') ? closeMenu() : openMenu();
   });
   searchInput.addEventListener('input', function(){ renderList(searchInput.value); });
+  if(allBtn) allBtn.addEventListener('click', function(e){
+    e.stopPropagation();
+    if(smMode === 'all'){ smMode = 'home'; allBtn.textContent = 'All apps ›'; }
+    else { smMode = 'all'; allBtn.textContent = '‹ Back'; }
+    searchInput.value = '';
+    renderList('');
+  });
   document.addEventListener('click', function(e){
     if(menu.classList.contains('open') && !menu.contains(e.target) && e.target!==startBtn){ closeMenu(); }
   });
@@ -169,6 +299,7 @@ setInterval(tickClock, 1000);
       var act = b.getAttribute('data-power');
       if(act === 'shutdown') window.TCOS_shutdown();
       else if(act === 'restart') window.TCOS_restart();
+      else if(act === 'sleep') window.TCOS_lock();
     });
   });
 
@@ -291,6 +422,134 @@ setInterval(tickClock, 1000);
 })();
 
 /* ============================================================
+   LOCK / SECURITY SCREEN / ALT+TAB
+   ============================================================ */
+(function(){
+  var lockEl = document.getElementById('lock-screen');
+  var cadEl = document.getElementById('cad-screen');
+  var altabEl = document.getElementById('altab');
+  var altabRow = document.getElementById('altab-row');
+  if(!lockEl || !cadEl || !altabEl) return;
+
+  function locked(){ return !lockEl.classList.contains('hidden'); }
+  window.TCOS_isLocked = locked;
+  window.TCOS_lock = function(){
+    if(window.TCOS_closeStart) window.TCOS_closeStart();
+    if(window.TCOS_closeNotifs) window.TCOS_closeNotifs();
+    if(window.TCOS_closeClock) window.TCOS_closeClock();
+    if(window.TCOS_closeTray) window.TCOS_closeTray();
+    lockEl.classList.remove('hidden');
+  };
+  function unlock(){
+    if(!locked()) return;
+    lockEl.classList.add('hidden');
+  }
+  lockEl.addEventListener('click', unlock);
+  document.addEventListener('keydown', function h(e){
+    if(locked()){ unlock(); }
+  });
+
+  function hideCad(){ cadEl.classList.add('hidden'); }
+  window.TCOS_cad = function(){
+    if(locked()) return;
+    if(window.TCOS_closeStart) window.TCOS_closeStart();
+    cadEl.classList.remove('hidden');
+  };
+  cadEl.querySelectorAll('[data-cad]').forEach(function(b){
+    b.addEventListener('click', function(){
+      var act = b.getAttribute('data-cad');
+      hideCad();
+      if(act === 'lock') window.TCOS_lock();
+      else if(act === 'taskmanager'){
+        if(isMobile() && window.TCOS_openMobile) window.TCOS_openMobile('taskmanager', 'Task Manager');
+        else WM.open('taskmanager');
+      }
+      else if(act === 'shutdown') window.TCOS_shutdown();
+      else if(act === 'restart') window.TCOS_restart();
+    });
+  });
+  cadEl.addEventListener('click', function(e){ if(e.target === cadEl) hideCad(); });
+
+  /* alt+tab */
+  var ids = [], idx = 0, altDown = false;
+  function iconFor(id){
+    var meta = ICON_LIST.filter(function(x){ return x.app === id; })[0];
+    if(meta) return iconGlyphFor(meta);
+    if(id.indexOf('project-') === 0) return glyph('file', 'case', 'var(--purple)');
+    return glyph('app');
+  }
+  function labelFor(id){
+    var meta = ICON_LIST.filter(function(x){ return x.app === id; })[0];
+    if(meta) return meta.label;
+    var app = APPS[id];
+    return app ? app.title : id;
+  }
+  function paint(){
+    altabRow.innerHTML = '';
+    ids.forEach(function(id, i){
+      var d = document.createElement('div');
+      d.className = 'altab-app' + (i === idx ? ' active' : '');
+      d.innerHTML = '<span class="g">' + iconFor(id) + '</span><span class="t">' + esc(labelFor(id)) + '</span>';
+      altabRow.appendChild(d);
+    });
+  }
+  window.TCOS_altab = function(){
+    if(locked() || isMobile()) return;
+    ids = WM.list().map(function(w){ return w.id; });
+    if(!ids.length){ showToast('No open windows.'); return; }
+    idx = 0;
+    altDown = true;
+    paint();
+    altabEl.classList.remove('hidden');
+  };
+  window.TCOS_altabNext = function(){
+    if(altabEl.classList.contains('hidden')) return;
+    idx = (idx + 1) % ids.length;
+    paint();
+  };
+  function altabDone(){
+    if(altabEl.classList.contains('hidden')) return;
+    altabEl.classList.add('hidden');
+    altDown = false;
+    if(ids[idx]) WM.focus(ids[idx]);
+    ids = [];
+  }
+  document.addEventListener('keyup', function(e){
+    if(e.key === 'Alt' && altDown) altabDone();
+    if(e.key === 'Escape' && !cadEl.classList.contains('hidden')) hideCad();
+  });
+})();
+
+/* ============================================================
+   UAC — permission confirm dialog
+   ============================================================ */
+(function(){
+  var screen = document.getElementById('uac-screen');
+  var text = document.getElementById('uac-text');
+  var yesBtn = document.getElementById('uac-yes');
+  var noBtn = document.getElementById('uac-no');
+  if(!screen) return;
+  var cb = null;
+  function done(ok){
+    screen.classList.add('hidden');
+    var fn = cb;
+    cb = null;
+    if(fn) fn(ok);
+  }
+  window.TCOS_uac = function(appName, callback){
+    cb = callback || null;
+    text.textContent = 'Do you want to allow ' + appName + ' to run as administrator?';
+    screen.classList.remove('hidden');
+    try { noBtn.focus({preventScroll:true}); } catch(e){}
+  };
+  window.TCOS_uacCancel = function(){
+    if(!screen.classList.contains('hidden')) done(false);
+  };
+  yesBtn.addEventListener('click', function(){ done(true); });
+  noBtn.addEventListener('click', function(){ done(false); });
+})();
+
+/* ============================================================
    CONTEXT MENU
    ============================================================ */
 (function(){
@@ -302,6 +561,7 @@ setInterval(tickClock, 1000);
     e.preventDefault();
     var icon = e.target.closest('.dicon');
     menu.classList.remove('pin-mode');
+    menu.classList.remove('task-mode');
     if(icon){
       var app = icon.getAttribute('data-app');
       menu._pinApp = app;
@@ -315,9 +575,9 @@ setInterval(tickClock, 1000);
     menu.style.top = y+'px';
     menu.classList.add('open');
   });
-  document.addEventListener('click', function(){ menu.classList.remove('open'); menu.classList.remove('pin-mode'); });
+  document.addEventListener('click', function(){ menu.classList.remove('open'); menu.classList.remove('pin-mode'); menu.classList.remove('task-mode'); });
   document.addEventListener('contextmenu', function(e){
-    if(!e.target.closest('#desktop')){ menu.classList.remove('open'); menu.classList.remove('pin-mode'); }
+    if(!e.target.closest('#desktop')){ menu.classList.remove('open'); menu.classList.remove('pin-mode'); menu.classList.remove('task-mode'); }
   });
 
   menu.querySelectorAll('.ctx-item').forEach(function(item){
@@ -325,6 +585,7 @@ setInterval(tickClock, 1000);
       var act = item.getAttribute('data-ctx');
       menu.classList.remove('open');
       menu.classList.remove('pin-mode');
+      menu.classList.remove('task-mode');
       if(act==='pin'){
         var app = menu._pinApp;
         if(app){
@@ -333,9 +594,23 @@ setInterval(tickClock, 1000);
           if(WM.refresh) WM.refresh();
         }
       }
+      else if(act==='tb-focus'){
+        var fid = menu._taskApp;
+        if(fid){ if(WM.isOpen(fid)) WM.focus(fid); else WM.open(fid); }
+      }
+      else if(act==='tb-min'){
+        var mid = menu._taskApp;
+        if(mid && WM.isOpen(mid)) WM.minimize(mid);
+      }
+      else if(act==='tb-close'){
+        var cid = menu._taskApp;
+        if(cid && WM.isOpen(cid)) WM.close(cid);
+      }
       else if(act==='new') showToast('New \u2014 not available in this build.');
       else if(act==='refresh') showToast('Desktop refreshed.');
       else if(act==='terminal') WM.open('terminal');
+      else if(act==='personalize'){ window.__tcosSettingsSection = 'personalization'; WM.open('settings'); }
+      else if(act==='display'){ window.__tcosSettingsSection = 'system'; WM.open('settings'); }
       else if(act==='source') window.open('https://github.com/toniec/toniec.github.io','_blank','noopener');
       else if(act==='sysinfo') WM.open('sysinfo');
     });

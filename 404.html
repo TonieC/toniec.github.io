@@ -51,6 +51,9 @@
     line-height:2;
     opacity:.9;
   }
+  .code a {
+    color:#fff;
+  }
   .actions {
     display:flex;
     flex-wrap:wrap;
@@ -93,10 +96,11 @@
   <main role="alert">
     <div class="face" aria-hidden="true">:(</div>
     <p class="msg">Your TC/OS ran into a problem with this page and needs to reboot you.</p>
-    <p class="pct">We're just collecting some error info, <span id="pct">0</span>% complete<span class="cursor" aria-hidden="true">_</span></p>
+    <p class="pct">We're just collecting some error info, and then we'll restart for you.<br /><span id="pct">0</span>% complete<span class="cursor" aria-hidden="true">_</span></p>
     <div class="code">
       <p>Stop code: PAGE_NOT_FOUND</p>
       <p>What failed: <span id="missing-path">tcos.sys</span></p>
+      <p>For more information about this issue and possible fixes, visit<br /><a href="/">toniec.github.io</a></p>
     </div>
     <div class="actions">
       <a class="btn solid" href="/">Reboot to TC/OS</a>
@@ -114,15 +118,17 @@
     document.addEventListener('keydown', function once() { go(); }, { once: true });
 
     var pct = document.getElementById('pct');
+    function rebootSoon() { setTimeout(go, 900); }
     if (pct) {
       if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         pct.textContent = '100';
+        rebootSoon();
       } else {
         var n = 0;
         var iv = setInterval(function () {
           n = Math.min(100, n + 1 + Math.floor(Math.random() * 4));
           pct.textContent = String(n);
-          if (n >= 100) clearInterval(iv);
+          if (n >= 100) { clearInterval(iv); rebootSoon(); }
         }, 120);
       }
     }

@@ -212,17 +212,18 @@ function initTerminal(container, ctx){
     help:function(){
       line('Available commands:');
       line('');
-      ['about','projects','skills','lab','contact','github','resume','neofetch','whoami','ls','open <file>','clear'].forEach(function(c){ line('  '+c); });
+      ['about','projects','skills','lab','explorer','contact','github','resume','neofetch','whoami','ls','open <file>','clear'].forEach(function(c){ line('  '+c); });
     },
     about:function(){ ctx.openApp('about-me'); line('Opening about-me.md ...'); },
     projects:function(){ ctx.openApp('projects'); line('Opening projects.md ...'); },
     skills:function(){ ctx.openApp('skills'); line('Opening skills.json ...'); },
     lab:function(){ ctx.openApp('lab'); line('Opening lab/ ...'); },
+    explorer:function(){ ctx.openApp('explorer'); line('Opening explorer ...'); },
     contact:function(){ ctx.openApp('contact'); line('Opening contact.md ...'); },
     resume:function(){ ctx.openApp('resume'); line('Opening resume.pdf ...'); },
     github:function(){ line('Opening '+DATA.contact.github+' ...'); window.open(DATA.contact.github,'_blank','noopener'); },
     whoami:function(){ line('tonie — developer, Philippines'); },
-    ls:function(){ line('about-me.md  projects.md  skills.json  contact.md  resume.pdf  github.url  lab/'); },
+    ls:function(){ line('about-me.md  projects.md  skills.json  contact.md  resume.pdf  github.url  lab/  explorer'); },
     date:function(){ line(new Date().toString()); },
     clear:function(){ out.innerHTML=''; },
     exit:function(){ ctx.closeSelf && ctx.closeSelf(); },
@@ -248,7 +249,7 @@ function initTerminal(container, ctx){
     var parts = trimmed.split(/\s+/);
     var cmd = parts[0].toLowerCase();
     if(cmd === 'open' && parts[1]){
-      var map = {'about-me.md':'about-me','about':'about-me','projects.md':'projects','projects':'projects','skills.json':'skills','skills':'skills','contact.md':'contact','contact':'contact','resume.pdf':'resume','resume':'resume','lab':'lab','lab/':'lab'};
+      var map = {'about-me.md':'about-me','about':'about-me','projects.md':'projects','projects':'projects','skills.json':'skills','skills':'skills','contact.md':'contact','contact':'contact','resume.pdf':'resume','resume':'resume','lab':'lab','lab/':'lab','explorer':'explorer'};
       var key = map[parts[1].toLowerCase()];
       if(key){ ctx.openApp(key); line('Opening '+parts[1]+' ...'); }
       else line('open: cannot find \u2018'+parts[1]+'\u2019', 'err');
@@ -622,6 +623,13 @@ APPS['taskmanager'] = {
           rowsEl.querySelectorAll('.tm-row').forEach(function(r){ r.classList.toggle('selected', r.getAttribute('data-tm-id') === selected); });
         });
         b.addEventListener('dblclick', function(){ WM.focus(w.id); });
+        b.addEventListener('contextmenu', function(e){
+          e.preventDefault();
+          window.__tcosExplorerOpen = { path:'/Home/Apps' };
+          if(WM.isOpen('explorer')) WM.close('explorer');
+          WM.open('explorer');
+          showToast('File location: /Home/Apps');
+        });
         rowsEl.appendChild(b);
       });
       if(countEl) countEl.textContent = list.length + (list.length === 1 ? ' process' : ' processes');
@@ -727,6 +735,17 @@ APPS['taskmanager'] = {
         return;
       }
       var admin = runAdmin && runAdmin.checked;
+      var label = tmLabel(target);
+      if(admin && window.TCOS_uac){
+        window.TCOS_uac(label, function(ok){
+          if(!ok) return;
+          closeRunDlg();
+          WM.open(target);
+          draw();
+          showToast('Running with administrative privileges.');
+        });
+        return;
+      }
       closeRunDlg();
       WM.open(target);
       draw();
@@ -827,11 +846,21 @@ APPS['notepad'] = {
     var count = container.querySelector('[data-np-count]');
     var saved = container.querySelector('[data-np-saved]');
     var timer = null;
+    var fsFile = null;
+    if(window.__tcosOpenFile){
+      fsFile = window.__tcosOpenFile;
+      window.__tcosOpenFile = null;
+    }
     function stats(){
       var words = area.value.trim() ? area.value.trim().split(/\s+/).length : 0;
       count.textContent = words + (words === 1 ? ' word' : ' words');
     }
-    try { area.value = localStorage.getItem('tcos-note') || ''; } catch(e){}
+    if(fsFile && fsFile.content !== undefined){
+      area.value = fsFile.content;
+      saved.textContent = 'Editing ' + fsFile.name;
+    } else {
+      try { area.value = localStorage.getItem('tcos-note') || ''; } catch(e){}
+    }
     stats();
     area.addEventListener('input', function(){
       stats();
@@ -839,7 +868,10 @@ APPS['notepad'] = {
       clearTimeout(timer);
       timer = setTimeout(function(){
         if(!container.isConnected) return;
-        try { localStorage.setItem('tcos-note', area.value); } catch(e){}
+        try {
+          if(fsFile && window.TCOS_fs){ window.TCOS_fs.write(fsFile.path, area.value); }
+          else localStorage.setItem('tcos-note', area.value);
+        } catch(e){}
         saved.textContent = 'Saved ' + new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
       }, 600);
     });
@@ -850,41 +882,176 @@ APPS['settings'] = {
   title:'Settings', kind:'app',
   render:function(){
     var light = document.documentElement.getAttribute('data-theme') === 'light';
-    var sound = true;
-    try { sound = localStorage.getItem('tcos-sound') !== '0'; } catch(e){}
-    var current = 'auto';
-    try { current = localStorage.getItem('tcos-wallpaper') || 'auto'; } catch(e){}
+    var sound = true, dnd = false, night = false, bt = true, air = false;
+    try {
+      sound = localStorage.getItem('tcos-sound') !== '0';
+      dnd = localStorage.getItem('tcos-dnd') === '1';
+      night = localStorage.getItem('tcos-night') === '1';
+      bt = localStorage.getItem('tcos-bt') !== '0';
+      air = localStorage.getItem('tcos-air') === '1';
+    } catch(e){}
+    var current = 'auto', align = 'center', accent = 'gold';
+    try {
+      current = localStorage.getItem('tcos-wallpaper') || 'auto';
+      align = localStorage.getItem('tcos-taskalign') || 'center';
+      accent = localStorage.getItem('tcos-accent') || 'gold';
+    } catch(e){}
     var wps = wallpaperOptions();
-    var align = 'center';
-    try { align = localStorage.getItem('tcos-taskalign') || 'center'; } catch(e){}
+    var secs = [
+      ['system','System'], ['personalization','Personalization'], ['apps','Apps'],
+      ['network','Network'], ['gaming','Gaming'], ['privacy','Privacy'],
+      ['accessibility','Accessibility'], ['updates','Updates'], ['about','About']
+    ];
+    var vol = 100, bright = 100;
+    try {
+      var v = parseInt(localStorage.getItem('tcos-volume'), 10);
+      if(!isNaN(v)) vol = Math.max(0, Math.min(100, v));
+      var b = parseInt(localStorage.getItem('tcos-bright'), 10);
+      if(!isNaN(b)) bright = Math.max(40, Math.min(100, b));
+    } catch(e){}
+    var pads = 0;
+    try {
+      var gps = navigator.getGamepads ? navigator.getGamepads() : [];
+      for(var gi = 0; gi < gps.length; gi++) if(gps[gi]) pads++;
+    } catch(e){}
+    var storeBytes = 0, storeKeys = 0;
+    try {
+      for(var ki = 0; ki < localStorage.length; ki++){
+        var kk = localStorage.key(ki);
+        if(kk && kk.indexOf('tcos-') === 0){
+          storeKeys++;
+          storeBytes += (localStorage.getItem(kk) || '').length + kk.length;
+        }
+      }
+    } catch(e){}
+    function toggle(id, t, d, on, label){
+      return '<div class="set-row"><div><div class="t">' + t + '</div><div class="d">' + d + '</div></div>' +
+        '<button class="set-toggle' + (on ? ' on' : '') + '" data-set-' + id + ' role="switch" aria-checked="' + on + '" aria-label="' + label + '"></button></div>';
+    }
     return '<div class="app-scroll">' +
       '<p class="app-eyebrow"># settings</p>' +
       '<h1 class="app-h1">Settings</h1>' +
-      '<div class="set-group"><div class="set-label">Appearance</div>' +
-        '<div class="set-row"><div><div class="t">Light theme</div><div class="d">Switch TC/OS to a light appearance.</div></div><button class="set-toggle' + (light ? ' on' : '') + '" data-set-theme role="switch" aria-checked="' + light + '" aria-label="Toggle light theme"></button></div>' +
-      '</div>' +
-      '<div class="set-group"><div class="set-label">Wallpaper</div>' +
-        '<div class="wp-grid">' + wps.map(function(w){
-          return '<button class="wp-opt' + (current === w.id ? ' active' : '') + '" data-wp="' + w.id + '"><img src="' + w.thumb + '" alt="" loading="lazy" /><span class="n">' + esc(w.label) + '</span></button>';
-        }).join('') + '</div>' +
-      '</div>' +
-      '<div class="set-group"><div class="set-label">Taskbar</div>' +
-        '<div class="set-row"><div><div class="t">Alignment</div><div class="d">Center icons like Windows 11, or align them left.</div></div></div>' +
-        '<div class="seg-group">' +
-          '<button class="seg-btn' + (align === 'left' ? '' : ' active') + '" data-align="center">Centered</button>' +
-          '<button class="seg-btn' + (align === 'left' ? ' active' : '') + '" data-align="left">Left</button>' +
+      '<div class="set-layout">' +
+        '<div class="set-side" role="tablist" aria-label="Settings sections">' +
+          secs.map(function(s, i){
+            return '<button class="set-navbtn' + (i === 0 ? ' active' : '') + '" data-set-tab="' + s[0] + '" role="tab" aria-selected="' + (i === 0) + '">' + s[1] + '</button>';
+          }).join('') +
         '</div>' +
-      '</div>' +
-      '<div class="set-group"><div class="set-label">Notifications</div>' +
-        '<div class="set-row"><div><div class="t">Notification sounds</div><div class="d">Play a sound when a notification arrives.</div></div><button class="set-toggle' + (sound ? ' on' : '') + '" data-set-sound role="switch" aria-checked="' + sound + '" aria-label="Toggle notification sounds"></button></div>' +
-      '</div>' +
-      '<div class="set-group"><div class="set-label">System</div>' +
-        '<div class="set-row"><div><div class="t">Reduced motion</div><div class="d">Follows your device setting: ' + (prefersReducedMotion() ? 'On' : 'Off') + '.</div></div></div>' +
-        '<div class="set-row"><div><div class="t">Reset TC/OS data</div><div class="d">Clear icon positions, recents, notes, and preferences.</div></div><button class="case-btn set-danger" data-set-reset>Reset</button></div>' +
+        '<div class="set-main">' +
+          '<div class="set-pane" data-set-pane="system">' +
+            '<div class="set-label">Sound</div>' +
+            toggle('sound', 'Notification sounds', 'Play a sound when a notification arrives.', sound, 'Toggle notification sounds') +
+            '<div class="set-row"><div><div class="t">Volume</div><div class="d">TC/OS sounds only.</div></div><input class="m-set-slider" data-set-vol type="range" min="0" max="100" value="' + vol + '" aria-label="TC/OS volume" /></div>' +
+            '<div class="set-label">Focus</div>' +
+            toggle('dnd', 'Do Not Disturb', 'Silence notification popups. New items still collect silently.', dnd, 'Toggle do not disturb') +
+            '<div class="set-label">Display</div>' +
+            '<div class="set-row"><div><div class="t">Brightness</div><div class="d">Dim the TC/OS screen.</div></div><input class="m-set-slider" data-set-bright type="range" min="40" max="100" value="' + bright + '" aria-label="Screen brightness" /></div>' +
+            toggle('night', 'Night light', 'Warm tint for late sessions.', night, 'Toggle night light') +
+            '<div class="set-row"><div><div class="t">Warmth</div><div class="d"><span id="night-temp-val">60% warm</span> · Cooler to warmer.</div></div><input class="m-set-slider" data-night-temp type="range" min="0" max="100" value="60" aria-label="Night light warmth" /></div>' +
+            '<div class="set-label">Recovery</div>' +
+            '<div class="set-row"><div><div class="t">Reset TC/OS data</div><div class="d">Clear positions, recents, notes, and preferences.</div></div><button class="case-btn set-danger" data-set-reset>Reset</button></div>' +
+          '</div>' +
+          '<div class="set-pane hidden" data-set-pane="personalization">' +
+            '<div class="set-label">Appearance</div>' +
+            toggle('theme', 'Light theme', 'Switch TC/OS to a light appearance.', light, 'Toggle light theme') +
+            '<div class="set-label">Accent color</div>' +
+            '<div class="seg-group">' +
+              '<button class="acc-swatch acc-gold' + (accent === 'gold' ? ' active' : '') + '" data-acc="gold" aria-label="Gold accent">Gold</button>' +
+              '<button class="acc-swatch acc-blue' + (accent === 'blue' ? ' active' : '') + '" data-acc="blue" aria-label="Blue accent">Blue</button>' +
+              '<button class="acc-swatch acc-green' + (accent === 'green' ? ' active' : '') + '" data-acc="green" aria-label="Green accent">Green</button>' +
+              '<button class="acc-swatch acc-purple' + (accent === 'purple' ? ' active' : '') + '" data-acc="purple" aria-label="Purple accent">Purple</button>' +
+            '</div>' +
+            '<div class="set-label">Wallpaper</div>' +
+            '<div class="wp-grid">' + wps.map(function(w){
+              return '<button class="wp-opt' + (current === w.id ? ' active' : '') + '" data-wp="' + w.id + '"><img src="' + w.thumb + '" alt="" loading="lazy" /><span class="n">' + esc(w.label) + '</span></button>';
+            }).join('') + '</div>' +
+            '<div class="set-label">Taskbar</div>' +
+            '<div class="set-row"><div><div class="t">Alignment</div><div class="d">Center icons like Windows 11, or align them left.</div></div></div>' +
+            '<div class="seg-group">' +
+              '<button class="seg-btn' + (align === 'left' ? '' : ' active') + '" data-align="center">Centered</button>' +
+              '<button class="seg-btn' + (align === 'left' ? ' active' : '') + '" data-align="left">Left</button>' +
+            '</div>' +
+          '</div>' +
+          '<div class="set-pane hidden" data-set-pane="apps">' +
+            '<div class="set-label">Installed apps</div><div data-set-apps></div>' +
+          '</div>' +
+          '<div class="set-pane hidden" data-set-pane="network">' +
+            '<div class="set-label">Network &amp; Internet</div>' +
+            '<div class="set-row"><div><div class="t">Status</div><div class="d" data-set-netstate>Checking…</div></div></div>' +
+            toggle('bt', 'Bluetooth', 'Toggles the tray indicator.', bt, 'Toggle bluetooth') +
+            toggle('air', 'Airplane mode', 'Mutes the network indicator.', air, 'Toggle airplane mode') +
+          '</div>' +
+          '<div class="set-pane hidden" data-set-pane="gaming">' +
+            '<div class="set-label">Gaming</div>' +
+            '<div class="set-row"><div><div class="t">Controllers</div><div class="d">' + pads + ' connected. Press any button, then reopen.</div></div></div>' +
+          '</div>' +
+          '<div class="set-pane hidden" data-set-pane="privacy">' +
+            '<div class="set-label">Privacy</div>' +
+            '<div class="set-row"><div><div class="t">Local data</div><div class="d">' + storeKeys + ' keys · ' + Math.round(storeBytes / 1024) + ' KB. Everything stays in this browser.</div></div></div>' +
+            '<div class="set-row"><div><div class="t">Clear notifications</div><div class="d">Forget which notices were already shown.</div></div><button class="case-btn" data-set-clearnotif>Clear</button></div>' +
+          '</div>' +
+          '<div class="set-pane hidden" data-set-pane="accessibility">' +
+            '<div class="set-label">Accessibility</div>' +
+            '<div class="set-row"><div><div class="t">Reduced motion</div><div class="d">Follows your device setting: ' + (prefersReducedMotion() ? 'On' : 'Off') + '.</div></div></div>' +
+            '<div class="set-row"><div><div class="t">Keyboard shortcuts</div><div class="d">Ctrl+Shift+Esc task manager · Ctrl+Alt+End security · Alt+Tab switcher · Win+Arrows snap · ` terminal</div></div></div>' +
+          '</div>' +
+          '<div class="set-pane hidden" data-set-pane="updates">' +
+            '<div class="set-label">Updates</div>' +
+            '<div class="set-row"><div><div class="t">TC/OS 2.x — dev channel</div><div class="d">Static site — refresh fetches the latest build.</div></div><button class="case-btn" data-set-check>Check</button></div>' +
+          '</div>' +
+          '<div class="set-pane hidden" data-set-pane="about">' +
+            '<div class="set-label">About</div>' +
+            '<div class="set-row"><div><div class="t">Tonie C. — Developer</div><div class="d">Philippines · Remote</div></div><button class="case-btn" data-set-sysinfo>System info</button></div>' +
+          '</div>' +
+        '</div>' +
       '</div>' +
     '</div>';
   },
-  init:function(container){
+  init:function(container, ctx){
+    var tabs = container.querySelectorAll('[data-set-tab]');
+    var panes = container.querySelectorAll('[data-set-pane]');
+    function show(id){
+      tabs.forEach(function(t){
+        var on = t.getAttribute('data-set-tab') === id;
+        t.classList.toggle('active', on);
+        t.setAttribute('aria-selected', on);
+      });
+      panes.forEach(function(p){ p.classList.toggle('hidden', p.getAttribute('data-set-pane') !== id); });
+    }
+    tabs.forEach(function(t){
+      t.addEventListener('click', function(){ show(t.getAttribute('data-set-tab')); });
+    });
+    if(window.__tcosSettingsSection){
+      show(window.__tcosSettingsSection);
+      window.__tcosSettingsSection = null;
+    }
+    function flip(btn, key, val){
+      btn.classList.toggle('on', val);
+      btn.setAttribute('aria-checked', val);
+      try { localStorage.setItem(key, val ? '1' : '0'); } catch(e){}
+    }
+    function wireToggle(sel, key, fn){
+      var b = container.querySelector(sel);
+      if(b) b.addEventListener('click', function(){
+        var on = !b.classList.contains('on');
+        flip(b, key, on);
+        if(fn) fn(on);
+      });
+    }
+    wireToggle('[data-set-sound]', 'tcos-sound', null);
+    wireToggle('[data-set-dnd]', 'tcos-dnd', function(){
+      if(window.TCOS_device) window.TCOS_device.refresh();
+    });
+    wireToggle('[data-set-night]', 'tcos-night', function(){
+      if(window.TCOS_night) window.TCOS_night();
+    });
+    wireToggle('[data-set-bt]', 'tcos-bt', function(){
+      if(window.TCOS_device) window.TCOS_device.refresh();
+    });
+    wireToggle('[data-set-air]', 'tcos-air', function(){
+      if(window.TCOS_device) window.TCOS_device.refresh();
+    });
+    /* theme toggle uses the real theme, synced manually */
     var themeBtn = container.querySelector('[data-set-theme]');
     if(themeBtn) themeBtn.addEventListener('click', function(){
       toggleTheme();
@@ -892,11 +1059,13 @@ APPS['settings'] = {
       themeBtn.classList.toggle('on', light);
       themeBtn.setAttribute('aria-checked', light);
     });
-    var soundBtn = container.querySelector('[data-set-sound]');
-    if(soundBtn) soundBtn.addEventListener('click', function(){
-      var on = soundBtn.classList.toggle('on');
-      soundBtn.setAttribute('aria-checked', on);
-      try { localStorage.setItem('tcos-sound', on ? '1' : '0'); } catch(e){}
+    var vol = container.querySelector('[data-set-vol]');
+    if(vol) vol.addEventListener('input', function(){
+      if(window.TCOS_device) window.TCOS_device.setVolume(parseInt(vol.value, 10));
+    });
+    var bright = container.querySelector('[data-set-bright]');
+    if(bright) bright.addEventListener('input', function(){
+      if(window.TCOS_device) window.TCOS_device.setBrightness(parseInt(bright.value, 10));
     });
     container.querySelectorAll('[data-wp]').forEach(function(b){
       b.addEventListener('click', function(){
@@ -910,6 +1079,40 @@ APPS['settings'] = {
         container.querySelectorAll('[data-align]').forEach(function(x){ x.classList.toggle('active', x === b); });
       });
     });
+    container.querySelectorAll('[data-acc]').forEach(function(b){
+      b.addEventListener('click', function(){
+        if(window.TCOS_accent) window.TCOS_accent(b.getAttribute('data-acc'));
+        container.querySelectorAll('[data-acc]').forEach(function(x){ x.classList.toggle('active', x === b); });
+      });
+    });
+    var appsEl = container.querySelector('[data-set-apps]');
+    if(appsEl){
+      var seen = {};
+      var rows = [];
+      ICON_LIST.forEach(function(m){ if(!seen[m.app] && APPS[m.app]){ seen[m.app] = 1; rows.push(m.app); } });
+      ['taskmanager', 'calculator', 'notepad', 'settings', 'deviceinfo', 'sysinfo', 'about-tcos', 'explorer'].forEach(function(id){
+        if(!seen[id] && APPS[id]){ seen[id] = 1; rows.push(id); }
+      });
+      appsEl.innerHTML = rows.map(function(id){
+        var app = APPS[id];
+        return '<div class="set-row"><div><div class="t">' + esc(app.title) + '</div><div class="d">' + esc(id) + '</div></div>' +
+          '<button class="case-btn" data-open-app="' + esc(id) + '">Open</button></div>';
+      }).join('');
+      appsEl.querySelectorAll('[data-open-app]').forEach(function(b){
+        b.addEventListener('click', function(){ ctx.openApp(b.getAttribute('data-open-app')); });
+      });
+    }
+    var netState = container.querySelector('[data-set-netstate]');
+    if(netState) netState.textContent = (navigator.onLine !== false) ? 'Online' : 'Offline';
+    var clearBtn = container.querySelector('[data-set-clearnotif]');
+    if(clearBtn) clearBtn.addEventListener('click', function(){
+      try { localStorage.removeItem('tcos-notif-seen'); } catch(e){}
+      showToast('Notification history cleared.');
+    });
+    var checkBtn = container.querySelector('[data-set-check]');
+    if(checkBtn) checkBtn.addEventListener('click', function(){ showToast('TC/OS is up to date.'); });
+    var sysBtn = container.querySelector('[data-set-sysinfo]');
+    if(sysBtn) sysBtn.addEventListener('click', function(){ ctx.openApp('sysinfo'); });
     var resetBtn = container.querySelector('[data-set-reset]');
     var resetArmed = false;
     var resetTimer = null;
@@ -1121,6 +1324,371 @@ function restoreTaskAlign(){
   if(bar) bar.classList.toggle('align-left', mode === 'left');
 }
 
+APPS['explorer'] = {
+  title:'File Explorer', kind:'folder',
+  render:function(){
+    return '<div class="fx-ex">' +
+      '<div class="fx-ex-bar">' +
+        '<button class="fx-ex-nav" data-ex-nav="back" aria-label="Back">‹</button>' +
+        '<button class="fx-ex-nav" data-ex-nav="fwd" aria-label="Forward">›</button>' +
+        '<button class="fx-ex-nav" data-ex-nav="up" aria-label="Up">∧</button>' +
+        '<div class="fx-ex-crumbs" data-ex-crumbs></div>' +
+      '</div>' +
+      '<div class="fx-ex-tools">' +
+        '<input class="fx-ex-search" data-ex-search type="text" placeholder="Search this folder" autocomplete="off" aria-label="Search this folder" />' +
+        '<button class="fx-ex-tool" data-ex-tool="new">New folder</button>' +
+        '<button class="fx-ex-tool" data-ex-tool="view">List</button>' +
+        '<button class="fx-ex-tool" data-ex-tool="sort">Name</button>' +
+      '</div>' +
+      '<div class="fx-ex-list" data-ex-list></div>' +
+      '<div class="fx-ex-status" data-ex-status></div>' +
+      '<div class="fx-ctx hidden" data-ex-ctx role="menu"></div>' +
+      '<div class="fx-prop hidden" data-ex-prop></div>' +
+    '</div>';
+  },
+  init:function(container, ctx){
+    var FS = window.TCOS_fs;
+    var root = container.querySelector('.fx-ex');
+    var listEl = container.querySelector('[data-ex-list]');
+    var crumbsEl = container.querySelector('[data-ex-crumbs]');
+    var statusEl = container.querySelector('[data-ex-status]');
+    var searchEl = container.querySelector('[data-ex-search]');
+    var ctxEl = container.querySelector('[data-ex-ctx]');
+    var propEl = container.querySelector('[data-ex-prop]');
+    var viewBtn = container.querySelector('[data-ex-tool="view"]');
+    var sortBtn = container.querySelector('[data-ex-tool="sort"]');
+
+    var cwd = '/Home';
+    var hist = ['/Home'], hi = 0;
+    var selected = [];
+    var sortMode = 'name';
+    var viewMode = 'list';
+    var filter = '';
+    var clip = { paths:[], cut:false };
+    var renamePath = null;
+
+    if(window.__tcosExplorerOpen){
+      var req = window.__tcosExplorerOpen;
+      window.__tcosExplorerOpen = null;
+      if(req.path && FS.get(req.path)) cwd = req.path;
+      hist = [cwd]; hi = 0;
+    }
+
+    function full(dir, name){ return (dir === '/' ? '' : dir) + '/' + name; }
+    function fmtDate(t){
+      try { return new Date(t).toLocaleDateString([], {month:'short', day:'numeric'}) + ' ' +
+        new Date(t).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}); }
+      catch(e){ return '—'; }
+    }
+    function iconFor(node){
+      if(node.type === 'dir') return '<span class="glyph-folder" aria-hidden="true"></span>';
+      if(node.kind === 'link' && node.app){
+        if(node.app.indexOf('project-') === 0) return '<span class="glyph-file ext-purple" aria-hidden="true"></span>';
+        return '<span class="glyph-app" aria-hidden="true">>_</span>';
+      }
+      var ext = (node.name.split('.').pop() || 'txt').slice(0, 4);
+      var color = node.kind === 'image' ? 'var(--green)' : (node.kind === 'audio' ? 'var(--purple)' : 'var(--blue)');
+      return '<span class="glyph-file ' + extClass(color) + '" aria-hidden="true"><span class="glyph-ext">.' + esc(ext) + '</span></span>';
+    }
+    function metaFor(node){
+      if(node.type === 'dir') return 'Folder';
+      if(node.kind === 'link') return 'Shortcut';
+      if(node.kind === 'image') return 'Image · ' + FS.fmtSize(node.size || 0);
+      if(node.kind === 'audio') return 'Audio · ' + FS.fmtSize(node.size || 0);
+      return 'Text · ' + FS.fmtSize(node.content ? node.content.length : 0);
+    }
+
+    function nav(path, push){
+      if(!FS.get(path)) return;
+      cwd = path;
+      if(push !== false){
+        hist = hist.slice(0, hi + 1);
+        hist.push(path);
+        hi = hist.length - 1;
+      }
+      selected = [];
+      renamePath = null;
+      draw();
+    }
+
+    function sortedKids(){
+      var kids = FS.list(cwd) || [];
+      if(filter) kids = kids.filter(function(k){ return k.name.toLowerCase().indexOf(filter) > -1; });
+      var by = {
+        name:function(a, b){ return a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1; },
+        type:function(a, b){
+          var ta = a.type === 'dir' ? 0 : 1, tb = b.type === 'dir' ? 0 : 1;
+          return (ta - tb) || by.name(a, b);
+        },
+        date:function(a, b){ return (b.mtime || 0) - (a.mtime || 0); }
+      }[sortMode];
+      return kids.sort(by);
+    }
+
+    function draw(){
+      if(!container.isConnected) return;
+      /* crumbs */
+      var ps = cwd.split('/').filter(function(p){ return p; });
+      var html = '<button class="fx-crumb' + (cwd === '/Home' && ps.length === 1 ? '' : '') + '" data-crumb="/">Home</button>';
+      var acc = '';
+      ps.slice(1).forEach(function(p){
+        acc += '/' + p;
+        html += '<span class="fx-crumb-sep">/</span><button class="fx-crumb" data-crumb="/Home' + esc(acc) + '">' + esc(p) + '</button>';
+      });
+      crumbsEl.innerHTML = html;
+      crumbsEl.querySelectorAll('[data-crumb]').forEach(function(b){
+        b.addEventListener('click', function(){
+          var t = b.getAttribute('data-crumb');
+          nav(t === '/' ? '/Home' : t);
+        });
+      });
+      root.querySelectorAll('[data-ex-nav]').forEach(function(b){
+        var act = b.getAttribute('data-ex-nav');
+        b.disabled = act === 'back' ? hi <= 0 : act === 'fwd' ? hi >= hist.length - 1 : cwd === '/Home';
+      });
+
+      /* rows */
+      var kids = sortedKids();
+      listEl.classList.toggle('grid', viewMode === 'grid');
+      listEl.innerHTML = '';
+      if(!kids.length){
+        var em = document.createElement('div');
+        em.className = 'tm-empty';
+        em.textContent = filter ? 'No matches.' : 'This folder is empty.';
+        listEl.appendChild(em);
+      }
+      kids.forEach(function(node){
+        var p = full(cwd, node.name);
+        var b = document.createElement('button');
+        b.className = 'fx-erow' + (selected.indexOf(p) > -1 ? ' selected' : '');
+        b.setAttribute('data-path', p);
+        var inner = '<span class="glyph-wrap">' + iconFor(node) + '</span>';
+        if(renamePath === p){
+          inner += '<span class="fx-ename"><input type="text" value="' + esc(node.name) + '" aria-label="New name" /></span>';
+        } else {
+          inner += '<span class="fx-ename">' + esc(node.name) + '</span>';
+        }
+        inner += '<span class="fx-emeta">' + esc(metaFor(node)) + '</span>';
+        inner += '<span class="fx-emeta">' + esc(fmtDate(node.mtime)) + '</span>';
+        b.innerHTML = inner;
+        if(renamePath === p){
+          var inp = b.querySelector('input');
+          inp.focus();
+          inp.setSelectionRange(0, node.name.lastIndexOf('.') > 0 ? node.name.lastIndexOf('.') : node.name.length);
+          inp.addEventListener('keydown', function(e){
+            e.stopPropagation();
+            if(e.key === 'Enter'){ commitRename(p, inp.value); }
+            else if(e.key === 'Escape'){ renamePath = null; draw(); }
+          });
+          inp.addEventListener('blur', function(){ commitRename(p, inp.value); });
+          inp.addEventListener('click', function(e){ e.stopPropagation(); });
+        } else {
+          b.addEventListener('click', function(e){
+            if(e.ctrlKey || e.metaKey){
+              var i = selected.indexOf(p);
+              if(i > -1) selected.splice(i, 1);
+              else selected.push(p);
+              draw();
+            } else if(selected.length === 1 && selected[0] === p){
+              openNode(node, p);
+            } else {
+              selected = [p];
+              draw();
+            }
+          });
+          b.addEventListener('dblclick', function(){ openNode(node, p); });
+        }
+        b.addEventListener('contextmenu', function(e){
+          e.preventDefault();
+          e.stopPropagation();
+          if(selected.indexOf(p) === -1){ selected = [p]; draw(); }
+          showCtx(e.clientX, e.clientY, ctxForSelection());
+        });
+        listEl.appendChild(b);
+      });
+
+      /* status */
+      var info = FS.storageInfo();
+      statusEl.innerHTML = '<span>' + kids.length + ' items</span>' +
+        '<span>' + selected.length + ' selected</span>' +
+        '<span>' + FS.fmtSize(info.bytes) + ' used</span>';
+      viewBtn.textContent = viewMode === 'list' ? 'Grid' : 'List';
+      sortBtn.textContent = sortMode.charAt(0).toUpperCase() + sortMode.slice(1);
+      hideCtx();
+    }
+
+    function commitRename(path, name){
+      if(renamePath === null && !name) return;
+      if(name && name.trim()) FS.rename(path, name);
+      renamePath = null;
+      draw();
+    }
+
+    function openNode(node, path){
+      if(node.type === 'dir'){ nav(path); return; }
+      if(node.kind === 'link' && node.app){
+        if(node.app === 'github'){ window.open(DATA.contact.github, '_blank', 'noopener'); return; }
+        ctx.openApp(node.app);
+        return;
+      }
+      if(node.kind === 'text' || /\.(txt|md|json|log)$/i.test(node.name)){
+        window.__tcosOpenFile = { name:node.name, path:path, content:node.content || '' };
+        ctx.openApp('notepad');
+        return;
+      }
+      showToast('No viewer for ' + node.kind + ' files yet.');
+    }
+
+    /* context menu */
+    function menuPos(x, y){
+      var r = root.getBoundingClientRect();
+      return { x: Math.max(4, Math.min(x - r.left, r.width - 180)), y: Math.max(4, Math.min(y - r.top, r.height - 40)) };
+    }
+    function showCtx(x, y, items){
+      var pos = menuPos(x, y);
+      ctxEl.style.left = pos.x + 'px';
+      ctxEl.style.top = pos.y + 'px';
+      ctxEl.innerHTML = '';
+      items.forEach(function(it){
+        var b = document.createElement('button');
+        b.className = 'fx-ctx-item';
+        b.textContent = it.label;
+        b.addEventListener('click', function(){ hideCtx(); it.fn(); });
+        ctxEl.appendChild(b);
+      });
+      ctxEl.classList.remove('hidden');
+    }
+    function hideCtx(){ ctxEl.classList.add('hidden'); }
+    function ctxForSelection(){
+      var items = [];
+      var single = selected.length === 1 ? FS.get(selected[0]) : null;
+      if(single && (single.type === 'dir' || single.kind === 'link')){
+        items.push({label:'Open', fn:function(){ openNode(single, selected[0]); }});
+      }
+      if(single && single.type === 'file' && single.kind === 'text'){
+        items.push({label:'Open', fn:function(){ openNode(single, selected[0]); }});
+        items.push({label:'Open with Notepad', fn:function(){ openNode(single, selected[0]); }});
+      }
+      if(selected.length){
+        items.push({label:'Rename', fn:function(){
+          if(selected.length === 1){ renamePath = selected[0]; draw(); }
+          else showToast('Rename one item at a time.');
+        }});
+        items.push({label:'Copy', fn:function(){ clip = { paths:selected.slice(), cut:false }; showToast(selected.length + ' copied.'); }});
+        items.push({label:'Cut', fn:function(){ clip = { paths:selected.slice(), cut:true }; showToast(selected.length + ' cut.'); }});
+        items.push({label:'Delete', fn:function(){
+          var n = FS.rm(selected);
+          selected = [];
+          showToast(n + ' deleted.');
+          draw();
+        }});
+        items.push({label:'Properties', fn:function(){ showProps(selected); }});
+      } else {
+        items.push({label:'New folder', fn:newFolder});
+        if(clip.paths.length) items.push({label:'Paste', fn:function(){ doPaste(); }});
+        items.push({label:'Refresh', fn:function(){ draw(); }});
+      }
+      return items;
+    }
+    function newFolder(){
+      var p = FS.mkdir(cwd, 'New folder');
+      if(p){ renamePath = p; draw(); }
+    }
+    function doPaste(){
+      if(!clip.paths.length) return;
+      var n = FS.copy(clip.paths, cwd, clip.cut);
+      if(clip.cut) clip = { paths:[], cut:false };
+      selected = [];
+      showToast(n + ' pasted.');
+      draw();
+    }
+    function showProps(paths){
+      var list = paths.map(function(p){ return FS.get(p); }).filter(function(n){ return !!n; });
+      if(!list.length) return;
+      var bytes = list.reduce(function(a, n){ return a + FS.size(n); }, 0);
+      var rows = list.map(function(n){
+        return '<div class="info-row"><span class="k">' + esc(n.name) + '</span><span class="v">' +
+          esc(n.type === 'dir' ? 'Folder' : (n.kind === 'link' ? 'Shortcut' : n.kind)) + ' · ' +
+          esc(FS.fmtSize(FS.size(n))) + '</span></div>';
+      }).join('');
+      propEl.innerHTML = '<div class="fx-prop-box" role="dialog" aria-label="Properties">' +
+        '<h3>Properties' + (list.length > 1 ? ' (' + list.length + ' items)' : '') + '</h3>' +
+        '<div class="info-rows">' + rows +
+        '<div class="info-row"><span class="k">Total size</span><span class="v">' + esc(FS.fmtSize(bytes)) + '</span></div>' +
+        '<div class="info-row"><span class="k">Location</span><span class="v">' + esc(cwd) + '</span></div>' +
+        '</div><div class="contact-actions"><button class="case-btn primary" data-prop-ok>OK</button></div></div>';
+      propEl.classList.remove('hidden');
+      propEl.querySelector('[data-prop-ok]').addEventListener('click', function(){ propEl.classList.add('hidden'); });
+    }
+
+    /* toolbar */
+    root.querySelectorAll('[data-ex-nav]').forEach(function(b){
+      b.addEventListener('click', function(){
+        var act = b.getAttribute('data-ex-nav');
+        if(act === 'back' && hi > 0){ hi--; cwd = hist[hi]; selected = []; draw(); }
+        else if(act === 'fwd' && hi < hist.length - 1){ hi++; cwd = hist[hi]; selected = []; draw(); }
+        else if(act === 'up' && cwd !== '/Home'){
+          var ps = cwd.split('/').filter(function(p){ return p; });
+          nav(ps.length > 1 ? '/' + ps.slice(0, -1).join('/') : '/Home');
+        }
+      });
+    });
+    searchEl.addEventListener('input', function(){
+      filter = searchEl.value.toLowerCase();
+      draw();
+    });
+    viewBtn.addEventListener('click', function(){
+      viewMode = viewMode === 'list' ? 'grid' : 'list';
+      draw();
+    });
+    sortBtn.addEventListener('click', function(){
+      sortMode = sortMode === 'name' ? 'type' : (sortMode === 'type' ? 'date' : 'name');
+      draw();
+    });
+    container.querySelector('[data-ex-tool="new"]').addEventListener('click', newFolder);
+    listEl.addEventListener('contextmenu', function(e){
+      e.preventDefault();
+      showCtx(e.clientX, e.clientY, selected.length ? ctxForSelection() : [
+        {label:'New folder', fn:newFolder},
+        {label:'Paste', fn:function(){ doPaste(); }},
+        {label:'Refresh', fn:function(){ draw(); }}
+      ]);
+    });
+    listEl.addEventListener('click', function(e){
+      if(e.target === listEl){ selected = []; draw(); }
+    });
+    propEl.addEventListener('click', function(e){
+      if(e.target === propEl) propEl.classList.add('hidden');
+    });
+    document.addEventListener('click', function h(e){
+      if(!container.isConnected){ document.removeEventListener('click', h); return; }
+      if(!ctxEl.classList.contains('hidden') && !ctxEl.contains(e.target)) hideCtx();
+    });
+    container.addEventListener('keydown', function(e){
+      var tag = (e.target.tagName || '').toLowerCase();
+      if(tag === 'input' || tag === 'textarea') return;
+      if(e.key === 'Delete' && selected.length){
+        var n = FS.rm(selected);
+        selected = [];
+        showToast(n + ' deleted.');
+        draw();
+      }
+      else if(e.key === 'F2' && selected.length === 1){ renamePath = selected[0]; draw(); }
+      else if((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'c' && selected.length){
+        clip = { paths:selected.slice(), cut:false };
+        showToast(selected.length + ' copied.');
+      }
+      else if((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'x' && selected.length){
+        clip = { paths:selected.slice(), cut:true };
+        showToast(selected.length + ' cut.');
+      }
+      else if((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'v'){ doPaste(); }
+    });
+
+    draw();
+  }
+};
+
 /* icon metadata for desktop / start menu / mobile home */
 var ICON_LIST = [
   {app:'about-me', label:'about-me.md', kind:'file', ext:'md', color:'var(--blue)'},
@@ -1130,6 +1698,7 @@ var ICON_LIST = [
   {app:'resume', label:'resume.pdf', kind:'file', ext:'pdf', color:'var(--danger)'},
   {app:'github', label:'github.url', kind:'link', href:DATA.contact.github},
   {app:'lab', label:'lab/', kind:'folder'},
+  {app:'explorer', label:'explorer', kind:'folder'},
   {app:'terminal', label:'terminal', kind:'app'}
 ];
 

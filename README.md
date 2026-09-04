@@ -10,15 +10,31 @@ and a taskbar — the way work actually feels on my computer.
 
 **Desktop OS**
 - Draggable, resizable, minimizable, maximizable windows with taskbar tracking
+- Win+Arrow snapping, Alt+Tab switcher, double-click to maximize
 - Desktop icons: click-drag marquee select, drag-to-reorder, free placement
   with auto-arrange toggle (right-click desktop), persisted per browser
-- Start menu with search + recently opened, centered like Windows 11
+- Start menu with pinned apps, all-apps view, categorized search
+  (apps / files / settings), recently opened, centered like Windows 11
   (or left-aligned via Settings), clock flyout with calendar
-- System tray: network status, volume, brightness, live battery, quick settings
-- Shutdown / restart flows with boot replay, power menu in Start
-- Task Manager (processes, performance, startup, run-new-task, `Ctrl+Shift+Esc`)
-- Notification center: tray bell, panel, toast stack, sounds
-- Pin/unpin apps to the taskbar, Calculator, Notepad, Settings, terminal
+- System tray + quick settings: network, volume, brightness, night light
+  with temperature slider, Bluetooth, airplane mode, live battery
+- Shutdown / restart / sleep flows, lock screen, Ctrl+Alt+End security
+  screen, permission confirmations
+- Task Manager (processes, live performance graphs, app history, startup,
+  users, details, services, run-new-task, `Ctrl+Shift+Esc`)
+- File Explorer over a persisted simulated filesystem (Home, Documents,
+  Apps…): navigate, search, create/rename/delete/copy/paste, properties,
+  sorting, list/grid views — text files open in Notepad
+- Notification center: tray bell, grouped panel, toast stack, sounds,
+  do-not-disturb, per-visit onboarding notices
+- Pin/unpin apps to the taskbar, Calculator, Notepad, Settings, terminal,
+  Device Info (GPU, storage, gamepads, fingerprints, display, audio)
+
+**Mobile OS** (≤640px)
+- Home grid with search + recently opened, long-press drag reorder
+- Full-screen app views, bottom nav (Home / Search / Settings)
+- Settings sheet: theme, Wi-Fi/volume/brightness/battery status,
+  night light, do-not-disturb
 
 **Mobile OS** (≤640px)
 - Home grid with search + recently opened, long-press drag reorder
@@ -34,7 +50,7 @@ and a taskbar — the way work actually feels on my computer.
 
 ```
 index.html          App shell + markup (JS/CSS live in folders below)
-scripts/            data, apps, desktop, shell, notifications, device,
+scripts/            data, apps, fs, desktop, shell, notifications, device,
                     prefs, mobile, boot, theme-init (deferred, in order)
 visual/             tokens, boot, desktop, windows, apps, taskbar, power,
                     taskmanager, notifications, calculator, notepad,
@@ -47,6 +63,13 @@ manifest.json       PWA manifest · robots.txt · sitemap.xml
 ```
 
 No frameworks, no build step, no dependencies — plain HTML/CSS/JS.
+
+## Controls
+
+- `Ctrl+Shift+Esc` task manager · `Ctrl+Alt+End` security screen
+- `Alt+Tab` window switcher · `Win+Arrows` snap windows · `` ` `` terminal
+- `Esc` closes menus/panels · Right-click desktop, icons, and taskbar apps
+  for context actions · `F2` renames in File Explorer
 
 ## Notes
 

@@ -9,16 +9,32 @@
  * index.html, mirror the new URLs in PRECACHE too (query strings are
  * part of the cache key).
  */
-var CACHE_NAME = 'tcos-v4';
+var CACHE_NAME = 'tcos-v5';
 
 var PRECACHE = [
   '/',
   '/index.html',
   '/404.html',
   '/manifest.json',
+  '/robots.txt',
+  '/sitemap.xml',
+  '/tflows.html',
+  '/samples/index.html',
+  '/samples/shop.html',
+  '/samples/portfolio.html',
+  '/samples/notepad.html',
+  '/samples/playground.html',
+  '/samples/taskify.html',
   '/images/favicon.ico',
   '/images/workshop.png',
   '/images/workshop-nobg.png',
+  '/images/developer-coding-7680x4320-13642.png',
+  '/images/samples.png',
+  '/images/port.png',
+  '/images/taskifysc.png',
+  '/images/playground.png',
+  '/images/notepadsc.png',
+  '/images/taskify-logo.png',
   '/icons/icon-192.png',
   '/icons/icon-512.png',
   '/icons/icon-maskable-512.png',
@@ -47,6 +63,7 @@ var PRECACHE = [
   '/scripts/theme-init.js?v=3',
   '/scripts/data.js?v=3',
   '/scripts/apps.js?v=3',
+  '/scripts/fs.js?v=1',
   '/scripts/desktop.js?v=3',
   '/scripts/shell.js?v=3',
   '/scripts/notifications.js?v=3',

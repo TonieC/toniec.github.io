@@ -166,6 +166,18 @@
   display:none
 }
 
+.ctx-menu.task-mode .ctx-item {
+  display:none
+}
+
+.ctx-menu.task-mode .ctx-item.task-only {
+  display:flex
+}
+
+.ctx-item.task-only {
+  display:none
+}
+
 .tb-right {
   display:flex;
   align-items:stretch;
@@ -188,31 +200,6 @@
   min-width:88px;
   padding:0 13px;
   font-family:var(--sans)
-}
-
-.tb-wifi {
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:0 10px;
-  color:var(--text-dim)
-}
-
-.tb-wifi:hover {
-  background:var(--surface-2);
-  color:var(--text)
-}
-
-.tb-wifi .wifi-off {
-  display:none
-}
-
-.tb-wifi.offline {
-  color:var(--danger)
-}
-
-.tb-wifi.offline .wifi-off {
-  display:block
 }
 
 .tb-clock:hover {
@@ -302,6 +289,120 @@
   display:flex;
   flex-direction:column;
   padding:7px
+}
+
+.sm-sec {
+  padding:7px 7px 0
+}
+
+.sm-sec-head {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  padding:5px 8px 7px;
+
+  color:var(--text-faint);
+
+  font-family:var(--mono);
+  font-size:9px;
+  font-weight:600;
+
+  letter-spacing:.04em;
+  text-transform:uppercase
+}
+
+.sm-allbtn {
+  border:none;
+  background:none;
+
+  color:var(--text-dim);
+
+  font-family:var(--sans);
+  font-size:10px;
+
+  cursor:pointer;
+
+  text-transform:none;
+  letter-spacing:0
+}
+
+.sm-allbtn:hover {
+  color:var(--accent)
+}
+
+.sm-pinned {
+  display:grid;
+
+  grid-template-columns:repeat(4, 1fr);
+
+  gap:2px;
+
+  padding:0 0 4px
+}
+
+.sm-app {
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+
+  gap:6px;
+
+  padding:9px 2px;
+
+  border:none;
+  border-radius:3px;
+
+  background:none;
+  color:var(--text);
+
+  font-size:10px;
+
+  cursor:pointer
+}
+
+.sm-app:hover {
+  background:var(--surface-2)
+}
+
+.sm-app .g {
+  position:relative;
+
+  width:24px;
+  height:24px
+}
+
+.sm-app .g .glyph-file,
+.sm-app .g .glyph-folder,
+.sm-app .g .glyph-app,
+.sm-app .g .glyph-link {
+  width:48px;
+  height:48px;
+
+  transform:scale(.5);
+  transform-origin:top left
+}
+
+.sm-app .lbl {
+  max-width:100%;
+
+  overflow:hidden;
+
+  white-space:nowrap;
+  text-overflow:ellipsis
+}
+
+.sm-cat-label {
+  padding:8px 8px 4px;
+
+  color:var(--text-faint);
+
+  font-family:var(--mono);
+  font-size:9px;
+  font-weight:600;
+
+  letter-spacing:.04em;
+  text-transform:uppercase
 }
 
 .sm-recent {

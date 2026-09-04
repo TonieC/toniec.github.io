@@ -20,6 +20,7 @@ function pinLabel(app){
   return app2 ? app2.title : app;
 }
 window.TCOS_isPinned = function(app){ return getPinned().indexOf(app) > -1; };
+window.TCOS_pinLabel = pinLabel;
 window.TCOS_pinApp = function(app){
   if(!APPS[app]) return;
   var list = getPinned();
@@ -227,13 +228,54 @@ var WM = (function(){
       el.style.width='100%'; el.style.height = (window.innerHeight - 52) + 'px';
       el.classList.add('maximized');
       st.maximized = true;
+      st.snapped = null;
     } else {
       var pr = st.prevRect;
       if(pr){ el.style.left=pr.left; el.style.top=pr.top; el.style.width=pr.width; el.style.height=pr.height; }
       el.classList.remove('maximized');
       st.maximized = false;
+      st.snapped = null;
     }
     focus(appId);
+  }
+  function snap(appId, side){
+    var st = windows[appId]; if(!st) return;
+    var el = st.el;
+    if(st.minimized) restore(appId);
+    if(st.maximized){
+      var pr0 = st.prevRect;
+      el.classList.remove('maximized');
+      st.maximized = false;
+      if(pr0){ el.style.left=pr0.left; el.style.top=pr0.top; el.style.width=pr0.width; el.style.height=pr0.height; }
+      st.snapped = null;
+      if(!side) { focus(appId); return; }
+    }
+    if(!side || st.snapped === side){
+      var pr = st.prevRect;
+      if(st.snapped && pr){ el.style.left=pr.left; el.style.top=pr.top; el.style.width=pr.width; el.style.height=pr.height; }
+      st.snapped = null;
+      focus(appId);
+      return;
+    }
+    if(!st.snapped) st.prevRect = { left:el.style.left, top:el.style.top, width:el.style.width, height:el.style.height };
+    var h = (window.innerHeight - 52) + 'px';
+    if(side === 'left'){ el.style.left='0px'; }
+    else { el.style.left='50%'; }
+    el.style.top='0px';
+    el.style.width='50%';
+    el.style.height=h;
+    st.snapped = side;
+    focus(appId);
+  }
+  function topmost(){
+    var best = null, z = -1;
+    Object.keys(windows).forEach(function(id){
+      var st = windows[id];
+      if(!st || st.minimized) return;
+      var w = parseInt(st.el.style.zIndex || '0', 10);
+      if(w >= z){ z = w; best = id; }
+    });
+    return best || openOrder[openOrder.length - 1] || null;
   }
   function close(appId){
     var st = windows[appId]; if(!st) return;
@@ -253,6 +295,25 @@ var WM = (function(){
     open(id);
   }
 
+  function taskMenu(e, id, isOpen){
+    e.preventDefault();
+    e.stopPropagation();
+    var menu = document.getElementById('ctx-menu');
+    if(!menu) return;
+    menu._taskApp = id;
+    menu.classList.remove('pin-mode');
+    menu.classList.add('task-mode');
+    var pinBtn = document.getElementById('ctx-pin');
+    if(pinBtn) pinBtn.firstChild.textContent = (window.TCOS_isPinned(id) ? 'Unpin from taskbar' : 'Pin to taskbar');
+    var minBtn = document.getElementById('ctx-tb-min');
+    if(minBtn) minBtn.textContent = (isOpen && windows[id] && windows[id].minimized) ? 'Restore' : 'Minimize';
+    var x = Math.min(e.clientX, window.innerWidth - 220);
+    var y = Math.min(e.clientY - 120, window.innerHeight - 220);
+    menu.style.left = Math.max(4, x) + 'px';
+    menu.style.top = Math.max(4, y) + 'px';
+    menu.classList.add('open');
+  }
+
   function renderTaskbar(activeId){
     taskbarApps.innerHTML = '';
     getPinned().forEach(function(id){
@@ -262,12 +323,7 @@ var WM = (function(){
       btn.setAttribute('aria-label', 'Open ' + pinLabel(id));
       btn.innerHTML = '<span class="dot" aria-hidden="true"></span><span>'+esc(pinLabel(id))+'</span>';
       btn.addEventListener('click', function(){ openPinned(id); });
-      btn.addEventListener('contextmenu', function(e){
-        e.preventDefault();
-        e.stopPropagation();
-        window.TCOS_unpinApp(id);
-        renderTaskbar(activeId);
-      });
+      btn.addEventListener('contextmenu', function(e){ taskMenu(e, id, false); });
       taskbarApps.appendChild(btn);
     });
     openOrder.forEach(function(id){
@@ -281,13 +337,7 @@ var WM = (function(){
         else if(id===activeId){ minimize(id); }
         else { focus(id); }
       });
-      btn.addEventListener('contextmenu', function(e){
-        e.preventDefault();
-        e.stopPropagation();
-        if(window.TCOS_isPinned(id)) window.TCOS_unpinApp(id);
-        else window.TCOS_pinApp(id);
-        renderTaskbar(activeId);
-      });
+      btn.addEventListener('contextmenu', function(e){ taskMenu(e, id, true); });
       taskbarApps.appendChild(btn);
     });
   }
@@ -301,7 +351,7 @@ var WM = (function(){
 
   renderTaskbar();
 
-  return { open:open, close:close, minimize:minimize, focus:focus, isOpen:function(id){return !!windows[id];}, refresh:function(){ renderTaskbar(); }, list:function(){ return openOrder.map(function(id){ var st = windows[id]; return st ? {id:id, title:label(id), minimized:st.minimized, maximized:st.maximized} : null; }).filter(function(x){return !!x;}); } };
+  return { open:open, close:close, minimize:minimize, focus:focus, toggleMax:toggleMax, snap:snap, topmost:topmost, isOpen:function(id){return !!windows[id];}, refresh:function(){ renderTaskbar(); }, list:function(){ return openOrder.map(function(id){ var st = windows[id]; return st ? {id:id, title:label(id), minimized:st.minimized, maximized:st.maximized} : null; }).filter(function(x){return !!x;}); } };
 })();
 
 /* ============================================================

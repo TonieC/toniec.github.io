@@ -92,6 +92,19 @@
   text-align:center
 }
 
+.notif-group {
+  padding:10px 14px 4px;
+
+  color:var(--text-faint);
+
+  font-family:var(--mono);
+  font-size:9px;
+  font-weight:600;
+
+  letter-spacing:.04em;
+  text-transform:uppercase
+}
+
 .notif-item {
   width:100%;
 
