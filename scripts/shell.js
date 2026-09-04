@@ -55,6 +55,7 @@ setInterval(tickClock, 1000);
     {app:'taskmanager', label:'Task Manager'},
     {app:'calculator', label:'Calculator'},
     {app:'notepad', label:'Notepad'},
+    {app:'deviceinfo', label:'Device Info'},
     {app:'github', label:'GitHub', kind:'link', href:DATA.contact.github},
     {app:'resume', label:'Resume'}
   ];

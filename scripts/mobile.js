@@ -21,7 +21,8 @@ function initMobileOS(){
     {app:'terminal', label:'Terminal'},
     {app:'taskmanager', label:'Task Manager'},
     {app:'calculator', label:'Calculator'},
-    {app:'notepad', label:'Notepad'}
+    {app:'notepad', label:'Notepad'},
+    {app:'deviceinfo', label:'Device Info'}
   ];
 
   mItems.forEach(function(item){

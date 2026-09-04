@@ -9,7 +9,7 @@
  * index.html, mirror the new URLs in PRECACHE too (query strings are
  * part of the cache key).
  */
-var CACHE_NAME = 'tcos-v2';
+var CACHE_NAME = 'tcos-v4';
 
 var PRECACHE = [
   '/',
@@ -44,16 +44,16 @@ var PRECACHE = [
   '/visual/settings.css?v=3',
   '/visual/responsive.css?v=3',
   '/visual/device.css?v=2',
-  '/scripts/theme-init.js?v=2',
-  '/scripts/data.js?v=2',
-  '/scripts/apps.js?v=2',
-  '/scripts/desktop.js?v=2',
-  '/scripts/shell.js?v=2',
-  '/scripts/notifications.js?v=2',
-  '/scripts/device.js?v=2',
-  '/scripts/prefs.js?v=2',
-  '/scripts/mobile.js?v=2',
-  '/scripts/boot.js?v=2'
+  '/scripts/theme-init.js?v=3',
+  '/scripts/data.js?v=3',
+  '/scripts/apps.js?v=3',
+  '/scripts/desktop.js?v=3',
+  '/scripts/shell.js?v=3',
+  '/scripts/notifications.js?v=3',
+  '/scripts/device.js?v=3',
+  '/scripts/prefs.js?v=3',
+  '/scripts/mobile.js?v=3',
+  '/scripts/boot.js?v=3'
 ];
 
 self.addEventListener('install', function (e) {

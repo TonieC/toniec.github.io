@@ -2,46 +2,86 @@
    TASK MANAGER
    ============================================================ */
 .tm {
+  position:relative;
+
   display:flex;
   flex-direction:column;
 
   height:100%
 }
 
-.tm-tabs {
+.tm-body {
+  flex:1;
+
   display:flex;
+
+  min-height:0
+}
+
+.tm-side {
+  width:148px;
+
+  flex-shrink:0;
+
+  display:flex;
+  flex-direction:column;
 
   gap:2px;
 
-  padding:10px 12px 0;
+  padding:12px 8px 12px 12px;
+
+  overflow:auto;
 
   background:var(--surface-2);
 
-  border-bottom:1px solid var(--line)
+  border-right:1px solid var(--line)
 }
 
-.tm-tab {
-  padding:8px 14px;
+.tm-navbtn {
+  display:flex;
+  align-items:center;
 
-  border:1px solid transparent;
-  border-bottom:none;
-  border-radius:4px 4px 0 0;
+  gap:10px;
+
+  padding:8px 10px;
+
+  border:none;
+  border-left:2px solid transparent;
+  border-radius:0 4px 4px 0;
 
   background:none;
   color:var(--text-dim);
 
   font-family:var(--sans);
   font-size:12px;
+  text-align:left;
 
-  cursor:pointer
+  cursor:pointer;
+
+  transition:background .12s var(--ease), color .12s var(--ease)
 }
 
-.tm-tab.active {
-  background:var(--surface);
+.tm-navbtn:hover {
+  background:var(--surface-3);
+  color:var(--text)
+}
 
-  border-color:var(--line);
+.tm-navbtn.active {
+  background:var(--surface-3);
+
+  border-left-color:var(--accent);
 
   color:var(--text)
+}
+
+.tm-main {
+  flex:1;
+
+  display:flex;
+  flex-direction:column;
+
+  min-width:0;
+  min-height:0
 }
 
 .tm-view {
@@ -52,11 +92,19 @@
   padding:12px 14px 16px
 }
 
+.tm-tablewrap {
+  overflow-x:auto
+}
+
+.tm-table {
+  min-width:560px
+}
+
 .tm-head,
 .tm-row {
   display:grid;
 
-  grid-template-columns:1fr 70px 70px 70px;
+  grid-template-columns:30px 1fr 76px 60px 66px 60px 66px;
   align-items:center;
 
   gap:8px
@@ -75,14 +123,18 @@
   text-transform:uppercase
 }
 
+.tm-head span:nth-child(n+3) {
+  text-align:right
+}
+
 .tm-row {
   width:100%;
 
-  padding:8px;
+  padding:7px 8px;
 
   border:none;
   border-bottom:1px solid var(--line);
-  border-radius:3px;
+  border-radius:4px;
 
   background:none;
   color:var(--text);
@@ -90,7 +142,9 @@
   font-size:12px;
   text-align:left;
 
-  cursor:default
+  cursor:default;
+
+  transition:background .12s var(--ease)
 }
 
 .tm-row:hover {
@@ -98,7 +152,27 @@
 }
 
 .tm-row.selected {
-  background:var(--surface-3)
+  background:var(--surface-3);
+
+  box-shadow:inset 2px 0 0 var(--accent)
+}
+
+.tm-row .ico {
+  position:relative;
+
+  width:22px;
+  height:22px
+}
+
+.tm-row .ico .glyph-file,
+.tm-row .ico .glyph-folder,
+.tm-row .ico .glyph-app,
+.tm-row .ico .glyph-link {
+  width:44px;
+  height:44px;
+
+  transform:scale(.5);
+  transform-origin:top left
 }
 
 .tm-row .n {
@@ -110,12 +184,18 @@
 
 .tm-row .s,
 .tm-row .c,
-.tm-row .m {
+.tm-row .m,
+.tm-row .d,
+.tm-row .e {
+  overflow:hidden;
+
   color:var(--text-dim);
 
   font-family:var(--mono);
   font-size:11px;
-  text-align:right
+  text-align:right;
+
+  white-space:nowrap
 }
 
 .tm-row .s.running {
@@ -124,6 +204,16 @@
 
 .tm-row .s.suspended {
   color:var(--accent)
+}
+
+.tm-empty {
+  padding:26px 10px;
+
+  color:var(--text-faint);
+
+  font-family:var(--mono);
+  font-size:11px;
+  text-align:center
 }
 
 .tm-foot {
@@ -142,6 +232,154 @@
   font-family:var(--mono);
   font-size:10px
 }
+
+.tm-foot .spacer {
+  flex:1
+}
+
+/* ---------- performance ---------- */
+
+.tm-perf-layout {
+  display:flex;
+
+  gap:0;
+
+  min-height:100%
+}
+
+.tm-reslist {
+  width:150px;
+
+  flex-shrink:0;
+
+  display:flex;
+  flex-direction:column;
+
+  gap:2px
+}
+
+.tm-res {
+  padding:9px 10px;
+
+  border:none;
+  border-left:2px solid transparent;
+  border-radius:0 4px 4px 0;
+
+  background:none;
+
+  text-align:left;
+
+  cursor:pointer;
+
+  transition:background .12s var(--ease)
+}
+
+.tm-res:hover {
+  background:var(--surface-2)
+}
+
+.tm-res.active {
+  background:var(--surface-3);
+
+  border-left-color:var(--accent)
+}
+
+.tm-res .n {
+  color:var(--text);
+
+  font-size:12px;
+  font-weight:500
+}
+
+.tm-res .v {
+  margin-top:2px;
+
+  color:var(--text-dim);
+
+  font-family:var(--mono);
+  font-size:11px
+}
+
+.tm-detail {
+  flex:1;
+
+  min-width:0;
+
+  padding:2px 0 0 18px
+}
+
+.tm-big {
+  color:var(--text);
+
+  font-size:24px;
+  font-weight:650;
+
+  letter-spacing:-.02em
+}
+
+.tm-big small {
+  color:var(--text-faint);
+
+  font-size:11px;
+  font-weight:400
+}
+
+.tm-graph {
+  width:100%;
+  height:150px;
+
+  margin-top:10px;
+
+  display:block;
+
+  background:var(--surface-2);
+
+  border:1px solid var(--line);
+  border-radius:4px
+}
+
+.tm-graph .tm-grid {
+  stroke:var(--line);
+  stroke-width:.5
+}
+
+.tm-graph .tm-area {
+  fill:var(--accent);
+  opacity:.12;
+  stroke:none
+}
+
+.tm-graph .tm-line {
+  fill:none;
+  stroke:var(--accent);
+  stroke-width:1.5;
+  stroke-linejoin:round;
+  stroke-linecap:round
+}
+
+.tm-axis {
+  display:flex;
+  justify-content:space-between;
+
+  margin-top:5px;
+
+  color:var(--text-faint);
+
+  font-family:var(--mono);
+  font-size:9px
+}
+
+.tm-stats {
+  display:grid;
+
+  grid-template-columns:1fr 1fr;
+
+  gap:0 18px;
+
+  margin-top:12px
+}
+
+/* ---------- shared meters (also used by Device Info) ---------- */
 
 .tm-perf {
   display:flex;
@@ -191,18 +429,67 @@
   transition:width .8s var(--ease)
 }
 
+/* ---------- startup / users / details / services ---------- */
+
 .tm-startup-row {
   display:flex;
   align-items:center;
-  justify-content:space-between;
 
   gap:12px;
 
-  padding:10px 8px;
+  padding:9px 8px;
 
+  border:none;
   border-bottom:1px solid var(--line);
+  border-radius:4px;
 
-  font-size:12px
+  background:none;
+
+  font-size:12px;
+  text-align:left;
+
+  transition:background .12s var(--ease)
+}
+
+button.tm-startup-row {
+  width:100%;
+
+  cursor:pointer
+}
+
+button.tm-startup-row:hover {
+  background:var(--surface-2)
+}
+
+.tm-startup-row .ico {
+  position:relative;
+
+  width:22px;
+  height:22px;
+
+  flex-shrink:0
+}
+
+.tm-startup-row .ico .glyph-file,
+.tm-startup-row .ico .glyph-folder,
+.tm-startup-row .ico .glyph-app,
+.tm-startup-row .ico .glyph-link {
+  width:44px;
+  height:44px;
+
+  transform:scale(.5);
+  transform-origin:top left
+}
+
+.tm-startup-row .n {
+  flex:1;
+
+  overflow:hidden;
+
+  color:var(--text);
+
+  white-space:nowrap;
+  text-overflow:ellipsis
 }
 
 .tm-startup-row .impact {
@@ -213,12 +500,94 @@
   text-align:right
 }
 
+.tm-pill {
+  flex-shrink:0;
+
+  padding:3px 9px;
+
+  border:1px solid var(--line);
+  border-radius:20px;
+
+  color:var(--text-dim);
+
+  font-family:var(--mono);
+  font-size:9px
+}
+
+button.tm-pill {
+  cursor:pointer
+}
+
+button.tm-pill:hover {
+  background:var(--surface-3);
+  color:var(--text)
+}
+
+.tm-pill.on {
+  border-color:var(--green);
+  color:var(--green)
+}
+
+.tm-pill.off {
+  border-color:var(--line-strong);
+  color:var(--text-faint)
+}
+
+.tm-user {
+  display:flex;
+  align-items:center;
+
+  gap:12px;
+
+  padding:12px 8px;
+
+  border-bottom:1px solid var(--line)
+}
+
+.tm-avatar {
+  width:32px;
+  height:32px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  flex-shrink:0;
+
+  background:var(--surface-3);
+
+  border:1px solid var(--line-strong);
+  border-radius:50%;
+
+  color:var(--accent);
+
+  font-family:var(--mono);
+  font-size:13px;
+  font-weight:700
+}
+
+.tm-user .n {
+  color:var(--text);
+
+  font-size:13px;
+  font-weight:600
+}
+
+.tm-user .s {
+  margin-top:2px;
+
+  color:var(--text-dim);
+
+  font-size:11px
+}
+
+.tm-user .s.sub {
+  display:block
+}
+
 /* ============================================================
    TASK MANAGER — RUN NEW TASK
    ============================================================ */
-.tm {
-  position:relative
-}
 
 .tm-run-overlay {
   position:absolute;
@@ -237,14 +606,14 @@
 }
 
 .tm-run-box {
-  width:min(360px, 100%);
+  width:min(380px, 100%);
 
-  padding:18px;
+  padding:20px;
 
   background:var(--surface);
 
   border:1px solid var(--line-strong);
-  border-radius:5px;
+  border-radius:6px;
 
   box-shadow:var(--shadow)
 }
@@ -269,17 +638,23 @@
   width:100%;
 
   margin-top:12px;
-  padding:9px 11px;
+  padding:10px 12px;
 
   background:var(--surface-2);
 
   border:1px solid var(--line-strong);
-  border-radius:3px;
+  border-radius:4px;
 
   color:var(--text);
 
   font-family:var(--mono);
   font-size:12px
+}
+
+.tm-run-input:focus {
+  border-color:var(--accent);
+
+  outline:none
 }
 
 .tm-run-admin {
@@ -295,6 +670,10 @@
   font-size:11px;
 
   cursor:pointer
+}
+
+.tm-run-admin input {
+  accent-color:var(--accent)
 }
 
 .tm-run-error {
@@ -313,5 +692,88 @@
 
   gap:8px;
 
-  margin-top:14px
+  margin-top:16px
+}
+
+/* ============================================================
+   TASK MANAGER — RESPONSIVE
+   ============================================================ */
+
+@media (max-width:640px) {
+  .tm-body {
+    flex-direction:column
+  }
+
+  .tm-side {
+    width:auto;
+
+    flex-direction:row;
+
+    padding:8px;
+
+    overflow-x:auto;
+
+    border-right:none;
+    border-bottom:1px solid var(--line)
+  }
+
+  .tm-navbtn {
+    flex-shrink:0;
+
+    border-left:none;
+    border-bottom:2px solid transparent;
+    border-radius:4px 4px 0 0
+  }
+
+  .tm-navbtn.active {
+    border-bottom-color:var(--accent)
+  }
+
+  .tm-main {
+    min-height:0
+  }
+
+  .tm-perf-layout {
+    flex-direction:column
+  }
+
+  .tm-reslist {
+    width:auto;
+
+    flex-direction:row;
+
+    overflow-x:auto;
+
+    padding-bottom:4px
+  }
+
+  .tm-res {
+    flex-shrink:0;
+
+    min-width:96px;
+
+    border-left:none;
+    border-bottom:2px solid transparent;
+    border-radius:4px 4px 0 0
+  }
+
+  .tm-res.active {
+    border-bottom-color:var(--accent)
+  }
+
+  .tm-detail {
+    padding:12px 0 0
+  }
+
+  .tm-graph {
+    height:120px
+  }
+
+  .tm-stats {
+    grid-template-columns:1fr
+  }
+
+  .tm-table {
+    min-width:600px
+  }
 }
