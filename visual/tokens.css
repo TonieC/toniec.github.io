@@ -62,7 +62,16 @@ body {
   background:var(--bg);
   color:var(--text);
   -webkit-font-smoothing:antialiased;
-  text-rendering:optimizeLegibility
+  text-rendering:optimizeLegibility;
+  user-select:none;
+  -webkit-user-select:none;
+  -webkit-touch-callout:none
+}
+
+input,
+textarea {
+  user-select:text;
+  -webkit-user-select:text
 }
 
 img {

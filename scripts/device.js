@@ -153,9 +153,7 @@
     trayBtn.addEventListener('click', function(e){
       e.stopPropagation();
       var willOpen = panel.classList.contains('hidden');
-      if(window.TCOS_closeNotifs) window.TCOS_closeNotifs();
-      if(window.TCOS_closeClock) window.TCOS_closeClock();
-      if(window.TCOS_closeStart) window.TCOS_closeStart();
+      if(willOpen && window.TCOS_closePopups) window.TCOS_closePopups('tray');
       panel.classList.toggle('hidden');
       trayBtn.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
       if(willOpen){ paintNet(); paintBatt(); }

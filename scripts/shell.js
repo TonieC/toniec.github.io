@@ -25,6 +25,16 @@ tickClock();
 setInterval(tickClock, 1000);
 
 /* ============================================================
+   POPUP EXCLUSIVITY — only one taskbar submenu open at a time
+   ============================================================ */
+window.TCOS_closePopups = function(except){
+  if(except !== 'start' && window.TCOS_closeStart) window.TCOS_closeStart();
+  if(except !== 'clock' && window.TCOS_closeClock) window.TCOS_closeClock();
+  if(except !== 'tray' && window.TCOS_closeTray) window.TCOS_closeTray();
+  if(except !== 'notifs' && window.TCOS_closeNotifs) window.TCOS_closeNotifs();
+};
+
+/* ============================================================
    START MENU
    ============================================================ */
 (function(){
@@ -249,6 +259,7 @@ setInterval(tickClock, 1000);
   renderRecent();
 
   function openMenu(){
+    if(window.TCOS_closePopups) window.TCOS_closePopups('start');
     menu.classList.add('open');
     startBtn.classList.add('active');
     startBtn.setAttribute('aria-expanded','true');
@@ -407,6 +418,7 @@ setInterval(tickClock, 1000);
   clockBtn.addEventListener('click', function(e){
     e.stopPropagation();
     if(fly.classList.contains('hidden')){
+      if(window.TCOS_closePopups) window.TCOS_closePopups('clock');
       view = new Date();
       view.setDate(1);
       render();

@@ -165,6 +165,8 @@
   window.TCOS_dismissNotification = dismiss;
 
   function togglePanel(){
+    var willOpen = panel.classList.contains('hidden');
+    if(willOpen && window.TCOS_closePopups) window.TCOS_closePopups('notifs');
     panel.classList.toggle('hidden');
   }
   function closePanel(){ panel.classList.add('hidden'); }

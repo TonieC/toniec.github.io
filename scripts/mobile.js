@@ -177,6 +177,7 @@ function initMobileOS(){
       '<div class="m-settings-row"><div><div class="t">Night light</div><div class="d">Warm tint.</div></div><button class="m-toggle" id="m-night-toggle" aria-label="Toggle night light"></button></div>'+
       '<div class="m-settings-row"><div><div class="t">Warmth</div><div class="d">Cooler to warmer.</div></div><input class="m-set-slider" data-night-temp type="range" min="0" max="100" value="60" aria-label="Night light warmth" /></div>'+
       '<div class="m-settings-row"><div><div class="t">Battery</div><div class="d" id="m-set-batt">Checking…</div></div></div>'+
+      '<div class="m-settings-row"><div><div class="t">Reset TC/OS data</div><div class="d">Wipe everything, reboot fresh.</div></div><button class="case-btn m-small-btn" id="m-reset-btn">Reset</button></div>'+
       '<div class="m-settings-row"><div><div class="t">About TC/OS</div><div class="d">Version and session info.</div></div><button class="case-btn m-small-btn" id="m-about-btn">Open</button></div>'+
       '</div>';
     appview.classList.add('open');
@@ -193,6 +194,27 @@ function initMobileOS(){
       });
     }
     appviewBody.querySelector('#m-about-btn').addEventListener('click', function(){ openMobileApp('about-tcos'); });
+    var mReset = appviewBody.querySelector('#m-reset-btn');
+    var mResetArmed = false;
+    var mResetTimer = null;
+    if(mReset) mReset.addEventListener('click', function(){
+      if(!mResetArmed){
+        mResetArmed = true;
+        mReset.textContent = 'Confirm?';
+        showToast('Tap Reset again to wipe all TC/OS data.');
+        mResetTimer = setTimeout(function(){
+          mResetArmed = false;
+          if(mReset) mReset.textContent = 'Reset';
+        }, 4000);
+        return;
+      }
+      clearTimeout(mResetTimer);
+      try {
+        Object.keys(localStorage).filter(function(k){ return k.indexOf('tcos-') === 0; }).forEach(function(k){ localStorage.removeItem(k); });
+      } catch(e){}
+      showToast('TC/OS data wiped — rebooting…');
+      setTimeout(function(){ window.location.reload(); }, 700);
+    });
     var mVol = appviewBody.querySelector('#m-set-vol');
     if(mVol) mVol.addEventListener('input', function(){ if(window.TCOS_device) window.TCOS_device.setVolume(parseInt(mVol.value, 10)); });
     var mBright = appviewBody.querySelector('#m-set-bright');

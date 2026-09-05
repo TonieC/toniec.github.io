@@ -1133,7 +1133,8 @@ APPS['settings'] = {
       try {
         Object.keys(localStorage).filter(function(k){ return k.indexOf('tcos-') === 0; }).forEach(function(k){ localStorage.removeItem(k); });
       } catch(e){}
-      window.location.reload();
+      showToast('TC/OS data wiped — rebooting…');
+      setTimeout(function(){ window.location.reload(); }, 700);
     });
   }
 };
@@ -1337,6 +1338,7 @@ APPS['explorer'] = {
       '<div class="fx-ex-tools">' +
         '<input class="fx-ex-search" data-ex-search type="text" placeholder="Search this folder" autocomplete="off" aria-label="Search this folder" />' +
         '<button class="fx-ex-tool" data-ex-tool="new">New folder</button>' +
+        '<button class="fx-ex-tool" data-ex-tool="file">New file</button>' +
         '<button class="fx-ex-tool" data-ex-tool="view">List</button>' +
         '<button class="fx-ex-tool" data-ex-tool="sort">Name</button>' +
       '</div>' +
@@ -1585,6 +1587,9 @@ APPS['explorer'] = {
         items.push({label:'Properties', fn:function(){ showProps(selected); }});
       } else {
         items.push({label:'New folder', fn:newFolder});
+        items.push({label:'New Markdown file', fn:function(){ newFile('untitled.md', '# Untitled\n'); }});
+        items.push({label:'New text file', fn:function(){ newFile('untitled.txt', ''); }});
+        items.push({label:'New JSON file', fn:function(){ newFile('untitled.json', '{}'); }});
         if(clip.paths.length) items.push({label:'Paste', fn:function(){ doPaste(); }});
         items.push({label:'Refresh', fn:function(){ draw(); }});
       }
@@ -1592,6 +1597,10 @@ APPS['explorer'] = {
     }
     function newFolder(){
       var p = FS.mkdir(cwd, 'New folder');
+      if(p){ renamePath = p; draw(); }
+    }
+    function newFile(name, content){
+      var p = FS.touch(cwd, name, content);
       if(p){ renamePath = p; draw(); }
     }
     function doPaste(){
@@ -1646,6 +1655,7 @@ APPS['explorer'] = {
       draw();
     });
     container.querySelector('[data-ex-tool="new"]').addEventListener('click', newFolder);
+    container.querySelector('[data-ex-tool="file"]').addEventListener('click', function(){ newFile('untitled.txt', ''); });
     listEl.addEventListener('contextmenu', function(e){
       e.preventDefault();
       showCtx(e.clientX, e.clientY, selected.length ? ctxForSelection() : [
