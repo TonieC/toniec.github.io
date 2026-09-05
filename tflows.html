@@ -1360,6 +1360,8 @@
       <pre><code><span class="pn">$</span> pip install tflows</code></pre>
     </div>
 
+    <p>Requires Python 3.10 or newer. Example bots live in the <code>examples/</code> folder of the repository (<code>basic_bot.py</code>, <code>variables.py</code>, <code>embeds.py</code>, <code>automation.py</code>, <code>mixing.py</code>).</p>
+
     <h3>Verify the installation</h3>
     <div class="code-block">
       <div class="code-header">
@@ -1374,7 +1376,9 @@
     <ul>
       <li><a href="https://pypi.org/project/tflows/" target="_blank" rel="noopener">PyPI Package</a></li>
       <li><a href="https://github.com/TonieC/tflows.py" target="_blank" rel="noopener">GitHub Repository</a></li>
+      <li><a href="https://github.com/TonieC/tflows.py/blob/main/CHANGELOG.md" target="_blank" rel="noopener">Changelog</a></li>
     </ul>
+    <p>tflows.py is released under the Apache License 2.0.</p>
   </section>
 
   <section id="quickstart">
@@ -1548,13 +1552,13 @@ bot<span class="pn">.</span><span class="fn">run</span><span class="pn">(</span>
       <tbody>
         <tr>
           <td class="pn-name">prefix</td>
-          <td class="pn-type">str</td>
-          <td class="pn-desc">The command prefix, e.g. <code>"!"</code>, <code>"?"</code>, <code>".."</code>.</td>
+          <td class="pn-type">str | list</td>
+          <td class="pn-desc">The command prefix, e.g. <code>"!"</code> — or a list of prefixes.</td>
         </tr>
         <tr>
           <td class="pn-name">help_command</td>
-          <td class="pn-type">HelpCommand | None</td>
-          <td class="pn-desc">Overrides or disables the built-in help command. See <a href="#help-system">Help System</a>.</td>
+          <td class="pn-type">bool</td>
+          <td class="pn-desc">Set to <code>False</code> to disable the built-in help command. See <a href="#help-system">Help System</a>.</td>
         </tr>
         <tr>
           <td class="pn-name">log_errors</td>
@@ -1921,12 +1925,13 @@ bot <span class="pn">=</span> <span class="fn">FlowBot</span><span class="pn">(<
       <thead><tr><th>Option</th><th>Effect</th></tr></thead>
       <tbody>
         <tr><td class="pn-name">prefix</td><td class="pn-desc">The command prefix string(s) that trigger command lookup, same as in discord.py.</td></tr>
-        <tr><td class="pn-name">help_command</td><td class="pn-desc">Pass your own <code>commands.HelpCommand</code> subclass to replace the built-in help, or <code>None</code> to disable it entirely.</td></tr>
+        <tr><td class="pn-name">help_command</td><td class="pn-desc">Set to <code>False</code> to disable the built-in help entirely.</td></tr>
         <tr><td class="pn-name">log_errors</td><td class="pn-desc">Catches and logs exceptions raised during script execution instead of propagating them as unhandled exceptions.</td></tr>
         <tr><td class="pn-name">log_unknown_functions</td><td class="pn-desc">Logs calls to unregistered function names instead of silently ignoring them — useful while developing.</td></tr>
         <tr><td class="pn-name">case_insensitive</td><td class="pn-desc">Controls whether command names are matched case-insensitively.</td></tr>
         <tr><td class="pn-name">members_intent</td><td class="pn-desc">Controls whether the guild members intent is requested, required for functions/variables needing full member lists.</td></tr>
         <tr><td class="pn-name">registry</td><td class="pn-desc">Optionally pass a pre-built <code>FunctionRegistry</code>. See <a href="#isolated-registry">Isolated Registries</a>.</td></tr>
+        <tr><td class="pn-name">intents</td><td class="pn-desc">Optional <code>discord.Intents</code> to use instead of the defaults (which already enable <code>message_content</code>).</td></tr>
       </tbody>
     </table>
   </section>
@@ -1944,7 +1949,7 @@ bot <span class="pn">=</span> <span class="fn">FlowBot</span><span class="pn">(<
       <li>In some cases, the underlying script source, useful for debugging or for letting trusted users see exactly what a command does</li>
     </ul>
 
-    <p>If you want full control over how help is presented, or you're integrating Tflows into a bot that already has its own help system, pass <code>help_command=None</code> (or your own <code>HelpCommand</code> subclass) when constructing FlowBot.</p>
+    <p>If you want full control over how help is presented, or you're integrating Tflows into a bot that already has its own help system, pass <code>help_command=False</code> when constructing FlowBot.</p>
 
     <div class="code-block">
       <div class="code-header">
@@ -1953,7 +1958,7 @@ bot <span class="pn">=</span> <span class="fn">FlowBot</span><span class="pn">(<
       </div>
       <pre><code>bot <span class="pn">=</span> <span class="fn">FlowBot</span><span class="pn">(</span>
     prefix<span class="pn">=</span><span class="st">"!"</span><span class="pn">,</span>
-    help_command<span class="pn">=</span><span class="kw">None</span>  <span class="cm"># disable built-in help</span>
+    help_command<span class="pn">=</span><span class="kw">False</span>  <span class="cm"># disable built-in help</span>
 <span class="pn">)</span></code></pre>
     </div>
   </section>
@@ -2316,6 +2321,72 @@ desc Custom: <span class="var">$uptime</span>(d, h, m, s)
 <span class="var">$id</span><span class="pn">(</span>user<span class="pn">)</span>
 <span class="var">$id</span><span class="pn">(</span>mention<span class="pn">)</span>
 <span class="var">$id</span><span class="pn">(</span>act<span class="pn">)</span></code></pre>
+      </div>
+    </div>
+
+    <div class="var-card">
+      <div class="var-card-head">
+        <h2 id="var-argcount">$argcount</h2>
+        <span class="var-badge badge-static">static</span>
+      </div>
+      <p>Returns how many arguments the user passed — useful for validating input before using <code>$arg(n)</code>.</p>
+      <table class="param-table">
+        <thead><tr><th>Usage</th><th>Returns</th></tr></thead>
+        <tbody>
+          <tr><td class="pn-name">$argcount</td><td class="pn-desc">Number of arguments, e.g. <code>2</code></td></tr>
+        </tbody>
+      </table>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang"><span class="code-dot"></span>tflows script</span></div>
+        <pre><code>reply Got <span class="var">$argcount</span> args</code></pre>
+      </div>
+    </div>
+
+    <div class="var-card">
+      <div class="var-card-head">
+        <h2 id="var-prefix">$prefix</h2>
+        <span class="var-badge badge-static">static</span>
+      </div>
+      <p>Returns the bot's command prefix — handy in help text so examples stay correct if the prefix ever changes.</p>
+      <table class="param-table">
+        <thead><tr><th>Usage</th><th>Returns</th></tr></thead>
+        <tbody>
+          <tr><td class="pn-name">$prefix</td><td class="pn-desc">Command prefix, e.g. <code>!</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="var-card">
+      <div class="var-card-head">
+        <h2 id="var-random">$random</h2>
+        <span class="var-badge badge-fn">function</span>
+      </div>
+      <p>Returns a random integer in the given inclusive range.</p>
+      <table class="param-table">
+        <thead><tr><th>Usage</th><th>Returns</th></tr></thead>
+        <tbody>
+          <tr><td class="pn-name">$random(a, b)</td><td class="pn-desc">Random number between <code>a</code> and <code>b</code>, e.g. <code>$random(1, 6)</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="var-card">
+      <div class="var-card-head">
+        <h2 id="var-thumbnail">$thumbnail</h2>
+        <span class="var-badge badge-static">static</span>
+      </div>
+      <p>Returns the author's avatar URL — designed to drop straight into an embed thumbnail.</p>
+      <table class="param-table">
+        <thead><tr><th>Usage</th><th>Returns</th></tr></thead>
+        <tbody>
+          <tr><td class="pn-name">$thumbnail</td><td class="pn-desc">Author's avatar URL — drop it straight into an embed thumbnail</td></tr>
+        </tbody>
+      </table>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang"><span class="code-dot"></span>tflows script</span></div>
+        <pre><code>embed
+<span class="var">$thumbnail</span>[<span class="var">$avatar</span>]
+endembed</code></pre>
       </div>
     </div>
 
