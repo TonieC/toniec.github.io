@@ -2602,7 +2602,7 @@ bot<span class="pn">.</span><span class="fn">add_cog</span><span class="pn">(</s
     <div class="section-label">Automation</div>
     <h2 class="section-title">Conditionals <a class="anchor" href="#conditionals">#</a></h2>
 
-    <p>Scripts can branch with <code>if</code> / <code>elif</code> / <code>else</code> / <code>endif</code> blocks. Conditions support <code>==</code>, <code>!=</code>, <code>&gt;</code>, <code>&lt;</code>, <code>&gt;=</code>, <code>&lt;=</code>, <code>contains</code>, <code>startswith</code>, <code>endswith</code>, <code>in</code>, and <code>and</code> / <code>or</code> / <code>not</code> — and blocks nest.</p>
+    <p>Scripts can branch with <code>if</code> / <code>elif</code> / <code>else</code> blocks closed by <code>endif</code> (or <code>end if</code>). Conditions support <code>==</code>, <code>!=</code>, <code>&gt;</code>, <code>&lt;</code>, <code>&gt;=</code>, <code>&lt;=</code>, <code>contains</code>, <code>startswith</code>, <code>endswith</code>, <code>in</code>, and <code>and</code> / <code>or</code> / <code>not</code> — and blocks nest. Conditions are quote-aware: operators and comparison-like text inside quoted strings are left alone, so <code>"fish and chips" == x</code> does not split on the inner <code>and</code>.</p>
     <div class="code-block">
       <div class="code-header"><span class="code-lang"><span class="code-dot"></span>tflows script</span><button class="copy-btn"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button></div>
       <pre><code><span class="dsl">if</span> $argcount == 0
@@ -2619,20 +2619,21 @@ bot<span class="pn">.</span><span class="fn">add_cog</span><span class="pn">(</s
     <div class="section-label">Automation</div>
     <h2 class="section-title">Slash Commands <a class="anchor" href="#slash-commands">#</a></h2>
 
-    <p>Any script can also run as a Discord slash command. Pass <code>slash=True</code> with a <code>slash_params</code> list, or use <code>bot.slashcommand(...)</code> — declared params map to <code>$args</code> / <code>$arg(n)</code> / <code>$arg(name)</code> inside the script. Sync them to Discord with <code>await bot.sync_commands()</code>.</p>
+    <p>Any script can also run as a Discord slash command. Pass <code>slash=True</code> with a <code>slash_params</code> list, or use <code>bot.slashcommand(...)</code> — declared params map to <code>$args</code> / <code>$arg(n)</code> / <code>$arg(name)</code> inside the script, using the same 0-based argument system as prefix commands (the first argument is <code>$arg(0)</code>, with <code>$argcount</code> for the total). Sync them to Discord with <code>await bot.sync_commands()</code>.</p>
     <div class="code-block">
       <div class="code-header"><span class="code-lang"><span class="code-dot"></span>python</span><button class="copy-btn"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button></div>
       <pre><code>bot<span class="pn">.</span><span class="fn">command</span><span class="pn">(</span><span class="st">"greet"</span><span class="pn">,</span> <span class="st">"reply Hello $arg(name)!"</span><span class="pn">,</span> slash<span class="pn">=</span><span class="kw">True</span><span class="pn">,</span> slash_params<span class="pn">=</span><span class="pn">[</span><span class="st">"name"</span><span class="pn">])</span>
 
 <span class="kw">await</span> bot<span class="pn">.</span><span class="fn">sync_commands</span><span class="pn">()</span></code></pre>
     </div>
+    <p>Parameters can declare types, including optional parameters — an unrecognized type string is rejected at registration instead of silently becoming text. Note that <code>slash_params</code> on its own does nothing: without <code>slash=True</code> no slash command is created and the configuration produces a warning.</p>
   </section>
 
   <section id="cooldowns-guards">
     <div class="section-label">Automation</div>
     <h2 class="section-title">Cooldowns &amp; Guards <a class="anchor" href="#cooldowns-guards">#</a></h2>
 
-    <p>Rate-limit spammy commands and gatekeep sensitive ones without leaving script-land. Cooldown scopes are <code>per user</code>, <code>per channel</code>, <code>per guild</code>, or <code>global</code>; guards check permissions, roles, or ownership. The <code>$hasrole()</code>, <code>$hasperm()</code>, and <code>$isowner</code> variables let scripts branch on the same checks.</p>
+    <p>Rate-limit spammy commands and gatekeep sensitive ones without leaving script-land. Cooldown scopes are <code>per user</code>, <code>per channel</code>, <code>per guild</code>, or <code>global</code>; expired per-user entries are pruned automatically. A malformed <code>cooldown</code> line produces a warning and lets execution continue. Guards check permissions, roles, or ownership — but a malformed <code>require</code> fails closed and blocks execution instead. The <code>$hasrole()</code>, <code>$hasperm()</code>, and <code>$isowner</code> variables let scripts branch on the same checks.</p>
     <div class="code-block">
       <div class="code-header"><span class="code-lang"><span class="code-dot"></span>tflows script</span><button class="copy-btn"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button></div>
       <pre><code><span class="dsl">cooldown</span> 5s per user
@@ -2651,11 +2652,17 @@ reply This only runs for mods and the owner.</code></pre>
     <div class="section-label">Automation</div>
     <h2 class="section-title">Persistent State <a class="anchor" href="#persistent-state">#</a></h2>
 
-    <p>Scripts are no longer stateless. A SQLite-backed store (a lazy <code>tflows.db</code> file by default, <code>state_path=":memory:"</code> or <code>None</code> for ephemeral use) persists per-server data across restarts. Use the <code>set</code> / <code>get</code> / <code>del</code> / <code>incr</code> functions, or read values inline with <code>$get(key, fallback)</code>.</p>
+    <p>Scripts are no longer stateless. A SQLite-backed store (a lazy <code>tflows.db</code> file by default, <code>state_path=":memory:"</code> or <code>None</code> for ephemeral use) persists per-server data across restarts. Use the <code>set</code> / <code>get</code> / <code>del</code> / <code>incr</code> functions, or read values inline with <code>$get(key, fallback)</code>. Keys can address a specific user, e.g. <code>points[$user]</code>:</p>
     <div class="code-block">
       <div class="code-header"><span class="code-lang"><span class="code-dot"></span>tflows script</span><button class="copy-btn"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button></div>
       <pre><code><span class="fn">incr</span> greet_count
 reply You have been greeted <span class="var">$get(greet_count, 0)</span> times!</code></pre>
+    </div>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang"><span class="code-dot"></span>tflows script</span><button class="copy-btn"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button></div>
+      <pre><code><span class="fn">set</span> points[<span class="var">$user</span>] 10
+<span class="fn">incr</span> points[<span class="var">$user</span>]
+<span class="fn">get</span> points[<span class="var">$user</span>]</code></pre>
     </div>
   </section>
 
@@ -2663,7 +2670,7 @@ reply You have been greeted <span class="var">$get(greet_count, 0)</span> times!
     <div class="section-label">Automation</div>
     <h2 class="section-title">Scheduled Tasks <a class="anchor" href="#scheduled-tasks">#</a></h2>
 
-    <p>Run scripts on a timer instead of waiting for messages. Register tasks with <code>bot.schedule(name, code, interval=...)</code> using duration strings or 5-field cron, or mark a script with an <code>every 1h:</code> header. Re-scheduling a name replaces the old task (no duplicates), tasks start and stop cleanly, and <code>run_once</code> fires a scheduled script on demand.</p>
+    <p>Run scripts on a timer instead of waiting for messages. Register tasks with <code>bot.schedule(name, code, interval=...)</code> using duration strings or 5-field cron, or mark a script with an <code>every 1h:</code> header. Cron follows standard day-of-month/day-of-week semantics (weekday <code>7</code> is accepted as Sunday), comments are tolerated around schedule headers, and an invalid cron expression produces a proper error instead of silently misfiring. Re-scheduling a name replaces the old task (no duplicates), tasks start and stop cleanly, and <code>run_once</code> fires a scheduled script on demand.</p>
     <div class="code-block">
       <div class="code-header"><span class="code-lang"><span class="code-dot"></span>python</span><button class="copy-btn"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button></div>
       <pre><code>bot<span class="pn">.</span><span class="fn">schedule</span><span class="pn">(</span><span class="st">"standup"</span><span class="pn">,</span> <span class="st">"send Good morning! $uptime(short)"</span><span class="pn">,</span> interval<span class="pn">=</span><span class="st">"1h"</span><span class="pn">)</span></code></pre>
@@ -2674,10 +2681,17 @@ reply You have been greeted <span class="var">$get(greet_count, 0)</span> times!
     <div class="section-label">Automation</div>
     <h2 class="section-title">Event Triggers <a class="anchor" href="#event-triggers">#</a></h2>
 
-    <p>React to things that aren't commands. Attach scripts to Discord events with <code>bot.on_event("join" | "leave" | "react" | ..., code)</code> — the mapping lives in the extensible <code>tflows.events.EVENT_MAP</code> — and detach them with <code>bot.remove_event()</code>.</p>
+    <p>React to things that aren't commands. Attach scripts to Discord events with <code>bot.on_event("join" | "leave" | "react" | ..., code)</code> — the mapping lives in the extensible <code>tflows.events.EVENT_MAP</code> — and detach them with <code>bot.remove_event()</code>. The same triggers work in script form:</p>
     <div class="code-block">
       <div class="code-header"><span class="code-lang"><span class="code-dot"></span>python</span><button class="copy-btn"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button></div>
       <pre><code>bot<span class="pn">.</span><span class="fn">on_event</span><span class="pn">(</span><span class="st">"join"</span><span class="pn">,</span> <span class="st">"send Welcome, $user(display)!"</span><span class="pn">)</span></code></pre>
+    </div>
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang"><span class="code-dot"></span>tflows script</span><button class="copy-btn"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button></div>
+      <pre><code><span class="dsl">on join:</span>
+    send Welcome, $user(display)!
+<span class="dsl">on react:</span>
+    reply Noted!</code></pre>
     </div>
   </section>
 
