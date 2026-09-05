@@ -88,15 +88,16 @@ var DATA = {
         'Built on discord.py, with FlowBot providing the main bot interface while retaining access to discord.py\u2019s functionality.',
         'Script engine executes registered commands line by line, resolving functions and variables through the framework\u2019s FunctionRegistry.',
         'Built-in functions and variables provide common Discord bot functionality without requiring every action to be implemented as Python code.',
+        'Scripts now branch with conditionals, run as slash commands, enforce cooldowns and permission guards, persist per-server state, and run on schedules or event triggers.',
         'Extensible registry system allows developers to add their own Python functions, variables, and aliases when scripts need additional functionality.'
       ],
       useCases:[
         ['Discord Bots','Build commands and bot functionality using concise script-based definitions.'],
-        ['Server Automation','Automate common Discord actions such as replies, reactions, message management, delays, and embeds.'],
+        ['Server Automation','Automate common Discord actions such as replies, reactions, message management, delays, and embeds — or schedule scripts and react to server events.'],
         ['Rapid Prototyping','Create functional Discord commands without writing a separate Python function for every simple command.'],
         ['Python Extensions','Combine scripts with custom Python functions, variables, and normal discord.py features for more complex functionality.']
       ],
-      stats:[['PyPI','Published'],['OSS','Open source'],['Scripts','Script-based'],['discord.py','Based on']],
+      stats:[['v1.0.0','PyPI version'],['OSS','Open source'],['Scripts','Script-based'],['discord.py','Based on']],
       links:[['GitHub','https://github.com/TonieC/tflows.py'],['PyPI','https://pypi.org/project/tflows/'],['Docs','https://toniec.github.io/tflows']]
     }
   ],
