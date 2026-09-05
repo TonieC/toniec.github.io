@@ -21,25 +21,22 @@ and a taskbar — the way work actually feels on my computer.
 - Shutdown / restart / sleep flows, lock screen, Ctrl+Alt+End security
   screen, permission confirmations
 - Task Manager (processes, live performance graphs, app history, startup,
-  users, details, services, run-new-task, `Ctrl+Shift+Esc`)
+  users, details, services, run-new-task, `Ctrl+Shift+Esc`) with simulated
+  process data
 - File Explorer over a persisted simulated filesystem (Home, Documents,
   Apps…): navigate, search, create/rename/delete/copy/paste, properties,
   sorting, list/grid views — text files open in Notepad
 - Notification center: tray bell, grouped panel, toast stack, sounds,
   do-not-disturb, per-visit onboarding notices
 - Pin/unpin apps to the taskbar, Calculator, Notepad, Settings, terminal,
-  Device Info (GPU, storage, gamepads, fingerprints, display, audio)
+  and browser Device Info (GPU, storage, gamepads, fingerprints, display,
+  audio)
 
 **Mobile OS** (≤640px)
 - Home grid with search + recently opened, long-press drag reorder
 - Full-screen app views, bottom nav (Home / Search / Settings)
 - Settings sheet: theme, Wi-Fi/volume/brightness/battery status,
   night light, do-not-disturb
-
-**Mobile OS** (≤640px)
-- Home grid with search + recently opened, long-press drag reorder
-- Full-screen app views, bottom nav (Home / Search / Settings)
-- Settings sheet: theme, Wi-Fi/volume/brightness/battery status
 
 **Content**
 - About, skills, contact (spam-protected email reveal), resume viewer
@@ -62,7 +59,7 @@ manifest.json       PWA manifest · robots.txt · sitemap.xml
 404.html            Blue-screen error page
 ```
 
-No frameworks, no build step, no dependencies — plain HTML/CSS/JS.
+No frameworks, no build step, and no package dependencies — plain HTML/CSS/JS.
 
 ## Controls
 
