@@ -19,14 +19,44 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Send Discord Webhook
-        uses: fjogeleit/http-request-action@v1
-        with:
-          url: ${{ secrets.DISCORD_WEBHOOK }}
-          method: POST
-          contentType: application/json
-          data: |
-            {
-              "username": "GitHub",
-              "avatar_url": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
-              "content": "${{ github.event_name == 'push' && '**New Commit Pushed to ' }}${{ github.repository }}${{ github.event_name == 'push' && '**\n\n**Author:** ' }}${{ github.actor }}${{ github.event_name == 'push' && '\n**Branch:** ' }}${{ github.ref_name }}${{ github.event_name == 'push' && '\n**Commit Message:** ' }}${{ github.event.head_commit.message }}${{ github.event_name == 'push' && '\n**Commit URL:** ' }}${{ github.event.head_commit.url }}"
-            }
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          EVENT_NAME: ${{ github.event_name }}
+          REPOSITORY: ${{ github.repository }}
+          ACTOR: ${{ github.actor }}
+          REF_NAME: ${{ github.ref_name }}
+          COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
+          COMMIT_URL: ${{ github.event.head_commit.url }}
+          EVENT_ACTION: ${{ github.event.action }}
+        run: |
+          set -euo pipefail
+
+          case "$EVENT_NAME" in
+            push)
+              content=$(printf '**New Commit Pushed to %s**\n\n**Author:** %s\n**Branch:** %s\n**Commit Message:** %s\n**Commit URL:** %s' \
+                "$REPOSITORY" "$ACTOR" "$REF_NAME" "$COMMIT_MESSAGE" "$COMMIT_URL")
+              ;;
+            pull_request)
+              content=$(printf '**Pull Request %s in %s**\n\n**Author:** %s\n**Action:** %s' \
+                "$REPOSITORY" "$REPOSITORY" "$ACTOR" "$EVENT_ACTION")
+              ;;
+            release)
+              content=$(printf '**Release published for %s**\n\n**Author:** %s' \
+                "$REPOSITORY" "$ACTOR")
+              ;;
+            *)
+              content=$(printf '**GitHub event in %s**\n\n**Event:** %s\n**Actor:** %s' \
+                "$REPOSITORY" "$EVENT_NAME" "$ACTOR")
+              ;;
+          esac
+
+          payload=$(jq -n \
+            --arg username "GitHub" \
+            --arg avatar_url "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" \
+            --arg content "$content" \
+            '{username: $username, avatar_url: $avatar_url, content: $content}')
+
+          curl --fail-with-body --silent --show-error \
+            --header "Content-Type: application/json" \
+            --data "$payload" \
+            "$DISCORD_WEBHOOK"
