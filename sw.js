@@ -9,7 +9,7 @@
  * index.html, mirror the new URLs in PRECACHE too (query strings are
  * part of the cache key).
  */
-var CACHE_NAME = 'tcos-v5';
+var CACHE_NAME = 'tcos-v6';
 
 var PRECACHE = [
   '/',
@@ -101,7 +101,11 @@ function staleWhileRevalidate(req) {
   return caches.open(CACHE_NAME).then(function (cache) {
     return cache.match(req).then(function (hit) {
       var fresh = fetch(req).then(function (res) {
-        if (res && (res.ok || res.type === 'opaque')) cache.put(req, res.clone());
+        var isCacheable = res && (res.status === 200 || res.type === 'opaque');
+        var isPartialRequest = req.headers.get('range');
+        if (isCacheable && !isPartialRequest) {
+          cache.put(req, res.clone()).catch(function () {});
+        }
         return res;
       }).catch(function () { return hit; });
       return hit || fresh;
